@@ -1,10 +1,10 @@
 package com.TFG.app.backend.establishment.service;
 
-import com.TFG.app.backend.establishment.entity.Establishment;
-import com.TFG.app.backend.establishment.repository.EstablishmentRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.TFG.app.backend.establishment.repository.EstablishmentRepository;
+import com.TFG.app.backend.establishment.entity.Establishment;
+
 
 @Service
 public class EstablishmentService {
@@ -13,6 +13,10 @@ public class EstablishmentService {
 
     public EstablishmentService(EstablishmentRepository establishmentRepository) {
         this.establishmentRepository = establishmentRepository;
+    }
+
+    public Establishment createEstablishment(Establishment establishment) {
+        return establishmentRepository.save(establishment);
     }
 
 }
