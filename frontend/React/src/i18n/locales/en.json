@@ -1,0 +1,35 @@
+{
+    "login": {
+        "title": "Login",
+        "welcomeBack": "Welcome back",
+        "logout": "Logout",
+        "signUp": "Sign Up",
+        "forgotPassword": "Forgot your password?",
+        "emailPlaceholder": "example@email.com",
+        "submit": "Log In"
+
+    },
+    "signUp": {
+        "title": "Sign Up",
+        "welcome": "Sign up to manage your finances",
+        "namePlaceholder": "Sherlock",
+        "lastNamePlaceholder": "Holmes",
+        "emailPlaceholder": "sherlockHolmes@email.com",
+        "confirmPassword": "Confirm Password",
+        "logIn": "Log In",
+        "submit": "Sign Up"
+    },
+    "forgotPassword": {
+        "title": "Recover Password",
+        "description": "Enter your email to receive a recovery link",
+        "emailPlaceholder": "example@email.com",
+        "backToLogin": "Back to Login",
+        "submit": "Send Recovery Link"
+    },
+    "user":{
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "password": "Password"
+    }
+}
