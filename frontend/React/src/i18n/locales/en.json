@@ -26,6 +26,13 @@
         "backToLogin": "Back to Login",
         "submit": "Send Recovery Link"
     },
+    "errors": {
+        "requiredField": "This field is required",
+        "invalidEmail": "Invalid email address",
+        "passwordMismatch": "Passwords do not match",
+        "passwordLength": "Password must be at least 8 characters long",
+        "passwordChars": "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    },
     "user":{
         "firstName": "First Name",
         "lastName": "Last Name",

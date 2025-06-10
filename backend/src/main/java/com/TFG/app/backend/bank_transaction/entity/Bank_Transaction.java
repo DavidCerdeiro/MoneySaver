@@ -5,17 +5,14 @@ import jakarta.persistence.*;
 import com.TFG.app.backend.bank_account.entity.Bank_Account;
 import com.TFG.app.backend.spending.entity.Spending;
 
-
+@Entity
+@Table(name = "bank_transaction")
 public class Bank_Transaction {
-    /*"Id" serial  PRIMARY KEY,
-  "Id_BankAccount" int NOT NULL,
-  "Id_Spending" int NOT NULL UNIQUE,
-  FOREIGN KEY ("Id_Spending") REFERENCES spending("Id"),
-  FOREIGN KEY ("Id_BankAccount") REFERENCES "bank_account"("Id") */
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    @Column(name = "Id")
+    private Integer Id;
+
     @ManyToOne
     @JoinColumn(name = "Id_BankAccount", nullable = false)
     private Bank_Account BankAccount;
@@ -25,7 +22,7 @@ public class Bank_Transaction {
     private Spending spending;
 
     // Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return Id;
     }
 

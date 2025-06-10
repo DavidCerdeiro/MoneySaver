@@ -6,10 +6,13 @@ import java.util.Date;
 import com.TFG.app.backend.spending.entity.Spending;
 import com.TFG.app.backend.type_periodic.entity.Type_Periodic;
 
+@Entity
+@Table(name = "periodic_spending")
 public class Periodic_Spending {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "Id")
+    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "Id_Spending", unique = true, nullable = false)
@@ -19,11 +22,11 @@ public class Periodic_Spending {
     @JoinColumn(name = "Id_TypePeriodic", nullable = false)
     private Type_Periodic typePeriodic;
 
-    @Column(nullable = false)
+    @Column(name = "Expiration", nullable = false)
     private Date expiration;
     
     // Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

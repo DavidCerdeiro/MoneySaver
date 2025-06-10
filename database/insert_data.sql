@@ -7,10 +7,10 @@ VALUES
 
 INSERT INTO category ("Id_User", "Name", "TotalSpending", "Icon")
 VALUES
-(1, 'Supermercados', 0.00, '2'),
-(1, 'Transporte', 0.00, '0'),
-(2, 'Restaurantes', 0.00, '1'),
-(3, 'Suscripciones', 0.00, '3');
+(1, 'Supermercados', 0.00, 2),
+(1, 'Transporte', 0.00, 0),
+(2, 'Restaurantes', 0.00, 1),
+(3, 'Suscripciones', 0.00, 3);
 
 INSERT INTO "bank_account" ("Id_User", "BankName", "AccessToken")
 VALUES

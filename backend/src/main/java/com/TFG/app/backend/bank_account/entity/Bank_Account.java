@@ -4,27 +4,27 @@ import jakarta.persistence.*;
 
 import com.TFG.app.backend.user.entity.User;
 
+@Entity
+@Table(name = "bank_account")
 public class Bank_Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "Id")
+    private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_user", nullable = false)
+    @JoinColumn(name = "Id_User", nullable = false)
     private User user;
 
-    @Column(length = 32, nullable = false)
+    @Column(name = "BankName", length = 32, nullable = false)
     private String bankName;
 
-    @Column(length = 128, nullable = false, unique = true)
+    @Column(name = "AccessToken", length = 128, nullable = false, unique = true)
     private String accessToken;
 
     // Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public User getUser() {

@@ -4,23 +4,25 @@ import jakarta.persistence.*;
 import com.TFG.app.backend.street.entity.Street;
 
 @Entity
+@Table(name = "address")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "Id")
+    private Integer id;
     
     @OneToOne
-    @JoinColumn(name = "id_street", nullable = false, unique = true)
+    @JoinColumn(name = "Id_Street", nullable = false, unique = true)
     private Street street;
 
-    @Column(length = 16, nullable = false)
+    @Column(name = "Country", length = 16, nullable = false)
     private String country;
 
-    @Column(length = 16, nullable = false)
+    @Column(name = "City", length = 16, nullable = false)
     private String city;
 
     //Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
     

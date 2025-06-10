@@ -1,31 +1,29 @@
 package com.TFG.app.backend.savings_goal.entity;
 
 import jakarta.persistence.*;
-
+import java.math.BigDecimal;
 import com.TFG.app.backend.category.entity.Category;
 
+@Entity
+@Table(name = "savings_goal")
 public class Savings_Goal {
-    /*"Id" serial  PRIMARY KEY,
-  "Id_Category" int NOT NULL,
-  "Name" varchar(32) NOT NULL UNIQUE,
-  "TargetAmount" numeric(15,2) NOT NULL,
-  FOREIGN KEY ("Id_Category") REFERENCES category("Id") */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "Id")
+    private Integer id;
 
     @OneToOne
-    @JoinColumn(name = "id_category", nullable = false)
+    @JoinColumn(name = "Id_Category", nullable = false)
     private Category category;
 
-    @Column(length = 32, nullable = false, unique = true)
+    @Column(name = "Name", length = 32, nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false, precision = 15, scale = 2)
-    private Double targetAmount;
+    @Column(name = "TargetAmount", nullable = false, precision = 15, scale = 2)
+    private BigDecimal targetAmount;
 
     // Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
     
@@ -43,10 +41,10 @@ public class Savings_Goal {
         this.name = name;
     }
 
-    public Double getTargetAmount() {
+    public BigDecimal getTargetAmount() {
         return targetAmount;
     }
-    public void setTargetAmount(Double targetAmount) {
+    public void setTargetAmount(BigDecimal targetAmount) {
         this.targetAmount = targetAmount;
     }
 }

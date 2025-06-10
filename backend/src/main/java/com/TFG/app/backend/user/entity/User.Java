@@ -8,22 +8,23 @@ public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "Id")
+    private Integer id;
 
-    @Column(length = 64, nullable = false)
+    @Column(name = "Name", length = 64, nullable = false)
     private String name;
 
-    @Column(length = 128, nullable = false)
+    @Column(name = "Surname", length = 128, nullable = false)
     private String surname;
 
-    @Column(length = 32, nullable = false, unique = true)
+    @Column(name = "Email", length = 32, nullable = false, unique = true)
     private String email;
 
-    @Column(length = 16, nullable = false)
+    @Column(name = "Password", length = 16, nullable = false)
     private String password;
 
     // Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 

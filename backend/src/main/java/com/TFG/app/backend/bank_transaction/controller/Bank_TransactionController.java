@@ -1,9 +1,6 @@
 package com.TFG.app.backend.bank_transaction.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.TFG.app.backend.bank_transaction.service.Bank_TransactionService;
 import com.TFG.app.backend.bank_transaction.entity.Bank_Transaction;
@@ -16,7 +13,8 @@ public class Bank_TransactionController {
     public Bank_TransactionController(Bank_TransactionService bankTransactionService) {
         this.bankTransactionService = bankTransactionService;
     }
-    @PostMapping
+    
+    @PostMapping("/create")
     public Bank_Transaction create(@RequestBody Bank_Transaction bankTransaction) {
         return bankTransactionService.createBankTransaction(bankTransaction);
     }

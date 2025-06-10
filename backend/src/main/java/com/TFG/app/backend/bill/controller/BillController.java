@@ -1,9 +1,6 @@
 package com.TFG.app.backend.bill.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.TFG.app.backend.bill.entity.Bill;
 import com.TFG.app.backend.bill.service.BillService;
@@ -17,8 +14,8 @@ public class BillController {
         this.billService = billService;
     }
 
-    @PostMapping
-    public Bill create(@RequestBody Bill bill) {
+    @PostMapping("/create")
+    public Bill createBill(@RequestBody Bill bill) {
         return billService.createBill(bill);
     }
 }

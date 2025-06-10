@@ -25,6 +25,13 @@
         "backToLogin": "Volver al inicio de sesión",
         "submit": "Enviar enlace de recuperación"
     },
+    "errors": {
+        "requiredField": "Este campo es obligatorio",
+        "invalidEmail": "Correo electrónico no válido",
+        "passwordMismatch": "Las contraseñas no coinciden",
+        "passwordLength": "La contraseña debe tener al menos 8 caracteres",
+        "passwordChars": "La contraseña debe contener al menos una mayúscula, una minúscula y un número"
+    },
     "user":{
         "firstName": "Nombre",
         "lastName": "Apellido",

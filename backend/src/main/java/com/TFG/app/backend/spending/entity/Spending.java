@@ -1,42 +1,48 @@
 package com.TFG.app.backend.spending.entity;
 
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.TFG.app.backend.category.entity.Category;
 import com.TFG.app.backend.establishment.entity.Establishment;
 import com.TFG.app.backend.user.entity.User;
 
+@Entity
+@Table(name = "spending")
 public class Spending {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "Id")
+    private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_category", nullable = false)
+    @JoinColumn(name = "Id_Category", nullable = false)
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "id_establishment")
+    @JoinColumn(name = "Id_Establishment")
     private Establishment establishment;
 
     @ManyToOne
-    @JoinColumn(name = "id_user", nullable = false)
+    @JoinColumn(name = "Id_User", nullable = false)
     private User user;
 
-    @Column(length = 64, nullable = false)
+    @Column(name = "Name", length = 64, nullable = false)
     private String name;
 
-    @Column(nullable = false, precision = 15, scale = 2)
-    private Double amount;
+    @Column(name = "Amount", nullable = false, precision = 15, scale = 2)
+    private BigDecimal amount;
 
-    @Column(nullable = false)
+    @Column(name = "Date", nullable = false)
     private Date date;
 
-    @Column(nullable = false)
+    @Column(name = "IsPeriodic", nullable = false)
     private Boolean isPeriodic;
 
     // Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -68,10 +74,10 @@ public class Spending {
         this.name = name;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

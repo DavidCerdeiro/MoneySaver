@@ -3,21 +3,23 @@ package com.TFG.app.backend.establishment.entity;
 import jakarta.persistence.*;
 import com.TFG.app.backend.category.entity.Category;
 @Entity
+@Table(name = "establishment")
 public class Establishment {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "Id")
+    private Integer id;
 
-    @Column(length = 64, nullable = false)
+    @Column(name = "Name", length = 64, nullable = false)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "id_category", nullable = false)
-    private Category id_category;
+    @JoinColumn(name = "Id_Category", nullable = false)
+    private Category category;
 
     // Getters y setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -28,10 +30,10 @@ public class Establishment {
         this.name = name;
     }
 
-    public Category getId_category() {
-        return id_category;
+    public Category getCategory() {
+        return category;
     }
-    public void setId_category(Category id_category) {
-        this.id_category = id_category;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

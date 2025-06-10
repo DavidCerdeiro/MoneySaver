@@ -1,9 +1,6 @@
 package com.TFG.app.backend.street.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.TFG.app.backend.street.entity.Street;
 import com.TFG.app.backend.street.service.StreetService;
@@ -17,7 +14,7 @@ public class StreetController {
         this.streetService = streetService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public  Street create(@RequestBody Street street) {
         return streetService.createStreet(street);
     }

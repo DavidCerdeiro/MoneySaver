@@ -2,19 +2,22 @@ package com.TFG.app.backend.street.entity;
 
 import jakarta.persistence.*;
 
+@Entity
+@Table(name = "street")
 public class Street {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "Id")
+    private Integer id;
 
-    @Column(length = 32, nullable = false)
+    @Column(name = "Name", length = 32, nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private Long number;
+    @Column(name = "Number", nullable = false)
+    private Integer number;
 
     //Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -25,10 +28,10 @@ public class Street {
         this.name = name;
     }
 
-    public Long getNumber() {
+    public Integer getNumber() {
         return number;
     }
-    public void setNumber(Long number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 }

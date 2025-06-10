@@ -1,8 +1,6 @@
 package com.TFG.app.backend.spending.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.TFG.app.backend.spending.service.SpendingService;
 import com.TFG.app.backend.spending.entity.Spending;
@@ -16,7 +14,7 @@ public class SpendingController {
         this.spendingService = spendingService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Spending create(Spending spending) {
         return spendingService.createSpending(spending);
     }

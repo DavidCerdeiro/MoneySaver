@@ -1,9 +1,6 @@
 package com.TFG.app.backend.address.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.TFG.app.backend.address.service.AddressService;
 import com.TFG.app.backend.address.entity.Address;
@@ -17,7 +14,7 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Address create(@RequestBody Address address) {
         return addressService.createAddress(address);
     }
