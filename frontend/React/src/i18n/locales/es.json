@@ -1,4 +1,8 @@
 {
+    "app": {
+        "title": "MoneySaver",
+        "description": "Controla tu economía personal"
+    },
     "login": {
         "title": "Iniciar sesión",
         "welcomeBack": "Bienvenido de nuevo",
@@ -23,7 +27,9 @@
         "description": "Introduce tu correo electrónico para recibir un enlace de recuperación",
         "emailPlaceholder": "correo@ejemplo.com",
         "backToLogin": "Volver al inicio de sesión",
-        "submit": "Enviar enlace de recuperación"
+        "submit": "Enviar enlace de recuperación",
+        "subject": "[MoneySaver] Recuperación de contraseña",
+        "body": "¡Buenas!\n\nSentimos que hayas olvidado tu contraseña.\n\nUsa el siguiente código para reestablecerla: {{otp}}\n\nEste código expirará en 10 minutos.\n\nRecibes este correo porque se ha solicitado el reestablecimiento de tu contraseña."
     },
     "errors": {
         "requiredField": "Este campo es obligatorio",
@@ -33,8 +39,8 @@
         "passwordChars": "La contraseña debe contener al menos una mayúscula, una minúscula y un número"
     },
     "user":{
-        "firstName": "Nombre",
-        "lastName": "Apellido",
+        "name": "Nombre",
+        "surname": "Apellido",
         "email": "Correo electrónico",
         "password": "Contraseña"
     }

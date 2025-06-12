@@ -1,49 +1,73 @@
-import React from 'react';
+import '@/styles/utilities.css';
+
 import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/app/domains/shared/card";
 import { Input } from "@/app/domains/shared/input.js";
 import { Button } from "@/app/domains/shared/button.js";
 import { Label } from "@/app/domains/shared/label.js";
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createLogInSchema } from "../schemas/login";
+import type { LogInFormData } from "../schemas/login";
+import { logInUser } from '../application/authService';
+
 
 
 export function LoginForm() {
     const { t } = useTranslation();
-    
+    const schema = createLogInSchema(t);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm<LogInFormData>({
+        resolver: zodResolver(schema),
+    });
+
+    const onSubmit = async (data: LogInFormData) => {
+        try {
+            const result = await logInUser(data);
+            console.log("Success in login", result);
+        } catch (error) {
+            console.error("Login error:", error);
+        }
+    };
+
     return (
-        <div className="min-h-screen flex items-center justify-center px-4">
-            <Card className="w-full max-w-sm">
+        <div className="form-background">
+            <h1 className="card-title">{t('nameApp')}</h1>
+            <Card className="form-card">
                 <CardHeader>
                     <CardTitle className="text-2xl">{t('login.title')}</CardTitle>
-                    <CardDescription>{t('login.welcomeBack')}</CardDescription>
+                    <CardDescription className="card-description">{t('login.welcomeBack')}</CardDescription>
                     <CardAction>
-                        <Link to="/">{t('login.signUp')}</Link>
+                        <Link to="/" className="text-link">{t('login.signUp')}</Link>
                     </CardAction>
                 </CardHeader>
                 <CardContent className="grid gap-4">
-                    <form className="grid gap-4 md:gap-6">
+                    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
                         <div className="grid gap-2">
                             <Label htmlFor="email">{t('user.email')}</Label>
-                            <Input id="email" type="email" placeholder={t('login.emailPlaceholder')} required/>
+                            <Input id="email" type="email" {...register("email")} className="input-dark"/>
+                            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                         </div>
                         <div className="grid gap-2">
                             <div className="flex items-center">
                                 <Label htmlFor="password">{t('user.password')}</Label>
-                                <Link to="/forgot-password" className="ml-auto text-sm text-blue-600 hover:underline">
-                                    {t('login.forgotPassword')}
-                                </Link>
+                                <Link to="/forgot-password" className="ml-auto text-sm text-blue-400 hover:underline">{t('login.forgotPassword')}</Link>
                             </div>
-                            <Input id="password" type="password" />
+                            <Input id="password" type="password" {...register("password")} className="input-dark"/>
+                            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                         </div>
-                        <Button type="submit" className="w-full">{t('login.submit')}</Button>
+                        <Button type="submit" className="button-green" disabled={isSubmitting}>
+                            {t('login.submit')}
+                        </Button>
                     </form>
                 </CardContent>
-                <CardFooter>
-                    <Button variant="outline" className="w-full">
-                        {t('login.googleLogin')}
-                    </Button>
-                </CardFooter>
+                <CardFooter />
             </Card>
         </div>
     );
 }
+

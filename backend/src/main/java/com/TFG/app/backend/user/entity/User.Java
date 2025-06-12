@@ -20,7 +20,7 @@ public class User{
     @Column(name = "Email", length = 32, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "Password", length = 16, nullable = false)
+    @Column(name = "Password", length = 64, nullable = false)
     private String password;
 
     // Getters and Setters

@@ -3,9 +3,14 @@ CREATE TABLE IF NOT EXISTS "user" (
   "Name" varchar(64) NOT NULL,
   "Surname" varchar(128) NOT NULL,
   "Email" varchar(32) NOT NULL UNIQUE,
-  "Password" varchar(16) NOT NULL
+  "Password" varchar(64) NOT NULL
 );
-
+CREATE TABLE IF NOT EXISTS "one_time_password" (
+  "Id" serial PRIMARY KEY,
+  "Email" varchar(32) NOT NULL,
+  "Token" varchar(6) NOT NULL,
+  "Expiration" timestamp NOT NULL,
+);
 
 CREATE TABLE IF NOT EXISTS "bank_account" (
   "Id" serial  PRIMARY KEY,

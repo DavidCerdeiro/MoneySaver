@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+.form-background {
+  @apply min-h-screen bg-black text-white flex flex-col items-center justify-center px-4;
+}
+
+.form-card {
+  @apply w-full max-w-sm bg-zinc-900 text-white rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.08)];
+}
+
+.card-title {
+  @apply text-3xl font-bold text-center mb-6;
+}
+
+.card-description {
+  @apply text-sm text-gray-100 mb-4;
+}
+
+/* === Inputs === */
+.input-dark {
+  @apply bg-zinc-800 text-white placeholder-gray-300 border-none focus:ring-2 focus:ring-green-500;
+}
+
+/* === Botón Principal === */
+.button-green {
+  @apply bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors;
+}
+
+/* === Links === */
+.text-link {
+  @apply text-sm text-blue-400 hover:underline;
+}
+
+.back-link {
+  @apply text-sm text-gray-300 hover:text-white transition-colors;
+}
