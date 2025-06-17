@@ -23,6 +23,9 @@ public class User{
     @Column(name = "Password", length = 64, nullable = false)
     private String password;
 
+    @Column(name = "IsAuthenticated", nullable = false)
+    private boolean isAuthenticated = false;
+
     // Getters and Setters
     public Integer getId() {
         return id;
@@ -58,5 +61,13 @@ public class User{
 
     public void setPassword(String password) {
         this.password = password;
-    }    
+    }
+
+    public boolean getIsAuthenticated() {
+        return isAuthenticated;
+    }
+
+    public void setIsAuthenticated(boolean isAuthenticated) {
+        this.isAuthenticated = isAuthenticated;
+    }
 }

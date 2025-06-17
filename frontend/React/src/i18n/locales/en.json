@@ -1,49 +1,68 @@
 {
-    "app": {
-        "title": "MoneySaver",
-        "description": "Manage your personal finances"
-    },
-   
-    "login": {
-        "title": "Login",
-        "welcomeBack": "Welcome back",
-        "logout": "Logout",
-        "signUp": "Sign Up",
-        "forgotPassword": "Forgot your password?",
-        "emailPlaceholder": "example@email.com",
-        "submit": "Log In"
-
-    },
-    "signUp": {
-        "title": "Sign Up",
-        "welcome": "Sign up to manage your finances",
-        "namePlaceholder": "Sherlock",
-        "lastNamePlaceholder": "Holmes",
-        "emailPlaceholder": "sherlockHolmes@email.com",
-        "confirmPassword": "Confirm Password",
-        "logIn": "Log In",
-        "submit": "Sign Up"
-    },
-    "forgotPassword": {
-        "title": "Recover Password",
-        "description": "Enter your email to receive a recovery link",
-        "emailPlaceholder": "example@email.com",
-        "backToLogin": "Back to Login",
-        "submit": "Send Recovery Link",
-        "subject": "[MoneySaver] Password Recovery",
-        "body": "Hi! \n\nWe noticed you forgot your password.\n\nUse the following code to reset it: {{otp}}\n\nThis code will expires in 10 minutes.\n\nYou received this email because a password reset was requested for your account."
-    },
-    "errors": {
-        "requiredField": "This field is required",
-        "invalidEmail": "Invalid email address",
-        "passwordMismatch": "Passwords do not match",
-        "passwordLength": "Password must be at least 8 characters long",
-        "passwordChars": "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-    },
-    "user":{
-        "name": "First Name",
-        "surname": "Last Name",
-        "email": "Email",
-        "password": "Password"
-    }
+  "app": {
+    "title": "MoneySaver",
+    "description": "Manage your personal finances"
+  },
+  "login": {
+    "title": "Login",
+    "welcomeBack": "Welcome back",
+    "logout": "Logout",
+    "forgotPassword": "Forgot your password?",
+    "signUp": "Sign Up",
+    "emailPlaceholder": "example@email.com",
+    "submit": "Log In"
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "welcome": "Sign up to manage your finances",
+    "namePlaceholder": "Sherlock",
+    "lastNamePlaceholder": "Holmes",
+    "emailPlaceholder": "sherlockHolmes@email.com",
+    "confirmPassword": "Confirm Password",
+    "logIn": "Log In",
+    "submit": "Sign Up"
+  },
+  "forgotPassword": {
+    "title": "Recover Password",
+    "description": "Enter your email to receive a recovery link",
+    "emailPlaceholder": "example@email.com",
+    "backToLogin": "Back to Login",
+    "submit": "Send Recovery Link",
+    "subject": "[MoneySaver] Password Recovery",
+    "body": "Hi! \n\nWe noticed you forgot your password.\n\nUse the following code to reset it: {{otp}}\n\nThis code will expire in 10 minutes.\n\nYou received this email because a password reset was requested for your account."
+  },
+  "auth": {
+    "title": "User Authentication",
+    "forgotTitle": "Password Recovery",
+    "welcomeUser": "Welcome, {{name}}!",
+    "forgotDescription": "To recover your password, a verification code has been sent to your email.",
+    "signUpDescription": "To complete your registration, a verification code has been sent to your email.",
+    "loginDescription": "To complete your login, a verification code has been sent to your email.",
+    "defaultDescription": "Please enter the code.",
+    "length": "The code must be 6 digits long",
+    "forgotSubmit": "Change Password",
+    "signUpSubmit": "Sign Up",
+    "loginSubmit": "Log In"
+  },
+  "resetPassword": {
+    "title": "Change Password",
+    "description": "Enter your new password. You will be redirected to the login page.",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "submit": "Change Password"
+  },
+  "errors": {
+    "requiredField": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "passwordMismatch": "Passwords do not match",
+    "passwordLength": "Password must be at least 8 characters long",
+    "passwordChars": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+    "otpContent": "Content must be numeric"
+  },
+  "user": {
+    "name": "First Name",
+    "surname": "Last Name",
+    "email": "Email",
+    "password": "Password"
+  }
 }

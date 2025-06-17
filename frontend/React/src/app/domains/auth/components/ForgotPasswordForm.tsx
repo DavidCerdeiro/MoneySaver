@@ -1,9 +1,9 @@
 import '@/styles/utilities.css';
 
-import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/app/domains/shared/card";
-import { Input } from "@/app/domains/shared/input.js";
-import { Button } from "@/app/domains/shared/button.js";
-import { Label } from "@/app/domains/shared/label.js";
+import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/app/domains/shared/components/card";
+import { Input } from "@/app/domains/shared/components/input.js";
+import { Button } from "@/app/domains/shared/components/button.js";
+import { Label } from "@/app/domains/shared/components/label.js";
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form";
@@ -11,30 +11,43 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createForgotPasswordSchema } from "../schemas/forgotpassword";
 import type { ForgotPasswordData } from "../schemas/forgotpassword";
 import { forgotPassword } from '../application/authService';
-
+import { useNavigate } from 'react-router-dom';
 export function ForgotPasswordForm() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
+    const { i18n } = useTranslation();
 
     const schema = createForgotPasswordSchema(t);
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-    } = useForm({
+    } = useForm<ForgotPasswordData>({
         resolver: zodResolver(schema),
     });
-    const onSubmit = async (data: ForgotPasswordData) => {
-            try {
-                const result = await forgotPassword(data);
-                console.log("Success in login", result);
-            } catch (error) {
-                console.error("Login error:", error);
-            }
-        };
+    const onSubmit = async (formData: ForgotPasswordData) => {
+        try {
+            // Extract the language and country from the i18n language tag with the aim of sending the verification email in the user's preferred language.
+            const languageTag = i18n.language || "en";
+            const [language, country = ""] = languageTag.split("-");
+            const requestBody: ForgotPasswordData = {
+                ...formData,
+                locale: `${language}_${country}`,
+            };
+
+            await forgotPassword(requestBody);
+            //In the next direction, we'll need the email, so we store it in localStorage.
+            localStorage.setItem('forgotEmail', formData.email);
+            
+            navigate('/forgot-password/authUser');
+        } catch (error) {
+            console.error("Forgot password error:", error);
+        }
+    };
 
     return (
         <div className="form-background">
-            <h1 className="card-title">{t('appName')}</h1>
+            <h1 className="card-title">{t('app.title')}</h1>
             <Card className="form-card">
                 <CardHeader>
                     <CardTitle className="text-2xl">{t('forgotPassword.title')}</CardTitle>

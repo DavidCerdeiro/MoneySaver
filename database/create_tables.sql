@@ -3,14 +3,27 @@ CREATE TABLE IF NOT EXISTS "user" (
   "Name" varchar(64) NOT NULL,
   "Surname" varchar(128) NOT NULL,
   "Email" varchar(32) NOT NULL UNIQUE,
-  "Password" varchar(64) NOT NULL
+  "Password" varchar(64) NOT NULL.
+  "IsAuthenticated" boolean NOT NULL DEFAULT false,
 );
+
+CREATE TABLE IF NOT EXISTS "purpose_otp"(
+  "Id" serial  PRIMARY KEY,
+  "Name" varchar(16) NOT NULL UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS "one_time_password" (
   "Id" serial PRIMARY KEY,
+  "Id_PurposeOTP" int NOT NULL,
   "Email" varchar(32) NOT NULL,
   "Token" varchar(6) NOT NULL,
   "Expiration" timestamp NOT NULL,
+  "Purpose" varchar(16) NOT NULL,
+  FOREIGN KEY ("Id_PurposeOTP") REFERENCES "purpose_otp"("Id")
+  CONSTRAINT unique_email_purpose UNIQUE ("Email", "Purpose")
 );
+
+
 
 CREATE TABLE IF NOT EXISTS "bank_account" (
   "Id" serial  PRIMARY KEY,

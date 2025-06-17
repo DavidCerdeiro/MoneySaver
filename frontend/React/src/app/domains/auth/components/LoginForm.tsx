@@ -1,9 +1,9 @@
 import '@/styles/utilities.css';
 
-import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/app/domains/shared/card";
-import { Input } from "@/app/domains/shared/input.js";
-import { Button } from "@/app/domains/shared/button.js";
-import { Label } from "@/app/domains/shared/label.js";
+import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/app/domains/shared/components/card";
+import { Input } from "@/app/domains/shared/components/input.js";
+import { Button } from "@/app/domains/shared/components/button.js";
+import { Label } from "@/app/domains/shared/components/label.js";
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form";
@@ -11,12 +11,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createLogInSchema } from "../schemas/login";
 import type { LogInFormData } from "../schemas/login";
 import { logInUser } from '../application/authService';
-
-
+import { useNavigate } from 'react-router-dom';
+import { useUser } from "@/app/contexts/UserContext";
 
 export function LoginForm() {
     const { t } = useTranslation();
     const schema = createLogInSchema(t);
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -24,19 +25,30 @@ export function LoginForm() {
     } = useForm<LogInFormData>({
         resolver: zodResolver(schema),
     });
+    // Importing the setUser function from the UserContext to save the user data after login
+    const { setUser } = useUser();
+
 
     const onSubmit = async (data: LogInFormData) => {
-        try {
-            const result = await logInUser(data);
-            console.log("Success in login", result);
-        } catch (error) {
-            console.error("Login error:", error);
-        }
+    try {
+        const requestBody: LogInFormData = {
+            ...data,
+            purpose: "loginUser",
+        };
+        const result = await logInUser(requestBody);
+        // Saving the user data in the context
+        setUser(result);
+        console.log("User logged in:", result);
+        // After successful login, redirect to the authUser page
+        navigate('/login/authUser');
+    } catch (error) {
+        console.error("Login error:", error);
+    }
     };
 
     return (
         <div className="form-background">
-            <h1 className="card-title">{t('nameApp')}</h1>
+            <h1 className="card-title">{t('app.title')}</h1>
             <Card className="form-card">
                 <CardHeader>
                     <CardTitle className="text-2xl">{t('login.title')}</CardTitle>

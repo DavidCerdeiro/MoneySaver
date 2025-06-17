@@ -1,9 +1,9 @@
 import '@/styles/utilities.css';
 
-import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/app/domains/shared/card";
-import { Input } from "@/app/domains/shared/input.js";
-import { Button } from "@/app/domains/shared/button.js";
-import { Label } from "@/app/domains/shared/label.js";
+import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/app/domains/shared/components/card.tsx";
+import { Input } from "@/app/domains/shared/components/input.js";
+import { Button } from "@/app/domains/shared/components/button.js";
+import { Label } from "@/app/domains/shared/components/label.js";
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form"
@@ -11,10 +11,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createSignUpSchema } from "../schemas/signup.tsx";
 import type { SignUpFormData } from "../schemas/signup";
 import { signUpUser } from "../application/authService";
-
+import { useNavigate } from 'react-router-dom';
+import { useUser } from "@/app/contexts/UserContext.tsx";
 
 export function SignUpForm() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
+
+
     const schema = createSignUpSchema(t);
     const {
         register,
@@ -23,19 +27,26 @@ export function SignUpForm() {
     } = useForm<SignUpFormData>({
         resolver: zodResolver(schema),
     });
-
+    const { setUser } = useUser();
     const onSubmit = async (data: SignUpFormData) => {
         try {
-            const { confirmPassword, ...userData } = data;
+            const requestBody: SignUpFormData = {
+                ...data,
+                purpose: "registerUser",
+            };
+            const { confirmPassword, ...userData } = requestBody;
             const result = await signUpUser(userData);
-            console.log("Usuario registrado:", result);
+            setUser(result);
+            console.log("User signed up");
+            // After successful signup, redirect to the authUser page
+            navigate('/authUser');
         } catch (error) {
             console.error("Signup error:", error);
         }
     };
     return (
         <div className="form-background">
-            <h1 className="card-title">{t('nameApp')}</h1>
+            <h1 className="card-title">{t('app.title')}</h1>
 
             <Card className="form-card">
                 <CardHeader>

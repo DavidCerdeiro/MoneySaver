@@ -23,20 +23,39 @@
         "submit": "Registrarse"
     },
     "forgotPassword": {
-        "title": "Recuperar contraseña",
-        "description": "Introduce tu correo electrónico para recibir un enlace de recuperación",
+        "title": "Recuperación de contraseña",
+        "description": "Introduce tu correo electrónico para recibir el código de verificación.",
         "emailPlaceholder": "correo@ejemplo.com",
         "backToLogin": "Volver al inicio de sesión",
-        "submit": "Enviar enlace de recuperación",
-        "subject": "[MoneySaver] Recuperación de contraseña",
-        "body": "¡Buenas!\n\nSentimos que hayas olvidado tu contraseña.\n\nUsa el siguiente código para reestablecerla: {{otp}}\n\nEste código expirará en 10 minutos.\n\nRecibes este correo porque se ha solicitado el reestablecimiento de tu contraseña."
+        "submit": "Enviar código de verificación"
+    },
+    "auth":{
+        "title": "Autenticación de usuario",
+        "forgotTitle": "Recuperación de contraseña",
+        "welcomeUser": "¡Bienvenido, {{name}}!",
+        "forgotDescription": "Para recuperar tu contraseña, se ha enviado un código de verificación a tu correo electrónico.",
+        "signUpDescription": "Para completar tu registro, se ha enviado un código de verificación a tu correo electrónico.",
+        "loginDescription": "Para completar tu inicio de sesión, se ha enviado un código de verificación a tu correo electrónico.",
+        "defaultDescription": "Introduzca el código por favor.",
+        "length": "El código debe tener 6 dígitos",
+        "forgotSubmit": "Cambiar contraseña",
+        "signUpSubmit": "Registrarse",
+        "loginSubmit": "Iniciar sesión"
+    },
+    "resetPassword": {
+        "title": "Cambiar contraseña",
+        "description": "Introduce tu nueva contraseña. Serás redirigido a la página de inicio de sesión.",
+        "newPassword": "Nueva contraseña",
+        "confirmNewPassword": "Confirmar nueva contraseña",
+        "submit": "Cambiar contraseña"
     },
     "errors": {
         "requiredField": "Este campo es obligatorio",
         "invalidEmail": "Correo electrónico no válido",
         "passwordMismatch": "Las contraseñas no coinciden",
         "passwordLength": "La contraseña debe tener al menos 8 caracteres",
-        "passwordChars": "La contraseña debe contener al menos una mayúscula, una minúscula y un número"
+        "passwordChars": "La contraseña debe contener al menos una mayúscula, una minúscula y un número",
+        "otpContent": "El contenido solo debe ser numérico"
     },
     "user":{
         "name": "Nombre",

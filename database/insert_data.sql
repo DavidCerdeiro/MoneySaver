@@ -72,3 +72,8 @@ VALUES
 (2, 'Entrada del piso', 10000.00),
 (3, 'Curso programación', 500.00);
 
+INSERT INTO "purpose_otp" ("Name")
+VALUES
+('forgotPassword'),
+('registerUser'),
+('loginUser');
