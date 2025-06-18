@@ -11,10 +11,12 @@ import { Input } from "@/app/domains/shared/components/input.js";
 import { Button } from "@/app/domains/shared/components/button.js";;
 import { Label } from "@/app/domains/shared/components/label.js";
 import { useEffect } from 'react';
+import { toast } from "sonner";
 
 export function ResetPasswordForm() {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { i18n } = useTranslation();
     // Retrieve the email from localStorage, which was set during the forgot password process
     const email = localStorage.getItem('otpEmail') || "";
     // If email is not set, redirect to the home page
@@ -35,16 +37,20 @@ export function ResetPasswordForm() {
 
     const onSubmit = async (formData: ResetPasswordData) => {
             try {
+                const languageTag = i18n.language || "en";
+                const [language, country = ""] = languageTag.split("-");
                 // Ensure the email is included in the request body
                 const requestBody: ResetPasswordData = {
                     ...formData,
-                    email: `${email}`
+                    email: `${email}`,
+                    locale: `${language}_${country}`,
                 };
                 await resetPassword(requestBody);
-                console.log("Password reset successful");
+                
+                toast.success(t('resetPassword.success'));
                 navigate('/login');
             } catch (error) {
-                console.error("Login error:", error);
+                toast.error(t('resetPassword.error'));
             }
         };
 

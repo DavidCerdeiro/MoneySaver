@@ -42,7 +42,7 @@ public class UserService {
      * sets it for the user, and returns true.
      * If the user does not exist, it returns false.
      */
-    public boolean resetPassword(String email, String newPassword){
+    public boolean resetPassword(String email, String newPassword, Locale locale) {
         Optional<User> user = userRepository.findByEmail(email);
         // Check if the user exists by email
         if(user.isPresent()) {
@@ -51,6 +51,11 @@ public class UserService {
             String encodedPassword = passwordEncoder.encode(newPassword);
             existingUser.setPassword(encodedPassword);
             userRepository.save(existingUser);
+             
+            String subject = messageSource.getMessage("forgot.password.successSubject", null, locale);
+            String body = messageSource.getMessage("forgot.password.successBody", null, locale);
+            emailService.sendEmail(email, subject, body);
+            
             return true;
         }
         return false;
@@ -92,7 +97,7 @@ public class UserService {
      * If the user is authenticated successfully,
      * it returns true.
      */
-    public boolean authUser(String email, String code) {
+    public boolean authUser(String email, String code, Locale locale) {
         One_Time_Password otp = oneTimePasswordService.getOTP(email);
         // Check if the OTP exists and if the provided code matches the OTP token
         if(otp != null) {
@@ -104,6 +109,11 @@ public class UserService {
                     User existingUser = user.get();
                     existingUser.setIsAuthenticated(true);
                     userRepository.save(existingUser);
+                     
+                    String subject = messageSource.getMessage("signUp.successSubject", null, locale);
+                    String body = messageSource.getMessage("signUp.successBody", null, locale);
+                    emailService.sendEmail(email, subject, body);
+                    
                     return true;
                 }
                 
@@ -120,13 +130,19 @@ public class UserService {
      * If the OTP does not exist or the code does not match,
      * it returns false, indicating the user is not verified.
      */
-    public boolean verifyUser(String email, String code) {
+    public boolean verifyUser(String email, String code, Locale locale) {
         One_Time_Password otp = oneTimePasswordService.getOTP(email);
         // Check if the OTP exists and if the provided code matches the OTP token
         boolean result = otp != null && otp.getToken().equals(code);
         // If the OTP is valid, delete it from the database
-        if(result && otp != null)
+        if(result && otp != null){
             oneTimePasswordService.deleteUsedOTP(otp.getId());
+
+            // Sending a success email to the user
+            String subject = messageSource.getMessage("logIn.successSubject", null, locale);
+            String body = messageSource.getMessage("logIn.successBody", null, locale);
+            emailService.sendEmail(email, subject, body);
+        }
         return result;
     }
 
@@ -148,8 +164,8 @@ public class UserService {
             if(passwordEncoder.matches(logInRequest.getPassword(), user.get().getPassword())) {
                 // Generate a one-time password (OTP) and send it via email
                 String otp = oneTimePasswordService.generateOTP(logInRequest.getEmail(), logInRequest.getPurpose());
-                String subject = messageSource.getMessage("auth.email.subject", null, logInRequest.getLocale());
-                String body = messageSource.getMessage("auth.email.body", new Object[]{otp}, logInRequest.getLocale());
+                String subject = messageSource.getMessage("verify.email.subject", null, logInRequest.getLocale());
+                String body = messageSource.getMessage("logIn.email.body", new Object[]{otp}, logInRequest.getLocale());
                 emailService.sendEmail(logInRequest.getEmail(), subject, body);
 
                 return user;
@@ -183,8 +199,8 @@ public class UserService {
 
         // Generate a one-time password (OTP) and send it via email
         String otp = oneTimePasswordService.generateOTP(signUpRequest.getEmail(), signUpRequest.getPurpose());
-        String subject = messageSource.getMessage("auth.email.subject", null, signUpRequest.getLocale());
-        String body = messageSource.getMessage("auth.email.body", new Object[]{otp}, signUpRequest.getLocale());
+        String subject = messageSource.getMessage("verify.email.subject", null, signUpRequest.getLocale());
+        String body = messageSource.getMessage("signUp.email.body", new Object[]{otp}, signUpRequest.getLocale());
         emailService.sendEmail(signUpRequest.getEmail(), subject, body);
 
         // Save the new user to the database

@@ -10,7 +10,7 @@ import './i18n/index.ts'
 import { ResetPasswordForm } from './app/domains/auth/components/ResetPasswordForm.tsx'
 import { UserProvider } from './app/contexts/UserContext.tsx'
 import { DashboardPage } from './app/domains/auth/pages/DashboardPage.tsx'
-
+import { Toaster } from './app/domains/shared/components/Toaster.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <UserProvider>
@@ -18,7 +18,6 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path="/login" element={<LoginForm />} />
           <Route path="/login/authUser" element={<VerificationCodeForm source='login'/>} />
-
           <Route path="/" element={<SignUpForm />} />
           <Route path="/authUser" element={<VerificationCodeForm source="signup" />} />
 
@@ -29,6 +28,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </Router>
+      <Toaster />
     </UserProvider>
   </StrictMode>,
 )

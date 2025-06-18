@@ -13,6 +13,7 @@ import type { LogInFormData } from "../schemas/login";
 import { logInUser } from '../application/authService';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from "@/app/contexts/UserContext";
+import { toast } from "sonner"
 
 export function LoginForm() {
     const { t } = useTranslation();
@@ -27,8 +28,7 @@ export function LoginForm() {
     });
     // Importing the setUser function from the UserContext to save the user data after login
     const { setUser } = useUser();
-
-
+    
     const onSubmit = async (data: LogInFormData) => {
     try {
         const requestBody: LogInFormData = {
@@ -38,11 +38,11 @@ export function LoginForm() {
         const result = await logInUser(requestBody);
         // Saving the user data in the context
         setUser(result);
-        console.log("User logged in:", result);
+
         // After successful login, redirect to the authUser page
         navigate('/login/authUser');
     } catch (error) {
-        console.error("Login error:", error);
+        toast.error(t('login.error'));
     }
     };
 

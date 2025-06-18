@@ -12,6 +12,8 @@ import { createForgotPasswordSchema } from "../schemas/forgotpassword";
 import type { ForgotPasswordData } from "../schemas/forgotpassword";
 import { forgotPassword } from '../application/authService';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "sonner";
+
 export function ForgotPasswordForm() {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -38,9 +40,9 @@ export function ForgotPasswordForm() {
             await forgotPassword(requestBody);
             //In the next direction, we'll need the email, so we store it in localStorage.
             localStorage.setItem('forgotEmail', formData.email);
-            
             navigate('/forgot-password/authUser');
         } catch (error) {
+            toast.error(t('forgotPassword.error'));
             console.error("Forgot password error:", error);
         }
     };

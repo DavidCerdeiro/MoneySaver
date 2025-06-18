@@ -10,7 +10,8 @@
         "forgotPassword": "¿Olvidaste tu contraseña?",
         "signUp": "Regístrate",
         "emailPlaceholder": "correo@ejemplo.com",
-        "submit": "Iniciar sesión"
+        "submit": "Iniciar sesión",
+        "error": "Correo electrónico o contraseña incorrectos"
     },
     "signUp": {
         "title": "Registro",
@@ -20,14 +21,17 @@
         "emailPlaceholder": "juanCuesta@ejemplo.com",
         "confirmPassword": "Confirmar contraseña",
         "logIn": "Inicia sesión",
-        "submit": "Registrarse"
+        "submit": "Registrarse",
+        "success": "¡Bienvenido, {{name}}! Autentica tu correo para continuar.",
+        "error": "Correo electrónico ya registrado."
     },
     "forgotPassword": {
         "title": "Recuperación de contraseña",
         "description": "Introduce tu correo electrónico para recibir el código de verificación.",
         "emailPlaceholder": "correo@ejemplo.com",
         "backToLogin": "Volver al inicio de sesión",
-        "submit": "Enviar código de verificación"
+        "submit": "Enviar código de verificación",
+        "error": "Correo electrónico no registrado."
     },
     "auth":{
         "title": "Autenticación de usuario",
@@ -40,14 +44,19 @@
         "length": "El código debe tener 6 dígitos",
         "forgotSubmit": "Cambiar contraseña",
         "signUpSubmit": "Registrarse",
-        "loginSubmit": "Iniciar sesión"
+        "loginSubmit": "Iniciar sesión",
+        "signUpSuccess": "¡Registrado con éxito! Bienvenido, {{name}}.",
+        "loginSuccess": "¡Has iniciado sesión correctamente! Bienvenido, {{name}}.",
+        "verificationError": "Error de verificación. Por favor, verifica tu código e inténtalo de nuevo."
     },
     "resetPassword": {
         "title": "Cambiar contraseña",
         "description": "Introduce tu nueva contraseña. Serás redirigido a la página de inicio de sesión.",
         "newPassword": "Nueva contraseña",
         "confirmNewPassword": "Confirmar nueva contraseña",
-        "submit": "Cambiar contraseña"
+        "submit": "Cambiar contraseña",
+        "success": "Contraseña cambiada con éxito, inicie sesión.",
+        "error": "Error al cambiar la contraseña. Por favor, inténtalo de nuevo."
     },
     "errors": {
         "requiredField": "Este campo es obligatorio",

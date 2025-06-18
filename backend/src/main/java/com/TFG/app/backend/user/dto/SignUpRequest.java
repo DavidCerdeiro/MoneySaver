@@ -9,7 +9,7 @@ public class SignUpRequest {
     private String surname;
     private String email;
     private String password;
-    public Locale locale;
+    private Locale locale;
     public String purpose;
 
     public String getName() {

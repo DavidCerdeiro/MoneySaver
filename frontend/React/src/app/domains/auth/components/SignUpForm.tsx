@@ -13,6 +13,7 @@ import type { SignUpFormData } from "../schemas/signup";
 import { signUpUser } from "../application/authService";
 import { useNavigate } from 'react-router-dom';
 import { useUser } from "@/app/contexts/UserContext.tsx";
+import { toast } from "sonner";
 
 export function SignUpForm() {
     const { t } = useTranslation();
@@ -37,11 +38,12 @@ export function SignUpForm() {
             const { confirmPassword, ...userData } = requestBody;
             const result = await signUpUser(userData);
             setUser(result);
-            console.log("User signed up");
+
+            toast.info(t('signUp.success'));
             // After successful signup, redirect to the authUser page
             navigate('/authUser');
         } catch (error) {
-            console.error("Signup error:", error);
+            toast.error(t('signUp.error'));
         }
     };
     return (

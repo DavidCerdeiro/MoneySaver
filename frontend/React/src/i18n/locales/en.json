@@ -10,7 +10,8 @@
     "forgotPassword": "Forgot your password?",
     "signUp": "Sign Up",
     "emailPlaceholder": "example@email.com",
-    "submit": "Log In"
+    "submit": "Log In",
+    "error": "Incorrect email or password"
   },
   "signUp": {
     "title": "Sign Up",
@@ -20,7 +21,9 @@
     "emailPlaceholder": "sherlockHolmes@email.com",
     "confirmPassword": "Confirm Password",
     "logIn": "Log In",
-    "submit": "Sign Up"
+    "submit": "Sign Up",
+    "success": "Welcome, {{name}}! Please verify your email to continue.",
+    "error": "Email is already registered."
   },
   "forgotPassword": {
     "title": "Recover Password",
@@ -29,7 +32,8 @@
     "backToLogin": "Back to Login",
     "submit": "Send Recovery Link",
     "subject": "[MoneySaver] Password Recovery",
-    "body": "Hi! \n\nWe noticed you forgot your password.\n\nUse the following code to reset it: {{otp}}\n\nThis code will expire in 10 minutes.\n\nYou received this email because a password reset was requested for your account."
+    "body": "Hi! \n\nWe noticed you forgot your password.\n\nUse the following code to reset it: {{otp}}\n\nThis code will expire in 10 minutes.\n\nYou received this email because a password reset was requested for your account.",
+    "error": "Email is not registered."
   },
   "auth": {
     "title": "User Authentication",
@@ -42,14 +46,19 @@
     "length": "The code must be 6 digits long",
     "forgotSubmit": "Change Password",
     "signUpSubmit": "Sign Up",
-    "loginSubmit": "Log In"
+    "loginSubmit": "Log In",
+    "signUpSuccess": "Successfully registered! Welcome, {{name}}.",
+    "loginSuccess": "You have logged in successfully! Welcome, {{name}}.",
+    "verificationError": "Verification error. Please check your code and try again."
   },
   "resetPassword": {
     "title": "Change Password",
     "description": "Enter your new password. You will be redirected to the login page.",
     "newPassword": "New Password",
     "confirmNewPassword": "Confirm New Password",
-    "submit": "Change Password"
+    "submit": "Change Password",
+    "success": "Password changed successfully, please log in.",
+    "error": "Error changing the password. Please try again."
   },
   "errors": {
     "requiredField": "This field is required",

@@ -13,12 +13,15 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from "@/app/contexts/UserContext";
+import { toast } from "sonner";
 
 export function VerificationCodeForm({ source }: { source: "login" | "signup" | "forgot" }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const schema = createEmailVerificationSchema(t);
     const { user } = useUser();
+    const { i18n } = useTranslation();
+
     let email = "";
     let title = "";
     let description = "";
@@ -58,7 +61,7 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
         register,
         handleSubmit,
         setValue,
-        formState: { errors, isSubmitting },
+        formState: { isSubmitting },
         } = useForm<EmailVerificationData>({
         resolver: zodResolver(schema),
     });
@@ -74,22 +77,30 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
     };
     const onSubmit = async (data: EmailVerificationData) => {
         try {
+            const languageTag = i18n.language || "en";
+            const [language, country = ""] = languageTag.split("-");
+            const requestBody: EmailVerificationData = {
+                ...data,
+                locale: `${language}_${country}`,
+            };
             if(source === "forgot") {
-                await emailVerification(data);
+                await emailVerification(requestBody);
         
                 localStorage.setItem('otpEmail', data.email);
                 navigate("/forgot-password/reset-password");
             }else if(source === "signup") {
-                await authUser(data);
-                console.log("User authenticated successfully");
+                await authUser(requestBody);
+
+                toast.success(t('auth.signUpSuccess', { name: user?.name ||"" }));
                 navigate("/dashboard");
             }else if(source === "login") {
-                await emailVerification(data);
-                console.log("Email verification successful");
+                await emailVerification(requestBody);
+
+                toast.success(t('auth.loginSuccess', { name: user?.name ||"" }));
                 navigate("/dashboard");
             }
         } catch (error) {
-            console.error("Login error:", error);
+            toast.error(t('auth.verificationError'));
         }
     };
 
@@ -120,7 +131,6 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
                                 <InputOTPSlot index={5} />
                                 </InputOTPGroup>
                             </InputOTP>
-                            {errors.code && <p className="text-red-500 text-sm text-center">{errors.code.message}</p>}
                         </div>
                             <Button type="submit" className="button-green" disabled={isSubmitting}>
                             {submit}

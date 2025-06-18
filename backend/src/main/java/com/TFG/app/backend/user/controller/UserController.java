@@ -66,7 +66,7 @@ public class UserController {
     @PatchMapping("/forgot-password/reset")
     public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequest resetPasswordRequest) {
 
-        if (userService.resetPassword(resetPasswordRequest.getEmail(), resetPasswordRequest.getNewPassword())) {
+        if (userService.resetPassword(resetPasswordRequest.getEmail(), resetPasswordRequest.getNewPassword(), resetPasswordRequest.getLocale())) {
             return new ResponseEntity<>(HttpStatus.OK);   
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -82,7 +82,7 @@ public class UserController {
     @PatchMapping("/auth")
     public ResponseEntity<Void> authUser(@RequestBody AuthUserRequest authUserRequest) {
         
-        if (userService.authUser(authUserRequest.getEmail(), authUserRequest.getCode())) {
+        if (userService.authUser(authUserRequest.getEmail(), authUserRequest.getCode(), authUserRequest.getLocale())) {
             return new ResponseEntity<>(HttpStatus.OK);   
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -97,7 +97,7 @@ public class UserController {
      */
     @PostMapping("/verify")
     public ResponseEntity<Void> verifyUser(@RequestBody AuthUserRequest authUserRequest) {
-        if (userService.verifyUser(authUserRequest.getEmail(), authUserRequest.getCode())) {
+        if (userService.verifyUser(authUserRequest.getEmail(), authUserRequest.getCode(), authUserRequest.getLocale())) {
             return new ResponseEntity<>(HttpStatus.OK);   
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
