@@ -4,6 +4,7 @@
 
 # Java
 /backend/target
+backend/src/main/resources/application.properties
 
 # VS Code
 .vscode/
