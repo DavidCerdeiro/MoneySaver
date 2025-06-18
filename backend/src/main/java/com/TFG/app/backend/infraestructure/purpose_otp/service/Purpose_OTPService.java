@@ -1,8 +1,9 @@
-package com.TFG.app.backend.purpose_otp.service;
+package com.TFG.app.backend.infraestructure.purpose_otp.service;
 
 import org.springframework.stereotype.Service;
 
-import com.TFG.app.backend.purpose_otp.repository.Purpose_OTPRepository;
+import com.TFG.app.backend.infraestructure.purpose_otp.entity.Purpose_OTP;
+import com.TFG.app.backend.infraestructure.purpose_otp.repository.Purpose_OTPRepository;
 
 @Service
 public class Purpose_OTPService {
@@ -14,5 +15,9 @@ public class Purpose_OTPService {
 
     public Integer getPurposeOTPId(String purpose) {
         return purposeOTPRepository.findByName(purpose).getId();
+    }
+
+    public Purpose_OTP getPurposeOTP(String purpose) {
+        return purposeOTPRepository.findByName(purpose);
     }
 }

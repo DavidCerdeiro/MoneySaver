@@ -3,6 +3,7 @@ package com.TFG.app.backend.category.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import com.TFG.app.backend.user.entity.User;
 
@@ -21,8 +22,8 @@ public class Category {
     @Column(name = "Name", length = 32, nullable = false, unique = true)
     private String name;
 
-    @Column(name = "TotalSpending", nullable = false)
-    private BigDecimal  totalSpending;
+    @Column(name = "TotalSpending", nullable = false, precision = 15, scale = 2)
+    private BigDecimal  totalSpending = BigDecimal.ZERO;
 
     @Column(name = "Icon", nullable = false)
     private Integer icon;
@@ -50,9 +51,8 @@ public class Category {
         return totalSpending;
     }
     public void setTotalSpending(BigDecimal  totalSpending) {
-        this.totalSpending = totalSpending;
+        this.totalSpending = totalSpending.setScale(2, RoundingMode.HALF_UP);
     }
-
     public Integer getIcon() {
         return icon;
     }

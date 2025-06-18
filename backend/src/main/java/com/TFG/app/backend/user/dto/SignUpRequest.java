@@ -10,8 +10,16 @@ public class SignUpRequest {
     private String email;
     private String password;
     private Locale locale;
-    public String purpose;
+    private String purpose;
 
+    public SignUpRequest(String name, String surname, String email, String password, Locale locale, String purpose) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.locale = locale;
+        this.purpose = purpose;
+    }
     public String getName() {
         return name;
     }

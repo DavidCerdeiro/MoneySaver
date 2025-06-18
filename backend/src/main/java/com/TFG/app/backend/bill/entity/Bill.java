@@ -14,7 +14,7 @@ public class Bill {
 
     @OneToOne
     @JoinColumn(name = "Id_Spending", nullable = false, unique = true)
-    private Spending idSpending;
+    private Spending spending;
 
     @Column(name = "FileRoute", length = 256, nullable = false, unique = true)
     private String fileRoute;
@@ -24,11 +24,11 @@ public class Bill {
         return Id;
     }
 
-    public Spending getIdSpending() {
-        return idSpending;
+    public Spending getSpending() {
+        return spending;
     }
-    public void setIdSpending(Spending idSpending) {
-        this.idSpending = idSpending;
+    public void setSpending(Spending spending) {
+        this.spending = spending;
     }
 
     public String getFileRoute() {

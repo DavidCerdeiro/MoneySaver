@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.TFG.app.backend.infraestructure.one_time_password.entity.One_Time_Password;
 import com.TFG.app.backend.infraestructure.one_time_password.repository.One_Time_PasswordRepository;
-import com.TFG.app.backend.purpose_otp.service.Purpose_OTPService;
+import com.TFG.app.backend.infraestructure.purpose_otp.service.Purpose_OTPService;
 
 import java.util.Optional;
 
@@ -32,7 +32,7 @@ public class One_Time_PasswordService {
         String tokenString = String.format("%06d", token);
         One_Time_Password otp = new One_Time_Password();
         otp.setEmail(email);
-        otp.setIdPurposeOTP(purposeOTPService.getPurposeOTPId(purpose));
+        otp.setPurposeOTP(purposeOTPService.getPurposeOTP(purpose));
         otp.setToken(tokenString);
         otp.setExpiration(new java.sql.Timestamp(System.currentTimeMillis() + 10 * 60 * 1000));
         oneTimePasswordRepository.save(otp);

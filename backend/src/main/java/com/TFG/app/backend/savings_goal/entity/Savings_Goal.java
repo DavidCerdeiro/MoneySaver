@@ -2,6 +2,8 @@ package com.TFG.app.backend.savings_goal.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import com.TFG.app.backend.category.entity.Category;
 
 @Entity
@@ -45,6 +47,6 @@ public class Savings_Goal {
         return targetAmount;
     }
     public void setTargetAmount(BigDecimal targetAmount) {
-        this.targetAmount = targetAmount;
+        this.targetAmount = targetAmount.setScale(2, RoundingMode.HALF_UP);
     }
 }

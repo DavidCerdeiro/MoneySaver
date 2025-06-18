@@ -2,6 +2,7 @@ package com.TFG.app.backend.establishment.entity;
 
 import jakarta.persistence.*;
 import com.TFG.app.backend.category.entity.Category;
+import com.TFG.app.backend.address.entity.Address;
 @Entity
 @Table(name = "establishment")
 public class Establishment {
@@ -17,6 +18,10 @@ public class Establishment {
     @ManyToOne
     @JoinColumn(name = "Id_Category", nullable = false)
     private Category category;
+
+    @OneToOne
+    @JoinColumn(name = "Id_Address", nullable = false, unique = true)
+    private Address address;
 
     // Getters y setters
     public Integer getId() {
@@ -35,5 +40,11 @@ public class Establishment {
     }
     public void setCategory(Category category) {
         this.category = category;
+    }
+    public Address getAddress() {
+        return address;
+    }
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

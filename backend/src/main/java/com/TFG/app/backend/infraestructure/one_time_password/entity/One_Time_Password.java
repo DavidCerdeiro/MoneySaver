@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
+import com.TFG.app.backend.infraestructure.purpose_otp.entity.Purpose_OTP;
+
 @Entity
 @Table(name = "one_time_password",
     uniqueConstraints = @UniqueConstraint(columnNames = {"Email", "Id_PurposeOTP"})
@@ -15,7 +17,7 @@ public class One_Time_Password {
     private Integer id;
 
     @Column(name = "Id_PurposeOTP", nullable = false)
-    private Integer idPurposeOTP;
+    private Purpose_OTP purposeOTP;
 
     @Column(name = "Email", length = 32, nullable = false)
     private String email;
@@ -55,10 +57,10 @@ public class One_Time_Password {
         this.expiration = expiration;
     }
     
-    public Integer getIdPurposeOTP() {
-        return idPurposeOTP;
+    public Purpose_OTP getPurposeOTP() {
+        return purposeOTP;
     }
-    public void setIdPurposeOTP(Integer idPurposeOTP) {
-        this.idPurposeOTP = idPurposeOTP;
+    public void setPurposeOTP(Purpose_OTP purposeOTP) {
+        this.purposeOTP = purposeOTP;
     }
 }

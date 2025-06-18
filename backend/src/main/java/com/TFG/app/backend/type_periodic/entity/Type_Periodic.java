@@ -1,6 +1,5 @@
 package com.TFG.app.backend.type_periodic.entity;
 
-import com.TFG.app.backend.type_periodic.enums.TypePeriodicEnum;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,16 +11,19 @@ public class Type_Periodic {
     @Column(name = "Id")
     private Integer id;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "Name", length = 16, nullable = false, unique = true)
-    private TypePeriodicEnum name;
+    private String name;
 
     // Getters and Setters
     public Integer getId() {
         return id;
     }
 
-    public TypePeriodicEnum getName() {
+    public String getName() {
         return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
     }
 }

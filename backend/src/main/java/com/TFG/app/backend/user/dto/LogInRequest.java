@@ -10,6 +10,13 @@ public class LogInRequest {
     private String password;
     private Locale locale;
     public String purpose;
+    
+    public LogInRequest(String email, String password, Locale locale, String purpose) {
+        this.email = email;
+        this.password = password;
+        this.locale = locale;
+        this.purpose = purpose;
+    }
 
     public String getEmail() {
         return email;

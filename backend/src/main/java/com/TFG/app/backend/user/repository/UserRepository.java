@@ -11,5 +11,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     // Custom query to check if a user exists by email
     boolean existsByEmail(String email);
+
+    void deleteByEmail(String email);
     
 }

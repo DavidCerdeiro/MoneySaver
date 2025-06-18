@@ -1,4 +1,4 @@
-package com.TFG.app.backend.purpose_otp.entity;
+package com.TFG.app.backend.infraestructure.purpose_otp.entity;
 
 
 import jakarta.persistence.*;
@@ -22,6 +22,9 @@ public class Purpose_OTP {
 
     public String getName() {
         return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

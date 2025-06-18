@@ -3,6 +3,7 @@ package com.TFG.app.backend.spending.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 import com.TFG.app.backend.category.entity.Category;
@@ -78,7 +79,7 @@ public class Spending {
         return amount;
     }
     public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+        this.amount = amount.setScale(2, RoundingMode.HALF_UP);
     }
 
     public Date getDate() {
