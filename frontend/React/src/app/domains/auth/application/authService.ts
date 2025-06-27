@@ -1,9 +1,8 @@
-import type { ForgotPasswordData } from "../schemas/forgotpassword";
-import type { ResetPasswordData } from "../schemas/resetpassword";
-import type { LogInFormData } from "../schemas/login";
-import type { SignUpFormData } from "../schemas/signup";
-import type { EmailVerificationData } from "../schemas/emailverification";
-
+import type {SignUpFormData} from "@/app/domains/auth/schemas/SignUp";
+import type {LogInFormData} from "@/app/domains/auth/schemas/LogIn";
+import type {ForgotPasswordData} from "@/app/domains/auth/schemas/ForgotPassword";
+import type {EmailVerificationData} from "@/app/domains/auth/schemas/EmailVerification";
+import type {ResetPasswordData} from "@/app/domains/auth/schemas/ResetPassword";
 /**
  * This function is used to sign up a user.
  * @param data - The data to sign up a user, excluding the confirmPassword field.
@@ -95,6 +94,7 @@ export async function authUser(data: EmailVerificationData) {
     throw new Error(error.message || "Signup failed");
   }
 }
+
 /**
  * This function is used to reset the password after the user has verified their email.
  * @param data - The data to reset the password, including the new password and the verification code.

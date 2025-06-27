@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createLogInSchema } from "../schemas/login";
-import type { LogInFormData } from "../schemas/login";
-import { logInUser } from '../application/authService';
+import type { LogInFormData} from "@/app/domains/auth/schemas/LogIn";
+import { createLogInSchema } from "@/app/domains/auth/schemas/LogIn";
+import { logInUser } from '../application/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from "@/app/contexts/UserContext";
 import { toast } from "sonner"
@@ -47,8 +47,6 @@ export function LoginForm() {
     };
 
     return (
-        <div className="form-background">
-            <h1 className="card-title">{t('app.title')}</h1>
             <Card className="form-card">
                 <CardHeader>
                     <CardTitle className="text-2xl">{t('login.title')}</CardTitle>
@@ -79,7 +77,6 @@ export function LoginForm() {
                 </CardContent>
                 <CardFooter />
             </Card>
-        </div>
     );
 }
 

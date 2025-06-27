@@ -4,9 +4,9 @@
     "description": "Manage your personal finances"
   },
   "login": {
-    "title": "Login",
+    "title": "Log In",
     "welcomeBack": "Welcome back",
-    "logout": "Logout",
+    "logout": "Log out",
     "forgotPassword": "Forgot your password?",
     "signUp": "Sign Up",
     "emailPlaceholder": "example@email.com",
@@ -26,23 +26,19 @@
     "error": "Email is already registered."
   },
   "forgotPassword": {
-    "title": "Recover Password",
-    "description": "Enter your email to receive a recovery link",
+    "title": "Password Recovery",
+    "description": "Enter your email to receive the verification code.",
     "emailPlaceholder": "example@email.com",
-    "backToLogin": "Back to Login",
-    "submit": "Send Recovery Link",
-    "subject": "[MoneySaver] Password Recovery",
-    "body": "Hi! \n\nWe noticed you forgot your password.\n\nUse the following code to reset it: {{otp}}\n\nThis code will expire in 10 minutes.\n\nYou received this email because a password reset was requested for your account.",
+    "backToLogin": "Back to login",
+    "submit": "Send verification code",
     "error": "Email is not registered."
   },
   "auth": {
     "title": "User Authentication",
     "forgotTitle": "Password Recovery",
-    "welcomeUser": "Welcome, {{name}}!",
     "forgotDescription": "To recover your password, a verification code has been sent to your email.",
     "signUpDescription": "To complete your registration, a verification code has been sent to your email.",
     "loginDescription": "To complete your login, a verification code has been sent to your email.",
-    "defaultDescription": "Please enter the code.",
     "length": "The code must be 6 digits long",
     "forgotSubmit": "Change Password",
     "signUpSubmit": "Sign Up",

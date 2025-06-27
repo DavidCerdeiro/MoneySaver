@@ -36,11 +36,9 @@
     "auth":{
         "title": "Autenticación de usuario",
         "forgotTitle": "Recuperación de contraseña",
-        "welcomeUser": "¡Bienvenido, {{name}}!",
         "forgotDescription": "Para recuperar tu contraseña, se ha enviado un código de verificación a tu correo electrónico.",
         "signUpDescription": "Para completar tu registro, se ha enviado un código de verificación a tu correo electrónico.",
         "loginDescription": "Para completar tu inicio de sesión, se ha enviado un código de verificación a tu correo electrónico.",
-        "defaultDescription": "Introduzca el código por favor.",
         "length": "El código debe tener 6 dígitos",
         "forgotSubmit": "Cambiar contraseña",
         "signUpSubmit": "Registrarse",

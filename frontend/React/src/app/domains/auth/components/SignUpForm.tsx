@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createSignUpSchema } from "../schemas/signup.tsx";
-import type { SignUpFormData } from "../schemas/signup";
-import { signUpUser } from "../application/authService";
+import { createSignUpSchema } from "@/app/domains/auth/schemas/SignUp";
+import type { SignUpFormData } from "@/app/domains/auth/schemas/SignUp";
+import { signUpUser } from "../application/AuthService";
 import { useNavigate } from 'react-router-dom';
 import { useUser } from "@/app/contexts/UserContext.tsx";
 import { toast } from "sonner";
@@ -47,9 +47,6 @@ export function SignUpForm() {
         }
     };
     return (
-        <div className="form-background">
-            <h1 className="card-title">{t('app.title')}</h1>
-
             <Card className="form-card">
                 <CardHeader>
                     <CardTitle className="text-2xl">{t('signUp.title')}</CardTitle>
@@ -95,6 +92,5 @@ export function SignUpForm() {
                 <CardFooter>
                 </CardFooter>
             </Card>
-        </div>
     );
 }

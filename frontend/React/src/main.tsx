@@ -1,29 +1,33 @@
+import './index.css'
+
+import { LoginPage } from './app/domains/auth/pages/LoginPage.tsx'
+import { ForgotPasswordPage } from './app/domains/auth/pages/ForgotPasswordPage.tsx'
+import { ResetPasswordPage } from './app/domains/auth/pages/ResetPasswordPage.tsx';
+import { VerificationEmailPage } from './app/domains/auth/pages/VerificationEmailPage.tsx'
+import { SignUpPage } from './app/domains/auth/pages/SignUpPage.tsx';
+import { DashboardPage } from './app/domains/auth/pages/DashboardPage.tsx'
+
+import './i18n/index.ts'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { LoginForm } from './app/domains/auth/components/LoginForm.js'
-import { SignUpForm } from './app/domains/auth/components/SignUpForm.js'
-import { ForgotPasswordForm } from './app/domains/auth/components/ForgotPasswordForm.js'
-import { VerificationCodeForm } from './app/domains/auth/components/VerificationCodeForm.js'
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import './index.css'
-import './i18n/index.ts'
-import { ResetPasswordForm } from './app/domains/auth/components/ResetPasswordForm.tsx'
 import { UserProvider } from './app/contexts/UserContext.tsx'
-import { DashboardPage } from './app/domains/auth/pages/DashboardPage.tsx'
 import { Toaster } from './app/domains/shared/components/Toaster.tsx'
+
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <UserProvider>
       <Router>
         <Routes>
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/login/authUser" element={<VerificationCodeForm source='login'/>} />
-          <Route path="/" element={<SignUpForm />} />
-          <Route path="/authUser" element={<VerificationCodeForm source="signup" />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login/authUser" element={<VerificationEmailPage />} />
+          <Route path="/" element={<SignUpPage />} />
+          <Route path="/authUser" element={<VerificationEmailPage />} />
 
-          <Route path="/forgot-password" element={<ForgotPasswordForm/>} />
-          <Route path="/forgot-password/authUser" element={<VerificationCodeForm source = "forgot"/>} />
-          <Route path="/forgot-password/reset-password" element={<ResetPasswordForm />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/forgot-password/authUser" element={<VerificationEmailPage />} />
+          <Route path="/forgot-password/reset-password" element={<ResetPasswordPage />} />
 
           <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
