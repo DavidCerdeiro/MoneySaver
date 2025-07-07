@@ -64,11 +64,92 @@
         "passwordChars": "La contraseña debe contener al menos una mayúscula, una minúscula y un número",
         "otpContent": "El contenido solo debe ser numérico"
     },
-    "user":{
-        "name": "Nombre",
-        "surname": "Apellido",
-        "email": "Correo electrónico",
-        "password": "Contraseña"
+    "domains":{
+        "user":{
+            "name": "Nombre",
+            "surname": "Apellido",
+            "email": "Correo electrónico",
+            "password": "Contraseña"
+        },
+        "category":{
+            "name": "Nombre",
+            "icon": "Icono",
+            "add":{
+                "description": "Crea una nueva categoría de gasto mediante el nombre que estimes oportuno y el icono que más se adecue.",
+                "iconSelected": "Seleccionado: ",
+                "submit": "Crear nueva categoría",
+                "success": "Categoría {{icon}} {{name}} creada con éxito.",
+                "error": "Error al crear la categoría. Por favor, revise los campos e inténtelo de nuevo."
+            }
+        }
+    },
+    "header":{
+        "sections":{
+            "profile":{
+                "title":"Perfil",
+                "editProfile":{
+                    "title": "Modificar perfil",
+                    "description": "Actualiza tu información personal."
+                },
+                "linkBankAccount":{
+                    "title": "Vincular cuenta bancaria",
+                    "description": "Conecta tu cuenta bancaria para extraer datos de transacciones."
+                },
+                "settings":{
+                    "title": "Configuración",
+                    "description": "Configura tus preferencias de usuario."
+                }
+            },
+            "savingGoals": {
+                "title": "Objetivos de ahorro",
+                "createGoal": {
+                    "title": "Crear objetivo de ahorro",
+                    "description": "Establece un objetivo de ahorro y comienza a ahorrar."
+                },
+                "viewGoals": {
+                    "title": "Ver objetivos de ahorro",
+                    "description": "Consulta tus objetivos de ahorro actuales."
+                },
+                "editGoals": {
+                    "title": "Editar objetivo de ahorro",
+                    "description": "Modifica los detalles de tu objetivo de ahorro."
+                }
+            },
+            "spendings":{
+                "title": "Gastos",
+                "viewSpendings": {
+                    "title": "Ver gastos",
+                    "description": "Consulta tus gastos recientes por categorías."
+                },
+                "addSpending": {
+                    "title": "Añadir gasto",
+                    "description": "Registra un nuevo gasto."
+                },
+                "addCategory": {
+                    "title": "Añadir categoría",
+                    "description": "Crea una nueva categoría de gasto.",
+                    "submit": "Crear nueva categoría"
+                },
+                "editCategory": {
+                    "title": "Modificar categoría",
+                    "description": "Actualiza los detalles de una categoría existente."
+                }
+            },
+            "charts": {
+                "title": "Gráficos",
+                "viewCharts": {
+                    "title": "Ver gráficos",
+                    "description": "Visualiza tus gastos de este mes a través de diferentes gráficos."
+                },
+                "compareCharts": {
+                    "title": "Comparativa de estadísticas",
+                    "description": "Compara tus gastos entre diferentes meses."
+                }
+            }
+        },
+        "logout": "Cerrar sesión"
+    },
+    "footer":{
+        "copyright": "Todos los derechos reservados"
     }
-
 }

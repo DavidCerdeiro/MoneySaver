@@ -14,11 +14,11 @@ public class CategoryUnitTest {
 
         user.setName("Paco");
         category.setName("Food");
-        category.setIcon(2);
+        category.setIcon("heavy_dollar_sign");
         category.setUser(user);
 
         Assertions.assertEquals("Food", category.getName());
-        Assertions.assertEquals(2, category.getIcon());
+        Assertions.assertEquals("heavy_dollar_sign", category.getIcon());
         Assertions.assertEquals(user, category.getUser());
     }
 

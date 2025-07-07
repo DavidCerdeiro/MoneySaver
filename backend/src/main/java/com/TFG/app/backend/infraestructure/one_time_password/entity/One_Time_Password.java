@@ -16,7 +16,8 @@ public class One_Time_Password {
     @Column(name = "Id")
     private Integer id;
 
-    @Column(name = "Id_PurposeOTP", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "Id_PurposeOTP", nullable = false)
     private Purpose_OTP purposeOTP;
 
     @Column(name = "Email", length = 32, nullable = false)

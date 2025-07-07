@@ -206,4 +206,15 @@ public class UserService {
         // Save the new user to the database
         return userRepository.save(newUser);
     }
+
+    /*
+     * Method to get a user by ID.
+     * It retrieves the user from the repository by ID.
+     * If the user exists, it returns the user object.
+     * If the user does not exist, it returns null.
+     */
+    public User getUserById(Integer id) {
+        // Retrieve the user by ID from the repository
+        return userRepository.findById(id).orElse(null);
+    }
 }

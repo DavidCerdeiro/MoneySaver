@@ -92,12 +92,12 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
                 await authUser(requestBody);
 
                 toast.success(t('auth.signUpSuccess', { name: user?.name ||"" }));
-                navigate("/dashboard");
+                navigate("/home");
             }else if(source === "login") {
                 await emailVerification(requestBody);
 
                 toast.success(t('auth.loginSuccess', { name: user?.name ||"" }));
-                navigate("/dashboard");
+                navigate("/home");
             }
         } catch (error) {
             toast.error(t('auth.verificationError'));

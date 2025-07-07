@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS category (
   "Id_User" int NOT NULL,
   "Name" varchar(32) NOT NULL UNIQUE,
   "TotalSpending"  numeric(15,2) NOT NULL DEFAULT 0.00,
-  "Icon" int NOT NULL,
+  "Icon" varchar(64) NOT NULL,
   FOREIGN KEY ("Id_User") REFERENCES "user"("Id") 
 );
 

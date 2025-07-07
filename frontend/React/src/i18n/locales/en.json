@@ -1,37 +1,37 @@
 {
   "app": {
     "title": "MoneySaver",
-    "description": "Manage your personal finances"
+    "description": "Control your personal finances"
   },
   "login": {
     "title": "Log In",
     "welcomeBack": "Welcome back",
     "logout": "Log out",
     "forgotPassword": "Forgot your password?",
-    "signUp": "Sign Up",
-    "emailPlaceholder": "example@email.com",
+    "signUp": "Sign up",
+    "emailPlaceholder": "email@example.com",
     "submit": "Log In",
     "error": "Incorrect email or password"
   },
   "signUp": {
     "title": "Sign Up",
-    "welcome": "Sign up to manage your finances",
-    "namePlaceholder": "Sherlock",
-    "lastNamePlaceholder": "Holmes",
-    "emailPlaceholder": "sherlockHolmes@email.com",
-    "confirmPassword": "Confirm Password",
-    "logIn": "Log In",
+    "welcome": "Sign up to control your finances",
+    "namePlaceholder": "John",
+    "lastNamePlaceholder": "Smith",
+    "emailPlaceholder": "johnsmith@example.com",
+    "confirmPassword": "Confirm password",
+    "logIn": "Log in",
     "submit": "Sign Up",
-    "success": "Welcome, {{name}}! Please verify your email to continue.",
-    "error": "Email is already registered."
+    "success": "Welcome, {{name}}! Verify your email to continue.",
+    "error": "Email already registered."
   },
   "forgotPassword": {
     "title": "Password Recovery",
     "description": "Enter your email to receive the verification code.",
-    "emailPlaceholder": "example@email.com",
+    "emailPlaceholder": "email@example.com",
     "backToLogin": "Back to login",
     "submit": "Send verification code",
-    "error": "Email is not registered."
+    "error": "Email not registered."
   },
   "auth": {
     "title": "User Authentication",
@@ -39,35 +39,114 @@
     "forgotDescription": "To recover your password, a verification code has been sent to your email.",
     "signUpDescription": "To complete your registration, a verification code has been sent to your email.",
     "loginDescription": "To complete your login, a verification code has been sent to your email.",
-    "length": "The code must be 6 digits long",
-    "forgotSubmit": "Change Password",
+    "length": "The code must be 6 digits",
+    "forgotSubmit": "Change password",
     "signUpSubmit": "Sign Up",
     "loginSubmit": "Log In",
     "signUpSuccess": "Successfully registered! Welcome, {{name}}.",
-    "loginSuccess": "You have logged in successfully! Welcome, {{name}}.",
+    "loginSuccess": "You have successfully logged in! Welcome, {{name}}.",
     "verificationError": "Verification error. Please check your code and try again."
   },
   "resetPassword": {
     "title": "Change Password",
     "description": "Enter your new password. You will be redirected to the login page.",
-    "newPassword": "New Password",
-    "confirmNewPassword": "Confirm New Password",
-    "submit": "Change Password",
-    "success": "Password changed successfully, please log in.",
-    "error": "Error changing the password. Please try again."
+    "newPassword": "New password",
+    "confirmNewPassword": "Confirm new password",
+    "submit": "Change password",
+    "success": "Password successfully changed, please log in.",
+    "error": "Error changing password. Please try again."
   },
   "errors": {
     "requiredField": "This field is required",
-    "invalidEmail": "Invalid email address",
+    "invalidEmail": "Invalid email",
     "passwordMismatch": "Passwords do not match",
-    "passwordLength": "Password must be at least 8 characters long",
+    "passwordLength": "Password must be at least 8 characters",
     "passwordChars": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
-    "otpContent": "Content must be numeric"
+    "otpContent": "Content must be numeric only"
   },
-  "user": {
-    "name": "First Name",
-    "surname": "Last Name",
-    "email": "Email",
-    "password": "Password"
+  "domains": {
+    "user": {
+      "name": "Name",
+      "surname": "Last Name",
+      "email": "Email",
+      "password": "Password"
+    },
+    "category": {
+      "name": "Name",
+      "icon": "Icon",
+      "add": {
+        "description": "Create a new spending category by choosing an appropriate name and the icon that best fits.",
+        "iconSelected": "Selected: ",
+        "submit": "Create new category"
+      }
+  }
+  },
+  "header": {
+    "sections": {
+      "profile": {
+        "title": "Profile",
+        "editProfile": {
+          "title": "Edit Profile",
+          "description": "Update your personal information."
+        },
+        "linkBankAccount": {
+          "title": "Link Bank Account",
+          "description": "Connect your bank account to extract transaction data."
+        },
+        "settings": {
+          "title": "Settings",
+          "description": "Configure your user preferences."
+        }
+      },
+      "savingGoals": {
+        "title": "Saving Goals",
+        "createGoal": {
+          "title": "Create Saving Goal",
+          "description": "Set a savings goal and start saving."
+        },
+        "viewGoals": {
+          "title": "View Saving Goals",
+          "description": "Check your current saving goals."
+        },
+        "editGoals": {
+          "title": "Edit Saving Goal",
+          "description": "Modify the details of your saving goal."
+        }
+      },
+      "spendings": {
+        "title": "Spendings",
+        "viewSpendings": {
+          "title": "View Spendings",
+          "description": "Check your recent spendings by category."
+        },
+        "addSpending": {
+          "title": "Add Spending",
+          "description": "Log a new spending."
+        },
+        "addCategory": {
+          "title": "Add Category",
+          "description": "Create a new spending category."
+        },
+        "editCategory": {
+          "title": "Edit Category",
+          "description": "Update the details of an existing category."
+        }
+      },
+      "charts": {
+        "title": "Charts",
+        "viewCharts": {
+          "title": "View Charts",
+          "description": "Visualize your monthly spendings through charts."
+        },
+        "compareCharts": {
+          "title": "Compare Stats",
+          "description": "Compare your spendings across different months."
+        }
+      }
+    },
+    "logout": "Log out"
+  },
+  "footer": {
+    "copyright": "All rights reserved"
   }
 }

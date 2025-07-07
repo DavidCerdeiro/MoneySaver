@@ -58,13 +58,13 @@ export function LoginForm() {
                 <CardContent className="grid gap-4">
                     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="email">{t('user.email')}</Label>
+                            <Label htmlFor="email">{t('domains.user.email')}</Label>
                             <Input id="email" type="email" {...register("email")} className="input-dark"/>
                             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                         </div>
                         <div className="grid gap-2">
                             <div className="flex items-center">
-                                <Label htmlFor="password">{t('user.password')}</Label>
+                                <Label htmlFor="password">{t('domains.user.password')}</Label>
                                 <Link to="/forgot-password" className="ml-auto text-sm text-blue-400 hover:underline">{t('login.forgotPassword')}</Link>
                             </div>
                             <Input id="password" type="password" {...register("password")} className="input-dark"/>

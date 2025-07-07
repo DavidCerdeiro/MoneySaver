@@ -5,7 +5,7 @@ import { ForgotPasswordPage } from './app/domains/auth/pages/ForgotPasswordPage.
 import { ResetPasswordPage } from './app/domains/auth/pages/ResetPasswordPage.tsx';
 import { VerificationEmailPage } from './app/domains/auth/pages/VerificationEmailPage.tsx'
 import { SignUpPage } from './app/domains/auth/pages/SignUpPage.tsx';
-import { DashboardPage } from './app/domains/auth/pages/DashboardPage.tsx'
+import { MainPage } from './app/domains/shared/pages/MainPage.tsx'
 
 import './i18n/index.ts'
 import { StrictMode } from 'react'
@@ -13,6 +13,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { UserProvider } from './app/contexts/UserContext.tsx'
 import { Toaster } from './app/domains/shared/components/Toaster.tsx'
+import { AddCategoryPage } from './app/domains/category/pages/AddCategoryPage.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
@@ -29,7 +30,9 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/forgot-password/authUser" element={<VerificationEmailPage />} />
           <Route path="/forgot-password/reset-password" element={<ResetPasswordPage />} />
 
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/home" element={<MainPage />} />
+
+          <Route path="/categories/add" element={<AddCategoryPage />} />
         </Routes>
       </Router>
       <Toaster />

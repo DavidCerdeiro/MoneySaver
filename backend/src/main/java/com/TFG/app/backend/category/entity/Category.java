@@ -25,8 +25,8 @@ public class Category {
     @Column(name = "TotalSpending", nullable = false, precision = 15, scale = 2)
     private BigDecimal  totalSpending = BigDecimal.ZERO;
 
-    @Column(name = "Icon", nullable = false)
-    private Integer icon;
+    @Column(name = "Icon", length = 64, nullable = false)
+    private String icon;
 
     // Getters and Setters
     public Integer  getId() {
@@ -53,10 +53,10 @@ public class Category {
     public void setTotalSpending(BigDecimal  totalSpending) {
         this.totalSpending = totalSpending.setScale(2, RoundingMode.HALF_UP);
     }
-    public Integer getIcon() {
+    public String getIcon() {
         return icon;
     }
-    public void setIcon(Integer icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 }

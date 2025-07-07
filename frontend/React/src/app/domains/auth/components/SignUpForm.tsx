@@ -59,22 +59,22 @@ export function SignUpForm() {
                 <CardContent className="grid gap-4">
                     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="name">{t('user.name')}</Label>
+                            <Label htmlFor="name">{t('domains.user.name')}</Label>
                             <Input id="firstName" placeholder={t('signUp.namePlaceholder')} {...register("name")} className="input-dark" />
                             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="surname">{t('user.surname')}</Label>
+                            <Label htmlFor="surname">{t('domains.user.surname')}</Label>
                             <Input id="surname" placeholder={t('signUp.lastNamePlaceholder')} {...register("surname")} className="input-dark" />
                             {errors.surname && <p className="text-red-500 text-sm">{errors.surname.message}</p>}
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="email">{t('user.email')}</Label>
+                            <Label htmlFor="email">{t('domains.user.email')}</Label>
                             <Input id="email" type="email" placeholder={t('signUp.emailPlaceholder')} {...register("email")} className="input-dark" />
                             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="password">{t('user.password')}</Label>
+                            <Label htmlFor="password">{t('domains.user.password')}</Label>
                             <Input id="password" type="password" {...register("password")} className="input-dark" />
                             {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                         </div>

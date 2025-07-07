@@ -58,7 +58,7 @@ export function ForgotPasswordForm() {
                 <CardContent className="grid gap-4">
                     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="email">{t('user.email')}</Label>
+                            <Label htmlFor="email">{t('domains.user.email')}</Label>
                             <Input id="email" type="email" {...register("email")} className="input-dark"/>
                             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                         </div>
