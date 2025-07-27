@@ -72,14 +72,37 @@
       "password": "Password"
     },
     "category": {
+      "title": "Spending Categories",
       "name": "Name",
       "icon": "Icon",
+      "totalSpending": "Total Spending",
       "add": {
         "description": "Create a new spending category by choosing an appropriate name and the icon that best fits.",
         "iconSelected": "Selected: ",
-        "submit": "Create new category"
+        "submit": "Create new category",
+        "success": "Category {{icon}} {{name}} created successfully.",
+        "error": "Error creating category. Please review the fields and try again."
+      },
+      "modify": {
+        "description": "Modify the name or icon of any category. This will not affect already registered spendings or the total amount.",
+        "tableCaption": "List of your current spending categories",
+        "success": "Category {{icon}} {{name}} successfully modified.",
+        "error": "Error modifying the category. Please review the fields and try again.",
+        "selectCategory": "Select category",
+        "noCategories": "No categories found.",
+        "dialog": {
+          "title": "Confirm modification",
+          "description": "Are you sure you want to change the category {{icon}}{{name}} to {{newIcon}}{{newName}}?",
+          "confirm": "Yes, modify",
+          "cancel": "No, cancel"
+        }
+      },
+      "errors":{
+        "name": {
+          "required": "Name is required"
+        }
       }
-  }
+    }
   },
   "header": {
     "sections": {
@@ -125,7 +148,8 @@
         },
         "addCategory": {
           "title": "Add Category",
-          "description": "Create a new spending category."
+          "description": "Create a new spending category.",
+          "submit": "Create new category"
         },
         "editCategory": {
           "title": "Edit Category",

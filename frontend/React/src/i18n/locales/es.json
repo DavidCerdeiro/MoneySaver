@@ -34,7 +34,7 @@
         "error": "Correo electrónico no registrado."
     },
     "auth":{
-        "title": "Autenticación de usuario",
+        "defaultTitle": "Autenticación de usuario",
         "forgotTitle": "Recuperación de contraseña",
         "forgotDescription": "Para recuperar tu contraseña, se ha enviado un código de verificación a tu correo electrónico.",
         "signUpDescription": "Para completar tu registro, se ha enviado un código de verificación a tu correo electrónico.",
@@ -72,14 +72,35 @@
             "password": "Contraseña"
         },
         "category":{
+            "title": "Categorías de gasto",
             "name": "Nombre",
             "icon": "Icono",
+            "totalSpending": "Gasto total",
             "add":{
                 "description": "Crea una nueva categoría de gasto mediante el nombre que estimes oportuno y el icono que más se adecue.",
                 "iconSelected": "Seleccionado: ",
                 "submit": "Crear nueva categoría",
                 "success": "Categoría {{icon}} {{name}} creada con éxito.",
                 "error": "Error al crear la categoría. Por favor, revise los campos e inténtelo de nuevo."
+            },
+            "modify":{
+                "description": "Modifica el nombre o icono de la categoría que desees. Esta modificación no afectará a los gastos ya registrados ni al gasto total.",
+                "tableCaption": "Listado de tus categorías de gasto actuales",
+                "success": "Categoría {{icon}} {{name}} modificada con éxito.",
+                "error": "Error al modificar la categoría. Por favor, revise los campos e inténtelo de nuevo.",
+                "selectCategory": "Seleccionar categoría",
+                "noCategories": "No se ha encontrado ninguna categoría.",
+                "dialog":{
+                    "title": "Confirmar modificación",
+                    "description": "¿Estás seguro de que deseas modificar la categoría {{icon}}{{name}} a {{newIcon}}{{newName}}?",
+                    "confirm": "Sí, modificar",
+                    "cancel": "No, cancelar"
+                }
+            },
+            "errors":{
+                "name": {
+                    "required": "El nombre es obligatorio"
+                }
             }
         }
     },

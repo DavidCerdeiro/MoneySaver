@@ -7,12 +7,11 @@ import { createResetPasswordSchema } from "../schemas/ResetPassword";
 import type { ResetPasswordData } from "../schemas/ResetPassword";
 import { resetPassword } from '../application/AuthService';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/app/domains/shared/components/card.js";;
-import { Input } from "@/app/domains/shared/components/input.js";
-import { Button } from "@/app/domains/shared/components/button.js";;
+import { Input } from "@/app/domains/shared/components/input";
+import { Button } from "@/app/domains/shared/components/button";;
 import { Label } from "@/app/domains/shared/components/label.js";
 import { useEffect } from 'react';
 import { toast } from "sonner";
-import { AuthPageLayout } from "@/app/domains/shared/layouts/AuthPageLayout";
 
 export function ResetPasswordForm() {
     const { t } = useTranslation();
@@ -56,7 +55,6 @@ export function ResetPasswordForm() {
         };
 
     return (
-        <AuthPageLayout>
             <Card className="form-card">
                 <CardHeader>
                     <CardTitle className="text-2xl">{t('resetPassword.title')}</CardTitle>
@@ -82,6 +80,5 @@ export function ResetPasswordForm() {
                 <CardFooter className="flex justify-center">
                 </CardFooter>
             </Card>
-        </AuthPageLayout>
     )
 }

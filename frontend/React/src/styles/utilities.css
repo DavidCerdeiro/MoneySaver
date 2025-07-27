@@ -1,20 +1,46 @@
 @import "tailwindcss";
 
-.main-header {
-  @apply sticky top-0 z-50 bg-black border-b border-zinc-800 h-16 w-full;
+
+/* === Page === */
+.page-title {
+  @apply text-3xl font-bold text-center mb-6;
 }
-.form-background {
+.page-description {
+  @apply text-lg text-gray-200 mb-4 max-w-2xl mx-auto text-center;
+}
+.page-background {
   @apply min-h-screen bg-black text-white flex flex-col items-center justify-center px-4;
 }
 
+/* === Modify Category Page === */
+.modify-category-page {
+  @apply text-white text-2xl font-bold mb-6 text-center;
+}
+/* === Header === */
+.main-header {
+  @apply sticky top-0 z-50 bg-black border-b border-zinc-800 py-3 w-full;
+}
+
+.nav-link {
+  @apply text-lg font-medium text-white bg-black px-3 py-2 rounded-md transition-colors;
+}
+.nav-link:hover,
+.nav-link:focus {
+  @apply bg-zinc-800 text-white;
+}
+.navMenu-content{
+  @apply grid w-[500px] gap-3 p-4 md:grid-cols-2 bg-black rounded-lg shadow-lg text-white;
+}
+
+/* === Footer === */
+.main-footer {
+  @apply w-full text-center text-sm text-gray-400 border-t border-zinc-800 py-4;
+}
+
+/* === Card === */
 .form-card {
   @apply w-full max-w-sm bg-zinc-900 text-white rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.08)];
 }
-
-.card-title {
-  @apply text-3xl font-bold text-center mb-6;
-}
-
 .card-description {
   @apply text-sm text-gray-100 mb-4;
 }
@@ -24,47 +50,67 @@
   @apply bg-zinc-800 text-white placeholder-gray-300 border-none focus:ring-2 focus:ring-green-500;
 }
 
-/* === Botón Principal === */
+/* === Buttons === */
 .button-green {
   @apply bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors;
+}
+.button-logout {
+  @apply text-sm font-medium text-red-500 hover:text-white hover:bg-red-500 px-3 py-2 rounded-md transition-colors duration-200;
 }
 
 /* === Links === */
 .text-link {
   @apply text-sm text-blue-400 hover:underline;
 }
-
 .back-link {
   @apply text-sm text-gray-300 hover:text-white transition-colors;
 }
-/* Header */
-.main-header {
-  @apply sticky top-0 z-50 bg-black border-b border-zinc-800 py-3;
-}
 
-.nav-link {
-  @apply text-lg font-medium text-white bg-black px-3 py-2 rounded-md transition-colors;
-}
 
-.nav-link:hover,
-.nav-link:focus {
-  @apply bg-zinc-800 text-white;
-}
-.navMenu-content{
-  @apply grid w-[500px] gap-3 p-4 md:grid-cols-2 bg-black rounded-lg shadow-lg text-white;
-}
-.user-greeting {
-  @apply text-sm text-gray-300;
-}
-.logout {
-  @apply text-sm font-medium text-red-500 hover:text-white hover:bg-red-500 px-3 py-2 rounded-md transition-colors duration-200;
-}
-
-/* Footer */
-.main-footer {
-  @apply w-full text-center text-sm text-gray-400 border-t border-zinc-800 py-4;
-}
-/* Oculta el nombre del emoji al hacer hover (tooltip en la parte inferior) */
+/* === Emoji Tooltip === */
 .emoji-mart-preview {
   display: none !important;
+}
+
+/* === Dialog === */
+.dialog-content {
+  @apply bg-zinc-900 text-white rounded-lg shadow-lg p-6;
+}
+.dialog-header {
+  @apply mb-4;
+}
+.dialog-title {
+  @apply text-xl font-bold mb-2;
+}
+.dialog-description {
+  @apply text-sm text-gray-300 mb-4;
+}
+.dialog-footer {
+  @apply space-x-2 mt-4 flex justify-center;
+}
+
+/* === Category Selector === */
+.category-selector-button {
+  @apply w-[200px] justify-between bg-zinc-900 text-white hover:bg-zinc-800 hover:text-white;
+}
+.category-popover-content {
+  @apply w-[200px] p-0 bg-zinc-900 border border-white text-white;
+}
+.category-command {
+  @apply bg-zinc-900 text-white;
+}
+.category-command-input {
+  @apply h-9 border-0 border-b border-white bg-zinc-900 placeholder:text-zinc-400 focus:ring-0 focus:outline-none text-white rounded-none;
+}
+.category-command-empty {
+  @apply text-white;
+}
+.category-command-group {
+  @apply border-t-0;
+}
+.category-command-item {
+  @apply text-white hover:!bg-zinc-700 hover:!text-white cursor-pointer;
+}
+.category-check-icon {
+  @apply mr-2 h-4 w-4 text-inherit;
 }

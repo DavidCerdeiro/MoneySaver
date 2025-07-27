@@ -5,6 +5,7 @@ export const createCategorySchema  = (t: (key: string) => string) => z.object({
     idUser: z.number().optional(),
     name: z.string().min(1, { message: t('errors.requiredField') }),
     icon: z.string().optional(),
+    totalSpending: z.number().optional(),
 })
 
 export type CategoryData = z.infer<ReturnType<typeof createCategorySchema>>;

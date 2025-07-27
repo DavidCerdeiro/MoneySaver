@@ -1,7 +1,7 @@
 import '@/styles/utilities.css';
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/app/domains/shared/components/card";
-import { Button } from "@/app/domains/shared/components/button.js";
+import { Button } from "@/app/domains/shared/components/button";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/app/domains/shared/components/input-otp.tsx";
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form";
@@ -29,13 +29,13 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
     //Depending on the source, we set the title, description, submit button text, and email.
     switch (source) {
         case "login":
-            title = t('auth.welcomeUser', { name: user?.name ||"" });
+            title = t('auth.defaultTitle', { name: user?.name ||"" });
             description = t('auth.loginDescription');
             submit = t('auth.loginSubmit');
             email = user?.email || "";
             break;
         case "signup":
-            title = t('auth.welcomeUser', { name: user?.name ||"" });
+            title = t('auth.defaultTitle', { name: user?.name ||"" });
             description = t('auth.signUpDescription');
             submit = t('auth.signUpSubmit');
             email = user?.email || "";
@@ -109,7 +109,6 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
                 <CardHeader>
                     <CardTitle className="text-2xl">{title}</CardTitle>
                     <CardDescription className="card-description">{description}</CardDescription>
-                    <CardDescription className="card-description">{t('auth.defaultDescription')}</CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-4">
                     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">

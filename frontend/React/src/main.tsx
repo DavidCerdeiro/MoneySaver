@@ -14,6 +14,7 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { UserProvider } from './app/contexts/UserContext.tsx'
 import { Toaster } from './app/domains/shared/components/Toaster.tsx'
 import { AddCategoryPage } from './app/domains/category/pages/AddCategoryPage.tsx';
+import { ModifyCategoryPage } from './app/domains/category/pages/ModifyCategoryPage.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
@@ -33,6 +34,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/home" element={<MainPage />} />
 
           <Route path="/categories/add" element={<AddCategoryPage />} />
+          <Route path="/categories/modify" element={<ModifyCategoryPage />} />
         </Routes>
       </Router>
       <Toaster />

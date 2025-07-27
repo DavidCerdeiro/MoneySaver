@@ -37,7 +37,6 @@ export function AddCategoryForm() {
       };
       await addCategory(requestBody);
       const nativeEmoji = getEmojiById(selectedIdEmoji);
-      console.log("Native Emoji:", nativeEmoji);
       toast.success(t('domains.category.add.success', {icon: nativeEmoji, name: formData.name}));
       reset();
       setSelectedEmoji('💲'); // Emoji por defecto
@@ -49,13 +48,13 @@ export function AddCategoryForm() {
   };
 
   return (
-    <div className="form-background">
-      <h1 className="card-title">{t('header.sections.spendings.addCategory.title')}</h1>
-      <p  className="font-medium mb-6">{t('domains.category.add.description')}</p>
+    <div className='flex flex-col items-center justify-center px-4'>
+      <h1 className="page-title">{t('header.sections.spendings.addCategory.title')}</h1>
+      <p  className="page-description">{t('domains.category.add.description')}</p>
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
         <div className="grid gap-2">
           <Label htmlFor="name">{t('domains.category.name')}</Label>
-          <Input id="name" {...register('name')} className="input-dark" />
+          <Input id="name" {...register('name', { required: t('domains.category.errors.name.required') })} className="input-dark" />
           {errors.name && (
             <p className="text-red-500 text-sm">{errors.name.message}</p>
           )}

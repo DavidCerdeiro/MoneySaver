@@ -6,9 +6,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.TFG.app.backend.category.service.CategoryService;
+
 import com.TFG.app.backend.category.dto.AddCategoryRequest;
+import com.TFG.app.backend.category.dto.ModifyCategoryRequest;
+import com.TFG.app.backend.category.dto.AllCategoriesFromUserResponse;
+import com.TFG.app.backend.category.dto.AllCategoryFromUserRequest;
+import com.TFG.app.backend.category.dto.CategoryResponse;
 import com.TFG.app.backend.category.entity.Category;
 
+import java.util.List;
+import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
@@ -34,5 +41,31 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("/modify")
+    public ResponseEntity<String> modifyCategory(@RequestBody ModifyCategoryRequest categoryRequest) {
+        Category category = categoryService.getCategoryFromUserAndId(categoryRequest.getIdUser(), categoryRequest.getId()).stream().findFirst().orElse(null);
+        if (category != null) {
+            category.setName(categoryRequest.getName());
+            category.setIcon(categoryRequest.getIcon());
+            if (categoryService.updateCategory(category)) {
+                System.out.println("Category updated successfully");
+                return new ResponseEntity<>(HttpStatus.OK);
+                
+            }
+        }
+        System.out.println("Category no updated successfully");
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
+    }
+
+    @PostMapping("/all")
+    public ResponseEntity<AllCategoriesFromUserResponse> AllCategoriesFromUser(@RequestBody AllCategoryFromUserRequest request) {
+        List<Category> categories = categoryService.getAllCategoriesFromUser(request.getIdUser());
+        List<CategoryResponse> response = categories.stream()
+        .map(CategoryResponse::new)
+        .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new AllCategoriesFromUserResponse(response));
     }
 }

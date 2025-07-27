@@ -4,14 +4,17 @@ import { FooterComponent } from '../components/FooterComponent';
 
 export function DefaultPageLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex flex-col min-h-screen form-background">
-      <HeaderComponent name="Usuario" />
+    <div className="flex flex-col min-h-screen page-background">
+      <HeaderComponent />
       
-      <main className="flex-grow">
-        {children}
+      <main className="flex-grow px-4 py-8 flex justify-center">
+        <div className="w-full max-w-5xl">
+          {children}
+        </div>
       </main>
-      
+
       <FooterComponent />
     </div>
   );
 }
+

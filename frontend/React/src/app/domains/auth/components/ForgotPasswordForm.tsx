@@ -1,8 +1,8 @@
 import '@/styles/utilities.css';
 
 import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/app/domains/shared/components/card";
-import { Input } from "@/app/domains/shared/components/input.js";
-import { Button } from "@/app/domains/shared/components/button.js";
+import { Input } from "@/app/domains/shared/components/input";
+import { Button } from "@/app/domains/shared/components/button";
 import { Label } from "@/app/domains/shared/components/label.js";
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,6 @@ import type { ForgotPasswordData } from "../schemas/ForgotPassword";
 import { forgotPassword } from '../application/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
-import { AuthPageLayout } from "@/app/domains/shared/layouts/AuthPageLayout";
 
 export function ForgotPasswordForm() {
     const { t } = useTranslation();
@@ -49,7 +48,6 @@ export function ForgotPasswordForm() {
     };
 
     return (
-        <AuthPageLayout>
             <Card className="form-card">
                 <CardHeader>
                     <CardTitle className="text-2xl">{t('forgotPassword.title')}</CardTitle>
@@ -73,6 +71,5 @@ export function ForgotPasswordForm() {
                     </CardAction>
                 </CardFooter>
             </Card>
-        </AuthPageLayout>
     )
 }

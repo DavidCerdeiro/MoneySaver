@@ -5,8 +5,8 @@ export function AuthPageLayout({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
 
   return (
-    <div className="form-background">
-      <h1 className="card-title">{t('app.title')}</h1>
+    <div className="page-background">
+      <h1 className="page-title">{t('app.title')}</h1>
       {children}
     </div>
   );

@@ -43,7 +43,7 @@ function ListItem({
   )
 }
 
-export function HeaderComponent({ name }: { name?: string }) {
+export function HeaderComponent() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   // This function handles the logout action
@@ -54,7 +54,7 @@ export function HeaderComponent({ name }: { name?: string }) {
 
   return (
     <header className="main-header">
-      <div className="flex items-center justify-between w-full px-4">
+      <div className="container mx-auto flex items-center justify-between px-4">
         {/* LINK TO HOME */}
         <Link to="/home">
           <h1 className="text-xl font-bold">{t("app.title")}</h1>
@@ -164,7 +164,7 @@ export function HeaderComponent({ name }: { name?: string }) {
         {/* LOGOUT */}
         <button
           onClick={handleLogout}
-          className="hidden md:inline-block logout"
+          className="hidden md:inline-block button-logout"
         >
           {t("header.logout")}
         </button>
