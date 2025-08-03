@@ -97,11 +97,58 @@
           "cancel": "No, cancel"
         }
       },
-      "errors":{
+      "errors": {
         "name": {
           "required": "Name is required"
         }
       }
+    },
+    "spending": {
+      "name": "Name",
+      "namePlaceholder": "GTA VI",
+      "amount": "Amount",
+      "amountPlaceholder": 0.00,
+      "category": "Category",
+      "date": "Date",
+      "periodicity": "Is periodic",
+      "typePeriodic": "Periodicity type",
+      "expirationDate": "Expiration date",
+      "add": {
+        "description": "Register a new spending via the form or by uploading a receipt, invoice, or similar document.",
+        "category": "Category",
+        "amount": "Amount",
+        "date": "Date",
+        "submit": "Register spending",
+        "error": "Error registering spending. Please review the fields and try again.",
+        "noTypePeriodic": "No periodicity types found.",
+        "searchTypePeriodic": "Search type",
+        "selectTypePeriodic": "Select type",
+        "success": "{{name}} has been registered with an amount of €{{amount}} under the {{category}} category"
+      },
+      "errors": {
+        "name": {
+          "required": "Name is required"
+        },
+        "amount": {
+          "required": "Amount is required",
+          "positive": "Amount must be a positive number"
+        },
+        "date": {
+          "required": "Date is required"
+        },
+        "expirationDate": {
+          "required": "Expiration date is required",
+          "future": "Expiration date must be in the future"
+        },
+        "typePeriodic": {
+          "required": "Periodicity type is required"
+        }
+      }
+    },
+    "typePeriodic": {
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "yearly": "Yearly"
     }
   },
   "header": {

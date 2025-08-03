@@ -20,9 +20,9 @@ VALUES
 
 INSERT INTO "type_periodic" ("Name")
 VALUES
-('Mensual'),
-('Trimestral'),
-('Anual');
+('Monthly'),
+('Quarterly'),
+('Yearly');
 
 INSERT INTO street ("Name", "Number")   
 VALUES

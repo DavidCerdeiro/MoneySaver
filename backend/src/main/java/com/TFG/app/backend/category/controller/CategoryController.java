@@ -10,7 +10,6 @@ import com.TFG.app.backend.category.service.CategoryService;
 import com.TFG.app.backend.category.dto.AddCategoryRequest;
 import com.TFG.app.backend.category.dto.ModifyCategoryRequest;
 import com.TFG.app.backend.category.dto.AllCategoriesFromUserResponse;
-import com.TFG.app.backend.category.dto.AllCategoryFromUserRequest;
 import com.TFG.app.backend.category.dto.CategoryResponse;
 import com.TFG.app.backend.category.entity.Category;
 
@@ -45,7 +44,7 @@ public class CategoryController {
 
     @PutMapping("/modify")
     public ResponseEntity<String> modifyCategory(@RequestBody ModifyCategoryRequest categoryRequest) {
-        Category category = categoryService.getCategoryFromUserAndId(categoryRequest.getIdUser(), categoryRequest.getId()).stream().findFirst().orElse(null);
+        Category category = categoryService.getCategoryFromUserAndId(categoryRequest.getIdUser(), categoryRequest.getId());
         if (category != null) {
             category.setName(categoryRequest.getName());
             category.setIcon(categoryRequest.getIcon());
@@ -59,9 +58,9 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
     }
 
-    @PostMapping("/all")
-    public ResponseEntity<AllCategoriesFromUserResponse> AllCategoriesFromUser(@RequestBody AllCategoryFromUserRequest request) {
-        List<Category> categories = categoryService.getAllCategoriesFromUser(request.getIdUser());
+    @GetMapping("/all")
+    public ResponseEntity<AllCategoriesFromUserResponse> AllCategoriesFromUser(@RequestParam("idUser") Long idUser) {
+        List<Category> categories = categoryService.getAllCategoriesFromUser(idUser.intValue());
         List<CategoryResponse> response = categories.stream()
         .map(CategoryResponse::new)
         .collect(Collectors.toList());

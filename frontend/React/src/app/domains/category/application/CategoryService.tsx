@@ -29,16 +29,22 @@ export async function modifyCategory(data: CategoryData) {
 }
 
 export async function obtainAllCategories(data: { idUser: number }) {
-  const response = await fetch("/api/categories/all", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+  const response = await fetch(`/api/categories/all?idUser=${data.idUser}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
-  
+
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.message || "Signup failed");
+    throw new Error(error.message || "Fetch failed");
   }
-  
+
   return await response.json();
+}
+
+export async function fetchCategoriesForUser(userId: number) {
+  const data = await obtainAllCategories({ idUser: userId });
+  return data.categories;
 }

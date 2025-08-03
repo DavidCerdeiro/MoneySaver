@@ -12,7 +12,7 @@ import { getEmojiById } from "./EmojiFunctions";
 import { modifyCategory } from "../application/CategoryService";
 import { toast } from "sonner";
 import { Dialog, DialogTrigger, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogClose, DialogTitle } from "@/app/domains/shared/components/dialog";
-import { CategorySelectorPopover } from "./CategorySelectorPopover";
+import { CategoryCombobox } from "./CategoryCombobox";
 type ModifyCategoryFormProps = {
   categories: CategoryData[];
   refreshCategories: () => Promise<void>;
@@ -58,7 +58,7 @@ export function ModifyCategoryForm({ categories, refreshCategories }: ModifyCate
 
   return (
     <>
-      <CategorySelectorPopover
+      <CategoryCombobox
         categories={categories}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}

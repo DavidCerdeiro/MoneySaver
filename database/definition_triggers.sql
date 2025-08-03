@@ -11,8 +11,8 @@ DROP FUNCTION IF EXISTS validate_periodic_expiration_date();
 CREATE OR REPLACE FUNCTION validate_periodic_type()
 RETURNS trigger AS $$
 BEGIN
-    IF NEW."Name" NOT IN ('Monthly', 'Quarterly', 'Yearly') THEN
-        RAISE EXCEPTION 'Invalid periodic spending type (must be Monthly, Quarterly or Yearly)'
+    IF NEW."Name" NOT IN ('monthly', 'quarterly', 'yearly') THEN
+        RAISE EXCEPTION 'Invalid periodic spending type (must be monthly, quarterly or yearly)'
         USING ERRCODE = 'P0003';
     END IF;
     RETURN NEW;

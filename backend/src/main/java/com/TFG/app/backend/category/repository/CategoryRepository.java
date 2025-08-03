@@ -10,5 +10,5 @@ public interface CategoryRepository extends JpaRepository<Category, Integer>{
     List<Category> findByUser(User user);
 
     // Method to find a category by user and id
-    List<Category> findByUserAndId(User user, Integer idCategory);
+    Category findByUserAndId(User user, Integer idCategory);
 }

@@ -28,7 +28,7 @@ type Props = {
   setValue: (field: keyof CategoryData, value: any) => void;
 };
 
-export function CategorySelectorPopover({
+export function CategoryCombobox({
   categories,
   selectedCategory,
   setSelectedCategory,
@@ -40,21 +40,22 @@ export function CategorySelectorPopover({
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   return (
+    // Popover component to display the combobox
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <span>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className="category-selector-button"
-          >
-            {selectedCategory?.name || t("domains.category.modify.selectCategory")}
-            <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-        </span>
-      </PopoverTrigger>
-
+        {/* Trigger button for the popover */}
+        <Button
+          type="button"
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="category-selector-button"
+        >
+          {selectedCategory?.name || t("domains.category.modify.selectCategory")}
+          <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+    </PopoverTrigger>
+      {/* Content of the popover containing the command list */}
       <PopoverContent className="category-popover-content">
         <Command className="bg-zinc-900 text-white">
           <CommandInput

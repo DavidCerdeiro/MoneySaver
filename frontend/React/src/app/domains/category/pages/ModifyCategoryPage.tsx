@@ -3,24 +3,24 @@ import { useTranslation } from 'react-i18next';
 import { CategoriesTable } from "../components/CategoriesTable";
 import { ModifyCategoryForm } from "../components/ModifyCategoryForm";
 import { useEffect, useState } from "react";
-import { obtainAllCategories } from "../application/CategoryService";
 import type { CategoryData } from "../schemas/Category";
+import { fetchCategoriesForUser } from "../application/CategoryService";
 
 export function ModifyCategoryPage() {
   const { t } = useTranslation();
   const [categories, setCategories] = useState<CategoryData[]>([]);
 
-  const fetchCategories = async () => {
+  const refreshCategories = async () => {
     try {
-      const data = await obtainAllCategories({ idUser: 1 });
-      setCategories(data.categories);
+      const data = await fetchCategoriesForUser(1);
+      setCategories(data);
     } catch (error) {
-      console.error("Error loading categories", error);
+      console.error("Error refreshing categories", error);
     }
   };
 
   useEffect(() => {
-    fetchCategories();
+    refreshCategories();
   }, []);
 
   return (
@@ -30,9 +30,9 @@ export function ModifyCategoryPage() {
         <p className="page-description">{t('domains.category.modify.description')}</p>
         <CategoriesTable categories={categories} />
         <div className="mt-5">
-            <ModifyCategoryForm categories={categories} refreshCategories={fetchCategories} />
+          <ModifyCategoryForm categories={categories} refreshCategories={refreshCategories} />
         </div>
       </div>
     </DefaultPageLayout>
   );
-}
+} 

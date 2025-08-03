@@ -31,7 +31,7 @@ public class CategoryService {
         return null;
     }
 
-    public List<Category> getCategoryFromUserAndId(Integer idUser, Integer idCategory) {
+    public Category getCategoryFromUserAndId(Integer idUser, Integer idCategory) {
         User user = userService.getUserById(idUser);
         if (user != null) {
             System.out.println("Fetching category with id: " + idCategory + " for user with id: " + idUser);
