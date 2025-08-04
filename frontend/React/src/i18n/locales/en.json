@@ -125,6 +125,10 @@
         "selectTypePeriodic": "Select type",
         "success": "{{name}} has been registered with an amount of €{{amount}} under the {{category}} category"
       },
+      "view": {
+        "title": "View Spendings",
+        "description": "Check your spendings by month."
+      },
       "errors": {
         "name": {
           "required": "Name is required"

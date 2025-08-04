@@ -16,4 +16,8 @@ public class Periodic_SpendingService {
     public Periodic_Spending createPeriodicSpending(Periodic_Spending periodicSpending) {
         return periodicSpendingRepository.save(periodicSpending);
     }
+
+    public Periodic_Spending getPeriodicSpendingBySpendingId(Integer spendingId) {
+        return periodicSpendingRepository.findBySpendingId(spendingId);
+    }
 }

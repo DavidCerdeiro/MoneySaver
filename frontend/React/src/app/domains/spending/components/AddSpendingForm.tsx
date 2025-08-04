@@ -40,7 +40,7 @@ export function AddSpendingForm({ categories, typePeriodic }: AddSpendingFormPro
             isPeriodic: false,
         },
     });
-    // Watch the isPeriodic field to conditionally enable/disable type periodic and expiration date fields
+    
     const isPeriodic = watch("isPeriodic");
 
     const onSubmit = async (formData: SpendingData) => {

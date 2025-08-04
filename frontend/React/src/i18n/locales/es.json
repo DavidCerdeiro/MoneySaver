@@ -125,6 +125,15 @@
                 "selectTypePeriodic": "Seleccionar tipo",
                 "success": "Se ha registrado {{name}} con un importe de {{amount}}€ en la categoría {{category}}"
             },
+            "view":{
+                "title": "Ver gastos",
+                "description": "Consulta tus gastos por meses y ordénalos como desees.",
+                "previousMonth": "Mes anterior",
+                "nextMonth": "Mes siguiente"
+            },
+            "table": {
+                "caption": "Listado de tus gastos de {{month}}/{{year}}"
+            },
             "errors": {
                 "name": {
                     "required": "El nombre es obligatorio"
@@ -187,7 +196,7 @@
                 "title": "Gastos",
                 "viewSpendings": {
                     "title": "Ver gastos",
-                    "description": "Consulta tus gastos recientes por categorías."
+                    "description": "Consulta tus gastos POR meses."
                 },
                 "addSpending": {
                     "title": "Añadir gasto",

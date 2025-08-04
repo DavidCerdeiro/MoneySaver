@@ -14,12 +14,16 @@ import com.TFG.app.backend.user.entity.User;
 import com.TFG.app.backend.category.service.CategoryService;
 import com.TFG.app.backend.periodic_spending.entity.Periodic_Spending;
 import com.TFG.app.backend.spending.dto.AddSpendingRequest;
+import com.TFG.app.backend.spending.dto.AllSpendingFromUserMonthAndYearResponse;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
+import com.TFG.app.backend.spending.dto.SpendingResponse;
 @RestController
 @RequestMapping("/api/spendings")
 public class SpendingController {
@@ -73,5 +77,30 @@ public class SpendingController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<AllSpendingFromUserMonthAndYearResponse> AllCategoriesFromUser(@RequestParam("idUser") Long idUser, @RequestParam("month") int month, @RequestParam("year") int year) {
+        List<Spending> spendings = spendingService.getAllSpendingsByUserMonthAndYear(idUser.intValue(), month, year);
+        List<SpendingResponse> spendingResponses = new ArrayList<>();
+        Periodic_Spending spendingPeriodic = new Periodic_Spending();
+        for (Spending spending : spendings) {
+            if (spending.getIsPeriodic()) {
+                spendingPeriodic = periodicSpendingService.getPeriodicSpendingBySpendingId(spending.getId());
+            }
+            SpendingResponse spendingResponse = new SpendingResponse(
+                spending.getId(),
+                spending.getName(),
+                spending.getAmount(),
+                spending.getDate(),
+                spending.getCategory().getName(),
+                spending.getCategory().getIcon(),
+                spending.getIsPeriodic(),
+                spendingPeriodic != null ? spendingPeriodic.getExpiration() : null
+            );
+            
+            spendingResponses.add(spendingResponse);
+        }
+        return new ResponseEntity<>(new AllSpendingFromUserMonthAndYearResponse(spendingResponses), HttpStatus.OK);
     }
 }

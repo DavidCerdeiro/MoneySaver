@@ -6,4 +6,5 @@ import com.TFG.app.backend.periodic_spending.entity.Periodic_Spending;
 
 public interface Periodic_SpendingRepository extends JpaRepository<Periodic_Spending, Integer> {
   
+    public Periodic_Spending findBySpendingId(Integer spendingId);
 }

@@ -1,4 +1,5 @@
 import './index.css'
+import './i18n/index.ts'
 
 import { LoginPage } from './app/domains/auth/pages/LoginPage.tsx'
 import { ForgotPasswordPage } from './app/domains/auth/pages/ForgotPasswordPage.tsx'
@@ -7,7 +8,7 @@ import { VerificationEmailPage } from './app/domains/auth/pages/VerificationEmai
 import { SignUpPage } from './app/domains/auth/pages/SignUpPage.tsx';
 import { MainPage } from './app/domains/shared/pages/MainPage.tsx'
 
-import './i18n/index.ts'
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
@@ -16,7 +17,7 @@ import { Toaster } from './app/domains/shared/components/Toaster.tsx'
 import { AddCategoryPage } from './app/domains/category/pages/AddCategoryPage.tsx';
 import { ModifyCategoryPage } from './app/domains/category/pages/ModifyCategoryPage.tsx';
 import { AddSpendingPage } from './app/domains/spending/pages/AddSpendingPage.tsx';
-
+import { ViewSpendingsPage } from './app/domains/spending/pages/ViewSpendingsPage.tsx';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <UserProvider>
@@ -37,6 +38,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/categories/modify" element={<ModifyCategoryPage />} />
 
           <Route path="/spendings/add" element={<AddSpendingPage />} />
+          <Route path="/spendings/view" element={<ViewSpendingsPage />} />
         </Routes>
       </Router>
       <Toaster />

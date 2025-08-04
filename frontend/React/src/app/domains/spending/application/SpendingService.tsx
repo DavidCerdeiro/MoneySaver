@@ -27,3 +27,16 @@ export async function obtainAllTypePeriodic() {
   
   return await response.json();
 }
+
+export async function obtainAllSpendingsByMonthAndUserId(data: { month: number, idUser: number, year?: number }) {
+  const response = await fetch(`/api/spendings/all?month=${data.month}&idUser=${data.idUser}&year=${data.year}`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to fetch spendings");
+  }
+  return await response.json();
+}

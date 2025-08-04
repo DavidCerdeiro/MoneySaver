@@ -25,10 +25,10 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-left text-white pl-8">
+            <TableHead className="table-head">
               {t('domains.category.name')}
             </TableHead>
-            <TableHead className="text-right text-white">
+            <TableHead className="table-head">
               {t('domains.category.totalSpending')}
             </TableHead>
           </TableRow>

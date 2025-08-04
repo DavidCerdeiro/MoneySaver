@@ -43,9 +43,9 @@ VALUES
 (2, 2, 'Uber'),
 (3, NULL, 'KFC');
 
-INSERT INTO spending ("Id_Category", "Id_Establishment", "Id_User", "Name", "Amount", "Date", "IsPeriodic")
+INSERT INTO spending ("Id_Category", "Id_User", "Name", "Amount", "Date", "IsPeriodic")
 VALUES
-(1, 1, 1, 'Compra semanal', 55.20, '2025-05-01', false),
+(1, 1, 1, 'Compra semanal', 55.20, '2025-06-01', false),
 (2, 2, 2, 'Viaje aeropuerto', 30.00, '2025-05-10', false),
 (3, 3, 3, 'Cena rápida', 18.50, '2025-05-12', false),
 (4, NULL, 3, 'Spotify', 9.99, '2025-05-01', true);
