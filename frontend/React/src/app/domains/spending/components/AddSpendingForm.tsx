@@ -19,9 +19,10 @@ import { toast } from "sonner";
 type AddSpendingFormProps = {
   categories: CategoryData[];
   typePeriodic: TypePeriodicData[];
+  idUser: number;
 };
 
-export function AddSpendingForm({ categories, typePeriodic }: AddSpendingFormProps) {
+export function AddSpendingForm({ categories, typePeriodic, idUser }: AddSpendingFormProps) {
     const { t } = useTranslation();
     const schema = createSpendingSchema(t);
     // State to manage selected category and type periodic
@@ -40,7 +41,7 @@ export function AddSpendingForm({ categories, typePeriodic }: AddSpendingFormPro
             name: '',
             amount: undefined,
             isPeriodic: false,
-            idUser: 1,
+            idUser: idUser,
         },
     });
     useEffect(() => {

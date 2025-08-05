@@ -16,9 +16,10 @@ import { CategoryCombobox } from "./CategoryCombobox";
 type ModifyCategoryFormProps = {
   categories: CategoryData[];
   refreshCategories: () => Promise<void>;
+  idUser: number;
 };
 
-export function ModifyCategoryForm({ categories, refreshCategories }: ModifyCategoryFormProps) {
+export function ModifyCategoryForm({ categories, refreshCategories, idUser }: ModifyCategoryFormProps) {
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<CategoryData | null>(null);
   const [selectedEmoji, setSelectedEmoji] = useState("");
@@ -38,7 +39,7 @@ export function ModifyCategoryForm({ categories, refreshCategories }: ModifyCate
       const requestBody: CategoryData = {
         ...formData,
         icon: selectedIdEmoji,
-        idUser: 1,
+        idUser: idUser,
         id: selectedCategory?.id,
       };
       console.log("Submitting category modification with data:", requestBody);

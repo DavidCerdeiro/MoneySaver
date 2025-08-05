@@ -25,10 +25,10 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="table-head">
+            <TableHead className="text-left text-white">
               {t('domains.category.name')}
             </TableHead>
-            <TableHead className="table-head">
+            <TableHead className="text-left text-white">
               {t('domains.category.totalSpending')}
             </TableHead>
           </TableRow>
@@ -37,7 +37,7 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
           {categories.map((category) => (
             <TableRow key={category.id}>
               <TableCell className="font-medium text-white">
-                <div className="flex items-center gap-2 pl-8">
+                <div className="text-left text-white">
                   {category.icon && (
                     <span className="flex-shrink-0">
                       {getEmojiById(category.icon)}
@@ -46,7 +46,7 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
                   <span>{category.name}</span>
                 </div>
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-left text-white">
                 {category.totalSpending?.toFixed(2)}€
               </TableCell>
             </TableRow>

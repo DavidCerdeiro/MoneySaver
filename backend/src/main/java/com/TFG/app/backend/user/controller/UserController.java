@@ -36,8 +36,8 @@ public class UserController {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);   
         }
-
-        UserResponse userResponse = new UserResponse(user.get().getName(),  user.get().getSurname(), user.get().getEmail(), user.get().getIsAuthenticated());
+        
+        UserResponse userResponse = new UserResponse(user.get().getId(), user.get().getName(), user.get().getSurname(), user.get().getEmail(), user.get().getIsAuthenticated());
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
     
@@ -116,7 +116,7 @@ public class UserController {
         if(newUser == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        UserResponse userResponse = new UserResponse(newUser.getName(), newUser.getSurname(), newUser.getEmail(), newUser.getIsAuthenticated());
+        UserResponse userResponse = new UserResponse(newUser.getId(), newUser.getName(), newUser.getSurname(), newUser.getEmail(), newUser.getIsAuthenticated());
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
 }

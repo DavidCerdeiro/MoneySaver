@@ -13,7 +13,7 @@ import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 
 
-export function AddCategoryForm() {
+export function AddCategoryForm({idUser}: {idUser: number | undefined}) {
   const { t } = useTranslation();
 
   const [selectedEmoji, setSelectedEmoji] = useState<string>('💲');
@@ -26,6 +26,10 @@ export function AddCategoryForm() {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(schema),
+    defaultValues: {
+      icon: selectedIdEmoji,
+      idUser: idUser ? idUser : 1,
+    },
   });
 
   const onSubmit = async (formData: CategoryData) => {
@@ -33,7 +37,6 @@ export function AddCategoryForm() {
       const requestBody: CategoryData = {
         ...formData,
         icon: selectedIdEmoji,
-        idUser: 1,
       };
       await addCategory(requestBody);
       const nativeEmoji = getEmojiById(selectedIdEmoji);

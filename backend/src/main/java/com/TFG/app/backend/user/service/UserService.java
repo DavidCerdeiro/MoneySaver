@@ -196,7 +196,7 @@ public class UserService {
         newUser.setEmail(signUpRequest.getEmail());
         String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
         newUser.setPassword(encodedPassword);
-
+        System.out.println("Purpose" + signUpRequest.getPurpose());
         // Generate a one-time password (OTP) and send it via email
         String otp = oneTimePasswordService.generateOTP(signUpRequest.getEmail(), signUpRequest.getPurpose());
         String subject = messageSource.getMessage("verify.email.subject", null, signUpRequest.getLocale());

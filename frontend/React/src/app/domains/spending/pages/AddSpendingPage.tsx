@@ -6,21 +6,23 @@ import type { CategoryData } from "../../category/schemas/Category";
 import { fetchCategoriesForUser } from "../../category/application/CategoryService";
 import type { TypePeriodicData } from "../schemas/TypePeriodic";
 import { obtainAllTypePeriodic } from "../application/SpendingService";
+import { useUser } from "@/app/contexts/UserContext";
 
 export function AddSpendingPage() {
     const { t } = useTranslation();
     const [categories, setCategories] = useState<CategoryData[]>([]);
     const [typePeriodic, setTypePeriodic] = useState<TypePeriodicData[]>([]);
+    const { user } = useUser();
     useEffect(() => {
-        fetchCategoriesForUser(1).then(setCategories).catch(console.error);
+        fetchCategoriesForUser(user?.id || 1 ).then(setCategories).catch(console.error);
         obtainAllTypePeriodic().then(setTypePeriodic).catch(console.error);
-    }, []);
-    
+    }, [user?.id || 1]);
+
     return (
         <DefaultPageLayout>
             <h1 className="page-title">{t('header.sections.spendings.addSpending.title')}</h1>
             <p className="page-description">{t('domains.spending.add.description')}</p>
-            <AddSpendingForm categories={categories} typePeriodic={typePeriodic} />
+            <AddSpendingForm categories={categories} typePeriodic={typePeriodic} idUser={user?.id || 1} />
         </DefaultPageLayout>
     )
 }

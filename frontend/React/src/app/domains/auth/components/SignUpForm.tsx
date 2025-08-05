@@ -29,6 +29,7 @@ export function SignUpForm() {
         resolver: zodResolver(schema),
     });
     const { setUser } = useUser();
+
     const onSubmit = async (data: SignUpFormData) => {
         try {
             const requestBody: SignUpFormData = {
@@ -38,8 +39,7 @@ export function SignUpForm() {
             const { confirmPassword, ...userData } = requestBody;
             const result = await signUpUser(userData);
             setUser(result);
-
-            toast.info(t('signUp.success'));
+            toast.info(t('signUp.success', {name: result.name}));
             // After successful signup, redirect to the authUser page
             navigate('/authUser');
         } catch (error) {

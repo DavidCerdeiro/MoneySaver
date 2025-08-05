@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { MobileNav } from "./MobileNav"
-
+import { useUser } from "@/app/contexts/UserContext.tsx"
 // This component is used to render a list item in the navigation menu
 function ListItem({
   title,
@@ -45,10 +45,11 @@ function ListItem({
 
 export function HeaderComponent() {
   const { t } = useTranslation();
+  const { setUser } = useUser();
   const navigate = useNavigate();
   // This function handles the logout action
   const handleLogout = () => {
-    localStorage.removeItem('authToken')
+    setUser(null);
     navigate('/login')
   }
 

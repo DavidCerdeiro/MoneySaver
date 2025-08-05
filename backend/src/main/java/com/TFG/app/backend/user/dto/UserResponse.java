@@ -4,12 +4,14 @@ package com.TFG.app.backend.user.dto;
  * UserResponse class represents the response object for user-related operations.
  */
 public class UserResponse {
+    private Integer id; // Unique identifier for the user
     private String name;
     private String surname;
     private String email;
     private boolean isAuthenticated;
 
-    public UserResponse(String name, String surname, String email, boolean isAuthenticated) {
+    public UserResponse(Integer id, String name, String surname, String email, boolean isAuthenticated) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -40,6 +42,9 @@ public class UserResponse {
     }
     public void setIsAuthenticated(boolean isAuthenticated) {
         this.isAuthenticated = isAuthenticated;
+    }
+    public Integer getId() {
+        return id;
     }
 
 }
