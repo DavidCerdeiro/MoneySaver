@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.TFG.app.backend.spending.entity.Spending;
 import java.util.List;
+
 public interface SpendingRepository extends JpaRepository<Spending, Integer> {
     
     @Query(value = """

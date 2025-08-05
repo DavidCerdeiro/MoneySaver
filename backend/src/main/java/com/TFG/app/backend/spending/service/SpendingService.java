@@ -20,4 +20,5 @@ public class SpendingService {
     public List<Spending> getAllSpendingsByUserMonthAndYear(int userId, int month, int year) {
         return spendingRepository.findAllByUserIdAndMonthAndYear(userId, month, year);
     }
+
 }

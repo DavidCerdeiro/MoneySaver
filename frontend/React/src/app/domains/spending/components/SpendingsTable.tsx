@@ -113,10 +113,6 @@ export function SpendingsTable({ spendings, month, year }: SpendingTableProps) {
                       {t('domains.spending.periodicity')}
                       {getSortIcon('periodic')}
                   </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('expirationDate')}>
-                      {t('domains.spending.expirationDate')}
-                      {getSortIcon('expirationDate')}
-                  </TableHead>
               </TableRow>
           </TableHeader>
           <TableBody>
@@ -130,9 +126,6 @@ export function SpendingsTable({ spendings, month, year }: SpendingTableProps) {
                       <TableCell className="table-cell">{spending.date.substring(0, 10)}</TableCell>
                       <TableCell className="table-cell">
                           {spending.periodic ? <Check className="inline-block" /> : <X className="inline-block" />}
-                      </TableCell>
-                      <TableCell className="table-cell">
-                          {spending.expirationDate ? spending.expirationDate.substring(0, 10) : '-'}
                       </TableCell>
                   </TableRow>
               ))}

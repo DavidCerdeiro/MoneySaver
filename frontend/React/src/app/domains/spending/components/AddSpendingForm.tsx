@@ -1,11 +1,12 @@
+
 import { CategoryCombobox } from "../../category/components/CategoryCombobox";
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { CategoryData } from "../../category/schemas/Category";
 import { Label } from "../../shared/components/label";
 import { Input } from "../../shared/components/input";
 import type { SpendingData } from "../schemas/Spending";
-import { useForm } from 'react-hook-form';
+import { useForm} from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createSpendingSchema } from "../schemas/Spending";
 import { Button } from "../../shared/components/button";
@@ -31,6 +32,7 @@ export function AddSpendingForm({ categories, typePeriodic }: AddSpendingFormPro
         handleSubmit,
         reset,
         watch,
+        setValue,
         formState: { errors, isSubmitting },
     } = useForm<SpendingData>({
         resolver: zodResolver(schema),
@@ -38,20 +40,17 @@ export function AddSpendingForm({ categories, typePeriodic }: AddSpendingFormPro
             name: '',
             amount: undefined,
             isPeriodic: false,
+            idUser: 1,
         },
     });
-    
+    useEffect(() => {
+        selectedTypePeriodic && setValue("typePeriodic", selectedTypePeriodic.id);
+        selectedCategory && setValue("idCategory", selectedCategory.id);
+    }, [selectedCategory, selectedTypePeriodic, setValue]);
     const isPeriodic = watch("isPeriodic");
-
     const onSubmit = async (formData: SpendingData) => {
-        const requestBody: SpendingData = {
-            ...formData,
-            idCategory: selectedCategory?.id,
-            typePeriodic: selectedTypePeriodic?.id,
-            idUser: 1, // Assuming a static user ID for now, replace with actual user ID logic
-        };
         
-        await addSpending(requestBody);
+        await addSpending(formData);
 
         console.log("Spending added successfully");
         // Reset form and state after submission
@@ -72,10 +71,17 @@ export function AddSpendingForm({ categories, typePeriodic }: AddSpendingFormPro
                 </div>
                 <div className="w-full">
                 <Label htmlFor="amount">{t('domains.spending.amount')}</Label>
-                    <Input type="number" id="amount" placeholder={t('domains.spending.amountPlaceholder')} {...register('amount', {valueAsNumber: true, required: t('domains.spending.errors.amount.required')})} className="input-dark" />
-                    {errors.amount && (
-                        <p className="text-red-500 text-sm">{errors.amount.message}</p>
-                    )}
+                    <Input
+                        type="number"
+                        step="any"
+                        id="amount"
+                        placeholder={t('domains.spending.amountPlaceholder')}
+                        {...register('amount', {
+                            valueAsNumber: true,
+                            required: t('domains.spending.errors.amount.required'),
+                        })}
+                        className="input-dark"
+                    />
                 </div>
             </div>
             <div className="row-input mt-10 ">
@@ -99,6 +105,7 @@ export function AddSpendingForm({ categories, typePeriodic }: AddSpendingFormPro
                         {...register("date", { required: t('domains.spending.errors.date.required') })}
                         className="input-dark"
                     />
+                    {errors.date && (<p className="text-red-500 text-sm">{errors.date.message}</p>)}
                 </div>
             </div>
             <div className="row-input-periodic mt-10">
@@ -120,6 +127,7 @@ export function AddSpendingForm({ categories, typePeriodic }: AddSpendingFormPro
                         setSelectedTypePeriodic={setSelectedTypePeriodic}
                         disabled={!isPeriodic}
                     />
+                    {errors.typePeriodic && (<p className="text-red-500 text-sm">{errors.typePeriodic.message}</p>)}
                 </div>
                 <div className="w-full">
                     <Label htmlFor="expirationDate">{t('domains.spending.expirationDate')}</Label>
@@ -130,6 +138,7 @@ export function AddSpendingForm({ categories, typePeriodic }: AddSpendingFormPro
                         {...register("expirationDate")}
                         className="input-dark"
                     />
+                    {errors.expirationDate && (<p className="text-red-500 text-sm">{errors.expirationDate.message}</p>)}
                 </div>
             </div>
             <div className="row-input mt-10">

@@ -118,6 +118,7 @@ CREATE TABLE IF NOT EXISTS "periodic_spending"(
   "Id_Spending" int NOT NULL UNIQUE,
   "Id_TypePeriodic" int NOT NULL,
   "Expiration" Date NOT NULL,
+  "Last_Execution" Date NOT NULL,
   FOREIGN KEY ("Id_Spending") REFERENCES spending("Id"),
   FOREIGN KEY ("Id_TypePeriodic") REFERENCES "type_periodic"("Id")
 );

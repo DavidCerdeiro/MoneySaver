@@ -1,3 +1,4 @@
+
 import { z } from 'zod';
 
 export const createSpendingSchema = (t: any) =>
@@ -40,6 +41,17 @@ export const createSpendingSchema = (t: any) =>
     }, {
       path: ["expirationDate"],
       message: t("domains.spending.errors.expirationDate.future"),
+    })
+    .refine((data) => {
+      if (data.isPeriodic && data.expirationDate) {
+        const spendingDay = new Date(data.date).getDate();
+        const expirationDay = new Date(data.expirationDate).getDate();
+        return spendingDay === expirationDay;
+      }
+      return true;
+    }, {
+      path: ["expirationDate"],
+      message: t("domains.spending.errors.expirationDate.sameDay"),
     });
 
 

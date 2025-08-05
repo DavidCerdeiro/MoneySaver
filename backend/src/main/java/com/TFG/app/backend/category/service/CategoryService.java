@@ -5,6 +5,8 @@ import com.TFG.app.backend.category.repository.CategoryRepository;
 import com.TFG.app.backend.user.service.UserService;
 import com.TFG.app.backend.category.entity.Category;
 import com.TFG.app.backend.user.entity.User;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -46,4 +48,14 @@ public class CategoryService {
         Category updatedCategory = categoryRepository.save(category);
         return updatedCategory != null;
     }
+
+    public void updateCategoryTotalSpendingMonthly() {
+        List<Category> categories = categoryRepository.findAll();
+        for (Category category : categories) {
+            category.setTotalSpending(BigDecimal.ZERO);
+            categoryRepository.save(category);
+        }
+    }
+
+    public void addPeriodicSpendingToCategory(Integer categoryId, BigDecimal periodicSpendingAmount) {}
 }

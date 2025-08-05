@@ -34,7 +34,7 @@
     "error": "Email not registered."
   },
   "auth": {
-    "title": "User Authentication",
+    "defaultTitle": "User Authentication",
     "forgotTitle": "Password Recovery",
     "forgotDescription": "To recover your password, a verification code has been sent to your email.",
     "signUpDescription": "To complete your registration, a verification code has been sent to your email.",
@@ -127,7 +127,12 @@
       },
       "view": {
         "title": "View Spendings",
-        "description": "Check your spendings by month."
+        "description": "Check your spendings by month and sort them as you wish.",
+        "previousMonth": "Previous month",
+        "nextMonth": "Next month"
+      },
+      "table": {
+        "caption": "List of your expenses for {{month}}/{{year}}"
       },
       "errors": {
         "name": {
@@ -142,7 +147,8 @@
         },
         "expirationDate": {
           "required": "Expiration date is required",
-          "future": "Expiration date must be in the future"
+          "future": "Expiration date must be in the future",
+          "sameDay": "The start day of the expense must match the expiration date"
         },
         "typePeriodic": {
           "required": "Periodicity type is required"
@@ -191,7 +197,7 @@
         "title": "Spendings",
         "viewSpendings": {
           "title": "View Spendings",
-          "description": "Check your recent spendings by category."
+          "description": "Check your expenses by month."
         },
         "addSpending": {
           "title": "Add Spending",
@@ -211,7 +217,7 @@
         "title": "Charts",
         "viewCharts": {
           "title": "View Charts",
-          "description": "Visualize your monthly spendings through charts."
+          "description": "Visualize your expenses for this month through different charts."
         },
         "compareCharts": {
           "title": "Compare Stats",

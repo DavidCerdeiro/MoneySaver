@@ -53,17 +53,15 @@ public class SpendingController {
         category.setTotalSpending(category.getTotalSpending().add(BigDecimal.valueOf(spendingRequest.getAmount()).setScale(2, RoundingMode.HALF_UP)));
 
         spending.setAmount(BigDecimal.valueOf(spendingRequest.getAmount()).setScale(2, RoundingMode.HALF_UP));
+        categoryService.updateCategory(category);
         // Convert date string to Date object
         LocalDate localDate = LocalDate.parse(spendingRequest.getDate());
         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         spending.setDate(date);
         spending.setIsPeriodic(spendingRequest.isPeriodic());
 
-        
-
         Spending savedSpending = spendingService.createSpending(spending);
         if(savedSpending != null){
-            System.out.println("Is periodic: " + spendingRequest.isPeriodic());
             if(spendingRequest.isPeriodic()) {
                 Periodic_Spending periodicSpending = new Periodic_Spending();
                 periodicSpending.setSpending(spending);
@@ -71,6 +69,7 @@ public class SpendingController {
                 localDate = LocalDate.parse(spendingRequest.getExpirationDate());
                 date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
                 periodicSpending.setExpiration(date);
+                periodicSpending.setLastExecution(date);
                 periodicSpendingService.createPeriodicSpending(periodicSpending);
             }
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -83,11 +82,7 @@ public class SpendingController {
     public ResponseEntity<AllSpendingFromUserMonthAndYearResponse> AllCategoriesFromUser(@RequestParam("idUser") Long idUser, @RequestParam("month") int month, @RequestParam("year") int year) {
         List<Spending> spendings = spendingService.getAllSpendingsByUserMonthAndYear(idUser.intValue(), month, year);
         List<SpendingResponse> spendingResponses = new ArrayList<>();
-        Periodic_Spending spendingPeriodic = new Periodic_Spending();
         for (Spending spending : spendings) {
-            if (spending.getIsPeriodic()) {
-                spendingPeriodic = periodicSpendingService.getPeriodicSpendingBySpendingId(spending.getId());
-            }
             SpendingResponse spendingResponse = new SpendingResponse(
                 spending.getId(),
                 spending.getName(),
@@ -95,8 +90,7 @@ public class SpendingController {
                 spending.getDate(),
                 spending.getCategory().getName(),
                 spending.getCategory().getIcon(),
-                spending.getIsPeriodic(),
-                spendingPeriodic != null ? spendingPeriodic.getExpiration() : null
+                spending.getIsPeriodic()
             );
             
             spendingResponses.add(spendingResponse);

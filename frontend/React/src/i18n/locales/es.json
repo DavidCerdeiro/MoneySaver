@@ -147,7 +147,8 @@
                 },
                 "expirationDate": {
                     "required": "La fecha de expiración es obligatoria",
-                    "future": "La fecha de expiración debe ser posterior a la fecha actual"
+                    "future": "La fecha de expiración debe ser posterior a la fecha actual",
+                    "sameDay": "Debe coincidir el día que comienza el gasto con la fecha de expiración"
                 },
                 "typePeriodic": {
                     "required": "El tipo de periodicidad es obligatorio"

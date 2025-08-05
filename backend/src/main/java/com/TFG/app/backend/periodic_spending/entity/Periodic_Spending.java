@@ -25,6 +25,9 @@ public class Periodic_Spending {
     @Column(name = "Expiration", nullable = false)
     private Date expiration;
     
+    @Column(name = "Last_Execution", nullable = false)
+    private Date lastExecution;
+
     // Getters and Setters
     public Integer getId() {
         return id;
@@ -49,5 +52,11 @@ public class Periodic_Spending {
     }
     public void setExpiration(Date expiration) {
         this.expiration = expiration;
+    }
+    public Date getLastExecution() {
+        return lastExecution;
+    }
+    public void setLastExecution(Date lastExecution) {
+        this.lastExecution = lastExecution;
     }
 }
