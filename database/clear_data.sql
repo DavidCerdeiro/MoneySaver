@@ -1,14 +1,14 @@
 TRUNCATE TABLE 
   "periodic_spending",
-  "bank_transaction",
+  "transaction",
   bill,
   spending,
   establishment,
   "address",
   street,
-  "bank_account",
+  "account",
   category,
   "user",
   "type_periodic",
-  "savings_goal"
+  "goal"
 RESTART IDENTITY CASCADE;

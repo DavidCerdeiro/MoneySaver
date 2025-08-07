@@ -6,7 +6,6 @@ import com.TFG.app.backend.user.entity.User;
 import com.TFG.app.backend.user.repository.UserRepository;
 
 import com.TFG.app.backend.infraestructure.email.*;
-import com.TFG.app.backend.infraestructure.one_time_password.entity.One_Time_Password;
 import com.TFG.app.backend.infraestructure.one_time_password.service.One_Time_PasswordService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Locale;
 import java.util.Optional;
-
+import com.google.common.cache.Cache;
 @Service
 public class UserService {
 
@@ -26,6 +25,9 @@ public class UserService {
 
     @Autowired
     private MessageSource messageSource;
+
+    @Autowired
+    private Cache<String, String> otpCache;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, One_Time_PasswordService oneTimePasswordService, EmailService emailService) {
         this.userRepository = userRepository;
@@ -98,11 +100,11 @@ public class UserService {
      * it returns true.
      */
     public boolean authUser(String email, String code, Locale locale) {
-        One_Time_Password otp = oneTimePasswordService.getOTP(email);
+        String otp = oneTimePasswordService.getOTP(email);
         // Check if the OTP exists and if the provided code matches the OTP token
         if(otp != null) {
-            if(otp.getToken().equals(code)) {
-                oneTimePasswordService.deleteUsedOTP(otp.getId());
+            if(otp.equals(code)) {
+                otpCache.invalidate(email); // Invalidate the OTP after successful authentication
                 Optional<User> user = userRepository.findByEmail(email);
                 if(user.isPresent()) {
                     // Update the user's authentication status to true
@@ -131,12 +133,12 @@ public class UserService {
      * it returns false, indicating the user is not verified.
      */
     public boolean verifyUser(String email, String code, Locale locale) {
-        One_Time_Password otp = oneTimePasswordService.getOTP(email);
+        String otp = oneTimePasswordService.getOTP(email);
         // Check if the OTP exists and if the provided code matches the OTP token
-        boolean result = otp != null && otp.getToken().equals(code);
+        boolean result = otp != null && otp.equals(code);
         // If the OTP is valid, delete it from the database
         if(result && otp != null){
-            oneTimePasswordService.deleteUsedOTP(otp.getId());
+            otpCache.invalidate(email); // Invalidate the OTP after successful verification
 
             // Sending a success email to the user
             String subject = messageSource.getMessage("logIn.successSubject", null, locale);

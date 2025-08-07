@@ -14,18 +14,15 @@ import com.TFG.app.backend.periodic_spending.entity.Periodic_Spending;
 import com.TFG.app.backend.periodic_spending.service.Periodic_SpendingService;
 import com.TFG.app.backend.spending.entity.Spending;
 import com.TFG.app.backend.spending.service.SpendingService;
-import com.TFG.app.backend.category.service.CategoryService;
 import com.TFG.app.backend.category.entity.Category;
 import java.util.Date;
 
 @Component
 public class CategoryMonthlyJob implements Job {
 
-    private final CategoryService categoryService;
     private final Periodic_SpendingService periodicSpendingService;
     private final SpendingService spendingService;
-    public CategoryMonthlyJob(CategoryService categoryService, Periodic_SpendingService periodicSpendingService, SpendingService spendingService) {
-        this.categoryService = categoryService;
+    public CategoryMonthlyJob(Periodic_SpendingService periodicSpendingService, SpendingService spendingService) {
         this.periodicSpendingService = periodicSpendingService;
         this.spendingService = spendingService;
     }
@@ -34,7 +31,7 @@ public class CategoryMonthlyJob implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         // Lógica para resetear totales aquí
         System.out.println("Reseteando totales de categorías (1er día del mes)");
-        categoryService.updateCategoryTotalSpendingMonthly();
+        
         System.out.println("Sumando gastos periódicos a las categorías.");
         List<Periodic_Spending> periodicSpendings = periodicSpendingService.getAllValidPeriodicSpendings();
         LocalDate today = LocalDate.now();
@@ -62,8 +59,6 @@ public class CategoryMonthlyJob implements Job {
 
             spendingService.createSpending(newSpending);
 
-            category.setTotalSpending(category.getTotalSpending().add(amount));
-            categoryService.updateCategory(category);
         }
     }
 

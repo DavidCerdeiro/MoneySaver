@@ -50,10 +50,10 @@ public class SpendingController {
         spending.setName(spendingRequest.getName());
         spending.setUser(user);
         spending.setCategory(category);
-        category.setTotalSpending(category.getTotalSpending().add(BigDecimal.valueOf(spendingRequest.getAmount()).setScale(2, RoundingMode.HALF_UP)));
+        
 
         spending.setAmount(BigDecimal.valueOf(spendingRequest.getAmount()).setScale(2, RoundingMode.HALF_UP));
-        categoryService.updateCategory(category);
+        
         // Convert date string to Date object
         LocalDate localDate = LocalDate.parse(spendingRequest.getDate());
         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());

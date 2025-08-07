@@ -1,10 +1,8 @@
 -- Clean up existing triggers and functions before creating new ones
 DROP TRIGGER IF EXISTS TR_Type_Periodic_BI ON "type_periodic";
-DROP TRIGGER IF EXISTS TR_Purpose_OTP_BI ON "purpose_otp";
 DROP TRIGGER IF EXISTS TR_Periodic_Spending_BI ON "periodic_spending";
 
 DROP FUNCTION IF EXISTS validate_periodic_type();
-DROP FUNCTION IF EXISTS validate_otp_purpose();
 DROP FUNCTION IF EXISTS validate_periodic_spending();
 
 -- 1. Validate name in periodic spending type
@@ -19,19 +17,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- 2. Validate name in one-time password purpose
-CREATE OR REPLACE FUNCTION validate_otp_purpose()
-RETURNS trigger AS $$
-BEGIN
-    IF NEW."Name" NOT IN ('registerUser', 'loginUser', 'forgotPassword') THEN
-        RAISE EXCEPTION 'Invalid OTP purpose (must be registerUser, loginUser or forgotPassword)'
-        USING ERRCODE = 'P0004';
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
 
--- 3. Validate expiration date is today or later and matches the spending day
+-- 2. Validate expiration date is today or later and matches the spending day
 CREATE OR REPLACE FUNCTION validate_periodic_spending()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -64,18 +51,12 @@ $$ LANGUAGE plpgsql;
 
 -- 1. Trigger for type_periodic
 CREATE TRIGGER TR_Type_Periodic_BI
-BEFORE INSERT OR UPDATE ON "type_periodic"
+BEFORE INSERT ON "type_periodic"
 FOR EACH ROW
 EXECUTE FUNCTION validate_periodic_type();
 
--- 2. Trigger for purpose_otp
-CREATE TRIGGER TR_Purpose_OTP_BI
-BEFORE INSERT OR UPDATE ON "purpose_otp"
-FOR EACH ROW
-EXECUTE FUNCTION validate_otp_purpose();
-
--- 3. Trigger for periodic_spending
+-- 2. Trigger for periodic_spending
 CREATE TRIGGER TR_Periodic_Spending_BI
-BEFORE INSERT OR UPDATE ON "periodic_spending"
+BEFORE INSERT ON "periodic_spending"
 FOR EACH ROW
 EXECUTE FUNCTION validate_periodic_spending();

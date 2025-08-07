@@ -9,11 +9,11 @@ public class CategoryResponse {
     private String icon;
     private BigDecimal totalSpending;
 
-    public CategoryResponse(Category category) {
+    public CategoryResponse(Category category, BigDecimal totalSpending) {
         this.id = category.getId();
         this.name = category.getName();
         this.icon = category.getIcon();
-        this.totalSpending = category.getTotalSpending();
+        this.totalSpending = totalSpending;
     }
 
     public Integer getId() {

@@ -13,6 +13,7 @@ import com.TFG.app.backend.category.dto.AllCategoriesFromUserResponse;
 import com.TFG.app.backend.category.dto.CategoryResponse;
 import com.TFG.app.backend.category.entity.Category;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 @RestController
@@ -62,7 +63,7 @@ public class CategoryController {
     public ResponseEntity<AllCategoriesFromUserResponse> AllCategoriesFromUser(@RequestParam("idUser") Long idUser) {
         List<Category> categories = categoryService.getAllCategoriesFromUser(idUser.intValue());
         List<CategoryResponse> response = categories.stream()
-        .map(CategoryResponse::new)
+        .map(category -> new CategoryResponse(category, BigDecimal.ZERO)) // Assuming totalSpending is not needed here
         .collect(Collectors.toList());
 
         return ResponseEntity.ok(new AllCategoriesFromUserResponse(response));

@@ -2,7 +2,7 @@ package com.TFG.app.backend.establishment.entity;
 
 import jakarta.persistence.*;
 import com.TFG.app.backend.category.entity.Category;
-import com.TFG.app.backend.address.entity.Address;
+import com.TFG.app.backend.region.entity.Region;
 @Entity
 @Table(name = "establishment")
 public class Establishment {
@@ -20,8 +20,8 @@ public class Establishment {
     private Category category;
 
     @OneToOne
-    @JoinColumn(name = "Id_Address", nullable = false, unique = true)
-    private Address address;
+    @JoinColumn(name = "Id_Region", nullable = false)
+    private Region region;
 
     // Getters y setters
     public Integer getId() {
@@ -41,10 +41,10 @@ public class Establishment {
     public void setCategory(Category category) {
         this.category = category;
     }
-    public Address getAddress() {
-        return address;
+    public Region getRegion() {
+        return region;
     }
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setRegion(Region region) {
+        this.region = region;
     }
 }

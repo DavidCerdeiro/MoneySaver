@@ -49,13 +49,5 @@ public class CategoryService {
         return updatedCategory != null;
     }
 
-    public void updateCategoryTotalSpendingMonthly() {
-        List<Category> categories = categoryRepository.findAll();
-        for (Category category : categories) {
-            category.setTotalSpending(BigDecimal.ZERO);
-            categoryRepository.save(category);
-        }
-    }
-
     public void addPeriodicSpendingToCategory(Integer categoryId, BigDecimal periodicSpendingAmount) {}
 }
