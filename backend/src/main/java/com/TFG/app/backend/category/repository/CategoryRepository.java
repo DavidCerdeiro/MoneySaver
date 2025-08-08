@@ -6,9 +6,14 @@ import com.TFG.app.backend.user.entity.User;
 import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer>{
-    // Method to find categories by user
+    // Method to find categories by user and not deleted
+    List<Category> findByUserAndIsDeletedFalse(User user);
+
+    // Method to find all categories by user
     List<Category> findByUser(User user);
 
+
+    void deleteById(Long id);
     // Method to find a category by user and id
-    Category findByUserAndId(User user, Integer idCategory);
+    Category findByIdAndIsDeletedFalse(Integer idCategory);
 }

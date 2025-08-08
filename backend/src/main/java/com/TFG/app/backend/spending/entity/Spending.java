@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.TFG.app.backend.category.entity.Category;
 import com.TFG.app.backend.establishment.entity.Establishment;
@@ -37,7 +37,7 @@ public class Spending {
     private BigDecimal amount;
 
     @Column(name = "Date", nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @Column(name = "IsPeriodic", nullable = false)
     private Boolean isPeriodic;
@@ -82,10 +82,10 @@ public class Spending {
         this.amount = amount.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

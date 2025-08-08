@@ -1,7 +1,7 @@
 package com.TFG.app.backend.periodic_spending.entity;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.TFG.app.backend.spending.entity.Spending;
 import com.TFG.app.backend.type_periodic.entity.Type_Periodic;
@@ -23,10 +23,10 @@ public class Periodic_Spending {
     private Type_Periodic typePeriodic;
 
     @Column(name = "Expiration", nullable = false)
-    private Date expiration;
+    private LocalDate expiration;
     
-    @Column(name = "Last_Execution", nullable = false)
-    private Date lastExecution;
+    @Column(name = "Last_Payment", nullable = false)
+    private LocalDate lastPayment;
 
     // Getters and Setters
     public Integer getId() {
@@ -47,16 +47,16 @@ public class Periodic_Spending {
         this.typePeriodic = typePeriodic;
     }
 
-    public Date getExpiration() {
+    public LocalDate getExpiration() {
         return expiration;
     }
-    public void setExpiration(Date expiration) {
+    public void setExpiration(LocalDate expiration) {
         this.expiration = expiration;
     }
-    public Date getLastExecution() {
-        return lastExecution;
+    public LocalDate getLastPayment() {
+        return lastPayment;
     }
-    public void setLastExecution(Date lastExecution) {
-        this.lastExecution = lastExecution;
+    public void setLastPayment(LocalDate lastPayment) {
+        this.lastPayment = lastPayment;
     }
 }

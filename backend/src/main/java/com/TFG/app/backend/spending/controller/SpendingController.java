@@ -19,9 +19,7 @@ import com.TFG.app.backend.spending.dto.AllSpendingFromUserMonthAndYearResponse;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import com.TFG.app.backend.spending.dto.SpendingResponse;
 @RestController
@@ -44,7 +42,7 @@ public class SpendingController {
     @PostMapping("/add")
     public ResponseEntity<String> addSpending(@RequestBody AddSpendingRequest spendingRequest) {
         Spending spending = new Spending();
-        Category category = categoryService.getCategoryFromUserAndId(spendingRequest.getIdUser(), spendingRequest.getIdCategory());
+        Category category = categoryService.getCategoryFromId(spendingRequest.getIdCategory());
         User user = userService.getUserById(spendingRequest.getIdUser());
 
         spending.setName(spendingRequest.getName());
@@ -56,8 +54,7 @@ public class SpendingController {
         
         // Convert date string to Date object
         LocalDate localDate = LocalDate.parse(spendingRequest.getDate());
-        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        spending.setDate(date);
+        spending.setDate(localDate);
         spending.setIsPeriodic(spendingRequest.isPeriodic());
 
         Spending savedSpending = spendingService.createSpending(spending);
@@ -67,9 +64,8 @@ public class SpendingController {
                 periodicSpending.setSpending(spending);
                 periodicSpending.setTypePeriodic(typePeriodicService.getTypePeriodicById(spendingRequest.getTypePeriodic()));
                 localDate = LocalDate.parse(spendingRequest.getExpirationDate());
-                date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                periodicSpending.setExpiration(date);
-                periodicSpending.setLastExecution(date);
+                periodicSpending.setExpiration(localDate);
+                periodicSpending.setLastPayment(localDate);
                 periodicSpendingService.createPeriodicSpending(periodicSpending);
             }
             return new ResponseEntity<>(HttpStatus.CREATED);

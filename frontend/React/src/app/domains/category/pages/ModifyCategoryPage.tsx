@@ -31,7 +31,7 @@ export function ModifyCategoryPage() {
         <p className="page-description">{t('domains.category.modify.description')}</p>
         <CategoriesTable categories={categories} />
         <div className="mt-5">
-          <ModifyCategoryForm categories={categories} refreshCategories={refreshCategories} idUser={user?.id || 1} />
+          <ModifyCategoryForm categories={categories} refreshCategories={refreshCategories} />
         </div>
       </div>
     </DefaultPageLayout>

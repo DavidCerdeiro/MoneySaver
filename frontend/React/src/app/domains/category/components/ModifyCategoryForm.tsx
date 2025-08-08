@@ -10,16 +10,16 @@ import { Input } from "@/app/domains/shared/components/input";
 import { useTranslation } from "react-i18next";
 import { getEmojiById } from "./EmojiFunctions";
 import { modifyCategory } from "../application/CategoryService";
+import { deleteCategory } from "../application/CategoryService";
 import { toast } from "sonner";
 import { Dialog, DialogTrigger, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogClose, DialogTitle } from "@/app/domains/shared/components/dialog";
 import { CategoryCombobox } from "./CategoryCombobox";
 type ModifyCategoryFormProps = {
   categories: CategoryData[];
   refreshCategories: () => Promise<void>;
-  idUser: number;
 };
 
-export function ModifyCategoryForm({ categories, refreshCategories, idUser }: ModifyCategoryFormProps) {
+export function ModifyCategoryForm({ categories, refreshCategories }: ModifyCategoryFormProps) {
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<CategoryData | null>(null);
   const [selectedEmoji, setSelectedEmoji] = useState("");
@@ -39,7 +39,6 @@ export function ModifyCategoryForm({ categories, refreshCategories, idUser }: Mo
       const requestBody: CategoryData = {
         ...formData,
         icon: selectedIdEmoji,
-        idUser: idUser,
         id: selectedCategory?.id,
       };
       console.log("Submitting category modification with data:", requestBody);
@@ -55,8 +54,24 @@ export function ModifyCategoryForm({ categories, refreshCategories, idUser }: Mo
       console.error('Error modifying category:', error);
       toast.error(t('domains.category.modify.error'));
     }
+    
   };
+const handleDelete = async () => {
+    if (!selectedCategory) return;
 
+    try {
+      await deleteCategory(selectedCategory?.id);
+      toast.success(t('domains.category.delete.success', { name: selectedCategory?.name }));
+      await refreshCategories();
+      setSelectedCategory(null);
+      setSelectedEmoji("");
+      setSelectedIdEmoji("");
+      reset();
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      toast.error(t('domains.category.delete.error'));
+    }
+  };
   return (
     <>
       <CategoryCombobox
@@ -101,7 +116,7 @@ export function ModifyCategoryForm({ categories, refreshCategories, idUser }: Mo
 
           <Dialog>
             <DialogTrigger asChild disabled={!selectedCategory || isSubmitting}>
-              <Button className="button-green">{t('domains.category.add.submit')}</Button>
+              <Button className="button-neutral">{t('domains.category.modify.submit')}</Button>
             </DialogTrigger>
 
             <DialogContent className="dialog-content">
@@ -119,6 +134,34 @@ export function ModifyCategoryForm({ categories, refreshCategories, idUser }: Mo
                   <DialogClose asChild>
                     <Button type="button" variant="secondary" className="button-red">
                       {t('domains.category.modify.dialog.cancel')}
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger asChild disabled={!selectedCategory || isSubmitting}>
+              <Button className="button-neutral">
+                {t('domains.category.delete.submit')}
+              </Button>
+            </DialogTrigger>
+
+            <DialogContent className="dialog-content">
+              <form onSubmit={handleSubmit(handleDelete)}>
+                <DialogHeader className="dialog-header">
+                  <DialogTitle className="dialog-title">{t('domains.category.delete.dialog.title')}</DialogTitle>
+                  <DialogDescription className="dialog-description">{t('domains.category.delete.dialog.description', { icon: getEmojiById(selectedCategory?.icon), name: selectedCategory?.name, newIcon: getEmojiById(selectedIdEmoji), newName: watchedName })}</DialogDescription>
+                </DialogHeader>
+                <DialogFooter className="dialog-footer">
+                  <DialogClose asChild>
+                    <Button type="submit" className="button-green"  disabled={isSubmitting}>
+                      {t('domains.category.delete.dialog.confirm')}
+                    </Button>
+                  </DialogClose>
+                  <DialogClose asChild>
+                    <Button type="button" variant="secondary" className="button-red">
+                      {t('domains.category.delete.dialog.cancel')}
                     </Button>
                   </DialogClose>
                 </DialogFooter>

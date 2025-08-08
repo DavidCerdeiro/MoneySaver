@@ -1,18 +1,17 @@
 package com.TFG.app.backend.spending.dto;
 
 import java.math.BigDecimal;
-import java.util.Date;
-
+import java.time.LocalDate;
 public class SpendingResponse {
     private Integer id;
     private String name;
     private BigDecimal amount;
-    private Date date;
+    private LocalDate date;
     private String categoryName;
     private String iconCategory;
     private boolean isPeriodic;
 
-    public SpendingResponse(Integer id, String name, BigDecimal amount, Date date, String categoryName, String iconCategory, boolean isPeriodic) {
+    public SpendingResponse(Integer id, String name, BigDecimal amount, LocalDate date, String categoryName, String iconCategory, boolean isPeriodic) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -31,7 +30,7 @@ public class SpendingResponse {
     public BigDecimal getAmount() {
         return amount;
     }
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
     public String getCategoryName() {

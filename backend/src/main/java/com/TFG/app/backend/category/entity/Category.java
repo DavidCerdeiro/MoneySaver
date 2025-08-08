@@ -22,6 +22,9 @@ public class Category {
     @Column(name = "Icon", length = 64, nullable = false)
     private String icon;
 
+    @Column(name = "IsDeleted", nullable = false)
+    private boolean isDeleted;
+
     // Getters and Setters
     public Integer  getId() {
         return id;
@@ -46,5 +49,13 @@ public class Category {
     }
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS category (
   "Id_User" int NOT NULL,
   "Name" varchar(32) NOT NULL,
   "Icon" varchar(64) NOT NULL,
+  "IsDeleted" boolean NOT NULL DEFAULT false,
   CONSTRAINT "RS_Category__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id"),
   UNIQUE ("Id_User", "Name")
 );

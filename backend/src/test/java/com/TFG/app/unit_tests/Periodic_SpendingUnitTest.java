@@ -2,7 +2,7 @@ package com.TFG.app.unit_tests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.TFG.app.backend.periodic_spending.entity.Periodic_Spending;
 import com.TFG.app.backend.spending.entity.Spending;
@@ -16,7 +16,7 @@ public class Periodic_SpendingUnitTest {
 
         spending.setName("Netflix");
         typePeriodic.setName("Monthly");
-        periodicSpending.setExpiration(new Date());
+        periodicSpending.setExpiration(LocalDate.now().plusMonths(1));
         periodicSpending.setTypePeriodic(typePeriodic);
         periodicSpending.setSpending(spending);
         

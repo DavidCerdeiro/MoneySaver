@@ -84,16 +84,32 @@
         "error": "Error creating category. Please review the fields and try again."
       },
       "modify": {
-        "description": "Modify the name or icon of any category. This will not affect already registered spendings or the total amount.",
+        "description": "Modify the name or icon of any category. This will not affect already registered spendings or the total amount. Or delete the category—this will remove all associated expenses.",
         "tableCaption": "List of your current spending categories",
         "success": "Category {{icon}} {{name}} successfully modified.",
         "error": "Error modifying the category. Please review the fields and try again.",
         "selectCategory": "Select category",
         "noCategories": "No categories found.",
+        "submit": "Modify category",
         "dialog": {
           "title": "Confirm modification",
           "description": "Are you sure you want to change the category {{icon}}{{name}} to {{newIcon}}{{newName}}?",
           "confirm": "Yes, modify",
+          "cancel": "No, cancel"
+        }
+      },
+      "delete": {
+        "description": "Delete the category you want. This action will delete all spendings in that category.",
+        "tableCaption": "List of your current spending categories",
+        "success": "Category {{icon}} {{name}} deleted successfully.",
+        "error": "Error deleting category. Please try again.",
+        "selectCategory": "Select category",
+        "noCategories": "No categories found.",
+        "submit": "Delete category",
+        "dialog": {
+          "title": "Confirm deletion",
+          "description": "Are you sure you want to delete the category {{icon}}{{name}}? All related spendings will be removed.",
+          "confirm": "Yes, delete",
           "cancel": "No, cancel"
         }
       },
@@ -210,7 +226,7 @@
         },
         "editCategory": {
           "title": "Edit Category",
-          "description": "Update the details of an existing category."
+          "description": "Update the details of an existing category or delete it."
         }
       },
       "charts": {

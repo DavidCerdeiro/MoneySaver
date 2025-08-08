@@ -8,7 +8,9 @@ import com.TFG.app.backend.spending.entity.Spending;
 import java.util.List;
 
 public interface SpendingRepository extends JpaRepository<Spending, Integer> {
-    
+
+    List<Spending> findAllByCategoryId(int categoryId);
+
     @Query(value = """
         SELECT * FROM spending
         WHERE "Id_User" = :userId

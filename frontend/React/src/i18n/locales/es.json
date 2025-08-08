@@ -84,16 +84,32 @@
                 "error": "Error al crear la categoría. Por favor, revise los campos e inténtelo de nuevo."
             },
             "modify":{
-                "description": "Modifica el nombre o icono de la categoría que desees. Esta modificación no afectará a los gastos ya registrados ni al gasto total.",
+                "description": "Modifica el nombre o icono de la categoría que desees. Esta modificación no afectará a los gastos ya registrados ni al gasto total. O elimina la categoría, todos los gastos de dicha categoría se eliminarán.",
                 "tableCaption": "Listado de tus categorías de gasto actuales",
                 "success": "Categoría {{icon}} {{name}} modificada con éxito.",
                 "error": "Error al modificar la categoría. Por favor, revise los campos e inténtelo de nuevo.",
                 "selectCategory": "Seleccionar categoría",
                 "noCategories": "No se ha encontrado ninguna categoría.",
+                "submit": "Modificar categoría",
                 "dialog":{
                     "title": "Confirmar modificación",
                     "description": "¿Estás seguro de que deseas modificar la categoría {{icon}}{{name}} a {{newIcon}}{{newName}}?",
                     "confirm": "Sí, modificar",
+                    "cancel": "No, cancelar"
+                }
+            },
+            "delete":{
+                "description": "Elimina la categoría que desees. Esta acción eliminará todos los gastos de dicha categoría.",
+                "tableCaption": "Listado de tus categorías de gasto actuales",
+                "success": "Categoría {{icon}} {{name}} eliminada con éxito.",
+                "error": "Error al eliminar la categoría. Por favor, inténtelo de nuevo.",
+                "selectCategory": "Seleccionar categoría",
+                "noCategories": "No se ha encontrado ninguna categoría.",
+                "submit": "Eliminar categoría",
+                "dialog":{
+                    "title": "Confirmar eliminación",
+                    "description": "¿Estás seguro de que deseas eliminar la categoría {{icon}}{{name}}? Todos los gastos relacionados se eliminarán.",
+                    "confirm": "Sí, eliminar",
                     "cancel": "No, cancelar"
                 }
             },
@@ -197,7 +213,7 @@
                 "title": "Gastos",
                 "viewSpendings": {
                     "title": "Ver gastos",
-                    "description": "Consulta tus gastos POR meses."
+                    "description": "Consulta tus gastos por meses."
                 },
                 "addSpending": {
                     "title": "Añadir gasto",
@@ -210,7 +226,7 @@
                 },
                 "editCategory": {
                     "title": "Modificar categoría",
-                    "description": "Actualiza los detalles de una categoría existente."
+                    "description": "Actualiza los detalles de una categoría existente o elimínala."
                 }
             },
             "charts": {

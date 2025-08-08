@@ -10,7 +10,7 @@ import com.TFG.app.backend.user.entity.User;
 import com.TFG.app.backend.category.entity.Category;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class SpendingUnitTest {
     @Test
@@ -25,7 +25,7 @@ public class SpendingUnitTest {
         establishment.setName("GameStop");
         spending.setName("GTA VI");
         spending.setAmount(new BigDecimal("100.00"));
-        spending.setDate(new Date());
+        spending.setDate(LocalDate.now());
         spending.setIsPeriodic(false);
         spending.setCategory(category);
         spending.setEstablishment(establishment);

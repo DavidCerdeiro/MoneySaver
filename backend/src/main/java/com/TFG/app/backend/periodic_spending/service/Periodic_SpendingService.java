@@ -6,7 +6,6 @@ import com.TFG.app.backend.periodic_spending.repository.Periodic_SpendingReposit
 import com.TFG.app.backend.periodic_spending.entity.Periodic_Spending;
 import java.util.List;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Iterator;
 @Service
@@ -32,10 +31,8 @@ public class Periodic_SpendingService {
         // Iterate through the list and check if the last execution date is valid based on the type of periodic spending
         while (iterator.hasNext()) {
             Periodic_Spending ps = iterator.next();
-            LocalDate lastExecution = ps.getLastExecution().toInstant()
-            .atZone(ZoneId.systemDefault())
-            .toLocalDate();
-            int monthsBetween = (today.getYear() - lastExecution.getYear()) * 12 + (today.getMonthValue() - lastExecution.getMonthValue());
+            LocalDate lastPayment = ps.getLastPayment();
+            int monthsBetween = (today.getYear() - lastPayment.getYear()) * 12 + (today.getMonthValue() - lastPayment.getMonthValue());
             boolean isValid;
             switch (ps.getTypePeriodic().getId()) {
                 case 1: // Monthly
@@ -54,8 +51,8 @@ public class Periodic_SpendingService {
                     break;
             }
             if(isValid) {
-                ps.setLastExecution(Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-                periodicSpendingRepository.save(ps); // Update last execution date
+                ps.setLastPayment(today);
+                periodicSpendingRepository.save(ps); // Update last payment date
             }else{
                 iterator.remove(); // Remove invalid periodic spendings
             }

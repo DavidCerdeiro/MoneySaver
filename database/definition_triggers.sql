@@ -39,7 +39,7 @@ BEGIN
     expiration_day := EXTRACT(DAY FROM NEW."Expiration");
 
     IF spending_day != expiration_day THEN
-        RAISE EXCEPTION 'El día de expiración (%) no coincide con el día del gasto (%).', expiration_day, spending_day
+        RAISE EXCEPTION 'Expiration day (%) does not match spending day (%).', expiration_day, spending_day
         USING ERRCODE = 'P0008';
     END IF;
 

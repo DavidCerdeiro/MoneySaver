@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 import com.TFG.app.backend.periodic_spending.entity.Periodic_Spending;
@@ -15,7 +14,6 @@ import com.TFG.app.backend.periodic_spending.service.Periodic_SpendingService;
 import com.TFG.app.backend.spending.entity.Spending;
 import com.TFG.app.backend.spending.service.SpendingService;
 import com.TFG.app.backend.category.entity.Category;
-import java.util.Date;
 
 @Component
 public class CategoryMonthlyJob implements Job {
@@ -29,10 +27,6 @@ public class CategoryMonthlyJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        // Lógica para resetear totales aquí
-        System.out.println("Reseteando totales de categorías (1er día del mes)");
-        
-        System.out.println("Sumando gastos periódicos a las categorías.");
         List<Periodic_Spending> periodicSpendings = periodicSpendingService.getAllValidPeriodicSpendings();
         LocalDate today = LocalDate.now();
         for (Periodic_Spending periodicSpending : periodicSpendings) {
@@ -40,9 +34,7 @@ public class CategoryMonthlyJob implements Job {
             Category category = spending.getCategory();
             BigDecimal amount = spending.getAmount();
 
-            LocalDate originalDate = periodicSpending.getSpending().getDate().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+            LocalDate originalDate = periodicSpending.getSpending().getDate();
             int dayOfMonth = originalDate.getDayOfMonth();
             int lastDayOfMonth = today.lengthOfMonth();
             int adjustedDay = Math.min(dayOfMonth, lastDayOfMonth);
@@ -53,7 +45,7 @@ public class CategoryMonthlyJob implements Job {
             newSpending.setCategory(category);
             newSpending.setUser(spending.getUser());
             newSpending.setName(spending.getName());
-            newSpending.setDate(Date.from(newSpendingDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            newSpending.setDate(newSpendingDate);
             newSpending.setIsPeriodic(true);
             newSpending.setEstablishment(spending.getEstablishment());
 

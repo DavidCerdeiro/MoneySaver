@@ -48,3 +48,17 @@ export async function fetchCategoriesForUser(userId: number) {
   const data = await obtainAllCategories({ idUser: userId });
   return data.categories;
 }
+
+export async function deleteCategory(categoryId: number | undefined) {
+  const response = await fetch(`/api/categories/delete?id=${categoryId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Category deletion failed");
+  }
+}
