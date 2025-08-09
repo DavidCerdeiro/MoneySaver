@@ -56,7 +56,7 @@ export function AddCategoryForm({idUser}: {idUser: number | undefined}) {
       <p  className="page-description">{t('domains.category.add.description')}</p>
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
         <div className="grid gap-2">
-          <Label htmlFor="name">{t('domains.category.name')}</Label>
+          <Label htmlFor="name" className="label">{t('domains.category.name')}</Label>
           <Input id="name" {...register('name', { required: t('domains.category.errors.name.required') })} className="input-dark" />
           {errors.name && (
             <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -64,7 +64,7 @@ export function AddCategoryForm({idUser}: {idUser: number | undefined}) {
         </div>
 
         <div className="grid gap-2">
-          <Label>{t('domains.category.icon')}</Label>
+          <Label className="label">{t('domains.category.icon')}</Label>
           <div className="flex items-center gap-2">
             <span className="text-2xl">{t('domains.category.add.iconSelected')}{selectedEmoji}</span>
           </div>

@@ -1,5 +1,7 @@
 package com.TFG.app.backend.spending.dto;
 
+import com.TFG.app.backend.establishment.dto.EstablishmentResponse;
+
 public class AddSpendingRequest {
     private String name;
     private Integer idCategory;
@@ -9,6 +11,7 @@ public class AddSpendingRequest {
     private String expirationDate;
     private boolean isPeriodic;
     private Integer typePeriodic;
+    private EstablishmentResponse establishment;
 
     // Getters
     public String getName() { return name; }
@@ -19,6 +22,7 @@ public class AddSpendingRequest {
     public String getExpirationDate() { return expirationDate; }
     public boolean isPeriodic() { return isPeriodic; }
     public Integer getTypePeriodic() { return typePeriodic; }
+    public EstablishmentResponse getEstablishment() { return establishment; }
 
     // Setters
     public void setName(String name) { this.name = name; }
@@ -29,4 +33,5 @@ public class AddSpendingRequest {
     public void setExpirationDate(String expirationDate) { this.expirationDate = expirationDate; }
     public void setIsPeriodic(boolean isPeriodic) { this.isPeriodic = isPeriodic; }
     public void setTypePeriodic(Integer typePeriodic) { this.typePeriodic = typePeriodic; }
+    public void setEstablishment(EstablishmentResponse establishment) { this.establishment = establishment; }
 }

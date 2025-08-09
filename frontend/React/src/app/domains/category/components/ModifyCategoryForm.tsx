@@ -87,7 +87,7 @@ const handleDelete = async () => {
       <div className='flex flex-col items-center justify-center px-4 mt-6'>
         <form className="grid gap-4 md:gap-6">
           <div className="grid gap-2">
-            <Label htmlFor="name">{t('domains.category.name')}</Label>
+            <Label htmlFor="name" className="label">{t('domains.category.name')}</Label>
             <Input id="name" {...register("name", { required: t('domains.category.errors.name.required') })} className="input-dark" />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -95,7 +95,7 @@ const handleDelete = async () => {
           </div>
 
           <div className="grid gap-2">
-            <Label>{t('domains.category.icon')}</Label>
+            <Label className="label">{t('domains.category.icon')}</Label>
             <div className="flex items-center gap-2">
               <span className="text-2xl">{t('domains.category.add.iconSelected')}{emojiIsNative ? selectedEmoji : getEmojiById(selectedEmoji)}</span>
             </div>

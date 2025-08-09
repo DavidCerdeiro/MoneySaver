@@ -1,5 +1,5 @@
-
 import { z } from 'zod';
+import { EstablishmentDataSchema } from './EstablishmentData';
 
 export const createSpendingSchema = (t: any) =>
   z.object({
@@ -13,9 +13,9 @@ export const createSpendingSchema = (t: any) =>
       expirationDate: z.string().optional(),
       typePeriodic: z.number().optional(),
       idCategory: z.number().optional(),
+      establishment: EstablishmentDataSchema.optional(),
     })
     .refine((data) => {
-      // Ensure that if isPeriodic is true, expirationDate is provided
       if (data.isPeriodic) return !!data.expirationDate;
       return true;
     }, {
@@ -23,7 +23,6 @@ export const createSpendingSchema = (t: any) =>
       message: t("domains.spending.errors.expirationDate.required"),
     })
     .refine((data) => {
-      // Ensure that if isPeriodic is true, typePeriodic is provided
       if (data.isPeriodic) return !!data.typePeriodic;
       return true;
     }, {
@@ -31,7 +30,6 @@ export const createSpendingSchema = (t: any) =>
       message: t("domains.spending.errors.typePeriodic.required"),
     })
     .refine((data) => {
-      // Ensure that if expirationDate is provided, it is greater than or equal to today
       if (data.isPeriodic && data.expirationDate) {
         const today = new Date().setHours(0, 0, 0, 0);
         const expiration = new Date(data.expirationDate).setHours(0, 0, 0, 0);
@@ -53,6 +51,5 @@ export const createSpendingSchema = (t: any) =>
       path: ["expirationDate"],
       message: t("domains.spending.errors.expirationDate.sameDay"),
     });
-
 
 export type SpendingData = z.infer<ReturnType<typeof createSpendingSchema>>;

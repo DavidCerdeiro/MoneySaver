@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.TFG.app.backend.spending.service.SpendingService;
 import com.TFG.app.backend.type_periodic.service.Type_PeriodicService;
 import com.TFG.app.backend.periodic_spending.service.Periodic_SpendingService;
+import com.TFG.app.backend.establishment.service.EstablishmentService;
 import com.TFG.app.backend.user.service.UserService;
 import com.TFG.app.backend.spending.entity.Spending;
 import com.TFG.app.backend.category.entity.Category;
@@ -30,13 +31,15 @@ public class SpendingController {
     private final UserService userService;
     private final Type_PeriodicService typePeriodicService;
     private final Periodic_SpendingService periodicSpendingService;
+    private final EstablishmentService establishmentService;
 
-    public SpendingController(SpendingService spendingService, UserService userService, CategoryService categoryService, Type_PeriodicService typePeriodicService, Periodic_SpendingService periodicSpendingService) {
+    public SpendingController(SpendingService spendingService, UserService userService, CategoryService categoryService, Type_PeriodicService typePeriodicService, Periodic_SpendingService periodicSpendingService, EstablishmentService establishmentService) {
         this.spendingService = spendingService;
         this.userService = userService;
         this.categoryService = categoryService;
         this.typePeriodicService = typePeriodicService;
         this.periodicSpendingService = periodicSpendingService;
+        this.establishmentService = establishmentService;
     }
 
     @PostMapping("/add")
@@ -44,7 +47,14 @@ public class SpendingController {
         Spending spending = new Spending();
         Category category = categoryService.getCategoryFromId(spendingRequest.getIdCategory());
         User user = userService.getUserById(spendingRequest.getIdUser());
-
+        if(spendingRequest.getEstablishment() != null) {
+            System.out.println("Establishment: " + spendingRequest.getEstablishment().getName());
+            if(spendingRequest.getEstablishment().getId() == 0) { // A new establishment
+                spending.setEstablishment(establishmentService.newEstablishment(spendingRequest.getEstablishment().getName(), spendingRequest.getEstablishment().getCountry(), spendingRequest.getEstablishment().getCity()));
+            } else {
+                spending.setEstablishment(establishmentService.findById(spendingRequest.getEstablishment().getId()));
+            }
+        }
         spending.setName(spendingRequest.getName());
         spending.setUser(user);
         spending.setCategory(category);

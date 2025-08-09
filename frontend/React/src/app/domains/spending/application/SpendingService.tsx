@@ -40,3 +40,16 @@ export async function obtainAllSpendingsByMonthAndUserId(data: { month: number, 
   }
   return await response.json();
 }
+
+export async function obtainAllEstablishments() {
+  const response = await fetch(`/api/establishments/all`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to fetch establishments");
+  }
+  return await response.json();
+}

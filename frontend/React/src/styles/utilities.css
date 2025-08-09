@@ -46,6 +46,9 @@
 }
 
 /* === Inputs === */
+.label{
+  @apply block mb-2;
+}
 .input-dark {
   @apply bg-zinc-800 text-white placeholder-gray-300 border-none focus:ring-2 focus:ring-green-500;
 }
@@ -98,10 +101,10 @@
 
 /* === Category Selector === */
 .category-selector-button {
-  @apply w-[200px] justify-between bg-zinc-900 text-white hover:bg-zinc-800 hover:text-white;
+  @apply w-full justify-between bg-zinc-900 text-white hover:bg-zinc-800 hover:text-white;
 }
 .category-popover-content {
-  @apply w-[200px] p-0 bg-zinc-900 border border-white text-white;
+  @apply w-full p-0 bg-zinc-900 border border-white text-white;
 }
 .category-command {
   @apply bg-zinc-900 text-white;
@@ -126,7 +129,7 @@
 .row-input {
   @apply grid grid-cols-2 gap-4;
 }
-.row-input-periodic {
+.row-three-input {
   @apply grid grid-cols-3 gap-4;
 }
 

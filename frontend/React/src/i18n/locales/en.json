@@ -71,6 +71,14 @@
       "email": "Email",
       "password": "Password"
     },
+    "establishment": {
+      "name": "Establishment",
+      "country": "Country",
+      "city": "City",
+      "namePlaceholder": "Tinoco",
+      "countryPlaceholder": "Spain",
+      "cityPlaceholder": "Cádiz"
+    },
     "category": {
       "title": "Spending Categories",
       "name": "Name",
@@ -139,6 +147,11 @@
         "noTypePeriodic": "No periodicity types found.",
         "searchTypePeriodic": "Search type",
         "selectTypePeriodic": "Select type",
+        "selectEstablishment": "Select establishment",
+        "searchEstablishment": "Search establishment",
+        "noEstablishment": "No establishment found",
+        "newEstablishment": "+ New establishment",
+        "selectedNewEstablishment": "New establishment",
         "success": "{{name}} has been registered with an amount of €{{amount}} under the {{category}} category"
       },
       "view": {

@@ -1,7 +1,6 @@
 package com.TFG.app.backend.establishment.entity;
 
 import jakarta.persistence.*;
-import com.TFG.app.backend.category.entity.Category;
 import com.TFG.app.backend.region.entity.Region;
 @Entity
 @Table(name = "establishment")
@@ -14,10 +13,6 @@ public class Establishment {
 
     @Column(name = "Name", length = 64, nullable = false)
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "Id_Category", nullable = false)
-    private Category category;
 
     @OneToOne
     @JoinColumn(name = "Id_Region", nullable = false)
@@ -34,13 +29,7 @@ public class Establishment {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Category getCategory() {
-        return category;
-    }
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+    
     public Region getRegion() {
         return region;
     }
