@@ -17,15 +17,6 @@ export function ResetPasswordForm() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { i18n } = useTranslation();
-    // Retrieve the email from localStorage, which was set during the forgot password process
-    const email = localStorage.getItem('otpEmail') || "";
-    // If email is not set, redirect to the home page
-    // This is to ensure that the user has an email set before proceeding with verification.
-    useEffect(() => {
-            if (!email) {
-                navigate("/");
-            }
-        }, [email, navigate]);
     const schema = createResetPasswordSchema(t);
     const {
         register,
@@ -34,6 +25,19 @@ export function ResetPasswordForm() {
     } = useForm({
         resolver: zodResolver(schema),
     });
+
+    // Retrieve the email from localStorage, which was set during the forgot password process
+    const email = localStorage.getItem('otpEmail') || "";
+    // If email is not set, redirect to the home page
+    // This is to ensure that the user has an email set before proceeding with verification.
+
+    useEffect(() => {
+        if (!email) {
+            navigate("/");
+        }
+    }, [email, navigate]);
+
+    
 
     const onSubmit = async (formData: ResetPasswordData) => {
             try {

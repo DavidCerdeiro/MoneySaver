@@ -22,11 +22,10 @@ type AddSpendingFormProps = {
   categories: CategoryData[];
   typePeriodic: TypePeriodicData[];
   establishments: EstablishmentData[];
-  idUser: number;
   loadEstablishment: () => void;
 };
 
-export function AddSpendingForm({ categories, typePeriodic, idUser, establishments, loadEstablishment }: AddSpendingFormProps) {
+export function AddSpendingForm({ categories, typePeriodic, establishments, loadEstablishment }: AddSpendingFormProps) {
     const { t } = useTranslation();
     const schema = createSpendingSchema(t);
     // State to manage selected category and type periodic
@@ -46,7 +45,7 @@ export function AddSpendingForm({ categories, typePeriodic, idUser, establishmen
             name: '',
             amount: undefined,
             isPeriodic: false,
-            idUser: idUser,
+            establishment: undefined,
         },
     });
     useEffect(() => {
@@ -66,20 +65,27 @@ export function AddSpendingForm({ categories, typePeriodic, idUser, establishmen
     }, [selectedCategory, selectedTypePeriodic, selectedEstablishment, setValue]);
     const isPeriodic = watch("isPeriodic");
     const onSubmit = async (formData: SpendingData) => {
-        console.log("formData:", formData);
-        await addSpending(formData);
+        if (formData.establishment) {
+            const { name, city, country } = formData.establishment;
+            if (
+            (name === "" || name === undefined) &&
+            (city === "" || city === undefined) &&
+            (country === "" || country === undefined)
+            ) {
+            formData.establishment = undefined;
+            }
+        }
 
-        console.log("Spending added successfully");
-        // Reset form and state after submission
+        await addSpending(formData);
         toast.success(t('domains.spending.add.success', { name: formData.name, amount: formData.amount, category: selectedCategory?.name }));
+
         loadEstablishment();
         setSelectedCategory(null);
         setSelectedTypePeriodic(null);
         setSelectedEstablishment(null);
         reset();
     };
-    
-    console.log("errors:", errors);
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row-input">

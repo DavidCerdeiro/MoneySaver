@@ -68,6 +68,7 @@ export async function forgotPassword(data: ForgotPasswordData) {
 export async function emailVerification(data: EmailVerificationData) {
   const response = await fetch("/api/users/verify", {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
@@ -112,3 +113,44 @@ export async function resetPassword(data: ResetPasswordData) {
   }
 
 }
+
+/**
+ * This function is used to fetch data from a URL with automatic token refresh.
+ * @param url - The URL to fetch data from.
+ * @param options - The options to configure the fetch request.
+ * @returns - The response from the fetch request.
+ */
+export async function fetchWithRefresh(
+    url: string,
+    options: RequestInit = {}
+  ): Promise<Response> {
+    const response = await fetch(url, {
+      ...options,
+      credentials: 'include',
+    });
+
+  if (response.ok) {
+    // If the response is successful, return it
+    return response;
+  }
+
+  // If we receive a 401, we try to refresh the token
+  const refreshResponse = await fetch('/api/auth/refresh', {
+    method: 'POST',
+    credentials: 'include',
+  });
+
+  if (!refreshResponse.ok) {
+    // TODO: Añadir lógica de que te devuelva al inicio de sesión y tal
+    throw new Error('No se pudo refrescar el token, por favor inicia sesión de nuevo.');
+  }
+
+  // If the refresh was successful, we retry the original request
+  const retryResponse = await fetch(url, {
+    ...options,
+    credentials: 'include',
+  });
+
+  return retryResponse;
+}
+

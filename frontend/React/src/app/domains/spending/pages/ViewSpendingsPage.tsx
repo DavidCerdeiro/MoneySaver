@@ -2,19 +2,17 @@ import { useTranslation } from 'react-i18next';
 import { DefaultPageLayout } from "../../shared/layouts/DefaultPageLayout";
 import { useEffect, useState } from "react";
 import { SpendingsTable } from '../components/SpendingsTable';
-import { obtainAllSpendingsByMonthAndUserId } from "../application/SpendingService";
+import { obtainAllSpendingsByMonthAndYear } from "../application/SpendingService";
 import type { SpendingResponse } from '../schemas/SpendingResponse';
 
 import { Button } from '../../shared/components/button';
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { addMonths, subMonths } from "date-fns";
-import { useUser } from '@/app/contexts/UserContext';
 
 export function ViewSpendingsPage() {
   const { t } = useTranslation();
   const [spendings, setSpendings] = useState<SpendingResponse[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const { user } = useUser();
   const selectedMonth = currentDate.getMonth() + 1;
   const selectedYear = currentDate.getFullYear();
 
@@ -25,7 +23,7 @@ export function ViewSpendingsPage() {
   const isCurrentMonth = selectedMonth === todayMonth && selectedYear === todayYear;
 
   useEffect(() => {
-    obtainAllSpendingsByMonthAndUserId({ month: selectedMonth, idUser: user?.id || 1, year: selectedYear })
+    obtainAllSpendingsByMonthAndYear({ month: selectedMonth, year: selectedYear })
       .then((data) => {
         setSpendings(data.spendings);
       })

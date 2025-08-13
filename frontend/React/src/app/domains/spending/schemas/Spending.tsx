@@ -4,7 +4,6 @@ import { EstablishmentDataSchema } from './EstablishmentData';
 export const createSpendingSchema = (t: any) =>
   z.object({
       name: z.string().nonempty(t("domains.spending.errors.name.required")),
-      idUser: z.number().int(),
       amount: z
         .number({ invalid_type_error: t("domains.spending.errors.amount.required") })
         .positive(t("domains.spending.errors.amount.positive")),

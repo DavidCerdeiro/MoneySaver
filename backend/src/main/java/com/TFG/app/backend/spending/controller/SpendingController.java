@@ -16,7 +16,7 @@ import com.TFG.app.backend.category.service.CategoryService;
 import com.TFG.app.backend.periodic_spending.entity.Periodic_Spending;
 import com.TFG.app.backend.spending.dto.AddSpendingRequest;
 import com.TFG.app.backend.spending.dto.AllSpendingFromUserMonthAndYearResponse;
-
+import com.TFG.app.backend.infraestructure.config.JwtService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -32,23 +32,39 @@ public class SpendingController {
     private final Type_PeriodicService typePeriodicService;
     private final Periodic_SpendingService periodicSpendingService;
     private final EstablishmentService establishmentService;
+    private final JwtService jwtService;
 
-    public SpendingController(SpendingService spendingService, UserService userService, CategoryService categoryService, Type_PeriodicService typePeriodicService, Periodic_SpendingService periodicSpendingService, EstablishmentService establishmentService) {
+    public SpendingController(SpendingService spendingService, UserService userService, CategoryService categoryService, Type_PeriodicService typePeriodicService, Periodic_SpendingService periodicSpendingService, EstablishmentService establishmentService, JwtService jwtService) {
         this.spendingService = spendingService;
         this.userService = userService;
         this.categoryService = categoryService;
         this.typePeriodicService = typePeriodicService;
         this.periodicSpendingService = periodicSpendingService;
         this.establishmentService = establishmentService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addSpending(@RequestBody AddSpendingRequest spendingRequest) {
+    public ResponseEntity<Spending> addSpending(@CookieValue(name = "accessToken", required = false) String token, @RequestBody AddSpendingRequest spendingRequest) {
+
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // Decodifica el token y extrae el email o userId
+        String email = jwtService.getEmailFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
         Spending spending = new Spending();
         Category category = categoryService.getCategoryFromId(spendingRequest.getIdCategory());
-        User user = userService.getUserById(spendingRequest.getIdUser());
         if(spendingRequest.getEstablishment() != null) {
-            System.out.println("Establishment: " + spendingRequest.getEstablishment().getName());
             if(spendingRequest.getEstablishment().getId() == 0) { // A new establishment
                 spending.setEstablishment(establishmentService.newEstablishment(spendingRequest.getEstablishment().getName(), spendingRequest.getEstablishment().getCountry(), spendingRequest.getEstablishment().getCity()));
             } else {
@@ -78,15 +94,36 @@ public class SpendingController {
                 periodicSpending.setLastPayment(localDate);
                 periodicSpendingService.createPeriodicSpending(periodicSpending);
             }
-            return new ResponseEntity<>(HttpStatus.CREATED);
+
+            return new ResponseEntity<>(savedSpending, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/all")
-    public ResponseEntity<AllSpendingFromUserMonthAndYearResponse> AllCategoriesFromUser(@RequestParam("idUser") Long idUser, @RequestParam("month") int month, @RequestParam("year") int year) {
-        List<Spending> spendings = spendingService.getAllSpendingsByUserMonthAndYear(idUser.intValue(), month, year);
+    public ResponseEntity<AllSpendingFromUserMonthAndYearResponse> getAllSpendingsByUserMonthAndYear(
+        @CookieValue(name = "accessToken", required = false) String token,
+        @RequestParam("month") int month,
+        @RequestParam("year") int year) {
+
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // Decodifica el token y extrae el email o userId
+        String email = jwtService.getEmailFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        List<Spending> spendings = spendingService.getAllSpendingsByUserMonthAndYear(user.getId().intValue(), month, year);
+
         List<SpendingResponse> spendingResponses = new ArrayList<>();
         for (Spending spending : spendings) {
             SpendingResponse spendingResponse = new SpendingResponse(
@@ -98,9 +135,10 @@ public class SpendingController {
                 spending.getCategory().getIcon(),
                 spending.getIsPeriodic()
             );
-            
             spendingResponses.add(spendingResponse);
         }
+    
         return new ResponseEntity<>(new AllSpendingFromUserMonthAndYearResponse(spendingResponses), HttpStatus.OK);
     }
+
 }

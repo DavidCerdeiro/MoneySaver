@@ -1,18 +1,23 @@
 import type { CategoryData } from "../schemas/Category";
+import { apiFetch } from "../../shared/service/ApiClient";
 
+/**
+ * Adds a new category.
+ * @param data The category data to add.
+ * @returns The added category data.
+ */
 export async function addCategory(data: CategoryData) {
-  const response = await fetch("/api/categories/add", {
+  return await apiFetch("/api/categories/add", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Category addition failed");
-  }
 }
 
+/**
+ * Modifies an existing category.
+ * @param data The category data to modify.
+ * @returns The modified category data.
+ */
 export async function modifyCategory(data: CategoryData) {
   console.log("Modifying category with data:", data);
   const response = await fetch("/api/categories/modify", {
@@ -28,27 +33,36 @@ export async function modifyCategory(data: CategoryData) {
   }
 }
 
-export async function obtainAllCategories(data: { idUser: number }) {
-  const response = await fetch(`/api/categories/all?idUser=${data.idUser}`, {
+/**
+ * Obtains all categories.
+ * @returns A list of all categories.
+ */
+export async function obtainAllCategories() {
+  return await apiFetch<{ categories: CategoryData[] }>("/api/categories/all", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Fetch failed");
-  }
-
-  return await response.json();
 }
 
-export async function fetchCategoriesForUser(userId: number) {
-  const data = await obtainAllCategories({ idUser: userId });
-  return data.categories;
+/**
+ * Fetches categories for the logged-in user.
+ * @returns A list of categories for the user.
+ */
+export async function fetchCategoriesForUser() {
+  return await apiFetch<{ categories: CategoryData[] }>("/api/categories/all", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }
 
+/**
+ * Deletes a category.
+ * @param categoryId The ID of the category to delete.
+ */
 export async function deleteCategory(categoryId: number | undefined) {
   const response = await fetch(`/api/categories/delete?id=${categoryId}`, {
     method: "DELETE",

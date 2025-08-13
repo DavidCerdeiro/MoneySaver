@@ -18,8 +18,6 @@ import { toast } from "sonner";
 export function SignUpForm() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-
-
     const schema = createSignUpSchema(t);
     const {
         register,
@@ -34,7 +32,6 @@ export function SignUpForm() {
         try {
             const requestBody: SignUpFormData = {
                 ...data,
-                purpose: "registerUser",
             };
             const { confirmPassword, ...userData } = requestBody;
             const result = await signUpUser(userData);
@@ -78,6 +75,15 @@ export function SignUpForm() {
                             <Input id="password" type="password" {...register("password")} className="input-dark" />
                             {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                         </div>
+                        <div className="grid gap-2">
+                            <ul className="password-requirements">
+                                <li>{t('domains.user.passwordRequirements.length')}</li>
+                                <li>{t('domains.user.passwordRequirements.uppercase')}</li>
+                                <li>{t('domains.user.passwordRequirements.lowercase')}</li>
+                                <li>{t('domains.user.passwordRequirements.number')}</li>
+                            </ul>
+                        </div>
+                        
                         <div className="grid gap-2">
                             <Label htmlFor="confirmPassword">{t('signUp.confirmPassword')}</Label>
                             <Input id="confirmPassword" type="password" {...register("confirmPassword")} className="input-dark" />

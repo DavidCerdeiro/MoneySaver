@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.TFG.app.backend.category.service.CategoryService;
 import com.TFG.app.backend.spending.service.SpendingService;
+import com.TFG.app.backend.infraestructure.config.JwtService;
+import com.TFG.app.backend.user.entity.User;
+import com.TFG.app.backend.user.service.UserService;
 import com.TFG.app.backend.category.dto.AddCategoryRequest;
 import com.TFG.app.backend.category.dto.ModifyCategoryRequest;
 import com.TFG.app.backend.category.dto.AllCategoriesFromUserResponse;
@@ -19,10 +22,13 @@ import java.util.stream.Collectors;
 public class CategoryController {
     private final CategoryService categoryService;
     private final SpendingService spendingService;
-
-    public CategoryController(CategoryService categoryService, SpendingService spendingService) {
+    private final JwtService jwtService;
+    private final UserService userService;
+    public CategoryController(CategoryService categoryService, SpendingService spendingService, JwtService jwtService, UserService userService) {
         this.categoryService = categoryService;
         this.spendingService = spendingService;
+        this.jwtService = jwtService;
+        this.userService = userService;
     }
 
     /**
@@ -33,36 +39,83 @@ public class CategoryController {
      *         - 400 Bad Request if the category could not be created.
      */
     @PostMapping("/add")
-    public ResponseEntity<String> addCategory(@RequestBody AddCategoryRequest categoryRequest) {
+    public ResponseEntity<Category> addCategory(@CookieValue(name = "accessToken", required = false) String token, @RequestBody AddCategoryRequest categoryRequest) {
+
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        
+        String email = jwtService.getEmailFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         Category category = new Category();
         category.setName(categoryRequest.getName());
         category.setIcon(categoryRequest.getIcon());
-        if(categoryService.addCategory(category, categoryRequest.getIdUser()))
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        else
+        category.setUser(user);
+
+        if(categoryService.addCategory(category)){
+            return new ResponseEntity<>(category, HttpStatus.CREATED);
+        }else{
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
+    /**
+     * Endpoint to modify a category.
+     * @param categoryRequest
+     * @output:
+     *         - 200 OK if the category is modified successfully.
+     *         - 404 Not Found if the category does not exist.
+     */
     @PutMapping("/modify")
     public ResponseEntity<String> modifyCategory(@RequestBody ModifyCategoryRequest categoryRequest) {
         Category category = categoryService.getCategoryFromId(categoryRequest.getId());
+
         if (category != null) {
             category.setName(categoryRequest.getName());
             category.setIcon(categoryRequest.getIcon());
+            
             if (categoryService.updateCategory(category)) {
-                System.out.println("Category updated successfully");
-                return new ResponseEntity<>(HttpStatus.OK);
-                
+                return new ResponseEntity<>(HttpStatus.OK);    
             }
         }
-        System.out.println("Category no updated successfully");
+        
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
     }
 
+    /**
+     * Endpoint to get all categories from a user.
+     * @param token
+     * @output:
+     *         - 200 OK with the list of categories if successful.
+     *         - 401 Unauthorized if the user is not authenticated.
+     *         - 404 Not Found if the user does not exist.
+     */
     @GetMapping("/all")
-    public ResponseEntity<AllCategoriesFromUserResponse> AllCategoriesFromUser(@RequestParam("idUser") Long idUser) {
-        List<Category> categories = categoryService.getAllCategoriesFromUser(idUser.intValue());
-          
+    public ResponseEntity<AllCategoriesFromUserResponse> AllCategoriesFromUser(@CookieValue(name = "accessToken", required = false) String token) {
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String email = jwtService.getEmailFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        List<Category> categories = categoryService.getAllCategoriesFromUser(user.getId());
+
         List<CategoryResponse> response = categories.stream()
         .map(category -> new CategoryResponse(category, spendingService.getTotalAmountByCategory(category.getId())))
         .collect(Collectors.toList());
@@ -70,6 +123,13 @@ public class CategoryController {
         return ResponseEntity.ok(new AllCategoriesFromUserResponse(response));
     }
 
+    /**
+     * Endpoint to delete a category.
+     * @param id
+     * @output:
+     *         - 200 OK if the category is deleted successfully.
+     *         - 404 Not Found if the category does not exist.
+     */
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteCategory(@RequestParam("id") Long id) {
         if (categoryService.deleteCategory(id.intValue())) {

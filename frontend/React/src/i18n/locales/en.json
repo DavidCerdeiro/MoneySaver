@@ -69,7 +69,44 @@
       "name": "Name",
       "surname": "Last Name",
       "email": "Email",
-      "password": "Password"
+      "password": "Password",
+      "confirmPassword": "Confirm new password",
+      "passwordRequirements": {
+        "length": "Password must be at least 8 characters",
+        "uppercase": "Password must contain at least one uppercase letter",
+        "lowercase": "Password must contain at least one lowercase letter",
+        "number": "Password must contain at least one number"
+      },
+      "modify": {
+        "title": "Edit Profile",
+        "description": "Update your profile information.",
+        "success": "Profile updated successfully.",
+        "error": "Error updating profile. Please try again.",
+        "submit": "Update information",
+        "dialog": {
+          "title": "Confirm profile modification",
+          "description": "Are you sure you want to modify your profile? This action will update your personal information.",
+          "confirm": "Yes, modify",
+          "cancel": "No, cancel"
+        }
+      },
+      "delete": {
+        "title": "Delete Account",
+        "success": "Account deleted successfully. Come back soon!",
+        "error": "Error deleting account. Please try again.",
+        "submit": "Delete account",
+        "dialog": {
+          "title": "Confirm account deletion",
+          "description": "Are you sure you want to delete your account? This action is irreversible and will remove your account and all associated data. You will need to verify your email.",
+          "confirm": "Yes, continue",
+          "cancel": "No, cancel"
+        },
+        "confirm": {
+          "title": "Authenticate to delete your account",
+          "description": "Enter the code sent to your email to confirm account deletion.",
+          "submit": "Delete account"
+        }
+      }
     },
     "establishment": {
       "name": "Establishment",
@@ -77,7 +114,7 @@
       "city": "City",
       "namePlaceholder": "Tinoco",
       "countryPlaceholder": "Spain",
-      "cityPlaceholder": "Cádiz"
+      "cityPlaceholder": "Cadiz"
     },
     "category": {
       "title": "Spending Categories",
@@ -144,9 +181,9 @@
         "date": "Date",
         "submit": "Register spending",
         "error": "Error registering spending. Please review the fields and try again.",
-        "noTypePeriodic": "No periodicity types found.",
-        "searchTypePeriodic": "Search type",
         "selectTypePeriodic": "Select type",
+        "searchTypePeriodic": "Search type",
+        "noTypePeriodic": "No periodicity types found.",
         "selectEstablishment": "Select establishment",
         "searchEstablishment": "Search establishment",
         "noEstablishment": "No establishment found",

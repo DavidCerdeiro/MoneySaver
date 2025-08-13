@@ -18,6 +18,8 @@ import { AddCategoryPage } from './app/domains/category/pages/AddCategoryPage.ts
 import { ModifyCategoryPage } from './app/domains/category/pages/ModifyCategoryPage.tsx';
 import { AddSpendingPage } from './app/domains/spending/pages/AddSpendingPage.tsx';
 import { ViewSpendingsPage } from './app/domains/spending/pages/ViewSpendingsPage.tsx';
+import { ModifyProfilePage } from './app/domains/user/pages/ModifyProfilePage.tsx';
+import { DeleteProfilePage } from './app/domains/user/pages/DeleteProfilePage.tsx';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <UserProvider>
@@ -39,6 +41,9 @@ createRoot(document.getElementById('root')!).render(
 
           <Route path="/spendings/add" element={<AddSpendingPage />} />
           <Route path="/spendings/view" element={<ViewSpendingsPage />} />
+
+          <Route path="/user/modifyProfile" element={<ModifyProfilePage />} />
+          <Route path="/user/deleteProfile" element={<DeleteProfilePage />} />
         </Routes>
       </Router>
       <Toaster />

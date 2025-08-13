@@ -13,9 +13,8 @@ import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 
 
-export function AddCategoryForm({idUser}: {idUser: number | undefined}) {
+export function AddCategoryForm() {
   const { t } = useTranslation();
-
   const [selectedEmoji, setSelectedEmoji] = useState<string>('💲');
   const [selectedIdEmoji, setSelectedIdEmoji] = useState<string>('heavy_dollar_sign');
   const schema = createCategorySchema(t);
@@ -28,7 +27,6 @@ export function AddCategoryForm({idUser}: {idUser: number | undefined}) {
     resolver: zodResolver(schema),
     defaultValues: {
       icon: selectedIdEmoji,
-      idUser: idUser ? idUser : 1,
     },
   });
 
@@ -42,10 +40,9 @@ export function AddCategoryForm({idUser}: {idUser: number | undefined}) {
       const nativeEmoji = getEmojiById(selectedIdEmoji);
       toast.success(t('domains.category.add.success', {icon: nativeEmoji, name: formData.name}));
       reset();
-      setSelectedEmoji('💲'); // Emoji por defecto
-      setSelectedIdEmoji('heavy_dollar_sign'); // ID por defecto
+      setSelectedEmoji('💲'); // Default emoji
+      setSelectedIdEmoji('heavy_dollar_sign'); // Default ID
     } catch (error) {
-      console.error('Error adding category:', error);
       toast.error(t('domains.category.add.error'));
     }
   };

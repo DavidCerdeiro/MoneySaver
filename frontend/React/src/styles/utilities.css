@@ -39,7 +39,7 @@
 
 /* === Card === */
 .form-card {
-  @apply w-full max-w-sm bg-zinc-900 text-white rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.08)];
+  @apply inline-block w-auto bg-zinc-900 text-white rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.08)];
 }
 .card-description {
   @apply text-sm text-gray-100 mb-4;
@@ -52,7 +52,10 @@
 .input-dark {
   @apply bg-zinc-800 text-white placeholder-gray-300 border-none focus:ring-2 focus:ring-green-500;
 }
-
+/* === UL === */
+.password-requirements {
+  @apply list-disc list-inside text-sm text-gray-200 space-y-1 pl-2;
+}
 /* === Buttons === */
 .button-green {
   @apply bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors;

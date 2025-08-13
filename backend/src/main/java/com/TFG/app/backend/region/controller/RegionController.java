@@ -9,6 +9,7 @@ import com.TFG.app.backend.region.service.RegionService;
 @RequestMapping("/api/regions")
 public class RegionController {
 
+    @SuppressWarnings("unused")
     private final RegionService regionService;
     public RegionController(RegionService regionService) {
         this.regionService = regionService;

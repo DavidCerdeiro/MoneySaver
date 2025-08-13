@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.Locale;
 import java.util.Optional;
 import com.google.common.cache.Cache;
+
+import jakarta.transaction.Transactional;
 @Service
 public class UserService {
 
@@ -77,7 +79,7 @@ public class UserService {
         // Check if the user exists by email
         if(user.isPresent()) {
             // Generate a one-time password (OTP) and send it via email
-            String otp = oneTimePasswordService.generateOTP(email, "forgotPassword");
+            String otp = oneTimePasswordService.generateOTP(email);
             String subject = messageSource.getMessage("forgot.password.subject", null, locale);
             String body = messageSource.getMessage("forgot.password.body", new Object[]{otp}, locale);
             emailService.sendEmail(email, subject, body);
@@ -97,9 +99,9 @@ public class UserService {
      * If the OTP does not exist or the code does not match,
      * it returns false, indicating the user is not authenticated.
      * If the user is authenticated successfully,
-     * it returns true.
+     * it returns the user ID
      */
-    public boolean authUser(String email, String code, Locale locale) {
+    public Integer authUser(String email, String code, Locale locale) {
         String otp = oneTimePasswordService.getOTP(email);
         // Check if the OTP exists and if the provided code matches the OTP token
         if(otp != null) {
@@ -115,13 +117,13 @@ public class UserService {
                     String subject = messageSource.getMessage("signUp.successSubject", null, locale);
                     String body = messageSource.getMessage("signUp.successBody", null, locale);
                     emailService.sendEmail(email, subject, body);
-                    
-                    return true;
+
+                    return existingUser.getId();
                 }
                 
             }
         }
-        return false;
+        return null;
     }
 
     /*
@@ -165,7 +167,7 @@ public class UserService {
             // Verify the password
             if(passwordEncoder.matches(logInRequest.getPassword(), user.get().getPassword())) {
                 // Generate a one-time password (OTP) and send it via email
-                String otp = oneTimePasswordService.generateOTP(logInRequest.getEmail(), logInRequest.getPurpose());
+                String otp = oneTimePasswordService.generateOTP(logInRequest.getEmail());
                 String subject = messageSource.getMessage("verify.email.subject", null, logInRequest.getLocale());
                 String body = messageSource.getMessage("logIn.email.body", new Object[]{otp}, logInRequest.getLocale());
                 emailService.sendEmail(logInRequest.getEmail(), subject, body);
@@ -198,9 +200,8 @@ public class UserService {
         newUser.setEmail(signUpRequest.getEmail());
         String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
         newUser.setPassword(encodedPassword);
-        System.out.println("Purpose" + signUpRequest.getPurpose());
         // Generate a one-time password (OTP) and send it via email
-        String otp = oneTimePasswordService.generateOTP(signUpRequest.getEmail(), signUpRequest.getPurpose());
+        String otp = oneTimePasswordService.generateOTP(signUpRequest.getEmail());
         String subject = messageSource.getMessage("verify.email.subject", null, signUpRequest.getLocale());
         String body = messageSource.getMessage("signUp.email.body", new Object[]{otp}, signUpRequest.getLocale());
         emailService.sendEmail(signUpRequest.getEmail(), subject, body);
@@ -218,5 +219,70 @@ public class UserService {
     public User getUserById(Integer id) {
         // Retrieve the user by ID from the repository
         return userRepository.findById(id).orElse(null);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
+    /**
+     * Method to send a verification email for account deletion.
+     * It checks if the user exists by email.
+     * If it does, it generates a one-time password (OTP) and sends it via email.
+     * If it doesn't, it returns false.
+     */
+    public boolean sendDeleteVerification(String email, Locale locale) {
+        Optional<User> user = userRepository.findByEmail(email);
+        // Check if the user exists by email
+        if(user.isPresent()) {
+            // Generate a one-time password (OTP) and send it via email
+            String otp = oneTimePasswordService.generateOTP(email);
+            String subject = messageSource.getMessage("delete.email.subject", null, locale);
+            String body = messageSource.getMessage("delete.email.body", new Object[]{otp}, locale);
+            emailService.sendEmail(email, subject, body);
+
+            return true;
+
+        }
+        return false;
+    }
+
+    /*
+     * Method to delete a user.
+     * It checks if the user is not null.
+     * If it is not, it deletes the user from the repository.
+     * If it is null, it does nothing.
+     */
+    @Transactional
+    public boolean deleteUser(User user) {
+        if (user != null) {
+            userRepository.delete(user);
+            return true;
+        }
+        return false;
+    }
+
+    /*
+     * Method to modify a user.
+     * It updates the user's properties that are modified.
+     * If it doesn't, it does nothing.
+     */
+    public void modifyUser(User user, String name, String surname, String password, Integer favouriteGraph) {
+        System.out.println("LOS DATOS SON: " + name + " " + surname + " " + password);
+        if(user.getName() != name) {
+            user.setName(name);
+        }
+        if(user.getSurname() != surname) {
+            user.setSurname(surname);
+        }
+        
+        if(password != null && !passwordEncoder.matches(password, user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(password));
+        }
+        if(favouriteGraph != null && !favouriteGraph.equals(user.getFavouriteGraph())) {
+            user.setFavouriteGraph(favouriteGraph);
+        }
+
+        userRepository.save(user);
     }
 }

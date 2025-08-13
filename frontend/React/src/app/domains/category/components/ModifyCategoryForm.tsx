@@ -41,17 +41,17 @@ export function ModifyCategoryForm({ categories, refreshCategories }: ModifyCate
         icon: selectedIdEmoji,
         id: selectedCategory?.id,
       };
-      console.log("Submitting category modification with data:", requestBody);
       await modifyCategory(requestBody);
+
       const nativeEmoji = getEmojiById(selectedIdEmoji);
       toast.success(t('domains.category.modify.success', {icon: nativeEmoji, name: requestBody.name}));
+
       await refreshCategories();
       setSelectedCategory(null);
       setSelectedEmoji("");
       setSelectedIdEmoji("");
       reset();
     } catch (error) {
-      console.error('Error modifying category:', error);
       toast.error(t('domains.category.modify.error'));
     }
     
@@ -61,14 +61,14 @@ const handleDelete = async () => {
 
     try {
       await deleteCategory(selectedCategory?.id);
-      toast.success(t('domains.category.delete.success', { name: selectedCategory?.name }));
+      toast.success(t('domains.category.delete.success', { icon: getEmojiById(selectedCategory?.icon), name: selectedCategory?.name }));
+
       await refreshCategories();
       setSelectedCategory(null);
       setSelectedEmoji("");
       setSelectedIdEmoji("");
       reset();
     } catch (error) {
-      console.error('Error deleting category:', error);
       toast.error(t('domains.category.delete.error'));
     }
   };

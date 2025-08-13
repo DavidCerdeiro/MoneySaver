@@ -5,16 +5,14 @@ import { ModifyCategoryForm } from "../components/ModifyCategoryForm";
 import { useEffect, useState } from "react";
 import type { CategoryData } from "../schemas/Category";
 import { fetchCategoriesForUser } from "../application/CategoryService";
-import { useUser } from "@/app/contexts/UserContext";
 
 export function ModifyCategoryPage() {
   const { t } = useTranslation();
   const [categories, setCategories] = useState<CategoryData[]>([]);
-  const { user } = useUser();
   const refreshCategories = async () => {
     try {
-      const data = await fetchCategoriesForUser(user?.id || 1);
-      setCategories(data);
+      const data = await fetchCategoriesForUser();
+      setCategories(data.categories);
     } catch (error) {
       console.error("Error refreshing categories", error);
     }

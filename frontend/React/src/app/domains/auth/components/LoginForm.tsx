@@ -26,16 +26,14 @@ export function LoginForm() {
     } = useForm<LogInFormData>({
         resolver: zodResolver(schema),
     });
+    
     // Importing the setUser function from the UserContext to save the user data after login
     const { setUser } = useUser();
     
     const onSubmit = async (data: LogInFormData) => {
     try {
-        const requestBody: LogInFormData = {
-            ...data,
-            purpose: "loginUser",
-        };
-        const result = await logInUser(requestBody);
+        const result = await logInUser(data);
+        localStorage.setItem('userId', String(result.id));
         // Saving the user data in the context
         setUser(result);
 

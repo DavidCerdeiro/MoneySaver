@@ -17,7 +17,7 @@ public class One_Time_PasswordService {
         
     }
 
-    public String generateOTP(String email, String purpose) {
+    public String generateOTP(String email) {
         SecureRandom secureRandom = new SecureRandom();
         int token = secureRandom.nextInt(1_000_000);
         String tokenString = String.format("%06d", token);

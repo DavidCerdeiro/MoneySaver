@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS "user" (
   "Surname" varchar(128) NOT NULL,
   "Email" varchar(32) NOT NULL,
   "Password" varchar(64) NOT NULL,
-  "IsAuthenticated" boolean NOT NULL DEFAULT false
+  "IsAuthenticated" boolean NOT NULL DEFAULT false,
+  "FavouriteGraph" int NOT NULL DEFAULT 1
 );
 
 CREATE UNIQUE INDEX UX_User__Email ON "user"("Email");
@@ -14,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "account" (
   "Id_User" int NOT NULL,
   "BankName" varchar(32) NOT NULL,
   "AccessToken" varchar(128) NOT NULL UNIQUE,
-  CONSTRAINT "RS_Account__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id")
+  CONSTRAINT "RS_Account__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id") ON DELETE CASCADE
 );
 
 CREATE INDEX IX_Account__Id_User ON account("Id_User");
@@ -25,7 +26,7 @@ CREATE TABLE IF NOT EXISTS category (
   "Name" varchar(32) NOT NULL,
   "Icon" varchar(64) NOT NULL,
   "IsDeleted" boolean NOT NULL DEFAULT false,
-  CONSTRAINT "RS_Category__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id"),
+  CONSTRAINT "RS_Category__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id") ON DELETE CASCADE,
   UNIQUE ("Id_User", "Name")
 );
 
@@ -36,7 +37,7 @@ CREATE TABLE IF NOT EXISTS "goal" (
   "Id_Category" int NOT NULL,
   "Name" varchar(32) NOT NULL,
   "TargetAmount" numeric(15,2) NOT NULL,
-  CONSTRAINT "RS_Goal__Id_Category" FOREIGN KEY ("Id_Category") REFERENCES category("Id"),
+  CONSTRAINT "RS_Goal__Id_Category" FOREIGN KEY ("Id_Category") REFERENCES category("Id") ON DELETE CASCADE,
   UNIQUE ("Id_Category", "Name")
 );
 
@@ -67,7 +68,7 @@ CREATE TABLE IF NOT EXISTS spending (
   "IsPeriodic" boolean NOT NULL,
   CONSTRAINT "RS_Spending__Id_Category" FOREIGN KEY ("Id_Category") REFERENCES category("Id"),
   CONSTRAINT "RS_Spending__Id_Establishment" FOREIGN KEY ("Id_Establishment") REFERENCES establishment("Id"),
-  CONSTRAINT "RS_Spending__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id")
+  CONSTRAINT "RS_Spending__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id") ON DELETE CASCADE
 );
 
 CREATE INDEX IX_Spending__Id_User ON spending("Id_User");
@@ -77,15 +78,15 @@ CREATE TABLE IF NOT EXISTS bill (
   "Id" serial PRIMARY KEY,
   "Id_Spending" int NOT NULL UNIQUE,
   "FileRoute" varchar(256) NOT NULL UNIQUE,
-  CONSTRAINT "RS_Bill__Id_Spending" FOREIGN KEY ("Id_Spending") REFERENCES spending("Id")
+  CONSTRAINT "RS_Bill__Id_Spending" FOREIGN KEY ("Id_Spending") REFERENCES spending("Id") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "transaction" (
   "Id" serial PRIMARY KEY,
   "Id_Account" int NOT NULL,
   "Id_Spending" int NOT NULL UNIQUE,
-  CONSTRAINT "RS_Transaction__Id_Spending" FOREIGN KEY ("Id_Spending") REFERENCES spending("Id"),
-  CONSTRAINT "RS_Transaction__Id_Account" FOREIGN KEY ("Id_Account") REFERENCES "account"("Id")
+  CONSTRAINT "RS_Transaction__Id_Spending" FOREIGN KEY ("Id_Spending") REFERENCES spending("Id") ON DELETE CASCADE,
+  CONSTRAINT "RS_Transaction__Id_Account" FOREIGN KEY ("Id_Account") REFERENCES "account"("Id") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "type_periodic" (
@@ -99,6 +100,6 @@ CREATE TABLE IF NOT EXISTS "periodic_spending" (
   "Id_TypePeriodic" int NOT NULL,
   "Expiration" Date NOT NULL,
   "Last_Payment" Date NOT NULL,
-  CONSTRAINT "RS_PeriodicSpending__Id_Spending" FOREIGN KEY ("Id_Spending") REFERENCES spending("Id"),
-  CONSTRAINT "RS_PeriodicSpending__Id_TypePeriodic" FOREIGN KEY ("Id_TypePeriodic") REFERENCES "type_periodic"("Id")
+  CONSTRAINT "RS_PeriodicSpending__Id_Spending" FOREIGN KEY ("Id_Spending") REFERENCES spending("Id") ON DELETE CASCADE,
+  CONSTRAINT "RS_PeriodicSpending__Id_TypePeriodic" FOREIGN KEY ("Id_TypePeriodic") REFERENCES "type_periodic"("Id") ON DELETE CASCADE
 );

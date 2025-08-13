@@ -69,7 +69,44 @@
             "name": "Nombre",
             "surname": "Apellido",
             "email": "Correo electrónico",
-            "password": "Contraseña"
+            "password": "Contraseña",
+            "confirmPassword": "Confirmar nueva contraseña",
+            "passwordRequirements":{
+                "length": "La contraseña debe tener al menos 8 caracteres",
+                "uppercase": "La contraseña debe contener al menos una letra mayúscula",
+                "lowercase": "La contraseña debe contener al menos una letra minúscula",
+                "number": "La contraseña debe contener al menos un número"
+            },
+            "modify":{
+                "title": "Modificar perfil",
+                "description": "Actualiza la información de tu perfil.",
+                "success": "Perfil modificado con éxito.",
+                "error": "Error al modificar el perfil. Por favor, inténtelo de nuevo.",
+                "submit": "Modificar datos",
+                "dialog":{
+                    "title": "Confirmar modificación de perfil",
+                    "description": "¿Estás seguro de que deseas modificar tu perfil? Esta acción actualizará tu información personal. ",
+                    "confirm": "Sí, modificar",
+                    "cancel": "No, cancelar"
+                }
+            },
+            "delete":{
+                "title": "Eliminar cuenta",
+                "success": "Cuenta eliminada con éxito.¡Vuelve pronto!",
+                "error": "Error al eliminar la cuenta. Por favor, inténtelo de nuevo.",
+                "submit": "Eliminar cuenta",
+                "dialog":{
+                    "title": "Confirmar eliminación de perfil",
+                    "description": "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible y eliminará tu cuenta y todos tus datos asociados. Deberás verificar tu correo electrónico.",
+                    "confirm": "Sí, continuar",
+                    "cancel": "No, cancelar"
+                },
+                "confirm":{
+                    "title": "Autentica para eliminar tu cuenta",
+                    "description": "Introduce el código enviado a tu correo para confirmar la eliminación de tu cuenta.",
+                    "submit": "Eliminar cuenta"
+                }
+            }
         },
         "establishment":{
             "name": "Establecimiento",

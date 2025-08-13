@@ -26,6 +26,9 @@ public class User{
     @Column(name = "IsAuthenticated", nullable = false)
     private boolean isAuthenticated = false;
 
+    @Column(name = "FavouriteGraph")
+    private Integer favouriteGraph = 1;
+
     // Getters and Setters
     public Integer getId() {
         return id;
@@ -69,5 +72,13 @@ public class User{
 
     public void setIsAuthenticated(boolean isAuthenticated) {
         this.isAuthenticated = isAuthenticated;
+    }
+
+    public Integer getFavouriteGraph() {
+        return favouriteGraph;
+    }
+
+    public void setFavouriteGraph(Integer favouriteGraph) {
+        this.favouriteGraph = favouriteGraph;
     }
 }
