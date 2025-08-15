@@ -75,7 +75,6 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
             formData.establishment = undefined;
             }
         }
-
         await addSpending(formData);
         toast.success(t('domains.spending.add.success', { name: formData.name, amount: formData.amount, category: selectedCategory?.name }));
 

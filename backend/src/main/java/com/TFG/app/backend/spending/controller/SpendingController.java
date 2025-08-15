@@ -63,8 +63,12 @@ public class SpendingController {
         }
         
         Spending spending = new Spending();
+        
         Category category = categoryService.getCategoryFromId(spendingRequest.getIdCategory());
+
         if(spendingRequest.getEstablishment() != null) {
+            System.out.println("ID establecimiento: " + spendingRequest.getEstablishment().getId());
+            System.out.println("Nombre establecimiento: " + spendingRequest.getEstablishment().getName());
             if(spendingRequest.getEstablishment().getId() == 0) { // A new establishment
                 spending.setEstablishment(establishmentService.newEstablishment(spendingRequest.getEstablishment().getName(), spendingRequest.getEstablishment().getCountry(), spendingRequest.getEstablishment().getCity()));
             } else {

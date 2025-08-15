@@ -1,6 +1,9 @@
 package com.TFG.app.backend.infraestructure.config;
 
 import org.springframework.http.ResponseCookie;
+import java.util.Arrays;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Cookie;
 
 public class CookieUtil {
 
@@ -13,5 +16,16 @@ public class CookieUtil {
                 .sameSite("Strict") // Set SameSite attribute
                 .maxAge(maxAgeSeconds) // Set cookie max age
                 .build();
+    }
+
+    public static String getCookieValue(HttpServletRequest request, String name) {
+        if (request.getCookies() == null) {
+            return null;
+        }
+        return Arrays.stream(request.getCookies())
+                .filter(c -> name.equals(c.getName()))
+                .map(Cookie::getValue)
+                .findFirst()
+                .orElse(null);
     }
 }
