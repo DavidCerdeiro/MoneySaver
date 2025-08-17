@@ -1,5 +1,7 @@
 package com.TFG.app.backend.user.entity;
 
+import com.TFG.app.backend.type_chart.entity.Type_Chart;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +12,10 @@ public class User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "Id_TypeChart", nullable = false)
+    private Type_Chart typeChart;
 
     @Column(name = "Name", length = 64, nullable = false)
     private String name;
@@ -25,9 +31,6 @@ public class User{
 
     @Column(name = "IsAuthenticated", nullable = false)
     private boolean isAuthenticated = false;
-
-    @Column(name = "FavouriteGraph")
-    private Integer favouriteGraph = 1;
 
     // Getters and Setters
     public Integer getId() {
@@ -74,11 +77,11 @@ public class User{
         this.isAuthenticated = isAuthenticated;
     }
 
-    public Integer getFavouriteGraph() {
-        return favouriteGraph;
+    public Type_Chart getTypeChart() {
+        return typeChart;
     }
 
-    public void setFavouriteGraph(Integer favouriteGraph) {
-        this.favouriteGraph = favouriteGraph;
+    public void setTypeChart(Type_Chart typeChart) {
+        this.typeChart = typeChart;
     }
 }

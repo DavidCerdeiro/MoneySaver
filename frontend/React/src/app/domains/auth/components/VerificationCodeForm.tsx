@@ -1,6 +1,6 @@
 import '@/styles/utilities.css';
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/app/domains/shared/components/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from  "@/app/domains/shared/components/card";
 import { Button } from "@/app/domains/shared/components/button";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/app/domains/shared/components/input-otp.tsx";
 import { useTranslation } from 'react-i18next';

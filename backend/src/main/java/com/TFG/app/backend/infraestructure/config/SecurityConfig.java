@@ -28,23 +28,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                                    JwtCookieAuthenticationFilter jwtCookieAuthenticationFilter) throws Exception {
 
-        http
-            // CORS must be enabled in Security for preflight to pass before rules
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            // Disallowed CSRF for stateless APIs with JWT in cookies
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
-            // Without sessions: everything via JWT
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            // Authentication and authorization rules
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(
                     "/api/users/auth/**", "/api/users/refresh", "/api/users/login",
                     "/api/users/forgot-password/**", "/api/users/verify", "/api/users/signup",
-                    "/api/type_periodic/all", "/api/establishments/all"
+                    "/api/type_periodic/all", "/api/establishments/all", "/api/type_charts/all"
                 ).permitAll()
                 .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll()
             )
             .exceptionHandling(ex -> ex.authenticationEntryPoint((req, res, e) -> res.sendError(401)))
             .addFilterBefore(jwtCookieAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

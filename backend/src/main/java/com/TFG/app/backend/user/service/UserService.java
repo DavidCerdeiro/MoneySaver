@@ -7,6 +7,8 @@ import com.TFG.app.backend.user.repository.UserRepository;
 
 import com.TFG.app.backend.infraestructure.email.*;
 import com.TFG.app.backend.infraestructure.one_time_password.service.One_Time_PasswordService;
+import com.TFG.app.backend.type_chart.entity.Type_Chart;
+import com.TFG.app.backend.type_chart.service.Type_ChartService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -24,6 +26,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final One_Time_PasswordService oneTimePasswordService;
     private final EmailService emailService;
+    private final Type_ChartService typeChartService;
 
     @Autowired
     private MessageSource messageSource;
@@ -31,12 +34,12 @@ public class UserService {
     @Autowired
     private Cache<String, String> otpCache;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, One_Time_PasswordService oneTimePasswordService, EmailService emailService) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, One_Time_PasswordService oneTimePasswordService, EmailService emailService, Type_ChartService typeChartService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.oneTimePasswordService = oneTimePasswordService;
         this.emailService = emailService;
-        
+        this.typeChartService = typeChartService;
     }
 
     /*
@@ -163,9 +166,12 @@ public class UserService {
     public Optional<User> logInUser(LogInRequest logInRequest) {
         // Check if the user exists by email
         if(userRepository.findByEmail(logInRequest.getEmail()).isPresent()){
+            System.out.println("User found: " + logInRequest.getEmail());
             Optional<User> user = userRepository.findByEmail(logInRequest.getEmail());
             // Verify the password
+            System.out.println("Password to verify: " + logInRequest.getPassword());
             if(passwordEncoder.matches(logInRequest.getPassword(), user.get().getPassword())) {
+                System.out.println("Password matches for user: " + logInRequest.getEmail());
                 // Generate a one-time password (OTP) and send it via email
                 String otp = oneTimePasswordService.generateOTP(logInRequest.getEmail());
                 String subject = messageSource.getMessage("verify.email.subject", null, logInRequest.getLocale());
@@ -200,6 +206,7 @@ public class UserService {
         newUser.setEmail(signUpRequest.getEmail());
         String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
         newUser.setPassword(encodedPassword);
+        newUser.setTypeChart(typeChartService.getTypeChartById(1));
         // Generate a one-time password (OTP) and send it via email
         String otp = oneTimePasswordService.generateOTP(signUpRequest.getEmail());
         String subject = messageSource.getMessage("verify.email.subject", null, signUpRequest.getLocale());
@@ -267,22 +274,33 @@ public class UserService {
      * It updates the user's properties that are modified.
      * If it doesn't, it does nothing.
      */
-    public void modifyUser(User user, String name, String surname, String password, Integer favouriteGraph) {
-        System.out.println("LOS DATOS SON: " + name + " " + surname + " " + password);
+    public void modifyUser(User user, String name, String surname, String password, Integer idTypeChart) {
         if(user.getName() != name) {
             user.setName(name);
         }
         if(user.getSurname() != surname) {
             user.setSurname(surname);
         }
-        
-        if(password != null && !passwordEncoder.matches(password, user.getPassword())) {
+    
+        if(password != "" && !passwordEncoder.matches(password, user.getPassword())) {
+            System.out.println("PASSWORD CHANGED");
             user.setPassword(passwordEncoder.encode(password));
         }
-        if(favouriteGraph != null && !favouriteGraph.equals(user.getFavouriteGraph())) {
-            user.setFavouriteGraph(favouriteGraph);
+        
+        if(idTypeChart != null) {
+            Type_Chart favouriteTypeChart = typeChartService.getTypeChartById(idTypeChart);
+            if(favouriteTypeChart != user.getTypeChart()) {
+                user.setTypeChart(favouriteTypeChart);
+            }
         }
 
         userRepository.save(user);
+    }
+
+    public Integer getFavouriteTypeChart(User user) {
+        if (user != null) {
+            return user.getTypeChart().getId();
+        }
+        return null;
     }
 }

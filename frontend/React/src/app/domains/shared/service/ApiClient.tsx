@@ -39,7 +39,6 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
       ...(options.headers || {}),
     },
   });
-
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
     throw new Error(error.message || `Error ${response.status}`);

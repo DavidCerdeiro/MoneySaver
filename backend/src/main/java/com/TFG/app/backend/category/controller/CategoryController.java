@@ -13,10 +13,14 @@ import com.TFG.app.backend.user.service.UserService;
 import com.TFG.app.backend.category.dto.AddCategoryRequest;
 import com.TFG.app.backend.category.dto.ModifyCategoryRequest;
 import com.TFG.app.backend.category.dto.AllCategoriesFromUserResponse;
+import com.TFG.app.backend.category.dto.CategoriesMonthlyResponse;
 import com.TFG.app.backend.category.dto.CategoryResponse;
 import com.TFG.app.backend.category.entity.Category;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
@@ -116,8 +120,12 @@ public class CategoryController {
 
         List<Category> categories = categoryService.getAllCategoriesFromUser(user.getId());
 
+        LocalDate now = LocalDate.now();
+        int currentMonth = now.getMonthValue();
+        int currentYear = now.getYear();
+
         List<CategoryResponse> response = categories.stream()
-        .map(category -> new CategoryResponse(category, spendingService.getTotalAmountByCategory(category.getId())))
+        .map(category -> new CategoryResponse(category, spendingService.getTotalAmountMonthlyByCategory(category.getId(), currentMonth, currentYear)))
         .collect(Collectors.toList());
 
         return ResponseEntity.ok(new AllCategoriesFromUserResponse(response));
@@ -138,4 +146,41 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * Endpoint to get monthly total amount spent by category.
+     * @param token
+     * @param month
+     * @param year
+     * @output:
+     *         - 200 OK with the monthly spending by category if successful.
+     *         - 401 Unauthorized if the user is not authenticated.
+     *         - 404 Not Found if the user does not exist.
+     */
+    @GetMapping("/monthly")
+    public ResponseEntity<CategoriesMonthlyResponse> getCategoriesMonthly(@CookieValue(name = "accessToken", required = false) String token, @RequestParam("month") int month, @RequestParam("year") int year) {
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String email = jwtService.getEmailFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+
+        List<Category> categories = categoryService.getAllCategoriesFromUser(user.getId());
+
+        List<CategoryResponse> response = categories.stream()
+        .map(category -> new CategoryResponse(category, spendingService.getTotalAmountMonthlyByCategory(category.getId(), month, year)))
+        .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new CategoriesMonthlyResponse(response));
+    }
+    
 }

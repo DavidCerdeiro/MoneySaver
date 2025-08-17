@@ -5,7 +5,7 @@ public class ModifyRequest {
     private String surname;
     private String email;
     private String password;
-    private Integer favouriteGraph;
+    private Integer idTypeChart;
 
     // Getters and Setters
     public String getName() {
@@ -40,11 +40,11 @@ public class ModifyRequest {
         this.password = password;
     }
 
-    public Integer getFavouriteGraph() {
-        return favouriteGraph;
+    public Integer getIdTypeChart() {
+        return idTypeChart;
     }
 
-    public void setFavouriteGraph(Integer favouriteGraph) {
-        this.favouriteGraph = favouriteGraph;
+    public void setIdTypeChart(Integer idTypeChart) {
+        this.idTypeChart = idTypeChart;
     }
 }

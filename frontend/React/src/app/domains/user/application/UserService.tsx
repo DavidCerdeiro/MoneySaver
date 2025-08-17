@@ -7,6 +7,8 @@ import type { UserData } from "../schemas/User";
  */
 export async function obtainUserProfile() {
   return apiFetch<{
+    typeChart: any;
+    idTypeChart: number;
     email: string;
     surname: string;
     name: string;
@@ -52,4 +54,9 @@ export async function modifyProfile(data: UserData) {
     `/api/users/modify`,
     { method: "PUT", body: JSON.stringify(data) }
   );
+}
+
+
+export async function loadFavouriteTypeCharts() {
+  return apiFetch(`/api/users/get-type-chart`, { method: "GET" });
 }

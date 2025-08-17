@@ -5,11 +5,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.TFG.app.backend.spending.entity.Spending;
+
 import java.util.List;
 
 public interface SpendingRepository extends JpaRepository<Spending, Integer> {
 
-    List<Spending> findAllByCategoryId(int categoryId);
+    @Query(value = """
+        SELECT * FROM spending
+        WHERE "Id_Category" = :categoryId
+          AND EXTRACT(YEAR FROM "Date") = :year
+          AND EXTRACT(MONTH FROM "Date") = :month
+        """, nativeQuery = true)
+    List<Spending> getAllByCategoryAndMonth(
+            @Param("categoryId") int categoryId,
+            @Param("month") int month,
+            @Param("year") int year
+    );
 
     @Query(value = """
         SELECT * FROM spending

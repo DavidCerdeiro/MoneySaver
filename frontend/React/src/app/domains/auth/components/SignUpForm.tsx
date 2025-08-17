@@ -1,6 +1,6 @@
 import '@/styles/utilities.css';
 
-import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/app/domains/shared/components/card.tsx";
+import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from  "@/app/domains/shared/components/card";
 import { Input } from "@/app/domains/shared/components/input";
 import { Button } from "@/app/domains/shared/components/button";
 import { Label } from "@/app/domains/shared/components/label.js";

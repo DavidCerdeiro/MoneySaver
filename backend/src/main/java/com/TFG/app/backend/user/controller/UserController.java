@@ -22,6 +22,8 @@ import com.TFG.app.backend.user.dto.UserResponse;
 import com.TFG.app.backend.user.service.UserService;
 import org.springframework.http.HttpHeaders;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
@@ -66,6 +68,7 @@ public class UserController {
     public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
         
         if (userService.forgotPassword(forgotPasswordRequest.getEmail(), forgotPasswordRequest.getLocale())) {
+            System.out.println("HOLA");
             return new ResponseEntity<>(HttpStatus.OK);   
         }
         
@@ -242,7 +245,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        ProfileResponse profileResponse = new ProfileResponse(user.getId(), user.getName(), user.getSurname(), user.getEmail());
+        ProfileResponse profileResponse = new ProfileResponse(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getTypeChart().getId());
         return new ResponseEntity<>(profileResponse, HttpStatus.OK);
     }
 
@@ -335,7 +338,37 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        userService.modifyUser(user, modifyRequest.getName(), modifyRequest.getSurname(),modifyRequest.getPassword(), modifyRequest.getFavouriteGraph());
+        userService.modifyUser(user, modifyRequest.getName(), modifyRequest.getSurname(),modifyRequest.getPassword(), modifyRequest.getIdTypeChart());
         return ResponseEntity.ok(Map.of("status", "modified"));
     }
+
+    /**
+     * Endpoint to get the user's favorite type chart.
+     * @param token
+     * @output:
+     *         - 200 OK with the user's favorite type chart if successful.
+     *         - 401 Unauthorized if the token is invalid or expired.
+     *         - 404 Not Found if the user does not exist.
+     */
+    @GetMapping("/get-type-chart")
+    public ResponseEntity<Integer> getTypeChart(@CookieValue(name = "accessToken", required = false) String token) {
+
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String email = jwtService.getEmailFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Integer favouriteTypeChart = userService.getFavouriteTypeChart(user);
+        return new ResponseEntity<>(favouriteTypeChart, HttpStatus.OK);
+    }
+    
 }

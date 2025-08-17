@@ -19,10 +19,6 @@ public class Type_PeriodicController {
     @GetMapping("/all")
     public ResponseEntity<List<Type_Periodic>> getAllTypePeriodics() {
         List<Type_Periodic> typePeriodics = typePeriodicService.getAllTypePeriodics();
-        if (typePeriodics.isEmpty()) {
-            System.out.println("No type periodics found");
-            return ResponseEntity.noContent().build();
-        }
         return ResponseEntity.ok(typePeriodics);
     }
 }

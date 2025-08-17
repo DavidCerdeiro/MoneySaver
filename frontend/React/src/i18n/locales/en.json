@@ -1,7 +1,8 @@
 {
   "app": {
     "title": "MoneySaver",
-    "description": "Control your personal finances"
+    "description": "Control your personal finances",
+    "welcome": "Welcome to MoneySaver! Your companion in financial management."
   },
   "login": {
     "title": "Log In",
@@ -71,6 +72,7 @@
       "email": "Email",
       "password": "Password",
       "confirmPassword": "Confirm new password",
+      "typeChart": "Preferred chart type",
       "passwordRequirements": {
         "length": "Password must be at least 8 characters",
         "uppercase": "Password must contain at least one uppercase letter",
@@ -88,7 +90,10 @@
           "description": "Are you sure you want to modify your profile? This action will update your personal information.",
           "confirm": "Yes, modify",
           "cancel": "No, cancel"
-        }
+        },
+        "selectTypeChart": "Select chart type",
+        "noTypeChart": "No type found",
+        "searchTypeChart": "Search chart type"
       },
       "delete": {
         "title": "Delete Account",
@@ -225,6 +230,22 @@
       "monthly": "Monthly",
       "quarterly": "Quarterly",
       "yearly": "Yearly"
+    },
+    "charts": {
+      "main": {
+        "title": "Monthly Chart",
+        "footer": "Expense breakdown by categories"
+      },
+      "type": {
+        "radar": "Radar chart",
+        "pie": "Pie chart",
+        "bars": "Bar chart",
+        "combobox": {}
+      },
+      "view": {
+        "title": "View Charts",
+        "description": "Showing the monthly summary by categories for {{month}}/{{year}}."
+      }
     }
   },
   "header": {
@@ -295,5 +316,19 @@
   },
   "footer": {
     "copyright": "All rights reserved"
+  },
+  "months": {
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
   }
 }

@@ -5,3 +5,9 @@ VALUES
 ('quarterly'),
 ('yearly');
 
+
+INSERT INTO "type_chart" ("Name")
+VALUES
+('bars'),
+('radar'),
+('pie');

@@ -1,14 +1,20 @@
 CREATE TABLE IF NOT EXISTS "user" (
   "Id" serial PRIMARY KEY,
+  "Id_TypeChart" int NOT NULL DEFAULT 1,
   "Name" varchar(64) NOT NULL,
   "Surname" varchar(128) NOT NULL,
   "Email" varchar(32) NOT NULL,
   "Password" varchar(64) NOT NULL,
   "IsAuthenticated" boolean NOT NULL DEFAULT false,
-  "FavouriteGraph" int NOT NULL DEFAULT 1
+  CONSTRAINT "RS_User__Id_TypeChart" FOREIGN KEY ("Id_TypeChart") REFERENCES "type_chart"("Id") ON DELETE CASCADE
 );
 
 CREATE UNIQUE INDEX UX_User__Email ON "user"("Email");
+
+CREATE TABLE IF NOT EXISTS "type_chart" (
+  "Id" serial PRIMARY KEY,
+  "Name" varchar(16) NOT NULL UNIQUE
+);
 
 CREATE TABLE IF NOT EXISTS "account" (
   "Id" serial PRIMARY KEY,

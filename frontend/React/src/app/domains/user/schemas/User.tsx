@@ -3,6 +3,7 @@ import { z } from "zod";
 export const createUserSchema = (t: any, isEdit = false) =>
   z.object({
     id: z.number().optional(),
+    idTypeChart: z.number().optional(),
     name: z.string().min(1, { message: t('domains.user.errors.name.required') }),
     surname: z.string().min(1, { message: t('domains.user.errors.surname.required') }),
     email: z.string().email({ message: t('domains.user.errors.email.invalid') }),

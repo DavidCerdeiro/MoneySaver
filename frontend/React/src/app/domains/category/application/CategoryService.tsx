@@ -76,3 +76,15 @@ export async function deleteCategory(categoryId: number | undefined) {
     throw new Error(error.message || "Category deletion failed");
   }
 }
+
+/**
+ * Obtains all spendings for a specific month and year for a user.
+ * @param data The month and year to filter spendings.
+ * @returns A list of categories for the specified month and year for the user.
+ */
+export async function obtainCategoriesMonthly(data: { month: number; year?: number }) {
+  return apiFetch<{ categories: CategoryData[] }>(
+    `/api/categories/monthly?month=${data.month}&year=${data.year}`,
+    { method: "GET" }
+  );
+}

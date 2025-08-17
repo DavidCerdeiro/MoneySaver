@@ -1,7 +1,8 @@
 {
     "app": {
         "title": "MoneySaver",
-        "description": "Controla tu economía personal"
+        "description": "Controla tu economía personal",
+        "welcome": "¡Bienvenido a MoneySaver! Tu compañero en la gestión financiera."
     },
     "login": {
         "title": "Iniciar sesión",
@@ -71,6 +72,7 @@
             "email": "Correo electrónico",
             "password": "Contraseña",
             "confirmPassword": "Confirmar nueva contraseña",
+            "typeChart": "Tipo de gráfico preferido",
             "passwordRequirements":{
                 "length": "La contraseña debe tener al menos 8 caracteres",
                 "uppercase": "La contraseña debe contener al menos una letra mayúscula",
@@ -88,7 +90,10 @@
                     "description": "¿Estás seguro de que deseas modificar tu perfil? Esta acción actualizará tu información personal. ",
                     "confirm": "Sí, modificar",
                     "cancel": "No, cancelar"
-                }
+                },
+                "selectTypeChart": "Seleccionar tipo de gráfico",
+                "noTypeChart": "No se ha encontrado ningún tipo",
+                "searchTypeChart": "Buscar tipo de gráfico"
             },
             "delete":{
                 "title": "Eliminar cuenta",
@@ -225,6 +230,24 @@
             "monthly": "Mensual",
             "quarterly": "Trimestral",
             "yearly": "Anual"
+        },
+        "charts":{
+            "main": {
+                "title": "Gráfica mensual",
+                "footer": "Desglose de gastos por categorías"
+            },
+            "type": {
+                "radar": "Gráfica radar",
+                "pie": "Gráfica circular",
+                "bars": "Gráfica de barras",
+                "combobox":{
+
+                }
+            },
+            "view": {
+                "title": "Ver gráficos",
+                "description": "Mostrando el resumen mensual por categorías correspondientes a {{month}}/{{year}}."
+            }
         }
     },
     "header":{
@@ -295,5 +318,19 @@
     },
     "footer":{
         "copyright": "Todos los derechos reservados"
+    },
+    "months":{
+        "january": "Enero",
+        "february": "Febrero",
+        "march": "Marzo",
+        "april": "Abril",
+        "may": "Mayo",
+        "june": "Junio",
+        "july": "Julio",
+        "august": "Agosto",
+        "september": "Septiembre",
+        "october": "Octubre",
+        "november": "Noviembre",
+        "december": "Diciembre"
     }
 }
