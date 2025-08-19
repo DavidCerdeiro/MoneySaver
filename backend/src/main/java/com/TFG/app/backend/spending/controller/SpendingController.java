@@ -76,7 +76,6 @@ public class SpendingController {
             }
         }
         spending.setName(spendingRequest.getName());
-        spending.setUser(user);
         spending.setCategory(category);
         
 

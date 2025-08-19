@@ -3,7 +3,10 @@ package com.TFG.app.backend.region.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "region")
+@Table(
+    name = "region",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"Country", "City"})
+)
 public class Region {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

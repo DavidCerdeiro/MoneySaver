@@ -8,7 +8,6 @@ import java.time.LocalDate;
 
 import com.TFG.app.backend.category.entity.Category;
 import com.TFG.app.backend.establishment.entity.Establishment;
-import com.TFG.app.backend.user.entity.User;
 
 @Entity
 @Table(name = "spending")
@@ -25,10 +24,6 @@ public class Spending {
     @ManyToOne
     @JoinColumn(name = "Id_Establishment")
     private Establishment establishment;
-
-    @ManyToOne
-    @JoinColumn(name = "Id_User", nullable = false)
-    private User user;
 
     @Column(name = "Name", length = 64, nullable = false)
     private String name;
@@ -59,13 +54,6 @@ public class Spending {
     }
     public void setEstablishment(Establishment establishment) {
         this.establishment = establishment;
-    }
-
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getName() {

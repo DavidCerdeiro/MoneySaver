@@ -21,6 +21,7 @@ import { ViewSpendingsPage } from './app/domains/spending/pages/ViewSpendingsPag
 import { ModifyProfilePage } from './app/domains/user/pages/ModifyProfilePage.tsx';
 import { DeleteProfilePage } from './app/domains/user/pages/DeleteProfilePage.tsx';
 import { ViewChartsPage } from './app/domains/charts/pages/ViewChartsPage.tsx';
+import { CompareChartsPage } from './app/domains/charts/pages/CompareChartsPage.tsx';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <UserProvider>
@@ -47,6 +48,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/user/deleteProfile" element={<DeleteProfilePage />} />
 
           <Route path="/charts/view" element={<ViewChartsPage />} />
+          <Route path="/charts/compare" element={<CompareChartsPage />} />
         </Routes>
       </Router>
       <Toaster />

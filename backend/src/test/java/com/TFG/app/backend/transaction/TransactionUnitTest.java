@@ -1,4 +1,4 @@
-package com.TFG.app.unit_tests;
+package com.TFG.app.backend.transaction;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

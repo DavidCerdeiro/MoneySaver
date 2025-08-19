@@ -239,14 +239,19 @@
             "type": {
                 "radar": "Gráfica radar",
                 "pie": "Gráfica circular",
-                "bars": "Gráfica de barras",
-                "combobox":{
-
-                }
+                "bars": "Gráfica de barras"
             },
             "view": {
                 "title": "Ver gráficos",
                 "description": "Mostrando el resumen mensual por categorías correspondientes a {{month}}/{{year}}."
+            },
+            "compare":{
+                "title": "Comparativa de gráficos",
+                "description": "Realice comparaciones de sus gastos mensuales por categorías. Seleccione fechas distintas.",
+                "actualMonths": "Realizando la comparación entre {{month1}}/{{year1}} y {{month2}}/{{year2}}.",
+                "month1Label": "Mes 1",
+                "month2Label": "Mes 2",
+                "submit": "Comparar"
             }
         }
     },
@@ -306,10 +311,10 @@
                 "title": "Gráficos",
                 "viewCharts": {
                     "title": "Ver gráficos",
-                    "description": "Visualiza tus gastos de este mes a través de diferentes gráficos."
+                    "description": "Visualiza tus gastos mensuales a través de diferentes gráficos."
                 },
                 "compareCharts": {
-                    "title": "Comparativa de estadísticas",
+                    "title": "Comparativa de gráficos",
                     "description": "Compara tus gastos entre diferentes meses."
                 }
             }

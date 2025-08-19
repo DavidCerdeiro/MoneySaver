@@ -10,10 +10,8 @@ import {
 } from "@/app/domains/shared/components/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/app/domains/shared/components/chart"
 import type { ChartConfig } from "@/app/domains/shared/components/chart"
-import type { ChartCategory } from "../schemas/CharCategory"
+import type { ChartCategory } from "../schemas/ChartCategory"
 import { useTranslation } from 'react-i18next'
-
-export const description = "A bar chart with a label"
 
 
 type Props = {

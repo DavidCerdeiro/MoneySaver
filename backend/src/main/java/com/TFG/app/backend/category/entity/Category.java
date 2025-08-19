@@ -16,14 +16,14 @@ public class Category {
     @JoinColumn(name = "Id_User", nullable = false)
     private User user;
 
-    @Column(name = "Name", length = 32, nullable = false, unique = true)
+    @Column(name = "Name", length = 32, nullable = false)
     private String name;
 
     @Column(name = "Icon", length = 64, nullable = false)
     private String icon;
 
     @Column(name = "IsDeleted", nullable = false)
-    private boolean isDeleted;
+    private boolean isDeleted = false;
 
     // Getters and Setters
     public Integer  getId() {

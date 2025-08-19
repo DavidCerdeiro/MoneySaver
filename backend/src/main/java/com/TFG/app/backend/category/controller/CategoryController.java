@@ -15,6 +15,7 @@ import com.TFG.app.backend.category.dto.ModifyCategoryRequest;
 import com.TFG.app.backend.category.dto.AllCategoriesFromUserResponse;
 import com.TFG.app.backend.category.dto.CategoriesMonthlyResponse;
 import com.TFG.app.backend.category.dto.CategoryResponse;
+import com.TFG.app.backend.category.dto.CompareMonthsResponse;
 import com.TFG.app.backend.category.entity.Category;
 
 import java.time.LocalDate;
@@ -182,5 +183,33 @@ public class CategoryController {
 
         return ResponseEntity.ok(new CategoriesMonthlyResponse(response));
     }
-    
+
+    @GetMapping("/compare")
+    public ResponseEntity<CompareMonthsResponse> compareMonths(@CookieValue(name = "accessToken", required = false) String token, @RequestParam("month1") int month1, @RequestParam("month2") int month2, @RequestParam("year1") int year1, @RequestParam("year2") int year2) {
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String email = jwtService.getEmailFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        List<Category> categories = categoryService.getAllCategoriesFromUser(user.getId());
+
+        List<CategoryResponse> totalMonth1 = categories.stream()
+        .map(category -> new CategoryResponse(category, spendingService.getTotalAmountMonthlyByCategory(category.getId(), month1, year2)))
+        .collect(Collectors.toList());
+
+        List<CategoryResponse> totalMonth2 = categories.stream()
+        .map(category -> new CategoryResponse(category, spendingService.getTotalAmountMonthlyByCategory(category.getId(), month2, year2)))
+        .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new CompareMonthsResponse(totalMonth1, totalMonth2));
+    }
 }

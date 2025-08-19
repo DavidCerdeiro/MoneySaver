@@ -1,3 +1,8 @@
+CREATE TABLE IF NOT EXISTS "type_chart" (
+  "Id" serial PRIMARY KEY,
+  "Name" varchar(16) NOT NULL UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS "user" (
   "Id" serial PRIMARY KEY,
   "Id_TypeChart" int NOT NULL DEFAULT 1,
@@ -6,15 +11,10 @@ CREATE TABLE IF NOT EXISTS "user" (
   "Email" varchar(32) NOT NULL,
   "Password" varchar(64) NOT NULL,
   "IsAuthenticated" boolean NOT NULL DEFAULT false,
-  CONSTRAINT "RS_User__Id_TypeChart" FOREIGN KEY ("Id_TypeChart") REFERENCES "type_chart"("Id") ON DELETE CASCADE
+  CONSTRAINT "RS_User__Id_TypeChart" FOREIGN KEY ("Id_TypeChart") REFERENCES "type_chart"("Id")
 );
 
 CREATE UNIQUE INDEX UX_User__Email ON "user"("Email");
-
-CREATE TABLE IF NOT EXISTS "type_chart" (
-  "Id" serial PRIMARY KEY,
-  "Name" varchar(16) NOT NULL UNIQUE
-);
 
 CREATE TABLE IF NOT EXISTS "account" (
   "Id" serial PRIMARY KEY,
@@ -32,9 +32,12 @@ CREATE TABLE IF NOT EXISTS category (
   "Name" varchar(32) NOT NULL,
   "Icon" varchar(64) NOT NULL,
   "IsDeleted" boolean NOT NULL DEFAULT false,
-  CONSTRAINT "RS_Category__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id") ON DELETE CASCADE,
-  UNIQUE ("Id_User", "Name")
+  CONSTRAINT "RS_Category__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id") ON DELETE CASCADE
 );
+
+CREATE UNIQUE INDEX UX_Category__Id_User_Name
+ON category ("Id_User", "Name") 
+WHERE "IsDeleted" = false;
 
 CREATE INDEX IX_Category__Id_User ON category("Id_User");
 
@@ -67,17 +70,14 @@ CREATE TABLE IF NOT EXISTS spending (
   "Id" serial PRIMARY KEY,
   "Id_Category" int NOT NULL,
   "Id_Establishment" int,
-  "Id_User" int NOT NULL,
   "Name" varchar(64) NOT NULL,
   "Amount" numeric(15,2) NOT NULL,
   "Date" Date NOT NULL,
   "IsPeriodic" boolean NOT NULL,
   CONSTRAINT "RS_Spending__Id_Category" FOREIGN KEY ("Id_Category") REFERENCES category("Id"),
-  CONSTRAINT "RS_Spending__Id_Establishment" FOREIGN KEY ("Id_Establishment") REFERENCES establishment("Id"),
-  CONSTRAINT "RS_Spending__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id") ON DELETE CASCADE
+  CONSTRAINT "RS_Spending__Id_Establishment" FOREIGN KEY ("Id_Establishment") REFERENCES establishment("Id")
 );
 
-CREATE INDEX IX_Spending__Id_User ON spending("Id_User");
 CREATE INDEX IX_Spending__Id_Category ON spending("Id_Category");
 
 CREATE TABLE IF NOT EXISTS bill (
@@ -107,5 +107,5 @@ CREATE TABLE IF NOT EXISTS "periodic_spending" (
   "Expiration" Date NOT NULL,
   "Last_Payment" Date NOT NULL,
   CONSTRAINT "RS_PeriodicSpending__Id_Spending" FOREIGN KEY ("Id_Spending") REFERENCES spending("Id") ON DELETE CASCADE,
-  CONSTRAINT "RS_PeriodicSpending__Id_TypePeriodic" FOREIGN KEY ("Id_TypePeriodic") REFERENCES "type_periodic"("Id") ON DELETE CASCADE
+  CONSTRAINT "RS_PeriodicSpending__Id_TypePeriodic" FOREIGN KEY ("Id_TypePeriodic") REFERENCES "type_periodic"("Id")
 );

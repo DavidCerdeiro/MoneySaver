@@ -3,7 +3,7 @@ import { BarChartVerticalComponent } from "../../charts/components/BarChartVerti
 import { PieChartComponent } from "../../charts/components/PieChartComponent";
 import { RadarChartComponent } from "../../charts/components/RadarChartComponent";
 import { DefaultPageLayout } from "../layouts/DefaultPageLayout"
-import type { ChartCategory } from "../../charts/schemas/CharCategory";
+import type { ChartCategory } from "../../charts/schemas/ChartCategory";
 import { useTranslation } from 'react-i18next';
 import { loadCategories } from "../../charts/application/ChartService";
 import { loadFavouriteTypeCharts } from "../../user/application/UserService";

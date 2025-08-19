@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { BarChartVerticalComponent } from "../components/BarChartVerticalComponent";
 import { PieChartComponent } from "../components/PieChartComponent";
 import { useEffect, useState } from "react";
-import type { ChartCategory } from "../schemas/CharCategory";
+import type { ChartCategory } from "../schemas/ChartCategory";
 import { loadCategories } from "../application/ChartService";
 import { DefaultPageLayout } from "../../shared/layouts/DefaultPageLayout";
 import { RadarChartComponent } from "../components/RadarChartComponent";

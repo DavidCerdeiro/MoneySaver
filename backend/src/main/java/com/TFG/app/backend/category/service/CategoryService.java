@@ -18,6 +18,9 @@ public class CategoryService {
     }
 
     public boolean addCategory(Category category) {
+        if(categoryRepository.existsByNameAndUserAndIsDeletedFalse(category.getName(), category.getUser())) {
+            throw new IllegalArgumentException("Ya existe una categoría activa con ese nombre");
+        }
         Category result = categoryRepository.save(category);
         return result != null;
     }

@@ -1,9 +1,11 @@
 -- Clean up existing triggers and functions before creating new ones
 DROP TRIGGER IF EXISTS TR_Type_Periodic_BI ON "type_periodic";
 DROP TRIGGER IF EXISTS TR_Periodic_Spending_BI ON "periodic_spending";
+DROP TRIGGER IF EXISTS TR_Type_Chart_BI ON "type_chart";
 
 DROP FUNCTION IF EXISTS validate_periodic_type();
 DROP FUNCTION IF EXISTS validate_periodic_spending();
+DROP FUNCTION IF EXISTS validate_chart_type();
 
 -- 1. Validate name in periodic spending type
 CREATE OR REPLACE FUNCTION validate_periodic_type()
@@ -17,8 +19,20 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- 2. Validate name in periodic spending type
+CREATE OR REPLACE FUNCTION validate_chart_type()
+RETURNS trigger AS $$
+BEGIN
+    IF NEW."Name" NOT IN ('bars', 'radar', 'pie') THEN
+        RAISE EXCEPTION 'Invalid periodic spending type (must be bars, radar or pie)'
+        USING ERRCODE = 'P0004';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
--- 2. Validate expiration date is today or later and matches the spending day
+
+-- 3. Validate expiration date is today or later and matches the spending day
 CREATE OR REPLACE FUNCTION validate_periodic_spending()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -28,7 +42,7 @@ BEGIN
     -- 1. Validte that expiration date is today or later
     IF NEW."Expiration" < CURRENT_DATE THEN
         RAISE EXCEPTION 'Expiration date cannot be earlier than today'
-        USING ERRCODE = 'P0007';
+        USING ERRCODE = 'P0006';
     END IF;
 
     -- 2. Validate that expiration date matches the spending day
@@ -40,7 +54,7 @@ BEGIN
 
     IF spending_day != expiration_day THEN
         RAISE EXCEPTION 'Expiration day (%) does not match spending day (%).', expiration_day, spending_day
-        USING ERRCODE = 'P0008';
+        USING ERRCODE = 'P0009';
     END IF;
 
     RETURN NEW;
@@ -55,7 +69,13 @@ BEFORE INSERT ON "type_periodic"
 FOR EACH ROW
 EXECUTE FUNCTION validate_periodic_type();
 
--- 2. Trigger for periodic_spending
+-- 2. Trigger for type_periodic
+CREATE TRIGGER TR_Type_Chart_BI
+BEFORE INSERT ON "type_chart"
+FOR EACH ROW
+EXECUTE FUNCTION validate_chart_type();
+
+-- 3. Trigger for periodic_spending
 CREATE TRIGGER TR_Periodic_Spending_BI
 BEFORE INSERT ON "periodic_spending"
 FOR EACH ROW

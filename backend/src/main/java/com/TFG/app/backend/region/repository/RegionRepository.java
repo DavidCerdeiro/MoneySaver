@@ -8,4 +8,6 @@ public interface RegionRepository extends JpaRepository<Region, Integer> {
 
 
     Optional<Region> findByCountryAndCity(String country, String city);
+
+    boolean existsByCountryAndCity(String country, String city);
 }

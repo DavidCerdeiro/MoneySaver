@@ -14,7 +14,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/app/domains/shared/components/chart"
-import type { ChartCategory } from "../schemas/CharCategory"
+import type { ChartCategory } from "../schemas/ChartCategory"
 import { useTranslation } from "react-i18next"
 
 export const description = "A radar chart"

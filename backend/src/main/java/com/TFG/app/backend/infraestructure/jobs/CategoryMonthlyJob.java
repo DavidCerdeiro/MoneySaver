@@ -43,7 +43,6 @@ public class CategoryMonthlyJob implements Job {
             Spending newSpending = new Spending();
             newSpending.setAmount(amount);
             newSpending.setCategory(category);
-            newSpending.setUser(spending.getUser());
             newSpending.setName(spending.getName());
             newSpending.setDate(newSpendingDate);
             newSpending.setIsPeriodic(true);

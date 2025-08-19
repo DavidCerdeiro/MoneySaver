@@ -1,4 +1,4 @@
-package com.TFG.app.unit_tests;
+package com.TFG.app.backend.establishment;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
@@ -15,11 +15,11 @@ public class EstablishmentUnitTest {
 
         region.setCity("Cadiz");
         region.setCountry("Spain");
-        establishment.setName("Starbucks");
+        establishment.setName("Tinoco");
 
         establishment.setRegion(region);
 
-        Assertions.assertEquals("Starbucks", establishment.getName());
+        Assertions.assertEquals("Tinoco", establishment.getName());
         Assertions.assertEquals("Cadiz", establishment.getRegion().getCity());
         Assertions.assertEquals("Spain", establishment.getRegion().getCountry());
         Assertions.assertEquals(region, establishment.getRegion());
