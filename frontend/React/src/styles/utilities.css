@@ -112,29 +112,29 @@
   @apply space-x-2 mt-4 flex justify-center;
 }
 
-/* === Category Selector === */
-.category-selector-button {
+/* === ComboBox Selector === */
+.combobox-selector-button {
   @apply w-full justify-between bg-zinc-900 text-white hover:bg-zinc-800 hover:text-white;
 }
-.category-popover-content {
+.combobox-popover-content {
   @apply w-full p-0 bg-zinc-900 border border-white text-white;
 }
-.category-command {
+.combobox-command {
   @apply bg-zinc-900 text-white;
 }
-.category-command-input {
+.combobox-command-input {
   @apply h-9 border-0 border-b border-white bg-zinc-900 placeholder:text-zinc-400 focus:ring-0 focus:outline-none text-white rounded-none;
 }
-.category-command-empty {
+.combobox-command-empty {
   @apply text-white;
 }
-.category-command-group {
+.combobox-command-group {
   @apply border-t-0;
 }
-.category-command-item {
+.combobox-command-item {
   @apply text-white hover:!bg-zinc-700 hover:!text-white cursor-pointer;
 }
-.category-check-icon {
+.combobox-check-icon {
   @apply mr-2 h-4 w-4 text-inherit;
 }
 

@@ -1,12 +1,12 @@
-// src/shared/api/apiClient.ts
-export async function fetchWithRefresh(url: string, options: RequestInit = {}): Promise<Response> {
-  // 1. Original request
+export async function fetchWithRefresh(
+  url: string,
+  options: RequestInit = {}
+): Promise<Response> {
   const response = await fetch(url, {
     ...options,
     credentials: "include",
   });
 
-  // 2. If 401 (token expired), try refresh
   if (response.status === 401 || response.status === 500) {
     const refreshResponse = await fetch("/api/users/auth/refresh", {
       method: "POST",
@@ -14,11 +14,9 @@ export async function fetchWithRefresh(url: string, options: RequestInit = {}): 
     });
 
     if (!refreshResponse.ok) {
-      //TODO: Implementar este proceso
-      throw new Error("Sesión expirada. Por favor inicia sesión nuevamente.");
+      throw new Error("Please log in again");
     }
 
-    // 3. Retry original request
     return fetch(url, {
       ...options,
       credentials: "include",
@@ -27,6 +25,7 @@ export async function fetchWithRefresh(url: string, options: RequestInit = {}): 
 
   return response;
 }
+
 
 /**
  * API Helper

@@ -12,7 +12,6 @@ import type { LogInFormData} from "@/app/domains/auth/schemas/LogIn";
 import { createLogInSchema } from "@/app/domains/auth/schemas/LogIn";
 import { logInUser } from '../application/AuthService';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from "@/app/contexts/UserContext";
 import { toast } from "sonner"
 
 export function LoginForm() {
@@ -27,15 +26,13 @@ export function LoginForm() {
         resolver: zodResolver(schema),
     });
     
-    // Importing the setUser function from the UserContext to save the user data after login
-    const { setUser } = useUser();
-    
     const onSubmit = async (data: LogInFormData) => {
     try {
         const result = await logInUser(data);
-        localStorage.setItem('userId', String(result.id));
-        // Saving the user data in the context
-        setUser(result);
+
+        // Saving the email in order to use it later
+        sessionStorage.setItem('email', result.email);
+        console.log("Email saved:", sessionStorage.getItem('email'));
 
         // After successful login, redirect to the authUser page
         navigate('/login/authUser');

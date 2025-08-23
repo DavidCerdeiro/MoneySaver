@@ -18,14 +18,13 @@ public class EstablishmentController {
     }
 
     @GetMapping("all")
-    public List<EstablishmentResponse> findAllByUser() {
+    public List<EstablishmentResponse> findAll() {
         List<Establishment> establishments = establishmentService.findAll();
         List<EstablishmentResponse> response = new ArrayList<>();
         establishments.forEach(establishment -> response.add(new EstablishmentResponse(
                 establishment.getId(),
-                establishment.getName(),
-                establishment.getRegion().getCountry(),
-                establishment.getRegion().getCity())));
+                establishment.getName()
+        )));
         return response;
     }
 }

@@ -12,7 +12,6 @@ import { createSignUpSchema } from "@/app/domains/auth/schemas/SignUp";
 import type { SignUpFormData } from "@/app/domains/auth/schemas/SignUp";
 import { signUpUser } from "../application/AuthService";
 import { useNavigate } from 'react-router-dom';
-import { useUser } from "@/app/contexts/UserContext.tsx";
 import { toast } from "sonner";
 
 export function SignUpForm() {
@@ -26,7 +25,6 @@ export function SignUpForm() {
     } = useForm<SignUpFormData>({
         resolver: zodResolver(schema),
     });
-    const { setUser } = useUser();
 
     const onSubmit = async (data: SignUpFormData) => {
         try {
@@ -35,7 +33,7 @@ export function SignUpForm() {
             };
             const { confirmPassword, ...userData } = requestBody;
             const result = await signUpUser(userData);
-            setUser(result);
+            sessionStorage.setItem('email', result.email);
             toast.info(t('signUp.success', {name: result.name}));
             // After successful signup, redirect to the authUser page
             navigate('/authUser');

@@ -41,22 +41,9 @@ export function SpendingsTable({ spendings, month, year }: SpendingTableProps) {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
 
-      // --- CAMBIOS CLAVE AQUÍ ---
-      // Lógica mejorada para manejar valores nulos/indefinidos.
-      // Esto soluciona ambos problemas: el error de TS y la ordenación de fechas.
-
-      // Regla 1: Si un valor es nulo/indefinido, siempre va al final.
-      // Usamos `== null` porque captura tanto `null` como `undefined`.
-      if (aValue == null) return 1;  // Mueve 'a' hacia el final.
-      if (bValue == null) return -1; // Mueve 'b' hacia el final.
+      if (aValue == null) return 1; 
+      if (bValue == null) return -1; 
       
-      // Regla 2: Si ambos son nulos/indefinidos, se consideran iguales.
-      // Esta línea ya no es necesaria por las dos anteriores, pero es bueno saberlo.
-      // if (aValue == null && bValue == null) return 0;
-      
-      // --- FIN DE LOS CAMBIOS CLAVE ---
-
-      // Ahora que sabemos que aValue y bValue no son nulos, podemos compararlos de forma segura.
       if (aValue < bValue) {
         return sortConfig.direction === 'ascending' ? -1 : 1;
       }
@@ -109,6 +96,10 @@ export function SpendingsTable({ spendings, month, year }: SpendingTableProps) {
                       {t('domains.spending.date')}
                       {getSortIcon('date')}
                   </TableHead>
+                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('establishmentName')}>
+                      {t('domains.establishment.title')}
+                      {getSortIcon('establishmentName')}
+                  </TableHead>
                   <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('periodic')}>
                       {t('domains.spending.periodicity')}
                       {getSortIcon('periodic')}
@@ -124,6 +115,7 @@ export function SpendingsTable({ spendings, month, year }: SpendingTableProps) {
                       <TableCell className="table-cell">{spending.name}</TableCell>
                       <TableCell className="table-cell">{spending.amount}</TableCell>
                       <TableCell className="table-cell">{spending.date.substring(0, 10)}</TableCell>
+                      <TableCell className="table-cell">{spending.establishmentName || '-'}</TableCell>
                       <TableCell className="table-cell">
                           {spending.periodic ? <Check className="inline-block" /> : <X className="inline-block" />}
                       </TableCell>

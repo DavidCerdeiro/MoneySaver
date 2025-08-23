@@ -39,8 +39,8 @@ export function ForgotPasswordForm() {
             };
 
             await forgotPassword(requestBody);
-            //In the next direction, we'll need the email, so we store it in localStorage.
-            localStorage.setItem('forgotEmail', formData.email);
+            //In the next direction, we'll need the email, so we store it in sessionStorage.
+            sessionStorage.setItem('email', formData.email);
             navigate('/forgot-password/authUser');
         } catch (error) {
             toast.error(t('forgotPassword.error'));

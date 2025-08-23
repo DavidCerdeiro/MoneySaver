@@ -4,8 +4,13 @@ import org.springframework.stereotype.Service;
 
 import com.TFG.app.backend.spending.repository.SpendingRepository;
 import com.TFG.app.backend.spending.entity.Spending;
+
+import java.util.Arrays;
 import java.util.List;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 @Service
 public class SpendingService {
     private final SpendingRepository spendingRepository;
@@ -31,4 +36,32 @@ public class SpendingService {
         return total;
     }
 
+    public LocalDate parseFlexibleDate(String dateStr) {
+        if (dateStr == null || dateStr.isEmpty()) {
+            return null;
+        }
+
+        List<DateTimeFormatter> formatters = Arrays.asList(
+                DateTimeFormatter.ofPattern("dd-MM-yyyy"),
+                DateTimeFormatter.ofPattern("d-M-yyyy"),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy"),
+                DateTimeFormatter.ofPattern("d/M/yyyy"),
+                DateTimeFormatter.ofPattern("dd.MM.yyyy"),
+                DateTimeFormatter.ofPattern("d.M.yyyy"),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        );
+
+        for (DateTimeFormatter formatter : formatters) {
+            try {
+                return LocalDate.parse(dateStr, formatter);
+            } catch (DateTimeParseException e) {
+            
+            }
+        }
+        
+        return null;
+}
+    public Spending getSpendingById(Integer id) {
+        return spendingRepository.findById(id).orElse(null);
+    }
 }

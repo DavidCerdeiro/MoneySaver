@@ -13,7 +13,6 @@ export function MainPage() {
   const today = new Date();
   const todayMonth = today.getMonth() + 1;
   const todayYear = today.getFullYear();
-
   const [chartData, setChartData] = useState<ChartCategory[]>([]);
   const [favouriteTypeCharts, setFavouriteTypeCharts] = useState<any>([]);
   async function fetchCategories() {

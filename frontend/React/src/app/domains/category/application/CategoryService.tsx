@@ -19,7 +19,6 @@ export async function addCategory(data: CategoryData) {
  * @returns The modified category data.
  */
 export async function modifyCategory(data: CategoryData) {
-  console.log("Modifying category with data:", data);
   const response = await fetch("/api/categories/modify", {
     
     method: "PUT",
@@ -93,7 +92,7 @@ export async function obtainCategoriesMonthly(data: { month: number; year?: numb
  * @param data The months and years to compare.
  * @returns A list of categories for the specified months and years.
  */
-export async function obtainComparisonCategories(data: { month1: number; year1?: number; month2: number; year2?: number }) {
+export async function obtainComparisonCategories(data: { month1: number; year1?: number; month2: number; year2?: number}) {
   return apiFetch<{ month1: CategoryData[], month2: CategoryData[] }>(
     `/api/categories/compare?month1=${data.month1}&year1=${data.year1}&month2=${data.month2}&year2=${data.year2}`,
     { method: "GET" }

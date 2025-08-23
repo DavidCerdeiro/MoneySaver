@@ -44,8 +44,8 @@
         "forgotSubmit": "Cambiar contraseña",
         "signUpSubmit": "Registrarse",
         "loginSubmit": "Iniciar sesión",
-        "signUpSuccess": "¡Registrado con éxito! Bienvenido, {{name}}.",
-        "loginSuccess": "¡Has iniciado sesión correctamente! Bienvenido, {{name}}.",
+        "signUpSuccess": "¡Registrado con éxito! Bienvenido a MoneySaver.",
+        "loginSuccess": "¡Has iniciado sesión correctamente! Bienvenido de nuevo.",
         "verificationError": "Error de verificación. Por favor, verifica tu código e inténtalo de nuevo."
     },
     "resetPassword": {
@@ -114,12 +114,9 @@
             }
         },
         "establishment":{
-            "name": "Establecimiento",
-            "country": "País",
-            "city": "Ciudad",
-            "namePlaceholder": "Tinoco",
-            "countryPlaceholder": "España",
-            "cityPlaceholder": "Cádiz"
+            "title": "Establecimiento",
+            "name": "Nombre del Establecimiento",
+            "namePlaceholder": "Tinoco"
         },
         "category":{
             "title": "Categorías de gasto",
@@ -194,7 +191,15 @@
                 "noEstablishment": "No se ha encontrado ningún establecimiento",
                 "newEstablishment": "+ Nuevo establecimiento",
                 "selectedNewEstablishment": "Establecimiento nuevo",
-                "success": "Se ha registrado {{name}} con un importe de {{amount}}€ en la categoría {{category}}"
+                "success": "Se ha registrado {{name}} con un importe de {{amount}}€ en la categoría {{category}}",
+                "fileDescription": "Adjunta una factura, ticket o cualquier documento similar para extraer la información. Una vez adjuntes el archivo, se deshabilatará el formulario anterior.",
+                "labelFile": "Archivo",
+                "submitFile": "Escanear archivo",
+                "defaultSpendingProcessed": "Compra en {{establishment}}",
+                "fileProcessed": "Archivo procesado con éxito",
+                "fileError": "Error al procesar el archivo. Por favor, inténtalo de nuevo.",
+                "processingFile": "Procesando archivo...",
+                "submitting": "Enviando..."
             },
             "view":{
                 "title": "Ver gastos",
@@ -223,6 +228,12 @@
                 },
                 "typePeriodic": {
                     "required": "El tipo de periodicidad es obligatorio"
+                },
+                "category": {
+                    "required": "La categoría es obligatoria"
+                },
+                "token":{
+                    "errorRefresh": "Se ha expirado el token de sesión. Por favor, inicia sesión nuevamente."
                 }
             }
         },
@@ -266,10 +277,6 @@
                 "linkBankAccount":{
                     "title": "Vincular cuenta bancaria",
                     "description": "Conecta tu cuenta bancaria para extraer datos de transacciones."
-                },
-                "settings":{
-                    "title": "Configuración",
-                    "description": "Configura tus preferencias de usuario."
                 }
             },
             "savingGoals": {

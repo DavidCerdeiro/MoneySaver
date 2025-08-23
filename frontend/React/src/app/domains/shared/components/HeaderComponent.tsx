@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { MobileNav } from "./MobileNav"
-import { useUser } from "@/app/contexts/UserContext.tsx"
+import { logout } from "../../user/application/UserService"
 // This component is used to render a list item in the navigation menu
 function ListItem({
   title,
@@ -45,11 +45,10 @@ function ListItem({
 
 export function HeaderComponent() {
   const { t } = useTranslation();
-  const { setUser } = useUser();
   const navigate = useNavigate();
   // This function handles the logout action
   const handleLogout = () => {
-    setUser(null);
+    logout(); 
     navigate('/login')
   }
 
@@ -78,11 +77,6 @@ export function HeaderComponent() {
                     to="user/linkBankAccount"
                     title={t("header.sections.profile.linkBankAccount.title")}
                     description={t("header.sections.profile.linkBankAccount.description")}
-                  />
-                  <ListItem
-                    to="user/settings"
-                    title={t("header.sections.profile.settings.title")}
-                    description={t("header.sections.profile.settings.description")}
                   />
                 </ul>
             </NavigationMenuContent>

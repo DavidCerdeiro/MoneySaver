@@ -1,5 +1,7 @@
 package com.TFG.app.backend.spending.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.TFG.app.backend.establishment.dto.EstablishmentResponse;
 
 public class AddSpendingRequest {
@@ -12,6 +14,7 @@ public class AddSpendingRequest {
     private boolean isPeriodic;
     private Integer typePeriodic;
     private EstablishmentResponse establishment;
+    private MultipartFile file;
 
     // Getters
     public String getName() { return name; }
@@ -23,6 +26,7 @@ public class AddSpendingRequest {
     public boolean isPeriodic() { return isPeriodic; }
     public Integer getTypePeriodic() { return typePeriodic; }
     public EstablishmentResponse getEstablishment() { return establishment; }
+    public MultipartFile getFile() { return file; }
 
     // Setters
     public void setName(String name) { this.name = name; }
@@ -34,4 +38,5 @@ public class AddSpendingRequest {
     public void setIsPeriodic(boolean isPeriodic) { this.isPeriodic = isPeriodic; }
     public void setTypePeriodic(Integer typePeriodic) { this.typePeriodic = typePeriodic; }
     public void setEstablishment(EstablishmentResponse establishment) { this.establishment = establishment; }
+    public void setFile(MultipartFile file) { this.file = file; }
 }

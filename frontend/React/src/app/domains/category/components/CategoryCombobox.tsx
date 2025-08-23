@@ -25,7 +25,7 @@ type Props = {
   setSelectedEmoji: (emoji: string) => void;
   setSelectedIdEmoji: (id: string) => void;
   setEmojiIsNative: (value: boolean) => void;
-  setValue: (field: keyof CategoryData, value: any) => void;
+  disabled: boolean;
 };
 
 export function CategoryCombobox({
@@ -35,32 +35,32 @@ export function CategoryCombobox({
   setSelectedEmoji,
   setSelectedIdEmoji,
   setEmojiIsNative,
-  setValue,
+  disabled = false,
 }: Props) {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   return (
     // Popover component to display the combobox
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild disabled={disabled}>
         {/* Trigger button for the popover */}
         <Button
           type="button"
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="category-selector-button"
+          className="combobox-selector-button"
         >
           {selectedCategory?.name || t("domains.category.modify.selectCategory")}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
     </PopoverTrigger>
       {/* Content of the popover containing the command list */}
-      <PopoverContent className="category-popover-content">
+      <PopoverContent className="combobox-popover-content">
         <Command className="bg-zinc-900 text-white">
           <CommandInput
             placeholder="Search category..."
-            className="category-command-input"
+            className="combobox-command-input"
           />
           <CommandList>
             <CommandEmpty className="text-white">{t("domains.category.modify.noCategories")}</CommandEmpty>
@@ -72,17 +72,15 @@ export function CategoryCombobox({
                   onSelect={() => {
                     setSelectedCategory(category);
                     setOpen(false);
-                    setValue("name", category.name);
                     setSelectedEmoji(category.icon || "");
                     setEmojiIsNative(false);
                     setSelectedIdEmoji(category.icon || "");
-                    setValue("icon", category.icon || "");
                   }}
                   className="text-white hover:!bg-zinc-700 hover:!text-white cursor-pointer"
                 >
                   <CheckIcon
                     className={cn(
-                      "category-check-icon text-current",
+                      "combobox-check-icon text-current",
                       selectedCategory?.name === category.name ? "opacity-100" : "opacity-0"
                     )}
                   />

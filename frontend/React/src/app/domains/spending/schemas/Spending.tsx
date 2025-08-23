@@ -1,18 +1,19 @@
 import { z } from 'zod';
-import { EstablishmentDataSchema } from './EstablishmentData';
+import { createEstablishmentDataSchema } from './Establishment';
 
 export const createSpendingSchema = (t: any) =>
   z.object({
-      name: z.string().nonempty(t("domains.spending.errors.name.required")),
-      amount: z
-        .number({ invalid_type_error: t("domains.spending.errors.amount.required") })
-        .positive(t("domains.spending.errors.amount.positive")),
-      isPeriodic: z.boolean(),
+    id: z.number().optional(),
+    name: z.string().nonempty(t("domains.spending.errors.name.required")),
+    amount: z
+      .number({ invalid_type_error: t("domains.spending.errors.amount.required") })
+      .positive(t("domains.spending.errors.amount.positive")),
+    isPeriodic: z.boolean(),
       date: z.string().nonempty(t("domains.spending.errors.date.required")),
       expirationDate: z.string().optional(),
       typePeriodic: z.number().optional(),
-      idCategory: z.number().optional(),
-      establishment: EstablishmentDataSchema.optional(),
+      idCategory: z.number().min(1, { message: t("domains.spending.errors.category.required") }),
+      establishment: createEstablishmentDataSchema.optional(),
     })
     .refine((data) => {
       if (data.isPeriodic) return !!data.expirationDate;

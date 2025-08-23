@@ -22,6 +22,8 @@ import { ModifyProfilePage } from './app/domains/user/pages/ModifyProfilePage.ts
 import { DeleteProfilePage } from './app/domains/user/pages/DeleteProfilePage.tsx';
 import { ViewChartsPage } from './app/domains/charts/pages/ViewChartsPage.tsx';
 import { CompareChartsPage } from './app/domains/charts/pages/CompareChartsPage.tsx';
+import { PrivateRoute } from './app/contexts/PrivateRoute.tsx';
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <UserProvider>
@@ -30,25 +32,27 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/login" element={<LoginPage />} />
           <Route path="/login/authUser" element={<VerificationEmailPage />} />
           <Route path="/" element={<SignUpPage />} />
-          <Route path="/authUser" element={<VerificationEmailPage />} />
-
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/authUser" element={<VerificationEmailPage />} />
           <Route path="/forgot-password/authUser" element={<VerificationEmailPage />} />
           <Route path="/forgot-password/reset-password" element={<ResetPasswordPage />} />
 
-          <Route path="/home" element={<MainPage />} />
+          {/* Protected Routes */}
+          <Route element={<PrivateRoute />}>
+            <Route path="/home" element={<MainPage />} />
 
-          <Route path="/categories/add" element={<AddCategoryPage />} />
-          <Route path="/categories/modify" element={<ModifyCategoryPage />} />
+            <Route path="/categories/add" element={<AddCategoryPage />} />
+            <Route path="/categories/modify" element={<ModifyCategoryPage />} />
 
-          <Route path="/spendings/add" element={<AddSpendingPage />} />
-          <Route path="/spendings/view" element={<ViewSpendingsPage />} />
+            <Route path="/spendings/add" element={<AddSpendingPage />} />
+            <Route path="/spendings/view" element={<ViewSpendingsPage />} />
 
-          <Route path="/user/modifyProfile" element={<ModifyProfilePage />} />
-          <Route path="/user/deleteProfile" element={<DeleteProfilePage />} />
+            <Route path="/user/modifyProfile" element={<ModifyProfilePage />} />
+            <Route path="/user/deleteProfile" element={<DeleteProfilePage />} />
 
-          <Route path="/charts/view" element={<ViewChartsPage />} />
-          <Route path="/charts/compare" element={<CompareChartsPage />} />
+            <Route path="/charts/view" element={<ViewChartsPage />} />
+            <Route path="/charts/compare" element={<CompareChartsPage />} />
+          </Route>
         </Routes>
       </Router>
       <Toaster />

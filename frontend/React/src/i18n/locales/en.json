@@ -44,8 +44,8 @@
     "forgotSubmit": "Change password",
     "signUpSubmit": "Sign Up",
     "loginSubmit": "Log In",
-    "signUpSuccess": "Successfully registered! Welcome, {{name}}.",
-    "loginSuccess": "You have successfully logged in! Welcome, {{name}}.",
+    "signUpSuccess": "Successfully registered! Welcome to MoneySaver.",
+    "loginSuccess": "You have successfully logged in! Welcome back.",
     "verificationError": "Verification error. Please check your code and try again."
   },
   "resetPassword": {
@@ -114,12 +114,9 @@
       }
     },
     "establishment": {
-      "name": "Establishment",
-      "country": "Country",
-      "city": "City",
-      "namePlaceholder": "Tinoco",
-      "countryPlaceholder": "Spain",
-      "cityPlaceholder": "Cadiz"
+      "title": "Establishment",
+      "name": "Establishment Name",
+      "namePlaceholder": "Tinoco"
     },
     "category": {
       "title": "Spending Categories",
@@ -194,7 +191,15 @@
         "noEstablishment": "No establishment found",
         "newEstablishment": "+ New establishment",
         "selectedNewEstablishment": "New establishment",
-        "success": "{{name}} has been registered with an amount of €{{amount}} under the {{category}} category"
+        "success": "{{name}} has been registered with an amount of €{{amount}} under the {{category}} category",
+        "fileDescription": "Attach a receipt, invoice, or any similar document to extract the information. Once you upload the file, the previous form will be disabled.",
+        "labelFile": "File",
+        "submitFile": "Scan file",
+        "defaultSpendingProcessed": "Purchase at {{establishment}}",
+        "fileProcessed": "File successfully processed",
+        "fileError": "Error processing file. Please try again.",
+        "processingFile": "Processing file...",
+        "submitting": "Submitting..."
       },
       "view": {
         "title": "View Spendings",
@@ -223,6 +228,12 @@
         },
         "typePeriodic": {
           "required": "Periodicity type is required"
+        },
+        "category": {
+          "required": "Category is required"
+        },
+        "token":{
+          "errorRefresh": "Access token expired. Please log in again."
         }
       }
     },
@@ -239,12 +250,19 @@
       "type": {
         "radar": "Radar chart",
         "pie": "Pie chart",
-        "bars": "Bar chart",
-        "combobox": {}
+        "bars": "Bar chart"
       },
       "view": {
         "title": "View Charts",
         "description": "Showing the monthly summary by categories for {{month}}/{{year}}."
+      },
+      "compare": {
+        "title": "Charts Comparison",
+        "description": "Compare your monthly expenses by categories. Select different dates.",
+        "actualMonths": "Comparing between {{month1}}/{{year1}} and {{month2}}/{{year2}}.",
+        "month1Label": "Month 1",
+        "month2Label": "Month 2",
+        "submit": "Compare"
       }
     }
   },
@@ -259,10 +277,6 @@
         "linkBankAccount": {
           "title": "Link Bank Account",
           "description": "Connect your bank account to extract transaction data."
-        },
-        "settings": {
-          "title": "Settings",
-          "description": "Configure your user preferences."
         }
       },
       "savingGoals": {
@@ -307,7 +321,7 @@
           "description": "Visualize your expenses for this month through different charts."
         },
         "compareCharts": {
-          "title": "Compare Stats",
+          "title": "Charts Comparison",
           "description": "Compare your spendings across different months."
         }
       }

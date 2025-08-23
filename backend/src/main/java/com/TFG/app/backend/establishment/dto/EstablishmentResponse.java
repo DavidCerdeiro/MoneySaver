@@ -5,15 +5,9 @@ public class EstablishmentResponse {
 
     private String name;
 
-    private String country;
-
-    private String city;
-
-    public EstablishmentResponse(Integer id, String name, String country, String city) {
+    public EstablishmentResponse(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.country = country;
-        this.city = city;
     }
 
     public Integer getId() {
@@ -32,19 +26,4 @@ public class EstablishmentResponse {
         this.name = name;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 }

@@ -47,7 +47,7 @@ export function TypePeriodicCombobox({
           role="combobox"
           aria-expanded={open}
           disabled={disabled}
-          className="category-selector-button"
+          className="combobox-selector-button"
         >
           {selectedTypePeriodic ? t(`domains.typePeriodic.${selectedTypePeriodic.name}`) : t("domains.spending.add.selectTypePeriodic")}
           {/* Icon to indicate dropdown functionality */}
@@ -55,11 +55,11 @@ export function TypePeriodicCombobox({
         </Button>
       </PopoverTrigger>
       {/* Content of the popover containing the command list */}
-      <PopoverContent className="category-popover-content">
+      <PopoverContent className="combobox-popover-content">
         <Command className="bg-zinc-900 text-white">
           <CommandInput
             placeholder={t("domains.spending.add.searchTypePeriodic")}
-            className="category-command-input"
+            className="combobox-command-input"
           />
           <CommandList>
             <CommandEmpty className="text-white">{t("domains.spending.add.noTypePeriodic")}</CommandEmpty>

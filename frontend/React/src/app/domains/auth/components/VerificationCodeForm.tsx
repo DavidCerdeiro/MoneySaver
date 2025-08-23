@@ -12,40 +12,35 @@ import { emailVerification, authUser } from '../application/AuthService';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from "@/app/contexts/UserContext";
 import { toast } from "sonner";
 import { deleteProfile } from '../../user/application/UserService';
+import { useUser } from '@/app/contexts/UserContext';
 
 export function VerificationCodeForm({ source }: { source: "login" | "signup" | "forgot" | "delete-profile" }) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const schema = createEmailVerificationSchema(t);
-    const { user } = useUser();
     const { i18n } = useTranslation();
+    const { checkAuth } = useUser();
 
-    let email = "";
-    let title = "";
+    let email = sessionStorage.getItem('email');
+    let title = t('auth.forgotTitle');
     let description = "";
     let submit = "";
-    //Depending on the source, we set the title, description, submit button text, and email.
+
+    //Depending on the source, we set the title, description and submit button text.
     switch (source) {
         case "login":
-            title = t('auth.defaultTitle', { name: user?.name ||"" });
             description = t('auth.loginDescription');
             submit = t('auth.loginSubmit');
-            email = user?.email || "";
             break;
         case "signup":
-            title = t('auth.defaultTitle', { name: user?.name ||"" });
             description = t('auth.signUpDescription');
             submit = t('auth.signUpSubmit');
-            email = user?.email || "";
             break;
         case "forgot":
-            title = t('auth.forgotTitle');
             description = t('auth.forgotDescription');
             submit = t('auth.forgotSubmit');
-            email = localStorage.getItem('forgotEmail') || "";
             break;
         case "delete-profile":
             title = t('domains.user.delete.confirm.title');
@@ -65,12 +60,17 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
         } = useForm<EmailVerificationData>({
         resolver: zodResolver(schema),
     });
+    
     useEffect(() => {
         register("code");
+        
+    }, [register, email]);
+
+    useEffect(() => {
         register("email");
         setValue("email", email || "");
-    }, [register, setValue, email]);
-    
+    }, [register, email]);
+
     const onChangeOTP = (val: string) => {
         setOtpValue(val);
         setValue("code", val);
@@ -78,16 +78,17 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
 
     const onSubmit = async (data: EmailVerificationData) => {
         try {
+            sessionStorage.removeItem('email');
             const languageTag = i18n.language || "en";
             const [language, country = ""] = languageTag.split("-");
-           const requestBody: any = {
+            const requestBody: any = {
                 code: data.code,
                 locale: `${language}_${country}`,
             };
 
             // Include email in the request body for non-delete sources
             if (source !== "delete-profile") {
-            requestBody.email = data.email;
+                requestBody.email = data.email;
             }
 
             if(source === "forgot") {
@@ -98,12 +99,14 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
             }else if(source === "signup") {
                 await authUser(requestBody);
                 
-                toast.success(t('auth.signUpSuccess', { name: user?.name ||"" }));
+                toast.success(t('auth.signUpSuccess'));
+                await checkAuth();
                 navigate("/home");
             }else if(source === "login") {
                 await emailVerification(requestBody);
 
-                toast.success(t('auth.loginSuccess', { name: user?.name ||"" }));
+                toast.success(t('auth.loginSuccess'));
+                await checkAuth();
                 navigate("/home");
             }else if(source === "delete-profile") {
                 await deleteProfile(requestBody);
@@ -150,3 +153,4 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
             </Card>
     )
 }
+

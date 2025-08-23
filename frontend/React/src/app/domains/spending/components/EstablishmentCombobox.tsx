@@ -15,7 +15,7 @@ import { Button } from "@/app/domains/shared/components/button";
 import { ChevronsUpDownIcon } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { EstablishmentData } from "../schemas/EstablishmentData";
+import type { EstablishmentData } from "../schemas/Establishment";
 
 // Setting up the props for the TypePeriodicCombobox component
 type Props = {
@@ -47,7 +47,7 @@ export function EstablishmentCombobox({
           role="combobox"
           aria-expanded={open}
           disabled={disabled}
-          className="category-selector-button"
+          className="combobox-selector-button"
         >
           {!selectedEstablishment ? t("domains.spending.add.selectEstablishment") : selectedEstablishment.id === 0 ? t("domains.spending.add.selectedNewEstablishment") : selectedEstablishment.name}
           {/* Icon to indicate dropdown functionality */}
@@ -55,11 +55,11 @@ export function EstablishmentCombobox({
         </Button>
       </PopoverTrigger>
       {/* Content of the popover containing the command list */}
-      <PopoverContent className="category-popover-content">
+      <PopoverContent className="combobox-popover-content">
         <Command className="bg-zinc-900 text-white">
           <CommandInput
             placeholder={t("domains.spending.add.searchTypePeriodic")}
-            className="category-command-input"
+            className="combobox-command-input"
           />
           <CommandList>
             <CommandEmpty className="text-white">{t("domains.spending.add.noEstablishment")}</CommandEmpty>
@@ -76,7 +76,7 @@ export function EstablishmentCombobox({
                 >
                   {establishment.id === 0
                     ? t("domains.spending.add.newEstablishment")
-                    : `${establishment.name}, ${establishment.country}, ${establishment.city}`}
+                    : `${establishment.name}`}
                 </CommandItem>
               ))}
             </CommandGroup>

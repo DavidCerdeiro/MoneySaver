@@ -25,7 +25,8 @@ export async function obtainUserProfile() {
  * @param data - contains the code and locale of the user
  * @returns Promise<Response>
  */
-export async function deleteProfile(data: {code: string, locale: string}) {
+export async function deleteProfile(data: {code: string, locale: string}
+) {
   return apiFetch(
     `/api/users/delete`,
     { method: "DELETE", body: JSON.stringify(data) }
@@ -59,4 +60,8 @@ export async function modifyProfile(data: UserData) {
 
 export async function loadFavouriteTypeCharts() {
   return apiFetch(`/api/users/get-type-chart`, { method: "GET" });
+}
+
+export async function logout() {
+  return fetch(`/api/users/auth/logout`, { method: "POST" });
 }

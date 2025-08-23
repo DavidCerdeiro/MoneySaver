@@ -22,7 +22,6 @@ import com.TFG.app.backend.user.dto.UserResponse;
 import com.TFG.app.backend.user.service.UserService;
 import org.springframework.http.HttpHeaders;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 
@@ -68,7 +67,6 @@ public class UserController {
     public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
         
         if (userService.forgotPassword(forgotPasswordRequest.getEmail(), forgotPasswordRequest.getLocale())) {
-            System.out.println("HOLA");
             return new ResponseEntity<>(HttpStatus.OK);   
         }
         
@@ -124,6 +122,15 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
+    @GetMapping("/auth/check")
+    public ResponseEntity<Void> checkAuth(@CookieValue(name = "accessToken", required = false) String token) {
+        if (token != null && jwtService.validateToken(token)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+
     /**
      * Endpoint to refresh the access token.
      * @param refreshToken the refresh token of the user.
@@ -160,7 +167,7 @@ public class UserController {
 
         // Create HttpOnly and Secure cookies for the tokens
         ResponseCookie accessCookie = CookieUtil.createHttpOnlyCookie("accessToken", newAccessToken, 900); // 15 min
-        ResponseCookie refreshCookie = CookieUtil.createHttpOnlyCookie("refreshToken", newRefreshToken, 7 * 24 * 60 * 60); // 7 días
+        ResponseCookie refreshCookie = CookieUtil.createHttpOnlyCookie("refreshToken", newRefreshToken, 3600); // 1 hora
 
         // Add cookies to the response
         response.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString());
@@ -169,6 +176,25 @@ public class UserController {
         return ResponseEntity.ok(Map.of("status", "refreshed"));
     }
 
+    @PostMapping("/auth/logout")
+    public ResponseEntity<Void> logout(HttpServletResponse response) {
+        ResponseCookie accessCookie = ResponseCookie.from("accessToken", "")
+                .path("/")
+                .httpOnly(true)
+                .maxAge(0)
+                .build();
+
+        ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", "")
+                .path("/")
+                .httpOnly(true)
+                .maxAge(0)
+                .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
+
+        return ResponseEntity.ok().build();
+    }
     /**
      * Endpoint to verify a registered user with a verification code.
      * @param authUserRequest contains the email and code of the user.

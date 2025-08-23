@@ -10,6 +10,7 @@ export const createSpendingResponseSchema = (t: any) =>
       date: z.string().nonempty(t("domains.spending.errors.date.required")),
       iconCategory: z.string().optional(),
       categoryName: z.string().optional(),
+      establishmentName: z.string().optional(),
       periodic : z.boolean().optional()
     })
     

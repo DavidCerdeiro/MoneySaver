@@ -19,7 +19,7 @@ export function ModifyProfilePage() {
       email: data.email,
       password: "",
       confirmPassword: "",
-      idTypeChart: data.typeChart,
+      idTypeChart: data.idTypeChart,
     });
     const typeChartsData = await getAllTypeCharts() as TypeChartData[];
     setTypeCharts(typeChartsData);

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import type { CategoryData } from "../../category/schemas/Category";
 import { fetchCategoriesForUser } from "../../category/application/CategoryService";
 import type { TypePeriodicData } from "../schemas/TypePeriodic";
-import type { EstablishmentData } from "../schemas/EstablishmentData";
+import type { EstablishmentData } from "../schemas/Establishment";
 import { obtainAllEstablishments, obtainAllTypePeriodic } from "../application/SpendingService";
 
 export function AddSpendingPage() {

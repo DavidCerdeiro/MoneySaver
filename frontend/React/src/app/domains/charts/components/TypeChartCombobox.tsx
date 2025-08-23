@@ -48,7 +48,7 @@ export function TypeChartCombobox({
           role="combobox"
           aria-expanded={open}
           disabled={disabled}
-          className="category-selector-button"
+          className="combobox-selector-button"
         >
           {selectedTypeChart ? t(`domains.charts.type.${selectedTypeChart.name}`) : t("domains.user.modify.selectTypeChart")}
           {/* Icon to indicate dropdown functionality */}
@@ -56,11 +56,11 @@ export function TypeChartCombobox({
         </Button>
       </PopoverTrigger>
       {/* Content of the popover containing the command list */}
-      <PopoverContent className="category-popover-content">
+      <PopoverContent className="combobox-popover-content">
         <Command className="bg-zinc-900 text-white">
           <CommandInput
             placeholder={t("domains.user.modify.searchTypeChart")}
-            className="category-command-input"
+            className="combobox-command-input"
           />
           <CommandList>
             <CommandEmpty className="text-white">{t("domains.user.modify.noTypeChart")}</CommandEmpty>

@@ -59,3 +59,18 @@ export async function obtainAllEstablishments() {
   }
   return await response.json();
 }
+
+export async function processFileDirect(formData: FormData) {
+  const response = await fetch("/api/spendings/processFile", {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.message || `Error ${response.status}`);
+  }
+
+  return response.json();
+}

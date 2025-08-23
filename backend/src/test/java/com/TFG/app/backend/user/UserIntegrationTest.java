@@ -1,10 +1,12 @@
 package com.TFG.app.backend.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import com.TFG.app.backend.type_chart.TypeChartTestDataBuilder;
 import com.TFG.app.backend.type_chart.entity.Type_Chart;
@@ -39,4 +41,28 @@ public class UserIntegrationTest {
         assertThat(userRepository.existsByEmail("iker.casillas@gmail.com")).isTrue();
     }
 
+    @Test
+    public void testDuplicateEmail(){
+        Type_Chart typeChart = new TypeChartTestDataBuilder().build();
+        typeChartRepository.save(typeChart);
+
+        User user1 = new User();
+        user1.setName("Iker");
+        user1.setSurname("Casillas");
+        user1.setEmail("iker.casillas@gmail.com");
+        user1.setPassword("password");
+        user1.setTypeChart(typeChart);
+        userRepository.save(user1);
+
+        User user2 = new User();
+        user2.setName("Cristiano");
+        user2.setSurname("Ronaldo");
+        user2.setEmail("iker.casillas@gmail.com");
+        user2.setPassword("password");
+        user2.setTypeChart(typeChart);
+
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            userRepository.saveAndFlush(user2);
+        });
+    }
 }

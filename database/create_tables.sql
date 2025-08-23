@@ -52,18 +52,9 @@ CREATE TABLE IF NOT EXISTS "goal" (
 
 CREATE INDEX IX_Goal__Id_Category ON "goal"("Id_Category");
 
-CREATE TABLE IF NOT EXISTS "region" (
-  "Id" serial PRIMARY KEY,
-  "Country" varchar(16) NOT NULL,
-  "City" varchar(16) NOT NULL,
-  UNIQUE ("Country", "City")
-);
-
 CREATE TABLE IF NOT EXISTS establishment (
   "Id" serial PRIMARY KEY,
-  "Id_Region" int,
-  "Name" varchar(64) NOT NULL,
-  CONSTRAINT "RS_Establishment__Id_Region" FOREIGN KEY ("Id_Region") REFERENCES "region"("Id")
+  "Name" varchar(64) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS spending (

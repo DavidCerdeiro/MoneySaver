@@ -1,27 +1,15 @@
 package com.TFG.app.backend.establishment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
 
 import com.TFG.app.backend.establishment.entity.Establishment;
-import com.TFG.app.backend.region.entity.Region;
-
-
 public class EstablishmentUnitTest {
     @Test
-    public void testEstablishmentAttributes() {
+    public void testNewEstablishment() {
         Establishment establishment = new Establishment();
-        Region region = new Region();
+        establishment.setName("El Corte Inglés");
 
-        region.setCity("Cadiz");
-        region.setCountry("Spain");
-        establishment.setName("Tinoco");
-
-        establishment.setRegion(region);
-
-        Assertions.assertEquals("Tinoco", establishment.getName());
-        Assertions.assertEquals("Cadiz", establishment.getRegion().getCity());
-        Assertions.assertEquals("Spain", establishment.getRegion().getCountry());
-        Assertions.assertEquals(region, establishment.getRegion());
+        assertEquals("El Corte Inglés", establishment.getName());
     }
 }
