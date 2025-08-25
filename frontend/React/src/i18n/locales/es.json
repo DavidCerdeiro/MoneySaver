@@ -90,10 +90,7 @@
                     "description": "¿Estás seguro de que deseas modificar tu perfil? Esta acción actualizará tu información personal. ",
                     "confirm": "Sí, modificar",
                     "cancel": "No, cancelar"
-                },
-                "selectTypeChart": "Seleccionar tipo de gráfico",
-                "noTypeChart": "No se ha encontrado ningún tipo",
-                "searchTypeChart": "Buscar tipo de gráfico"
+                }
             },
             "delete":{
                 "title": "Eliminar cuenta",
@@ -116,7 +113,61 @@
         "establishment":{
             "title": "Establecimiento",
             "name": "Nombre del Establecimiento",
-            "namePlaceholder": "Tinoco"
+            "namePlaceholder": "Tinoco",
+            "combobox":{
+                "select": "Seleccionar establecimiento",
+                "noEstablishments": "No se ha encontrado ningún establecimiento.",
+                "selectedNewEstablishment": "Establecimiento nuevo seleccionado",
+                "newEstablishment":"+ Nuevo establecimiento",
+                "search": "Buscar establecimiento"
+            }
+        },
+        "goal":{
+            "name":"Nombre del Objetivo",
+            "targetAmount":"Cantidad máxima",
+            "category": "Categoría",
+            "percent": "Porcentaje",
+            "combobox":{
+                "select": "Seleccionar objetivo",
+                "noGoals": "No se ha encontrado ningún objetivo.",
+                "search": "Buscar objetivo"
+            },
+            "add":{
+                "title": "Añadir objetivo",
+                "description": "Crea un nuevo objetivo de ahorro. Establece la cantidad máxima que deseas gastar en una categoría.",
+                "tableCaption": "Listado de tus objetivos de ahorro actuales",
+                "submit": "Crear objetivo",
+                "success": "Objetivo creado con éxito."
+            },
+            "edit":{
+                "title": "Modificar objetivo",
+                "description": "Actualiza la información de los objetivos o eliminalos.",
+                "success": "Objetivo modificado con éxito.",
+                "error": "Error al modificar el objetivo. Por favor, inténtelo de nuevo.",
+                "submit": "Modificar objetivo",
+                "dialog":{
+                    "title": "Confirmar modificación",
+                    "description": "¿Estás seguro de que deseas modificar el objetivo {{name}}?",
+                    "confirm": "Sí, modificar",
+                    "cancel": "No, cancelar"
+                }
+            },
+            "delete":{
+                "success": "Objetivo eliminado con éxito.",
+                "submit": "Eliminar objetivo",
+                "dialog":{
+                    "title": "Confirmar eliminación",
+                    "description": "¿Estás seguro de que deseas eliminar el objetivo {{name}}?",
+                    "confirm": "Sí, eliminar",
+                    "cancel": "No, cancelar"
+                }            
+            },
+            "view":{
+                "title": "Ver objetivos",
+                "description": "Consulta el resumen de tus objetivos por meses.",
+                "tableCaption": "Listado de tus objetivos de ahorro de {{month}}/{{year}}",
+                "stats": "En el mes {{month}}/{{year}} has cumplido {{goalsBelow100}} de {{totalGoals}} objetivos."
+            }
         },
         "category":{
             "title": "Categorías de gasto",
@@ -135,8 +186,6 @@
                 "tableCaption": "Listado de tus categorías de gasto actuales",
                 "success": "Categoría {{icon}} {{name}} modificada con éxito.",
                 "error": "Error al modificar la categoría. Por favor, revise los campos e inténtelo de nuevo.",
-                "selectCategory": "Seleccionar categoría",
-                "noCategories": "No se ha encontrado ninguna categoría.",
                 "submit": "Modificar categoría",
                 "dialog":{
                     "title": "Confirmar modificación",
@@ -160,6 +209,11 @@
                     "cancel": "No, cancelar"
                 }
             },
+            "combobox":{
+                "select": "Seleccionar categoría",
+                "noCategories": "No se ha encontrado ninguna categoría.",
+                "search": "Buscar categoría"
+            },
             "errors":{
                 "name": {
                     "required": "El nombre es obligatorio"
@@ -174,7 +228,6 @@
             "category": "Categoría",
             "date": "Fecha",
             "periodicity": "Es periódico",
-            "typePeriodic": "Tipo de periodicidad",
             "expirationDate": "Fecha de expiración",
             "add": {
                 "description": "Registra un nuevo gasto a través del formulario o mediante la importación del ticket, factura o cualquier documento similar.",
@@ -183,14 +236,6 @@
                 "date": "Fecha",
                 "submit": "Registrar gasto",
                 "error": "Error al registrar el gasto. Por favor, revise los campos e inténtelo de nuevo.",
-                "selectTypePeriodic": "Seleccionar tipo",
-                "searchTypePeriodic": "Buscar tipo",
-                "noTypePeriodic": "No se ha encontrado ningún tipo de periodicidad",
-                "selectEstablishment": "Seleccionar establecimiento",
-                "searchEstablishment": "Buscar establecimiento",
-                "noEstablishment": "No se ha encontrado ningún establecimiento",
-                "newEstablishment": "+ Nuevo establecimiento",
-                "selectedNewEstablishment": "Establecimiento nuevo",
                 "success": "Se ha registrado {{name}} con un importe de {{amount}}€ en la categoría {{category}}",
                 "fileDescription": "Adjunta una factura, ticket o cualquier documento similar para extraer la información. Una vez adjuntes el archivo, se deshabilatará el formulario anterior.",
                 "labelFile": "Archivo",
@@ -238,9 +283,15 @@
             }
         },
         "typePeriodic":{
+            "title": "Tipo de periodicidad",
             "monthly": "Mensual",
             "quarterly": "Trimestral",
-            "yearly": "Anual"
+            "yearly": "Anual",
+            "combobox":{
+                "select": "Seleccionar tipo",
+                "noTypePeriodic": "No se ha encontrado ningún tipo",
+                "search": "Buscar tipo"
+            }
         },
         "charts":{
             "main": {
@@ -250,7 +301,12 @@
             "type": {
                 "radar": "Gráfica radar",
                 "pie": "Gráfica circular",
-                "bars": "Gráfica de barras"
+                "bars": "Gráfica de barras",
+                "combobox":{
+                    "select": "Seleccionar tipo de gráfico",
+                    "noTypeChart": "No se ha encontrado ningún tipo de gráfico.",
+                    "search": "Buscar tipo de gráfico"
+                }
             },
             "view": {
                 "title": "Ver gráficos",

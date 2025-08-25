@@ -18,7 +18,7 @@ public class Goal {
     @JoinColumn(name = "Id_Category", nullable = false)
     private Category category;
 
-    @Column(name = "Name", length = 32, nullable = false, unique = true)
+    @Column(name = "Name", length = 32, nullable = false)
     private String name;
 
     @Column(name = "TargetAmount", nullable = false, precision = 15, scale = 2)

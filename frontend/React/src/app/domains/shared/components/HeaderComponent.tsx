@@ -117,17 +117,17 @@ export function HeaderComponent() {
               <NavigationMenuContent>
                 <ul className="navMenu-content">
                   <ListItem
-                    to="/savingGoals/create"
+                    to="/savingGoals/add"
                     title={t("header.sections.savingGoals.createGoal.title")}
                     description={t("header.sections.savingGoals.createGoal.description")}
                   />
                   <ListItem
-                    to="/empresa/cultura"
+                    to="/savingGoals/view"
                     title={t("header.sections.savingGoals.viewGoals.title")}
                     description={t("header.sections.savingGoals.viewGoals.description")}
                   />
                   <ListItem
-                    to="/empresa/contacto"
+                    to="/savingGoals/edit"
                     title={t("header.sections.savingGoals.editGoals.title")}
                     description={t("header.sections.savingGoals.editGoals.description")}
                   />

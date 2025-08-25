@@ -90,10 +90,7 @@
           "description": "Are you sure you want to modify your profile? This action will update your personal information.",
           "confirm": "Yes, modify",
           "cancel": "No, cancel"
-        },
-        "selectTypeChart": "Select chart type",
-        "noTypeChart": "No type found",
-        "searchTypeChart": "Search chart type"
+        }
       },
       "delete": {
         "title": "Delete Account",
@@ -116,7 +113,61 @@
     "establishment": {
       "title": "Establishment",
       "name": "Establishment Name",
-      "namePlaceholder": "Tinoco"
+      "namePlaceholder": "Tinoco",
+      "combobox": {
+        "select": "Select establishment",
+        "noEstablishments": "No establishments found.",
+        "selectedNewEstablishment": "New establishment selected",
+        "newEstablishment": "+ New establishment",
+        "search": "Search establishment"
+      }
+    },
+    "goal": {
+      "name": "Goal Name",
+      "targetAmount": "Maximum amount",
+      "category": "Category",
+      "percent": "Percentage",
+      "combobox": {
+        "select": "Select goal",
+        "noGoals": "No goals found.",
+        "search": "Search goal"
+      },
+      "add": {
+        "title": "Add Goal",
+        "description": "Create a new saving goal. Set the maximum amount you want to spend in a category.",
+        "tableCaption": "List of your current saving goals",
+        "submit": "Create goal",
+        "success": "Goal created successfully."
+      },
+      "edit": {
+        "title": "Edit Goal",
+        "description": "Update the information of your goals or delete them.",
+        "success": "Goal updated successfully.",
+        "error": "Error updating goal. Please try again.",
+        "submit": "Edit goal",
+        "dialog": {
+          "title": "Confirm modification",
+          "description": "Are you sure you want to edit the goal {{name}}?",
+          "confirm": "Yes, modify",
+          "cancel": "No, cancel"
+        }
+      },
+      "delete": {
+        "success": "Goal deleted successfully.",
+        "submit": "Delete goal",
+        "dialog": {
+          "title": "Confirm deletion",
+          "description": "Are you sure you want to delete the goal {{name}}?",
+          "confirm": "Yes, delete",
+          "cancel": "No, cancel"
+        }
+      },
+      "view": {
+        "title": "View Goals",
+        "description": "Check the summary of your goals by month.",
+        "tableCaption": "List of your saving goals for {{month}}/{{year}}",
+        "stats": "In {{month}}/{{year}} you achieved {{goalsBelow100}} out of {{totalGoals}} goals."
+      }
     },
     "category": {
       "title": "Spending Categories",
@@ -135,8 +186,6 @@
         "tableCaption": "List of your current spending categories",
         "success": "Category {{icon}} {{name}} successfully modified.",
         "error": "Error modifying the category. Please review the fields and try again.",
-        "selectCategory": "Select category",
-        "noCategories": "No categories found.",
         "submit": "Modify category",
         "dialog": {
           "title": "Confirm modification",
@@ -160,6 +209,11 @@
           "cancel": "No, cancel"
         }
       },
+      "combobox": {
+        "select": "Select category",
+        "noCategories": "No categories found.",
+        "search": "Search category"
+      },
       "errors": {
         "name": {
           "required": "Name is required"
@@ -174,7 +228,6 @@
       "category": "Category",
       "date": "Date",
       "periodicity": "Is periodic",
-      "typePeriodic": "Periodicity type",
       "expirationDate": "Expiration date",
       "add": {
         "description": "Register a new spending via the form or by uploading a receipt, invoice, or similar document.",
@@ -183,14 +236,6 @@
         "date": "Date",
         "submit": "Register spending",
         "error": "Error registering spending. Please review the fields and try again.",
-        "selectTypePeriodic": "Select type",
-        "searchTypePeriodic": "Search type",
-        "noTypePeriodic": "No periodicity types found.",
-        "selectEstablishment": "Select establishment",
-        "searchEstablishment": "Search establishment",
-        "noEstablishment": "No establishment found",
-        "newEstablishment": "+ New establishment",
-        "selectedNewEstablishment": "New establishment",
         "success": "{{name}} has been registered with an amount of €{{amount}} under the {{category}} category",
         "fileDescription": "Attach a receipt, invoice, or any similar document to extract the information. Once you upload the file, the previous form will be disabled.",
         "labelFile": "File",
@@ -232,15 +277,21 @@
         "category": {
           "required": "Category is required"
         },
-        "token":{
+        "token": {
           "errorRefresh": "Access token expired. Please log in again."
         }
       }
     },
     "typePeriodic": {
+      "title": "Periodicity Type",
       "monthly": "Monthly",
       "quarterly": "Quarterly",
-      "yearly": "Yearly"
+      "yearly": "Yearly",
+      "combobox": {
+        "select": "Select type",
+        "noTypePeriodic": "No types found.",
+        "search": "Search type"
+      }
     },
     "charts": {
       "main": {
@@ -250,7 +301,12 @@
       "type": {
         "radar": "Radar chart",
         "pie": "Pie chart",
-        "bars": "Bar chart"
+        "bars": "Bar chart",
+        "combobox": {
+          "select": "Select chart type",
+          "noTypeChart": "No chart types found.",
+          "search": "Search chart type"
+        }
       },
       "view": {
         "title": "View Charts",

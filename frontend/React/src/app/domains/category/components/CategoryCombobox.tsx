@@ -51,7 +51,7 @@ export function CategoryCombobox({
           aria-expanded={open}
           className="combobox-selector-button"
         >
-          {selectedCategory?.name || t("domains.category.modify.selectCategory")}
+          {selectedCategory?.name || t("domains.category.combobox.select")}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
     </PopoverTrigger>
@@ -59,11 +59,11 @@ export function CategoryCombobox({
       <PopoverContent className="combobox-popover-content">
         <Command className="bg-zinc-900 text-white">
           <CommandInput
-            placeholder="Search category..."
+            placeholder={t("domains.category.combobox.search")}
             className="combobox-command-input"
           />
           <CommandList>
-            <CommandEmpty className="text-white">{t("domains.category.modify.noCategories")}</CommandEmpty>
+            <CommandEmpty className="text-white">{t("domains.category.combobox.noCategories")}</CommandEmpty>
             <CommandGroup className="border-t-0">
               {categories.map((category) => (
                 <CommandItem

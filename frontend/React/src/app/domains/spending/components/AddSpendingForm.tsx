@@ -223,7 +223,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                         <Label htmlFor="isPeriodic">{t('domains.spending.periodicity')}</Label>
                     </div>
                     <div className="w-full">
-                        <Label htmlFor="typePeriodic" className="label">{t('domains.spending.typePeriodic')}</Label>
+                        <Label htmlFor="typePeriodic" className="label">{t('domains.typePeriodic.title')}</Label>
                         <TypePeriodicCombobox
                             typePeriodic={typePeriodic}
                             selectedTypePeriodic={selectedTypePeriodic}

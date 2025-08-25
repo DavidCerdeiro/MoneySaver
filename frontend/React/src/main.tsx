@@ -23,6 +23,9 @@ import { DeleteProfilePage } from './app/domains/user/pages/DeleteProfilePage.ts
 import { ViewChartsPage } from './app/domains/charts/pages/ViewChartsPage.tsx';
 import { CompareChartsPage } from './app/domains/charts/pages/CompareChartsPage.tsx';
 import { PrivateRoute } from './app/contexts/PrivateRoute.tsx';
+import { AddGoalPage } from './app/domains/goals/pages/AddGoalPage.tsx';
+import { EditGoalsPage } from './app/domains/goals/pages/EditGoalsPage.tsx';
+import { ViewGoalsPage } from './app/domains/goals/pages/ViewGoalsPage.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -52,6 +55,10 @@ createRoot(document.getElementById('root')!).render(
 
             <Route path="/charts/view" element={<ViewChartsPage />} />
             <Route path="/charts/compare" element={<CompareChartsPage />} />
+
+            <Route path="/savingGoals/add" element={<AddGoalPage />} />
+            <Route path="/savingGoals/edit" element={<EditGoalsPage />} />
+            <Route path="/savingGoals/view" element={<ViewGoalsPage />} />
           </Route>
         </Routes>
       </Router>

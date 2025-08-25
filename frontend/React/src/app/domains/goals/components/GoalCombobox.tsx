@@ -12,33 +12,28 @@ import {
   CommandList,
 } from "@/app/domains/shared/components/command";
 import { Button } from "@/app/domains/shared/components/button";
-import { ChevronsUpDownIcon } from "lucide-react";
+import { ChevronsUpDownIcon, CheckIcon } from "lucide-react";
+import { cn } from "@/app/domains/shared/lib/utils";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { TypePeriodicData } from "../schemas/TypePeriodic";
+import type { GoalData } from "../schemas/Goal";
 
-// Setting up the props for the TypePeriodicCombobox component
 type Props = {
-    typePeriodic: TypePeriodicData[];
-    selectedTypePeriodic: TypePeriodicData | null;
-    setSelectedTypePeriodic: (type: TypePeriodicData | null) => void;
-    disabled?: boolean;
+  goals: GoalData[];
+  selectedGoal: GoalData | null;
+  setSelectedGoal: (goal: GoalData | null) => void;
 };
 
-// TypePeriodicCombobox component for selecting a type periodic from a list
-export function TypePeriodicCombobox({
-  typePeriodic,
-  selectedTypePeriodic,
-  setSelectedTypePeriodic,
-  disabled = false,
+export function GoalCombobox({
+  goals,
+  selectedGoal,
+  setSelectedGoal,
 }: Props) {
-
-  // State to manage the open/close state of the popover
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   return (
     // Popover component to display the combobox
-    <Popover open={open} onOpenChange={(value) => !disabled && setOpen(value)}>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         {/* Trigger button for the popover */}
         <Button
@@ -46,35 +41,39 @@ export function TypePeriodicCombobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          disabled={disabled}
           className="combobox-selector-button"
         >
-          {selectedTypePeriodic ? t(`domains.typePeriodic.${selectedTypePeriodic.name}`) : t("domains.typePeriodic.combobox.select")}
-          {/* Icon to indicate dropdown functionality */}
-          <ChevronsUpDownIcon className="chevrons-up-down-icon" />
+          {selectedGoal?.name || t("domains.goal.combobox.select")}
+          <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
-      </PopoverTrigger>
+    </PopoverTrigger>
       {/* Content of the popover containing the command list */}
       <PopoverContent className="combobox-popover-content">
         <Command className="bg-zinc-900 text-white">
           <CommandInput
-            placeholder={t("domains.typePeriodic.combobox.search")}
+            placeholder={t("domains.goal.combobox.search")}
             className="combobox-command-input"
           />
           <CommandList>
-            <CommandEmpty className="text-white">{t("domains.typePeriodic.combobox.noTypePeriodic")}</CommandEmpty>
+            <CommandEmpty className="text-white">{t("domains.goal.combobox.noGoals")}</CommandEmpty>
             <CommandGroup className="border-t-0">
-              {typePeriodic.map((type) => (
+              {goals.map((goal) => (
                 <CommandItem
-                  key={type.id}
-                  value={String(type.name)}
+                  key={goal.id}
+                  value={String(goal.name)}
                   onSelect={() => {
-                    setSelectedTypePeriodic(type);
+                    setSelectedGoal(goal);
                     setOpen(false);
                   }}
                   className="text-white hover:!bg-zinc-700 hover:!text-white cursor-pointer"
                 >
-                  {t(`domains.typePeriodic.${type.name}`)}
+                  <CheckIcon
+                    className={cn(
+                      "combobox-check-icon text-current",
+                      selectedGoal?.name === goal.name ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  {goal.name}
                 </CommandItem>
               ))}
             </CommandGroup>

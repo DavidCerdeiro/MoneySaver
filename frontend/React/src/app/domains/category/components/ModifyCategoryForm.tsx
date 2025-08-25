@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Picker from '@emoji-mart/react';
@@ -33,7 +33,15 @@ export function ModifyCategoryForm({ categories, refreshCategories }: ModifyCate
     watch,
     formState: { errors, isSubmitting },
   } = useForm<CategoryData>();
+
   const watchedName = watch("name");
+
+  useEffect(() => {
+    if (selectedCategory) {
+      setValue("name", selectedCategory.name);
+    }
+  }, [selectedCategory, setValue]);
+
   const onSubmit = async (formData: CategoryData) => {
     try {
       const requestBody: CategoryData = {
@@ -56,7 +64,8 @@ export function ModifyCategoryForm({ categories, refreshCategories }: ModifyCate
     }
     
   };
-const handleDelete = async () => {
+  
+  const handleDelete = async () => {
     if (!selectedCategory) return;
 
     try {
@@ -81,7 +90,7 @@ const handleDelete = async () => {
         setSelectedEmoji={setSelectedEmoji}
         setSelectedIdEmoji={setSelectedIdEmoji}
         setEmojiIsNative={setEmojiIsNative}
-        setValue={setValue}
+        disabled={false}
       />
 
       <div className='flex flex-col items-center justify-center px-4 mt-6'>

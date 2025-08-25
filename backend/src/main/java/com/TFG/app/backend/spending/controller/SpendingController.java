@@ -256,10 +256,6 @@ public class SpendingController {
                         case "total_amount" -> totalAmountStr = entity.getMentionText();
                     }
                 }
-                System.out.println("Extracted Data:");
-                System.out.println("Supplier Name: " + supplierNameStr);
-                System.out.println("Receipt Date: " + receiptDateStr);
-                System.out.println("Total Amount: " + totalAmountStr);
 
                 if (supplierNameStr != null && !supplierNameStr.isEmpty()) {
                     supplierNameStr = supplierNameStr.substring(0, 1).toUpperCase() 

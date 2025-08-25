@@ -38,9 +38,13 @@ export async function apiFetch<T>(path: string, options: RequestInit = {}): Prom
       ...(options.headers || {}),
     },
   });
+
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
     throw new Error(error.message || `Error ${response.status}`);
   }
-  return response.json() as Promise<T>;
+
+  const text = await response.text();
+  // If the response is empty, don't try to parse JSON
+  return text ? (JSON.parse(text) as T) : ({} as T);
 }

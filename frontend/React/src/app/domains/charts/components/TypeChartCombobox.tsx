@@ -50,7 +50,7 @@ export function TypeChartCombobox({
           disabled={disabled}
           className="combobox-selector-button"
         >
-          {selectedTypeChart ? t(`domains.charts.type.${selectedTypeChart.name}`) : t("domains.user.modify.selectTypeChart")}
+          {selectedTypeChart ? t(`domains.charts.type.${selectedTypeChart.name}`) : t("domains.charts.type.combobox.select")}
           {/* Icon to indicate dropdown functionality */}
           <ChevronsUpDownIcon className="chevrons-up-down-icon" />
         </Button>
@@ -59,11 +59,11 @@ export function TypeChartCombobox({
       <PopoverContent className="combobox-popover-content">
         <Command className="bg-zinc-900 text-white">
           <CommandInput
-            placeholder={t("domains.user.modify.searchTypeChart")}
+            placeholder={t("domains.charts.type.combobox.search")}
             className="combobox-command-input"
           />
           <CommandList>
-            <CommandEmpty className="text-white">{t("domains.user.modify.noTypeChart")}</CommandEmpty>
+            <CommandEmpty className="text-white">{t("domains.charts.type.combobox.noTypeChart")}</CommandEmpty>
             <CommandGroup className="border-t-0">
               {typeChart.map((type) => (
                 <CommandItem

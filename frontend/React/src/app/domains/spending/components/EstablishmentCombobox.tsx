@@ -49,7 +49,7 @@ export function EstablishmentCombobox({
           disabled={disabled}
           className="combobox-selector-button"
         >
-          {!selectedEstablishment ? t("domains.spending.add.selectEstablishment") : selectedEstablishment.id === 0 ? t("domains.spending.add.selectedNewEstablishment") : selectedEstablishment.name}
+          {!selectedEstablishment ? t("domains.establishment.combobox.select") : selectedEstablishment.id === 0 ? t("domains.establishment.combobox.selectedNewEstablishment") : selectedEstablishment.name}
           {/* Icon to indicate dropdown functionality */}
           <ChevronsUpDownIcon className="chevrons-up-down-icon" />
         </Button>
@@ -58,11 +58,11 @@ export function EstablishmentCombobox({
       <PopoverContent className="combobox-popover-content">
         <Command className="bg-zinc-900 text-white">
           <CommandInput
-            placeholder={t("domains.spending.add.searchTypePeriodic")}
+            placeholder={t("domains.establishment.combobox.search") || "Search establishment..."}
             className="combobox-command-input"
           />
           <CommandList>
-            <CommandEmpty className="text-white">{t("domains.spending.add.noEstablishment")}</CommandEmpty>
+            <CommandEmpty className="text-white">{t("domains.establishment.combobox.noEstablishments")}</CommandEmpty>
             <CommandGroup className="border-t-0">
               {establishments.map((establishment) => (
                 <CommandItem
@@ -75,7 +75,7 @@ export function EstablishmentCombobox({
                   className="text-white hover:!bg-zinc-700 hover:!text-white cursor-pointer"
                 >
                   {establishment.id === 0
-                    ? t("domains.spending.add.newEstablishment")
+                    ? t("domains.establishment.combobox.newEstablishment")
                     : `${establishment.name}`}
                 </CommandItem>
               ))}
