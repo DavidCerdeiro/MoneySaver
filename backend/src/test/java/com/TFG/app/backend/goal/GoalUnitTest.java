@@ -33,7 +33,7 @@ public class GoalUnitTest {
 
         goal.setTargetAmount(inputTargetAmount);
 
-        assertEquals(2, goal.getTargetAmount().scale(), "Amount should have 2 decimal places");
+        assertEquals(2, goal.getTargetAmount().scale());
         assertEquals(new BigDecimal("123.46"), goal.getTargetAmount());
     }
 }

@@ -36,9 +36,7 @@ public class EstablishmentIntegrationTest {
 
         Establishment establishment2 = new Establishment();
         establishment2.setName("El Corte Inglés");
-        
-        assertThrows(DataIntegrityViolationException.class, () -> {
-            establishmentRepository.saveAndFlush(establishment2);
-        });
+
+        assertThrows(DataIntegrityViolationException.class, () -> { establishmentRepository.saveAndFlush(establishment2); });
     }
 }

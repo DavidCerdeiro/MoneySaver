@@ -14,13 +14,15 @@ public class TransactionUnitTest {
         Account bankAccount = new Account();
         Spending spending = new Spending();
 
-        spending.setName("Grocery Shopping");
-        bankAccount.setBankName("Bank of Spain");
+        spending.setName("Mercadona");
+        bankAccount.setBankName("Unicaja");
         transaction.setAccount(bankAccount);
         transaction.setSpending(spending);
+        transaction.setTrueLayerId("tr_id12345");
 
-        Assertions.assertEquals("Grocery Shopping", transaction.getSpending().getName());
-        Assertions.assertEquals("Bank of Spain", transaction.getAccount().getBankName());
+        Assertions.assertEquals("Mercadona", transaction.getSpending().getName());
+        Assertions.assertEquals("Unicaja", transaction.getAccount().getBankName());
         Assertions.assertEquals(spending, transaction.getSpending());
+        Assertions.assertEquals("tr_id12345", transaction.getTrueLayerId());
     }
 }

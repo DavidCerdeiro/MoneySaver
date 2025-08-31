@@ -1,5 +1,6 @@
 package com.TFG.app.backend.goal.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -79,7 +80,7 @@ public class GoalController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        List<Goal> goals = goalService.getAllGoalsFromCategories(user.getId());
+        List<Goal> goals = goalService.getAllGoalsFromCategories(user.getId(), LocalDate.of(year, month, 1));
 
         List<GoalResponse> goalResponses = goals.stream().map(goal -> {
             GoalResponse response = new GoalResponse();
@@ -92,7 +93,6 @@ public class GoalController {
             response.setPercent(goalService.calculatePercent(goal.getTargetAmount(), spendingService.getTotalAmountMonthlyByCategory(goal.getCategory().getId(), month, year)));
             return response;
         }).toList();
-        System.out.println(goalResponses.get(0).getPercent());
         return ResponseEntity.ok(goalResponses);
     }
 

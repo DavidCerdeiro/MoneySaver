@@ -13,6 +13,7 @@ import com.TFG.app.backend.establishment.service.EstablishmentService;
 import com.TFG.app.backend.user.service.UserService;
 
 import com.TFG.app.backend.spending.entity.Spending;
+import com.TFG.app.backend.bill.entity.Bill;
 import com.TFG.app.backend.bill.service.BillService;
 import com.TFG.app.backend.category.entity.Category;
 import com.TFG.app.backend.user.entity.User;
@@ -52,6 +53,7 @@ public class SpendingController {
     private final Periodic_SpendingService periodicSpendingService;
     private final EstablishmentService establishmentService;
     private final JwtService jwtService;
+    private final BillService billService;
 
     public SpendingController(SpendingService spendingService, UserService userService, CategoryService categoryService, Type_PeriodicService typePeriodicService, Periodic_SpendingService periodicSpendingService, EstablishmentService establishmentService, JwtService jwtService, BillService billService) {
         this.spendingService = spendingService;
@@ -61,6 +63,7 @@ public class SpendingController {
         this.periodicSpendingService = periodicSpendingService;
         this.establishmentService = establishmentService;
         this.jwtService = jwtService;
+        this.billService = billService;
     }
 
     /**
@@ -159,16 +162,23 @@ public class SpendingController {
         List<Spending> spendings = spendingService.getAllSpendingsByUserMonthAndYear(user.getId().intValue(), month, year);
         List<SpendingResponse> spendingResponses = new ArrayList<>();
 
+        LocalDate date = LocalDate.of(year, month, 1);
         for (Spending spending : spendings) {
+            boolean isDeleted = spending.getCategory().getDeletedAt() != null &&
+                   !spending.getCategory().getDeletedAt().isAfter(date);
+            String categoryName = isDeleted ? "Deleted" : spending.getCategory().getName();
+            String categoryIcon = isDeleted ? "x" : spending.getCategory().getIcon();
+            Bill bill = billService.getBillBySpending(spending);
             spendingResponses.add(new SpendingResponse(
                     spending.getId(),
                     spending.getName(),
                     spending.getAmount(),
                     spending.getDate(),
-                    spending.getCategory().getName(),
-                    spending.getCategory().getIcon(),
+                    categoryName,
+                    categoryIcon,
                     spending.getIsPeriodic(),
-                    spending.getEstablishment() != null ? spending.getEstablishment().getName() : ""
+                    spending.getEstablishment() != null ? spending.getEstablishment().getName() : "",
+                    bill != null ? bill.getId() : null
             ));
         }
 

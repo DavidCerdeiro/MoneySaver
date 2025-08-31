@@ -11,12 +11,12 @@ import {
 } from "@/app/domains/shared/components/table";
 import { useTranslation } from "react-i18next";
 import { getEmojiById } from "../../category/components/EmojiFunctions";
-import { Check, X, ArrowUp, ArrowDown } from "lucide-react";
+import { Check, X, ArrowUp, ArrowDown, Eye } from "lucide-react";
+import { getDownloadUrl } from "../application/BillService";
+import { Button } from "../../shared/components/button";
 
 type SpendingTableProps = {
   spendings: SpendingResponse[];
-  month?: number;
-  year?: number;
 };
 
 type SortableKeys = keyof SpendingResponse;
@@ -26,7 +26,7 @@ type SortConfig = {
   direction: SortDirection;
 };
 
-export function SpendingsTable({ spendings, month, year }: SpendingTableProps) {
+export function SpendingsTable({ spendings}: SpendingTableProps) {
   const { t } = useTranslation();
   
   const [sortConfig, setSortConfig] = useState<SortConfig>({
@@ -76,7 +76,7 @@ export function SpendingsTable({ spendings, month, year }: SpendingTableProps) {
     <div>
       <Table>
           <TableCaption className="text-white">
-              {t('domains.spending.table.caption', { month, year })}
+              {t('domains.spending.table.caption')}
           </TableCaption>
           <TableHeader>
               <TableRow>
@@ -104,13 +104,16 @@ export function SpendingsTable({ spendings, month, year }: SpendingTableProps) {
                       {t('domains.spending.periodicity')}
                       {getSortIcon('periodic')}
                   </TableHead>
+                  <TableHead className="table-head cursor-pointer hover:bg-gray-700">
+                    {t('domains.spending.table.viewAttachment')}
+                  </TableHead>
               </TableRow>
           </TableHeader>
           <TableBody>
               {sortedSpendings.map((spending) => (
                   <TableRow key={spending.id}>
                       <TableCell className="table-cell">
-                          {getEmojiById(spending.iconCategory)} {spending.categoryName}
+                          {getEmojiById(spending.iconCategory)} {spending.categoryName === "Deleted" ? t('domains.category.deleted') : spending.categoryName}
                       </TableCell>
                       <TableCell className="table-cell">{spending.name}</TableCell>
                       <TableCell className="table-cell">{spending.amount}</TableCell>
@@ -118,6 +121,26 @@ export function SpendingsTable({ spendings, month, year }: SpendingTableProps) {
                       <TableCell className="table-cell">{spending.establishmentName || '-'}</TableCell>
                       <TableCell className="table-cell">
                           {spending.periodic ? <Check className="inline-block" /> : <X className="inline-block" />}
+                      </TableCell>
+                      <TableCell className="table-cell">
+                        {spending.billId ? (
+                          <Button
+                            onClick={async () => {
+                              try {
+                                const signedUrl = await getDownloadUrl(spending.billId);
+                                window.open(signedUrl, "_blank");
+                              } catch (err) {
+                                console.error("Error downloading file", err);
+                              }
+                            }}
+                            className="px-2 py-1 rounded bg-gray-800 text-white border border-gray-600 hover:bg-gray-700 transition flex items-center gap-1"
+                          >
+                            <Eye className="h-4 w-4" />
+
+                          </Button>
+                        ) : (
+                          "-"
+                        )}
                       </TableCell>
                   </TableRow>
               ))}

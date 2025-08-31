@@ -65,9 +65,7 @@ export async function fetchCategoriesForUser() {
 export async function deleteCategory(categoryId: number | undefined) {
   const response = await fetch(`/api/categories/delete?id=${categoryId}`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    credentials: "include",
   });
 
   if (!response.ok) {

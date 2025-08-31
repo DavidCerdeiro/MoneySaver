@@ -2,23 +2,29 @@ package com.TFG.app.backend.category.service;
 
 import org.springframework.stereotype.Service;
 import com.TFG.app.backend.category.repository.CategoryRepository;
+import com.TFG.app.backend.goal.entity.Goal;
+import com.TFG.app.backend.goal.service.GoalService;
 import com.TFG.app.backend.user.service.UserService;
 import com.TFG.app.backend.category.entity.Category;
 import com.TFG.app.backend.user.entity.User;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final UserService userService;
+    private final GoalService goalService;
 
-    public CategoryService(CategoryRepository categoryRepository, UserService userService) {
+    public CategoryService(CategoryRepository categoryRepository, UserService userService, GoalService goalService) {
         this.categoryRepository = categoryRepository;
         this.userService = userService;
+        this.goalService = goalService;
     }
 
     public boolean addCategory(Category category) {
-        if(categoryRepository.existsByNameAndUserAndIsDeletedFalse(category.getName(), category.getUser())) {
+        if(categoryRepository.existsByNameAndUserAndDeletedAtIsNull(category.getName(), category.getUser())) {
             throw new IllegalArgumentException("Ya existe una categoría activa con ese nombre");
         }
         Category result = categoryRepository.save(category);
@@ -28,21 +34,21 @@ public class CategoryService {
     public List<Category> getAllCategoriesFromUser(Integer idUser) {
         User user = userService.getUserById(idUser);
         if (user != null) {
-            return categoryRepository.findByUserAndIsDeletedFalse(user);
+            return categoryRepository.findByUserAndDeletedAtIsNull(user);
         }
         return null;
     }
 
-    public List<Category> getAllCategoriesNotDeletedFromUser(Integer idUser) {
+    public List<Category> getAllCategoriesNotDeletedFromUser(Integer idUser, LocalDate date) {
         User user = userService.getUserById(idUser);
         if (user != null) {
-            return categoryRepository.findByUser(user);
+            return categoryRepository.findActivesByUserAndMonth(user.getId(), date);
         }
         return null;
     }
 
     public Category getCategoryFromId(Integer idCategory) {
-        return categoryRepository.findByIdAndIsDeletedFalse(idCategory);
+        return categoryRepository.findByIdAndDeletedAtIsNull(idCategory);
     }
 
     public boolean updateCategory(Category category) {
@@ -52,9 +58,13 @@ public class CategoryService {
     }
 
     public boolean deleteCategory(Integer id) {
-            Category category = categoryRepository.findByIdAndIsDeletedFalse(id);
-            category.setDeleted(true);
+            Category category = categoryRepository.findByIdAndDeletedAtIsNull(id);
+            List<Goal> goals = goalService.getAllGoalsFromCategory(category);
+            for (Goal goal : goals) {
+                goal.setDeletedAt(LocalDate.now().withDayOfMonth(1));        
+            }
 
+            category.setDeletedAt(LocalDate.now().withDayOfMonth(1));
             if( categoryRepository.save(category) != null) {
                 return true;
             }

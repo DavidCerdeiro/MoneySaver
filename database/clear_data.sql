@@ -4,7 +4,6 @@ TRUNCATE TABLE
   bill,
   spending,
   establishment,
-  "region",
   "account",
   category,
   "user",

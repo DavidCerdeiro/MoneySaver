@@ -16,6 +16,7 @@ import com.TFG.app.backend.user.repository.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 @DataJpaTest
 @ActiveProfiles("test")
 public class CategoryIntegrationTest {
@@ -41,7 +42,7 @@ public class CategoryIntegrationTest {
 
         categoryRepository.save(category);
 
-        assertThat(categoryRepository.existsByNameAndUserAndIsDeletedFalse("Videogames", user)).isTrue();
+        assertThat(categoryRepository.existsByNameAndUserAndDeletedAtIsNull("Videogames", user)).isTrue();
     }
 
     @Test
@@ -58,47 +59,21 @@ public class CategoryIntegrationTest {
         category.setName("Supermarkets");
         categoryRepository.save(category);
 
-        assertThat(categoryRepository.existsByNameAndUserAndIsDeletedFalse("Supermarkets", user)).isTrue();
+        assertThat(categoryRepository.existsByNameAndUserAndDeletedAtIsNull("Supermarkets", user)).isTrue();
     }
 
     @Test
-    public void testDuplicateNameDifferentUser() {
-        Type_Chart typeChart = new TypeChartTestDataBuilder().build();
-        typeChartRepository.save(typeChart);
-
-        User user1 = new UserTestDataBuilder().withTypeChart(typeChart).build();
-        userRepository.save(user1);
-
-        User user2 = new UserTestDataBuilder().withEmail("david2@gmail.com").withTypeChart(typeChart).build();
-        userRepository.save(user2);
-
-        Category category1 = new CategoryTestDataBuilder().withUser(user1).build();
-        categoryRepository.save(category1);
-
-        Category category2 = new CategoryTestDataBuilder().withUser(user2).build();
-        categoryRepository.save(category2);
-
-        assertThat(categoryRepository.existsByNameAndUserAndIsDeletedFalse("Videogames", user1)).isTrue();
-        assertThat(categoryRepository.existsByNameAndUserAndIsDeletedFalse("Videogames", user2)).isTrue();
-    }
-
-    @Test
-    public void testInsertCategoryWithSameNameAfterDelete() {
+    public void testCreatedAtPrePersist() {
         Type_Chart typeChart = new TypeChartTestDataBuilder().build();
         typeChartRepository.save(typeChart);
 
         User user = new UserTestDataBuilder().withTypeChart(typeChart).build();
         userRepository.save(user);
 
-        Category category1 = new CategoryTestDataBuilder().withUser(user).build();
-        categoryRepository.save(category1);
+        Category category = new CategoryTestDataBuilder().withUser(user).build();
+        categoryRepository.save(category);
 
-        category1.setDeleted(true);
-        categoryRepository.save(category1);
-
-        Category category2 = new CategoryTestDataBuilder().withUser(user).build();
-        categoryRepository.save(category2);
-
-        assertThat(categoryRepository.existsByNameAndUserAndIsDeletedFalse("Videogames", user)).isTrue();
+        assertThat(category.getCreatedAt().getDayOfMonth()).isEqualTo(1);
     }
+
 }

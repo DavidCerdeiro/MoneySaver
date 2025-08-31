@@ -12,12 +12,15 @@ public class AccountUnitTest {
         User user = new User();
 
         user.setName("Juan Perez");
-        account.setBankName("Bank of Spain");
-        account.setAccessToken("1234567890abcdef1234567890abcdef12345678");
+        account.setBankName("CaixaBank");
+        account.setName("Cuenta de ahorros");
+        account.setNumber("100000");
+        account.setTrueLayerId("tl_id1234");
         account.setUser(user);
 
-        Assertions.assertEquals("Bank of Spain", account.getBankName());
-        Assertions.assertEquals("1234567890abcdef1234567890abcdef12345678", account.getAccessToken());
+        Assertions.assertEquals("CaixaBank", account.getBankName());
+        Assertions.assertEquals("100000", account.getNumber());
+        Assertions.assertEquals("tl_id1234", account.getTrueLayerId());
         Assertions.assertEquals(user, account.getUser());
     }
 }

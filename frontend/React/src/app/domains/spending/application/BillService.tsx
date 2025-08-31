@@ -9,3 +9,17 @@ export async function uploadBill(file: File, idSpending: number) {
         credentials: "include",
     });
 }
+
+export async function getDownloadUrl(idBill: number | undefined = undefined) {
+    const response = await fetch(`/api/bills/signed-url?billId=${idBill}`, {
+        method: "GET",
+        credentials: "include",
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch download URL");
+    }
+
+    const data = await response.json();
+    return data.downloadUrl;
+}

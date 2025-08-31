@@ -18,6 +18,7 @@ import com.TFG.app.backend.type_chart.repository.Type_ChartRepository;
 import com.TFG.app.backend.user.UserTestDataBuilder;
 import com.TFG.app.backend.user.entity.User;
 import com.TFG.app.backend.user.repository.UserRepository;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -52,5 +53,26 @@ public class GoalIntegrationTest {
         goal.setTargetAmount(BigDecimal.valueOf(1000.0));
 
         goalRepository.save(goal);
+        assertThat(goalRepository.findByCategoryAndDeletedAtIsNull(category)).isNotNull();
+    }
+
+    @Test
+    public void testCreatedAPrePersist() {
+        Type_Chart typeChart = new TypeChartTestDataBuilder().build();
+        typeChartRepository.save(typeChart);
+
+        User user = new UserTestDataBuilder().withTypeChart(typeChart).build();
+        userRepository.save(user);
+
+        Category category = new CategoryTestDataBuilder().withUser(user).build();
+        categoryRepository.save(category);
+
+        Goal goal = new Goal();
+        goal.setName("Holidays in Brasil");
+        goal.setCategory(category);
+        goal.setTargetAmount(BigDecimal.valueOf(1000.0));
+
+        goalRepository.save(goal);
+        assertThat(goal.getCreatedAt().getDayOfMonth()).isEqualTo(1);
     }
 }

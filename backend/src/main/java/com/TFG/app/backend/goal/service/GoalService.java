@@ -2,6 +2,7 @@ package com.TFG.app.backend.goal.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -27,14 +28,15 @@ public class GoalService {
         return goalRepository.save(goal);
     }
 
-    public List<Goal> getAllGoalsFromCategories(Integer idUser) {
-        return goalRepository.findAllByUserId(idUser);
+    public List<Goal> getAllGoalsFromCategories(Integer idUser, LocalDate month) {
+        return goalRepository.findActivesByUserAndMonth(idUser, month);
+    }
+
+    public List<Goal> getAllGoalsFromCategory(Category category) {
+        return goalRepository.findByCategoryAndDeletedAtIsNull(category);
     }
 
     public BigDecimal calculatePercent(BigDecimal targetAmount, BigDecimal currentAmount) {
-        System.out.println("Target Amount: " + targetAmount);
-        System.out.println("Current Amount: " + currentAmount);
-
         if (targetAmount == null || currentAmount == null || targetAmount.compareTo(BigDecimal.ZERO) == 0) {
             return BigDecimal.ZERO;
         }

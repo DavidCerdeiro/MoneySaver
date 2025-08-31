@@ -1,6 +1,10 @@
 package com.TFG.app.backend.bill.controller;
 
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,4 +80,50 @@ public class BillController {
 
         
     }
+
+    @GetMapping("/signed-url")
+    public ResponseEntity<Map<String, String>> getSignedUrl(
+            @CookieValue(name = "accessToken", required = false) String token,
+            @RequestParam("billId") int billId) {
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String email = jwtService.getEmailFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Bill bill = billService.getBillById(billId);
+        if (bill == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        try {
+            String fileRoute = bill.getFileRoute(); // ej: gs://bucket/bills/uuid-file.jpg
+            String bucketName = fileRoute.split("/")[2];
+            String objectName = fileRoute.substring(fileRoute.indexOf(bucketName) + bucketName.length() + 1);
+
+            Storage storage = StorageOptions.getDefaultInstance().getService();
+            BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, objectName)).build();
+
+            URL signedUrl = storage.signUrl(blobInfo, 15, TimeUnit.MINUTES, Storage.SignUrlOption.withV4Signature());
+
+            Map<String, String> response = new HashMap<>();
+            response.put("downloadUrl", signedUrl.toString());
+
+            System.out.println("Generated signed URL: " + signedUrl.toString());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+
 }

@@ -19,7 +19,7 @@ public class SpendingUnitTest {
         Establishment establishment = new Establishment();
 
         category.setName("Video Games");
-        establishment.setName("GameStop");
+        establishment.setName("Game");
         spending.setName("GTA VI");
         spending.setAmount(new BigDecimal("100.00"));
         spending.setDate(LocalDate.now());
@@ -42,7 +42,7 @@ public class SpendingUnitTest {
 
         spending.setAmount(inputAmount);
 
-        assertEquals(2, spending.getAmount().scale(), "Amount should have 2 decimal places");
+        assertEquals(2, spending.getAmount().scale());
         assertEquals(new BigDecimal("123.46"), spending.getAmount());
     }
 }

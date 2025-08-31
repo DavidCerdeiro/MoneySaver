@@ -36,7 +36,7 @@ export function BarChartVerticalComponent({ data, principalPage }: Props) {
   if(principalPage){
     title = t("domains.charts.main.title");
   } else {
-    title = t("domains.charts.type.bar");
+    title = t("domains.charts.type.bars");
   }
   
   return (

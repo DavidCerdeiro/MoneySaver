@@ -2,10 +2,13 @@
 DROP TRIGGER IF EXISTS TR_Type_Periodic_BI ON "type_periodic";
 DROP TRIGGER IF EXISTS TR_Periodic_Spending_BI ON "periodic_spending";
 DROP TRIGGER IF EXISTS TR_Type_Chart_BI ON "type_chart";
+DROP TRIGGER IF EXISTS TR_Category_CreatedAt_BU ON "category";
+DROP TRIGGER IF EXISTS TR_Goal_CreatedAt_BU ON "goal";
 
 DROP FUNCTION IF EXISTS validate_periodic_type();
 DROP FUNCTION IF EXISTS validate_periodic_spending();
 DROP FUNCTION IF EXISTS validate_chart_type();
+DROP FUNCTION IF EXISTS validate_createdat_immutable();
 
 -- 1. Validate name in periodic spending type
 CREATE OR REPLACE FUNCTION validate_periodic_type()
@@ -61,6 +64,18 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- 4. Validate CreatedAt is immutable
+CREATE OR REPLACE FUNCTION validate_createdat_immutable()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW."CreatedAt" IS DISTINCT FROM OLD."CreatedAt" THEN
+        RAISE EXCEPTION 'El atributo "CreatedAt" no es modificable'
+        USING ERRCODE = 'P0010';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 -- TRIGGERS
 
 -- 1. Trigger for type_periodic
@@ -80,3 +95,15 @@ CREATE TRIGGER TR_Periodic_Spending_BI
 BEFORE INSERT ON "periodic_spending"
 FOR EACH ROW
 EXECUTE FUNCTION validate_periodic_spending();
+
+-- 4. Trigger for category
+CREATE TRIGGER TR_Category_CreatedAt_BU
+BEFORE UPDATE ON "category"
+FOR EACH ROW
+EXECUTE FUNCTION validate_createdat_immutable();
+
+-- 5. Trigger for goal
+CREATE TRIGGER TR_Goal_CreatedAt_BU
+BEFORE UPDATE ON "goal"
+FOR EACH ROW
+EXECUTE FUNCTION validate_createdat_immutable();

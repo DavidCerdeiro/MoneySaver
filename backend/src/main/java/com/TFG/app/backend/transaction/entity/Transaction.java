@@ -6,7 +6,12 @@ import com.TFG.app.backend.account.entity.Account;
 import com.TFG.app.backend.spending.entity.Spending;
 
 @Entity
-@Table(name = "transaction")
+@Table(
+    name = "transaction",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"Id_Account", "TrueLayerId"})
+    }
+)
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +25,9 @@ public class Transaction {
     @OneToOne
     @JoinColumn(name = "Id_Spending", unique = true, nullable = false)
     private Spending spending;
+
+    @Column(name = "TrueLayerId", nullable = false, length = 64, unique = true)
+    private String trueLayerId;
 
     // Getters and Setters
     public Integer getId() {
@@ -40,4 +48,11 @@ public class Transaction {
         this.spending = spending;
     }
 
+    public String getTrueLayerId() {
+        return trueLayerId;
+    }
+
+    public void setTrueLayerId(String trueLayerId) {
+        this.trueLayerId = trueLayerId;
+    }
 }

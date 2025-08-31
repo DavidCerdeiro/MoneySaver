@@ -3,6 +3,7 @@ package com.TFG.app.backend.goal.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 
 import com.TFG.app.backend.category.entity.Category;
 
@@ -23,6 +24,19 @@ public class Goal {
 
     @Column(name = "TargetAmount", nullable = false, precision = 15, scale = 2)
     private BigDecimal targetAmount;
+
+    @Column(name = "CreatedAt", nullable = false)
+    private LocalDate createdAt;
+
+    @Column(name = "DeletedAt", nullable = true)
+    private LocalDate deletedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.createdAt == null) {
+            this.createdAt = LocalDate.now().withDayOfMonth(1);
+        }
+    }
 
     // Getters and Setters
     public Integer getId() {
@@ -48,5 +62,19 @@ public class Goal {
     }
     public void setTargetAmount(BigDecimal targetAmount) {
         this.targetAmount = targetAmount.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDate getDeletedAt() {
+        return deletedAt;
+    }
+    public void setDeletedAt(LocalDate deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

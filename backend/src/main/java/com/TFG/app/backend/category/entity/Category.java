@@ -2,6 +2,8 @@ package com.TFG.app.backend.category.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 import com.TFG.app.backend.user.entity.User;
 
 @Entity
@@ -22,9 +24,18 @@ public class Category {
     @Column(name = "Icon", length = 64, nullable = false)
     private String icon;
 
-    @Column(name = "IsDeleted", nullable = false)
-    private boolean isDeleted = false;
+    @Column(name = "CreatedAt", nullable = false)
+    private LocalDate createdAt;
 
+    @Column(name = "DeletedAt", nullable = true)
+    private LocalDate deletedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.createdAt == null) {
+            this.createdAt = LocalDate.now().withDayOfMonth(1);
+        }
+    }
     // Getters and Setters
     public Integer  getId() {
         return id;
@@ -51,11 +62,19 @@ public class Category {
         this.icon = icon;
     }
 
-    public boolean isDeleted() {
-        return isDeleted;
+    public LocalDate getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDate getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDate deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

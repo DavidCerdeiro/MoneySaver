@@ -110,6 +110,36 @@
                 }
             }
         },
+        "transaction":{
+                "extract":{
+                    "title": "Extraer transacciones",
+                    "description": "Extrae tus últimas transacciones desde una cuenta bancaria durante un periodo de tiempo.",
+                    "submit": "Extraer información",
+                    "minDate": "Fecha mínima",
+                    "maxDate": "Fecha máxima",
+                    "noTransactionsFound": "No se encontraron transacciones pendientes para este periodo de tiempo."
+                },
+                "add":{
+                    "title":"Añadir transacciones",
+                    "description":"Añada la categoría a la que la quiere asociar y el establecimiento si desea.",
+                    "submit": "Añadir transacción",
+                    "success": "Transacción {{name}} de {{amount}}€ añadida con éxito."
+                },
+                "table":{
+                    "caption": "Listado de tus transacciones"
+                },
+                "errors":{
+                    "minDate": {
+                        "required": "La fecha mínima es obligatoria",
+                        "currentMonth": "La fecha mínima debe ser del mes actual",
+                        "cannotBeAfterMaxDate": "La fecha mínima no puede ser posterior a la fecha máxima"
+                    },
+                    "maxDate": {
+                        "required": "La fecha máxima es obligatoria",
+                        "future": "La fecha máxima no puede ser futura"
+                    }
+                }
+            },
         "establishment":{
             "title": "Establecimiento",
             "name": "Nombre del Establecimiento",
@@ -170,10 +200,11 @@
             }
         },
         "category":{
-            "title": "Categorías de gasto",
+            "title": "Categorías",
             "name": "Nombre",
             "icon": "Icono",
             "totalSpending": "Gasto total",
+            "deleted": "Eliminada",
             "add":{
                 "description": "Crea una nueva categoría de gasto mediante el nombre que estimes oportuno y el icono que más se adecue.",
                 "iconSelected": "Seleccionado: ",
@@ -204,7 +235,7 @@
                 "submit": "Eliminar categoría",
                 "dialog":{
                     "title": "Confirmar eliminación",
-                    "description": "¿Estás seguro de que deseas eliminar la categoría {{icon}}{{name}}? Todos los gastos relacionados se eliminarán.",
+                    "description": "¿Estás seguro de que deseas eliminar la categoría {{icon}}{{name}}? Se eliminarán los objetivos y los gastos dejarán de estar asociados",
                     "confirm": "Sí, eliminar",
                     "cancel": "No, cancelar"
                 }
@@ -231,6 +262,7 @@
             "expirationDate": "Fecha de expiración",
             "add": {
                 "description": "Registra un nuevo gasto a través del formulario o mediante la importación del ticket, factura o cualquier documento similar.",
+                "currentMonth": "El gasto se debe corresponder al mes actual.",
                 "category": "Categoría",
                 "amount": "Importe",
                 "date": "Fecha",
@@ -249,11 +281,13 @@
             "view":{
                 "title": "Ver gastos",
                 "description": "Consulta tus gastos por meses y ordénalos como desees.",
+                "date": "Mostrando el resumen mensual correspondiente a {{month}}/{{year}}.",
                 "previousMonth": "Mes anterior",
                 "nextMonth": "Mes siguiente"
             },
             "table": {
-                "caption": "Listado de tus gastos de {{month}}/{{year}}"
+                "viewAttachment": "Ver adjunto",
+                "caption": "Listado de tus gastos generales"
             },
             "errors": {
                 "name": {
@@ -264,7 +298,8 @@
                     "positive": "El importe debe ser un número positivo"
                 },
                 "date": {
-                    "required": "La fecha es obligatoria"
+                    "required": "La fecha es obligatoria",
+                    "currentMonth": "La fecha debe ser del mes actual"
                 },
                 "expirationDate": {
                     "required": "La fecha de expiración es obligatoria",
@@ -280,6 +315,41 @@
                 "token":{
                     "errorRefresh": "Se ha expirado el token de sesión. Por favor, inicia sesión nuevamente."
                 }
+            }
+        },
+        "account":{
+            "title": "Cuentas bancaria",
+            "number": "Número de cuenta",
+            "addedSuccesfully": "Se han vinculado {{num}} cuentas bancarias.",
+            "addedOneAccount": "Se ha vinculado {{name}} cuenta bancaria.",
+            "noAccountsFound": "No se han encontrado cuentas bancarias por añadir.",
+            "page":{
+                "title": "Ver cuentas bancarias",
+                "description": "Consulta tus cuentas bancarias vinculadas, añade nuevas o elimínalas.",
+                "linkAccounts": "Vincular nuevas cuentas"
+            },
+            "delete":{
+                "success": "Cuenta bancaria eliminada con éxito.",
+                "error": "Error al eliminar la cuenta bancaria. Por favor, inténtelo de nuevo."
+            },
+            "table":{
+                "caption": "Listado de tus cuentas bancarias vinculadas",
+                "headers": {
+                    "name": "Nombre",
+                    "number": "Número",
+                    "bankName": "Nombre del banco",
+                    "unlink": "Desvincular",
+                    "select": "Seleccionar"
+                },
+                "dialog":{
+                    "title": "Desvincular cuenta",
+                    "description": "¿Estás seguro de que deseas desvincular la cuenta {{name}}?",
+                    "confirm": "Desvincular",
+                    "cancel": "Cancelar"
+                }
+            },
+            "errors":{
+                "duplicateAccount": "La cuenta bancaria ya está vinculada."
             }
         },
         "typePeriodic":{
@@ -330,9 +400,9 @@
                     "title": "Modificar perfil",
                     "description": "Actualiza tu información personal."
                 },
-                "linkBankAccount":{
-                    "title": "Vincular cuenta bancaria",
-                    "description": "Conecta tu cuenta bancaria para extraer datos de transacciones."
+                "manageAccounts":{
+                    "title": "Gestionar cuentas bancarias",
+                    "description": "Añade nuevas cuentas bancarias o elimina las ya vinculadas."
                 }
             },
             "savingGoals": {
@@ -359,6 +429,10 @@
                 "addSpending": {
                     "title": "Añadir gasto",
                     "description": "Registra un nuevo gasto."
+                },
+                "transactions":{
+                    "title": "Extraer transacciones",
+                    "description": "Extrae tus últimas transacciones."
                 },
                 "addCategory": {
                     "title": "Añadir categoría",

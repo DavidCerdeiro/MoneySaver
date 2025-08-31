@@ -11,13 +11,15 @@ public class SpendingResponse {
     private String iconCategory;
     private boolean isPeriodic;
     private String establishmentName;
+    private Integer billId;
 
-    public SpendingResponse(Integer id, String name, BigDecimal amount, LocalDate date, String categoryName, String iconCategory, boolean isPeriodic, String establishmentName) {
+    public SpendingResponse(Integer id, String name, BigDecimal amount, LocalDate date, String categoryName, String iconCategory, boolean isPeriodic, String establishmentName, Integer billId) {
         this.id = id;
         this.name = name;
         this.amount = amount;
         this.date = date;
         this.categoryName = categoryName;
+        this.billId = billId;
         this.iconCategory = iconCategory;
         this.isPeriodic = isPeriodic;
         this.establishmentName = establishmentName;
@@ -46,6 +48,9 @@ public class SpendingResponse {
     }
     public String getEstablishmentName() {
         return establishmentName;
+    }
+    public Integer getBillId() {
+        return billId;
     }
 }
 

@@ -74,9 +74,9 @@ export function HeaderComponent() {
                     description={t("header.sections.profile.editProfile.description")}
                   />
                   <ListItem
-                    to="user/linkBankAccount"
-                    title={t("header.sections.profile.linkBankAccount.title")}
-                    description={t("header.sections.profile.linkBankAccount.description")}
+                    to="/user/accounts"
+                    title={t("header.sections.profile.manageAccounts.title")}
+                    description={t("header.sections.profile.manageAccounts.description")}
                   />
                 </ul>
             </NavigationMenuContent>
@@ -106,6 +106,11 @@ export function HeaderComponent() {
                     to="/categories/add"
                     title={t("header.sections.spendings.addCategory.title")}
                     description={t("header.sections.spendings.addCategory.description")}
+                  />
+                  <ListItem
+                    to="/spendings/transactions"
+                    title={t("header.sections.spendings.transactions.title")}
+                    description={t("header.sections.spendings.transactions.description")}
                   />
                 </ul>
               </NavigationMenuContent>

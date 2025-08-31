@@ -24,7 +24,7 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
     const { checkAuth } = useUser();
 
     let email = sessionStorage.getItem('email');
-    let title = t('auth.forgotTitle');
+    let title = t('auth.defaultTitle');
     let description = "";
     let submit = "";
 

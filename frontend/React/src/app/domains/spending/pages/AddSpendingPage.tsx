@@ -40,6 +40,7 @@ export function AddSpendingPage() {
         <DefaultPageLayout>
             <h1 className="page-title">{t('header.sections.spendings.addSpending.title')}</h1>
             <p className="page-description">{t('domains.spending.add.description')}</p>
+            <p className="page-description">{t('domains.spending.add.currentMonth')}</p>
             <AddSpendingForm categories={categories} typePeriodic={typePeriodic} establishments={establishments}  loadEstablishment={loadEstablishment} />
         </DefaultPageLayout>
     )

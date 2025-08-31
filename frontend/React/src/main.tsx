@@ -26,6 +26,10 @@ import { PrivateRoute } from './app/contexts/PrivateRoute.tsx';
 import { AddGoalPage } from './app/domains/goals/pages/AddGoalPage.tsx';
 import { EditGoalsPage } from './app/domains/goals/pages/EditGoalsPage.tsx';
 import { ViewGoalsPage } from './app/domains/goals/pages/ViewGoalsPage.tsx';
+import { CallbackPage } from './app/domains/shared/pages/CallbackPage.tsx';
+import { AccountsPage } from './app/domains/account/pages/AccountsPage.tsx';
+import { ExtractTransactionsPage } from './app/domains/transactions/pages/ExtractTransactionsPage.tsx';
+import { AddTransactionsPage } from './app/domains/transactions/pages/AddTransactionsPage.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -40,8 +44,11 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/forgot-password/authUser" element={<VerificationEmailPage />} />
           <Route path="/forgot-password/reset-password" element={<ResetPasswordPage />} />
 
+          <Route path="/callback" element={<CallbackPage />} />
+          
           {/* Protected Routes */}
           <Route element={<PrivateRoute />}>
+
             <Route path="/home" element={<MainPage />} />
 
             <Route path="/categories/add" element={<AddCategoryPage />} />
@@ -49,9 +56,12 @@ createRoot(document.getElementById('root')!).render(
 
             <Route path="/spendings/add" element={<AddSpendingPage />} />
             <Route path="/spendings/view" element={<ViewSpendingsPage />} />
-
+            <Route path="/spendings/transactions" element={<ExtractTransactionsPage />} />
+            <Route path="/transactions/add" element={<AddTransactionsPage />} />
+            
             <Route path="/user/modifyProfile" element={<ModifyProfilePage />} />
             <Route path="/user/deleteProfile" element={<DeleteProfilePage />} />
+            <Route path="/user/accounts" element={<AccountsPage />} />
 
             <Route path="/charts/view" element={<ViewChartsPage />} />
             <Route path="/charts/compare" element={<CompareChartsPage />} />

@@ -1,10 +1,12 @@
 package com.TFG.app.backend.transaction;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.TFG.app.backend.account.entity.Account;
@@ -61,16 +63,54 @@ public class TransactionIntegrationTest {
 
         Account account = new Account();
         account.setUser(user);
-        account.setAccessToken("access-token");
+        account.setName("Cuenta de Ahorros");
+        account.setNumber("1234567890abcdef1234567890abcdef12345678");
         account.setBankName("Unicaja");
+        account.setTrueLayerId("tr_id123");
         accountRepository.save(account);
 
         Transaction transaction = new Transaction();
         transaction.setAccount(account);
-    
+        transaction.setTrueLayerId("tr_id12345");
         transaction.setSpending(spending);
         transactionRepository.save(transaction);
 
         assertThat(transactionRepository.findBySpending(spending)).isPresent();
+    }
+
+    @Test
+    public void testSaveDuplicateTrueLayerThrowsException() {
+        Type_Chart typeChart = new TypeChartTestDataBuilder().build();
+        typeChartRepository.save(typeChart);
+
+        User user = new UserTestDataBuilder().withTypeChart(typeChart).build();
+        userRepository.save(user);
+
+        Category category = new CategoryTestDataBuilder().withUser(user).build();
+        categoryRepository.save(category);
+
+        Spending spending = new SpendingTestDataBuilder().withCategory(category).build();
+        spendingRepository.save(spending);
+
+        Account account = new Account();
+        account.setUser(user);
+        account.setName("Cuenta de Ahorros");
+        account.setNumber("1234567890abcdef1234567890abcdef12345678");
+        account.setBankName("Unicaja");
+        account.setTrueLayerId("tr_id1234577");
+        accountRepository.save(account);
+
+        Transaction transaction = new Transaction();
+        transaction.setAccount(account);
+        transaction.setTrueLayerId("tr_id12345");
+        transaction.setSpending(spending);
+        transactionRepository.save(transaction);
+
+        Transaction transaction2 = new Transaction();
+        transaction2.setAccount(account);
+        transaction2.setTrueLayerId("tr_id12345");
+        transaction2.setSpending(spending);
+
+        assertThrows(DataIntegrityViolationException.class, () -> { transactionRepository.saveAndFlush(transaction2); });
     }
 }

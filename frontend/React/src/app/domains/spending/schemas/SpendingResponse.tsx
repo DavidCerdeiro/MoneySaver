@@ -11,7 +11,8 @@ export const createSpendingResponseSchema = (t: any) =>
       iconCategory: z.string().optional(),
       categoryName: z.string().optional(),
       establishmentName: z.string().optional(),
-      periodic : z.boolean().optional()
+      periodic : z.boolean().optional(),
+      billId: z.number().optional(),
     })
     
 

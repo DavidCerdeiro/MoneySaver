@@ -18,8 +18,11 @@ import com.TFG.app.backend.category.dto.CategoryResponse;
 import com.TFG.app.backend.category.dto.CompareMonthsResponse;
 import com.TFG.app.backend.category.entity.Category;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -140,7 +143,21 @@ public class CategoryController {
      *         - 404 Not Found if the category does not exist.
      */
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteCategory(@RequestParam("id") Long id) {
+    public ResponseEntity<String> deleteCategory(@CookieValue(name = "accessToken", required = false) String token, @RequestParam("id") Long id) {
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String email = jwtService.getEmailFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         if (categoryService.deleteCategory(id.intValue())) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -175,7 +192,7 @@ public class CategoryController {
         }
 
 
-        List<Category> categories = categoryService.getAllCategoriesFromUser(user.getId());
+        List<Category> categories = categoryService.getAllCategoriesNotDeletedFromUser(user.getId(), LocalDate.of(year, month, 1));
 
         List<CategoryResponse> response = categories.stream()
         .map(category -> new CategoryResponse(category, spendingService.getTotalAmountMonthlyByCategory(category.getId(), month, year)))
@@ -185,7 +202,13 @@ public class CategoryController {
     }
 
     @GetMapping("/compare")
-    public ResponseEntity<CompareMonthsResponse> compareMonths(@CookieValue(name = "accessToken", required = false) String token, @RequestParam("month1") int month1, @RequestParam("month2") int month2, @RequestParam("year1") int year1, @RequestParam("year2") int year2) {
+    public ResponseEntity<CompareMonthsResponse> compareMonths(
+            @CookieValue(name = "accessToken", required = false) String token,
+            @RequestParam("month1") int month1,
+            @RequestParam("month2") int month2,
+            @RequestParam("year1") int year1,
+            @RequestParam("year2") int year2) {
+
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -200,16 +223,41 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        List<Category> categories = categoryService.getAllCategoriesFromUser(user.getId());
+        List<Category> categories1 = categoryService.getAllCategoriesNotDeletedFromUser(user.getId(), LocalDate.of(year1, month1, 1));
+        List<Category> categories2 = categoryService.getAllCategoriesNotDeletedFromUser(user.getId(), LocalDate.of(year2, month2, 1));
 
-        List<CategoryResponse> totalMonth1 = categories.stream()
-        .map(category -> new CategoryResponse(category, spendingService.getTotalAmountMonthlyByCategory(category.getId(), month1, year2)))
-        .collect(Collectors.toList());
+        // Crear un set con todas las categorías distintas
+        List<Category> allCategories = new ArrayList<>();
+        allCategories.addAll(categories1);
+        allCategories.addAll(categories2);
+        allCategories = allCategories.stream()
+                .distinct()
+                .collect(Collectors.toList());
 
-        List<CategoryResponse> totalMonth2 = categories.stream()
-        .map(category -> new CategoryResponse(category, spendingService.getTotalAmountMonthlyByCategory(category.getId(), month2, year2)))
-        .collect(Collectors.toList());
+        // Map de categorías por ID para búsqueda rápida
+        Map<Integer, Category> map1 = categories1.stream()
+                .collect(Collectors.toMap(Category::getId, c -> c));
+        Map<Integer, Category> map2 = categories2.stream()
+                .collect(Collectors.toMap(Category::getId, c -> c));
+
+        // Construir listas de CategoryResponse para cada mes
+        List<CategoryResponse> totalMonth1 = allCategories.stream()
+                .map(cat -> {
+                    Category c = map1.get(cat.getId());
+                    BigDecimal total = (c != null) ? spendingService.getTotalAmountMonthlyByCategory(c.getId(), month1, year1) : BigDecimal.ZERO;
+                    return new CategoryResponse(cat, total);
+                })
+                .collect(Collectors.toList());
+
+        List<CategoryResponse> totalMonth2 = allCategories.stream()
+                .map(cat -> {
+                    Category c = map2.get(cat.getId());
+                    BigDecimal total = (c != null) ? spendingService.getTotalAmountMonthlyByCategory(c.getId(), month2, year2) : BigDecimal.ZERO;
+                    return new CategoryResponse(cat, total);
+                })
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok(new CompareMonthsResponse(totalMonth1, totalMonth2));
     }
+
 }
