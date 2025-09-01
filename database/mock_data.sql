@@ -4,6 +4,8 @@ VALUES
 (1, 'Transport', 'heavy_dollar_sign', '2025-02-01', '2025-04-01'),
 (1, 'Utilities', 'heavy_dollar_sign', '2025-04-01', NULL);
 
+
+
 INSERT INTO "establishment" ("Name")
 VALUES
 ('Action');
@@ -24,6 +26,17 @@ VALUES
 (3, 'Periodica mensual', 500, '2025-04-10', TRUE),
 (3, 'Periodica trimestral', 1500, '2025-04-12', TRUE),
 (3, 'Periodica anual', 6000, '2025-04-15', TRUE);
+
+INSERT INTO "spending" ("Id_Category", "Name", "Amount", "Date", "IsPeriodic")
+VALUES
+(4, 'Compra en Aldi', 300, '2025-01-12', FALSE),
+(4, 'Compra en Amazon', 200, '2025-01-20', FALSE),
+(4, 'Gasolina', 400.50, '2025-02-10', FALSE),
+(4, 'Papa', 100, '2025-02-18', FALSE),
+(4, 'Reforma del baño otra vez', 2000, '2025-04-05', FALSE),
+(4, 'Este mes', 500, '2025-08-10', FALSE),
+(4, 'Este mes 2', 15, '2025-08-12', FALSE),
+(4, 'Este mes 3', 30, '2025-08-15', FALSE);
 
 INSERT INTO "periodic_spending" ("Id_Spending", "Id_TypePeriodic", "Expiration", "LastPayment")
 VALUES
