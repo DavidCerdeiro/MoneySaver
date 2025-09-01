@@ -47,11 +47,14 @@ public class TransactionController {
     private final SpendingService spendingService;
     private final CategoryService categoryService;
     private final AccountService accountService;
-    @Value("${tink.client-id}")
-    private String tinkClientId;
+    @Value("${truelayer.client-id}")
+    private String truelayerClientId;
 
-    @Value("${tink.client-secret}")
-    private String tinkClientSecret;
+    @Value("${truelayer.client-secret}")
+    private String truelayerSecret;
+
+    @Value("${truelayer.redirect-url}")
+    private String truelayerRedirectUrl;
 
     public TransactionController(TransactionService transactionService, JwtService jwtService, UserService userService, EstablishmentService establishmentService, SpendingService spendingService, CategoryService categoryService, AccountService accountService) {
         this.transactionService = transactionService;
@@ -81,9 +84,9 @@ public class TransactionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        String clientId = "sandbox-moneysaver-fefb0e";
-        String clientSecret = "d60f99b7-07a9-4e4f-bb84-f83f46d0f7b1";
-        String redirectUri = "http://localhost:5173/callback";
+        String clientId = truelayerClientId;
+        String clientSecret = truelayerSecret;
+        String redirectUri = truelayerRedirectUrl;
 
         String accessToken = new AccessTokenTrueLayer().getAccessToken(clientId, clientSecret, redirectUri, request.getCode());
 

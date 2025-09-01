@@ -105,7 +105,7 @@ public class BillController {
         }
 
         try {
-            String fileRoute = bill.getFileRoute(); // ej: gs://bucket/bills/uuid-file.jpg
+            String fileRoute = bill.getFileRoute();
             String bucketName = fileRoute.split("/")[2];
             String objectName = fileRoute.substring(fileRoute.indexOf(bucketName) + bucketName.length() + 1);
 
@@ -117,7 +117,6 @@ public class BillController {
             Map<String, String> response = new HashMap<>();
             response.put("downloadUrl", signedUrl.toString());
 
-            System.out.println("Generated signed URL: " + signedUrl.toString());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace();
