@@ -25,8 +25,8 @@ public class AccountService {
         return accounts;
     }
 
-    public boolean existByUserAndTrueLayerId(User user, String trueLayerId) {
-        return accountRepository.existsByUserAndTrueLayerId(user, trueLayerId);
+    public boolean existByUserAndAccountCode(User user, String accountCode) {
+        return accountRepository.existsByUserAndAccountCode(user, accountCode);
     }
 
     public Account findById(Integer id) {

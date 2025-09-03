@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import type { GoalData } from "../schemas/Goal";
 import { useEffect, useState } from "react";
 import { obtainAllGoalsFromUser } from "../application/GoalService";
-import { fetchCategoriesForUser } from "../../category/application/CategoryService";
+import { getCategories } from "../../category/application/CategoryService";
 import type { CategoryData } from "../../category/schemas/Category";
 import { GoalsTable } from "../components/GoalsTable";
 import { EditGoalForm } from "../components/EditGoalForm";
@@ -24,7 +24,7 @@ export function EditGoalsPage() {
     };
 
     useEffect(() => {
-      fetchCategoriesForUser()
+      getCategories()
         .then((data) => setCategories(data.categories))
         .catch(console.error);
 

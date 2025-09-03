@@ -25,7 +25,7 @@ public class Spending {
     @JoinColumn(name = "Id_Establishment")
     private Establishment establishment;
 
-    @Column(name = "Name", length = 64, nullable = false)
+    @Column(name = "Name", length = 32, nullable = false)
     private String name;
 
     @Column(name = "Amount", nullable = false, precision = 15, scale = 2)
@@ -35,7 +35,7 @@ public class Spending {
     private LocalDate date;
 
     @Column(name = "IsPeriodic", nullable = false)
-    private Boolean isPeriodic;
+    private Boolean isPeriodic = false;
 
     // Getters and Setters
     public Integer getId() {

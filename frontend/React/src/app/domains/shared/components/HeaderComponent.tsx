@@ -31,7 +31,7 @@ function ListItem({
       <NavigationMenuLink asChild>
         <Link
           to={to}
-          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground"
+          className="header-link"
         >
           <div className="text-sm font-medium leading-none">{title}</div>
           <p className="line-clamp-2 text-sm text-zinc-400">
@@ -69,7 +69,7 @@ export function HeaderComponent() {
             <NavigationMenuContent>
               <ul className="navMenu-content">
                   <ListItem
-                    to="/user/modifyProfile"
+                    to="/user/profile/edit"
                     title={t("header.sections.profile.editProfile.title")}
                     description={t("header.sections.profile.editProfile.description")}
                   />
@@ -98,7 +98,7 @@ export function HeaderComponent() {
                     description={t("header.sections.spendings.addSpending.description")}
                   />
                   <ListItem
-                    to="/categories/modify"
+                    to="/categories/edit"
                     title={t("header.sections.spendings.editCategory.title")}
                     description={t("header.sections.spendings.editCategory.description")}
                   />

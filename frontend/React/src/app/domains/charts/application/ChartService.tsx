@@ -32,5 +32,5 @@ export async function loadCategories(month: number, year: number) {
  * @returns An array of chart type data.
  */
 export async function getAllTypeCharts() {
-  return apiFetch(`/api/type-charts/all`, { method: "GET" });
+  return apiFetch(`/api/type-charts`, { method: "GET" });
 }

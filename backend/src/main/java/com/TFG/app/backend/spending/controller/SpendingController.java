@@ -1,5 +1,6 @@
 package com.TFG.app.backend.spending.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +56,15 @@ public class SpendingController {
     private final JwtService jwtService;
     private final BillService billService;
 
+    @Value("${documentai.project-id}")
+    private String documentAiProjectId;
+
+    @Value("${documentai.location}")
+    private String documentAiLocation;
+
+    @Value("${documentai.processor-id}")
+    private String documentAiProcessorId;
+    
     public SpendingController(SpendingService spendingService, UserService userService, CategoryService categoryService, Type_PeriodicService typePeriodicService, Periodic_SpendingService periodicSpendingService, EstablishmentService establishmentService, JwtService jwtService, BillService billService) {
         this.spendingService = spendingService;
         this.userService = userService;
@@ -70,15 +80,15 @@ public class SpendingController {
      * Endpoint to add a new spending
      * @param token
      * @param spendingRequest
-     * @throws IOException 
-     * @output:
-     *      - 201 Created: If the spending is successfully added
-     *      - 400 Bad Request: If the request is invalid
-     *      - 401 Unauthorized: If the user is not authenticated
-     *      - 404 Not Found: If the user is not found
+     * @throws IOException
+     * @return:
+     * - 201: Created SpendingResponse If the spending is successfully added
+     * - 400: Bad Request If the request is invalid
+     * - 401: Unauthorized if token is missing or invalid
+     * - 404: Not Found If the user is not found
      */
-    @PostMapping("/add")
-    public ResponseEntity<Spending> addSpending(@CookieValue(name = "accessToken", required = false) String token, @RequestBody AddSpendingRequest spendingRequest) throws IOException {
+    @PostMapping
+    public ResponseEntity<SpendingResponse> addSpending(@CookieValue(name = "accessToken", required = false) String token, @RequestBody AddSpendingRequest spendingRequest) throws IOException {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -125,8 +135,8 @@ public class SpendingController {
         }
 
         return savedSpending != null
-                ? new ResponseEntity<>(savedSpending, HttpStatus.CREATED)
-                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            ? new ResponseEntity<>(new SpendingResponse(savedSpending, null), HttpStatus.CREATED)
+            : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -134,17 +144,16 @@ public class SpendingController {
      * @param token
      * @param month
      * @param year
-     * @output:
-     *      - 200 OK: If the spendings are successfully retrieved
-     *      - 401 Unauthorized: If the user is not authenticated
-     *      - 404 Not Found: If the user is not found
+     * @return:
+     * - 200: OK with a list of SpendingResponse if the spendings are successfully retrieved
+     * - 401: Unauthorized if token is missing or invalid
+     * - 404: Not Found if the user is not found
      */
-    @GetMapping("/all")
-    public ResponseEntity<AllSpendingFromUserMonthAndYearResponse> getAllSpendingsByUserMonthAndYear(
-            @CookieValue(name = "accessToken", required = false) String token,
-            @RequestParam("month") int month,
-            @RequestParam("year") int year) {
-
+    @GetMapping("/{year}/{month}")
+    public ResponseEntity<AllSpendingFromUserMonthAndYearResponse> getSpendings(
+        @CookieValue(name = "accessToken", required = false) String token,
+        @PathVariable("month") int month,
+        @PathVariable("year") int year) {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -185,118 +194,108 @@ public class SpendingController {
         return new ResponseEntity<>(new AllSpendingFromUserMonthAndYearResponse(spendingResponses), HttpStatus.OK);
     }
 
-        /**
-         * Endpoint to process a file
-         * @param token
-         * @param fileContent
-         * @output:
-         *      - 200 OK: If the file is successfully processed
-         *      - 401 Unauthorized: If the user is not authenticated
-         *      - 404 Not Found: If the user is not foundº
-         */
-    @PostMapping("/processFile")
+    /**
+     * Endpoint to process a file
+     * @param token
+     * @param fileContent
+     * @throws IOException 
+     * @return:
+     * - 200: OK ProcessFileResponse if the file is successfully processed
+     * - 401: Unauthorized if the user is not authenticated
+     * - 404: Not Found if the user is not found
+     */
+    @PostMapping("/documents")
     public ResponseEntity<ProcessFileResponse> processFile(
-            @CookieValue(name = "accessToken", required = false) String token,
-            @RequestParam("file") MultipartFile fileContent) {
+        @RequestHeader("Authorization") String authHeader,
+        @RequestParam("file") MultipartFile fileContent) throws IOException {
 
-        try {
-            if (token == null || token.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
-
-            String email = jwtService.getEmailFromToken(token);
-            if (email == null) {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
-
-            User user = userService.findByEmail(email);
-            if (user == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-
-            // Upload file to Google Cloud Storage
-            String bucketName = "filesmoneysaver";
-            String gcsFileName = "uploads/" + UUID.randomUUID() + "-" + fileContent.getOriginalFilename();
-
-            // Create a new blob in Google Cloud Storage
-            // A blob is an object stored in Google Cloud Storage
-            Storage storage = StorageOptions.getDefaultInstance().getService();
-            BlobId blobId = BlobId.of(bucketName, gcsFileName);
-            BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-                    .setContentType(fileContent.getContentType())
-                    .build();
-
-            // Upload the file content to the newly created blob
-            storage.create(blobInfo, fileContent.getBytes());
-            String gcsUri = String.format("gs://%s/%s", bucketName, gcsFileName);
-
-            // Process the file with Document AI
-            String projectId = "6904079188";
-            String location = "eu";
-            String processorId = "7a0c31f5d3e9cf2a";
-            String processorName = String.format("projects/%s/locations/%s/processors/%s", projectId, location, processorId);
-            
-            String endpoint = String.format("%s-documentai.googleapis.com:443", location);
-
-            DocumentProcessorServiceSettings settings = DocumentProcessorServiceSettings.newBuilder()
-                    .setEndpoint(endpoint)
-                    .build();
-            // Create a Document AI client
-            try (DocumentProcessorServiceClient client = DocumentProcessorServiceClient.create(settings)) {
-                ProcessRequest request = ProcessRequest.newBuilder()
-                        .setName(processorName)
-                        .setGcsDocument(GcsDocument.newBuilder()
-                                .setGcsUri(gcsUri)
-                                .setMimeType(fileContent.getContentType())
-                                .build())
-                        .build();
-
-                ProcessResponse response = client.processDocument(request);
-                Document document = response.getDocument();
-
-                String supplierNameStr = null;
-                String receiptDateStr = null;
-                String totalAmountStr = null;
-
-                // Extract relevant information from the document
-                for (Document.Entity entity : document.getEntitiesList()) {
-                    switch (entity.getType()) {
-                        case "supplier_name" -> supplierNameStr = entity.getMentionText();
-                        case "receipt_date" -> receiptDateStr = entity.getMentionText();
-                        case "total_amount" -> totalAmountStr = entity.getMentionText();
-                    }
-                }
-
-                if (supplierNameStr != null && !supplierNameStr.isEmpty()) {
-                    supplierNameStr = supplierNameStr.substring(0, 1).toUpperCase() 
-                    + supplierNameStr.substring(1).toLowerCase();
-                }
-                Establishment establishment = establishmentService.findByName(supplierNameStr);
-
-                LocalDate parsedDate = spendingService.parseFlexibleDate(receiptDateStr);
-
-                Float parsedAmount = null;
-                if (totalAmountStr != null && !totalAmountStr.isEmpty()) {
-                    try {
-                        parsedAmount = Float.parseFloat(totalAmountStr.replace(",", "."));
-                    } catch (NumberFormatException e) {
-                        
-                    }
-                }
-
-                ProcessFileResponse result = new ProcessFileResponse(
-                        supplierNameStr,
-                        parsedDate,
-                        parsedAmount,
-                        establishment != null ? establishment.getId() : 0,
-                        supplierNameStr
-                );
-                return ResponseEntity.ok(result);
-            }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body(null);
+        if (authHeader == null || authHeader.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
+        String token = authHeader.replace("Bearer ", "");
+        String email = jwtService.getEmailFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Upload file to Google Cloud Storage
+        String bucketName = "filesmoneysaver";
+        String gcsFileName = "uploads/" + UUID.randomUUID() + "-" + fileContent.getOriginalFilename();
+
+        // Create a new blob in Google Cloud Storage
+        // A blob is an object stored in Google Cloud Storage
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+        BlobId blobId = BlobId.of(bucketName, gcsFileName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+            .setContentType(fileContent.getContentType())
+            .build();
+
+        // Upload the file content to the newly created blob
+        storage.create(blobInfo, fileContent.getBytes());
+        String gcsUri = String.format("gs://%s/%s", bucketName, gcsFileName);
+
+        // Process the file with Document AI
+        String processorName = String.format("projects/%s/locations/%s/processors/%s", documentAiProjectId, documentAiLocation, documentAiProcessorId);
+
+        String endpoint = String.format("%s-documentai.googleapis.com:443", documentAiLocation);
+        DocumentProcessorServiceSettings settings = DocumentProcessorServiceSettings.newBuilder()
+            .setEndpoint(endpoint)
+            .build();
+
+        // Create a Document AI client
+        DocumentProcessorServiceClient client = DocumentProcessorServiceClient.create(settings);
+        ProcessRequest request = ProcessRequest.newBuilder()
+            .setName(processorName)
+            .setGcsDocument(GcsDocument.newBuilder()
+                .setGcsUri(gcsUri)
+                .setMimeType(fileContent.getContentType())
+                .build()
+            ).build();
+
+        ProcessResponse response = client.processDocument(request);
+        Document document = response.getDocument();
+
+        String supplierNameStr = null;
+        String receiptDateStr = null;
+        String totalAmountStr = null;
+
+        // Extract relevant information from the document
+        for (Document.Entity entity : document.getEntitiesList()) {
+            switch (entity.getType()) {
+                case "supplier_name" -> supplierNameStr = entity.getMentionText();
+                case "receipt_date" -> receiptDateStr = entity.getMentionText();
+                case "total_amount" -> totalAmountStr = entity.getMentionText();
+            }
+        }
+
+        if (supplierNameStr != null && !supplierNameStr.isEmpty()) {
+            supplierNameStr = supplierNameStr.substring(0, 1).toUpperCase() 
+            + supplierNameStr.substring(1).toLowerCase();
+        }
+        Establishment establishment = establishmentService.findByName(supplierNameStr);
+
+        LocalDate parsedDate = spendingService.parseFlexibleDate(receiptDateStr);
+
+        Float parsedAmount = null;
+        if (totalAmountStr != null && !totalAmountStr.isEmpty()) {
+            parsedAmount = Float.parseFloat(totalAmountStr.replace(",", "."));
+        }
+
+        ProcessFileResponse result = new ProcessFileResponse(
+            supplierNameStr,
+            parsedDate,
+            parsedAmount,
+            establishment != null ? establishment.getId() : 0,
+            supplierNameStr
+        );
+        return ResponseEntity.ok(result);
     }
 }
+    
+

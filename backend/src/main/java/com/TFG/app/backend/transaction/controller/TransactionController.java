@@ -67,6 +67,18 @@ public class TransactionController {
         this.accountService = accountService;
     }
     
+    /**
+     * Endpoint to extract transactions from an account by TrueLayer
+     * @param token
+     * @param request
+     * @return
+     * - 201: Created AddTransactionResponse 
+     * - 400: Bad Request if the request is invalid
+     * - 401: Unauthorized if token is missing or invalid
+     * - 404: Not Found if the user is not found
+     * @throws JsonMappingException
+     * @throws JsonProcessingException
+     */
     @PostMapping("/extract")
     public ResponseEntity<ExtractTransactionsResponse> extract(@CookieValue(name = "accessToken", required = false) String token, @RequestBody ExtractTransactionsRequest request) throws JsonMappingException, JsonProcessingException{
 
@@ -99,14 +111,14 @@ public class TransactionController {
         String body = webClient.get()
             .uri(uriBuilder -> uriBuilder
                 .scheme("https")
-                .host("api.truelayer-sandbox.com") // ✅ Usa el host del sandbox
-                .path("/data/v1/accounts/{accountId}/transactions") // Path con placeholder
-                .queryParam("from", request.getMinDate()) // Añade parámetro 'from'
-                .queryParam("to", request.getMaxDate())   // Añade parámetro 'to'
-                .build(request.getAccount().getTrueLayerId())) // Asigna el valor al placeholder {accountId}
-            .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken) // Añade la cabecera de autorización
-            .retrieve() // Ejecuta la petición
-            .bodyToMono(String.class) // Convierte la respuesta a un String
+                .host("api.truelayer-sandbox.com") // Sandbox host
+                .path("/data/v1/accounts/{accountId}/transactions") // Path with placeholder for accountId
+                .queryParam("from", request.getMinDate()) 
+                .queryParam("to", request.getMaxDate())   // Dates min and max
+                .build(request.getAccount().getAccountCode())) // Build URI with accountId
+            .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken) // Authorization header
+            .retrieve() // Execute request
+            .bodyToMono(String.class) // Convert response to String
             .block();
         
         ObjectMapper mapper = new ObjectMapper();
@@ -117,11 +129,10 @@ public class TransactionController {
 
         for (JsonNode tran : transactionsJson.get("results")) {
             if (!tran.has("transaction_type") || !"DEBIT".equalsIgnoreCase(tran.get("transaction_type").asText())) {
-                continue; // saltamos si no es DEBIT
+                continue; // skip if not DEBIT
             }
             String transactionId = tran.get("transaction_id").asText();
-            if(transactionService.existsByTrueLayerId(transactionId)) {
-                System.out.println("La transacción con ID " + transactionId + " ya existe.");
+            if(transactionService.existsByTransactionCode(transactionId)) {
                 continue;
             }
             SpendingTransactionResponse spending = new SpendingTransactionResponse();
@@ -134,22 +145,31 @@ public class TransactionController {
                if (est != null) {
                    spending.setEstablishment(est);
                } else {
-                   spending.setEstablishment(new Establishment(0, user, establishmentName));
+                   spending.setEstablishment(new Establishment(0, establishmentName));
                }
             }else{
-                spending.setEstablishment(new Establishment(0, user, ""));
+                spending.setEstablishment(new Establishment(0, ""));
             }
 
             transactionPairs.add(new Object[]{new TransactionExtractedResponse(tran.get("transaction_id").asText(), request.getAccount()), spending});
         }
         
         response.setTransactions(transactionPairs);
-        System.out.println("Transacciones extraídas: " + response.getTransactions().size());
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<AddTransactionResponse> addTransaction(@CookieValue(name = "accessToken", required = false) String token, @RequestBody AddTransactionRequest request) {
+    /**
+     * Endpoint to add a new transaction
+     * @param token
+     * @param request
+     * @return
+     * - 201: Created AddTransactionResponse if the transaction is successfully added
+     * - 400: Bad Request if the request is invalid
+     * - 401: Unauthorized if token is missing or invalid
+     * - 404: Not Found if the user is not found
+     */
+    @PostMapping
+    public ResponseEntity<AddTransactionResponse> postTransaction(@CookieValue(name = "accessToken", required = false) String token, @RequestBody AddTransactionRequest request) {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -186,15 +206,25 @@ public class TransactionController {
 
         Transaction transaction = new Transaction();
         transaction.setAccount(accountService.findById(request.getTransaction().getAccount().getId()));
-        transaction.setTrueLayerId(request.getTransaction().getTrueLayerId());
+        transaction.setTransactionCode(request.getTransaction().getTransactionCode());
         transaction.setSpending(spending);
         transactionService.createTransaction(transaction);
 
         return ResponseEntity.ok(new AddTransactionResponse(transaction.getSpending().getName(), transaction.getSpending().getAmount()));
     }
-    
-    @GetMapping("/all")
-    public ResponseEntity<List<TransactionResponse>> getAllUserTransactions(@CookieValue(name = "accessToken", required = false) String token, @RequestParam("month") int month,
+
+    /**
+     * Endpoint to get all transactions for a user
+     * @param token
+     * @param month
+     * @param year
+     * @return
+     * - 200: OK with a list of TransactionResponse if the transactions are successfully retrieved
+     * - 401: Unauthorized if token is missing or invalid
+     * - 404: Not Found if the user is not found
+     */
+    @GetMapping
+    public ResponseEntity<List<TransactionResponse>> getTransactions(@CookieValue(name = "accessToken", required = false) String token, @RequestParam("month") int month,
             @RequestParam("year") int year) {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -216,7 +246,7 @@ public class TransactionController {
             List<Transaction> transactions = transactionService.getAllByAccountAndMonth(account.getId(), month, year);
             for (Transaction transaction : transactions) {
                 Spending spending = transaction.getSpending();
-                response.add(new TransactionResponse(transaction.getId(), spending.getName(), spending.getAmount(), spending.getDate(), account.getName(), account.getNumber(), spending.getCategory().getIcon(), spending.getCategory().getName(), spending.getEstablishment().getName()));
+                response.add(new TransactionResponse(transaction.getId(), spending.getName(), spending.getAmount(), spending.getDate(), account.getName(), account.getNumber(), spending.getCategory().getIcon(), spending.getCategory().getName(), spending.getEstablishment() != null ? spending.getEstablishment().getName() : ""));
             }
         }
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -41,7 +41,7 @@ export function CallbackPage() {
             console.error(error);
           }
         } finally {
-          navigate("/user/accounts", { replace: true });
+          navigate("/user/accounts", { replace: true, state: { refresh: true } });
           setLoading(false); 
         }
 
@@ -54,6 +54,7 @@ export function CallbackPage() {
         if (!request.success) return;
         
         try {
+          console.log("Extrayendo transacciones...");
           const response = await extractTransactions(request.data);
           console.log("Transacciones extraídas: ", response.transactions);
           setLoading(false);

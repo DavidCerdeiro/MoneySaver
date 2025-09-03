@@ -37,8 +37,18 @@ public class GoalController {
         this.spendingService = spendingService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Goal> addGoal(@CookieValue(name = "accessToken", required = false) String token, @RequestBody AddGoalRequest request) {
+    /**
+     * Endpoint to create a new goal
+     * @param token
+     * @param request
+     * @return:
+     *  - 201: Created GoalResponse if the goal is successfully created
+     *  - 400: Bad Request if the request is invalid
+     *  - 401: Unauthorized if token is missing or invalid
+     *  - 404: Not Found if the user or category is not found
+     */
+    @PostMapping
+    public ResponseEntity<GoalResponse> postGoal(@CookieValue(name = "accessToken", required = false) String token, @RequestBody AddGoalRequest request) {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -59,13 +69,29 @@ public class GoalController {
         }
 
         Goal createdGoal = goalService.addGoal(request.getName(), request.getTargetAmount(), category);
-        return ResponseEntity.ok(createdGoal);
+        GoalResponse response = new GoalResponse();
+        response.setId(createdGoal.getId());
+        response.setName(createdGoal.getName());
+        response.setTargetAmount(createdGoal.getTargetAmount());
+        response.setIdCategory(createdGoal.getCategory().getId());
+        response.setNameCategory(createdGoal.getCategory().getName());
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/allFromUser")
-    public ResponseEntity<List<GoalResponse>> getAllGoalsFromUser(@CookieValue(name = "accessToken", required = false) String token, 
-            @RequestParam("month") int month,
-            @RequestParam("year") int year) {
+    /**
+     * Endpoint to get all goals for a specific month and year
+     * @param token
+     * @param month
+     * @param year
+     * @return:
+     *  - 200: OK with a list of GoalResponse if goals are found
+     *  - 401: Unauthorized if token is missing or invalid
+     *  - 404: Not Found if the user is not found
+     */
+    @GetMapping("/{year}/{month}")
+    public ResponseEntity<List<GoalResponse>> getGoals(@CookieValue(name = "accessToken", required = false) String token, 
+            @PathVariable("month") int month,
+            @PathVariable("year") int year) {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -96,8 +122,17 @@ public class GoalController {
         return ResponseEntity.ok(goalResponses);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteGoal(@CookieValue(name = "accessToken", required = false) String token, @RequestParam("id") Integer id) {
+    /**
+     * Endpoint to delete an existing goal
+     * @param token
+     * @param id
+     * @return:
+     *  - 204: No Content if the goal is successfully deleted
+     *  - 401: Unauthorized if token is missing or invalid
+     *  - 404: Not Found if the user or goal is not found
+     */
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteGoal(@CookieValue(name = "accessToken", required = false) String token, @PathVariable("id") Integer id) {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -117,12 +152,23 @@ public class GoalController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/edit")
-    public ResponseEntity<GoalResponse> editGoal(@CookieValue(name = "accessToken", required = false) String token, @RequestBody EditGoalRequest request) {
-        Goal goal = goalService.findById(request.getId());
+    /**
+     * Endpoint to update an existing goal
+     * @param token
+     * @param id
+     * @param request
+     * @return:
+     *  - 200: OK GoalResponse if the goal is successfully updated
+     *  - 400: Bad Request if the request is invalid
+     *  - 401: Unauthorized if token is missing or invalid
+     *  - 404: Not Found if the user or goal is not found
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<GoalResponse> putGoal(@CookieValue(name = "accessToken", required = false) String token, @PathVariable("id") Integer id, @RequestBody EditGoalRequest request) {
+        Goal goal = goalService.findById(id);
         if (goal == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -26,8 +26,8 @@ public class Transaction {
     @JoinColumn(name = "Id_Spending", unique = true, nullable = false)
     private Spending spending;
 
-    @Column(name = "TrueLayerId", nullable = false, length = 64, unique = true)
-    private String trueLayerId;
+    @Column(name = "TransactionCode", nullable = false, length = 64, unique = true)
+    private String transactionCode;
 
     // Getters and Setters
     public Integer getId() {
@@ -48,11 +48,11 @@ public class Transaction {
         this.spending = spending;
     }
 
-    public String getTrueLayerId() {
-        return trueLayerId;
+    public String getTransactionCode() {
+        return transactionCode;
     }
 
-    public void setTrueLayerId(String trueLayerId) {
-        this.trueLayerId = trueLayerId;
+    public void setTransactionCode(String transactionCode) {
+        this.transactionCode = transactionCode;
     }
 }

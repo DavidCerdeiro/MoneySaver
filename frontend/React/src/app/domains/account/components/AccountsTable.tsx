@@ -26,7 +26,7 @@ import { Check, X } from "lucide-react";
 type AccountTableProps = {
   accounts: AccountData[];
   onDelete?: (id: number) => void;
-   onSelect?: (account: AccountData) => void;
+  onSelect?: (account: AccountData) => void;
   isAccountPage: boolean;
 };
 
@@ -40,7 +40,7 @@ export function AccountsTable({
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const handleSelect = (account: AccountData) => {
-    setSelectedId(account.trueLayerId);
+    setSelectedId(account.accountCode);
     onSelect?.(account);
   };
 
@@ -70,7 +70,7 @@ export function AccountsTable({
       </TableHeader>
       <TableBody>
         {accounts.map((account) => {
-          const isSelected = account.trueLayerId === selectedId;
+          const isSelected = account.accountCode === selectedId;
           return (
             <TableRow key={account.id} className="hover:bg-transparent">
               <TableCell className="font-medium text-white text-center">

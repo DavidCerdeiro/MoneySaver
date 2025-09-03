@@ -3,15 +3,15 @@ export async function uploadBill(file: File, idSpending: number) {
     formData.append("file", file);
     formData.append("idSpending", idSpending.toString());
 
-    await fetch("/api/bills/add", {
+    await fetch("/api/bills", {
         method: "POST",
         body: formData,
         credentials: "include",
     });
 }
 
-export async function getDownloadUrl(idBill: number | undefined = undefined) {
-    const response = await fetch(`/api/bills/signed-url?billId=${idBill}`, {
+export async function getDownloadUrl(idBill: number) {
+    const response = await fetch(`/api/bills/${idBill}/download-url`, {
         method: "GET",
         credentials: "include",
     });

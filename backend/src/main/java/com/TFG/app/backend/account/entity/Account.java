@@ -16,16 +16,16 @@ public class Account {
     @JoinColumn(name = "Id_User", nullable = false)
     private User user;
 
-    @Column(name = "TrueLayerId", length = 32, nullable = false, unique = true)
-    private String trueLayerId;
+    @Column(name = "AccountCode", length = 64, nullable = false, unique = true)
+    private String accountCode;
 
-    @Column(name = "Name", length = 64, nullable = false)
+    @Column(name = "Name", length = 32, nullable = false)
     private String name;
 
     @Column(name = "BankName", length = 32, nullable = false)
     private String bankName;
 
-    @Column(name = "Number", length = 128, nullable = false)
+    @Column(name = "Number", length = 128, nullable = false, unique = true)
     private String number;
 
     // Getters and Setters
@@ -57,11 +57,11 @@ public class Account {
     public void setName(String name) {
         this.name = name;
     }
-    public String getTrueLayerId() {
-        return trueLayerId;
+    public String getAccountCode() {
+        return accountCode;
     }
-    public void setTrueLayerId(String trueLayerId) {
-        this.trueLayerId = trueLayerId;
+    public void setAccountCode(String accountCode) {
+        this.accountCode = accountCode;
     }
     public String getNumber() {
         return number;

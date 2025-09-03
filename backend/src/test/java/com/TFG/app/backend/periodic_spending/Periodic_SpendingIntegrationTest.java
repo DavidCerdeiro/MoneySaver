@@ -2,6 +2,7 @@ package com.TFG.app.backend.periodic_spending;
 
 import java.time.LocalDate;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -64,10 +65,16 @@ public class Periodic_SpendingIntegrationTest {
         typePeriodicRepository.save(typePeriodic);
 
         Periodic_Spending periodicSpending = new Periodic_Spending();
+
         periodicSpending.setSpending(spending);
         periodicSpending.setTypePeriodic(typePeriodic);
         periodicSpending.setExpiration(LocalDate.now().plusMonths(1));
         periodicSpending.setLastPayment(LocalDate.now());
         periodicSpendingRepository.save(periodicSpending);
+
+        Assertions.assertEquals(typePeriodic.getName(), periodicSpendingRepository.findBySpendingId(spending.getId()).getTypePeriodic().getName());
+        Assertions.assertEquals(LocalDate.now().plusMonths(1).getMonthValue(), periodicSpendingRepository.findBySpendingId(spending.getId()).getExpiration().getMonthValue());
+        Assertions.assertEquals(LocalDate.now().getYear(), periodicSpendingRepository.findBySpendingId(spending.getId()).getExpiration().getYear());
+        Assertions.assertEquals(LocalDate.now().getDayOfMonth(), periodicSpendingRepository.findBySpendingId(spending.getId()).getLastPayment().getDayOfMonth());
     }
 }

@@ -20,7 +20,12 @@ public class Type_ChartController {
         this.typeChartService = typeChartService;
     }
 
-    @GetMapping("/all")
+    /**
+     * Endpoint to get all type charts
+     * @return
+     * - 200: OK with the list of type charts
+     */
+    @GetMapping
     public ResponseEntity<List<Type_Chart>> getAllTypeCharts() {
 
         List<Type_Chart> typeCharts = typeChartService.getAllTypeCharts();

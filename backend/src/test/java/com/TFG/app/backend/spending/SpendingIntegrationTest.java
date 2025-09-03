@@ -1,9 +1,9 @@
 package com.TFG.app.backend.spending;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
-import java.util.List;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -51,12 +51,21 @@ public class SpendingIntegrationTest {
         build();
         categoryRepository.save(category);
 
-        Spending spending = new SpendingTestDataBuilder().withCategory(category).build();
+        Spending spending = new Spending();
+
+        spending.setName("Amazon");
+        spending.setCategory(category);
+        spending.setAmount(BigDecimal.valueOf(100.0));
+        spending.setIsPeriodic(false);
+        spending.setDate(LocalDate.now());
         spendingRepository.save(spending);
 
-        List<Spending> spendings = spendingRepository.findByCategory(category);
-        
-        assertThat(spendings).isNotEmpty();
+
+        Assertions.assertEquals(1, spendingRepository.findByCategory(category).size());
+        Assertions.assertEquals("Amazon", spendingRepository.findByCategory(category).get(0).getName());
+        Assertions.assertEquals(BigDecimal.valueOf(100.00).setScale(2), spendingRepository.findByCategory(category).get(0).getAmount());
+        Assertions.assertFalse(spendingRepository.findByCategory(category).get(0).getIsPeriodic());
+        Assertions.assertEquals(LocalDate.now(), spendingRepository.findByCategory(category).get(0).getDate());
     }
 
 }

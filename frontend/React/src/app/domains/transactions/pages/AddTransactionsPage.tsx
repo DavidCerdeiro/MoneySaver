@@ -5,7 +5,7 @@ import { AddTransactionForm } from "../components/AddTransactionForm";
 import type { ExtractTransactionResponse } from "../schemas/ExtractTransactionResponse";
 import type { CategoryData } from "../../category/schemas/Category";
 import { useEffect, useState } from "react";
-import { fetchCategoriesForUser } from "../../category/application/CategoryService";
+import { getCategories } from "../../category/application/CategoryService";
 import { obtainAllEstablishments } from "../../spending/application/SpendingService";
 import type { EstablishmentData } from "../../spending/schemas/Establishment";
 
@@ -15,7 +15,8 @@ export function AddTransactionsPage() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [establishments, setEstablishments] = useState<EstablishmentData[]>([]);
-const transactions = (location.state as { transactions?: ExtractTransactionResponse["transactions"] })?.transactions ?? [];
+  const transactions = (location.state as { transactions?: ExtractTransactionResponse["transactions"] })?.transactions ?? [];
+  console.log(transactions)
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const loadEstablishment = async () => {
@@ -35,7 +36,7 @@ const transactions = (location.state as { transactions?: ExtractTransactionRespo
       }
     };
   useEffect(() => {
-    fetchCategoriesForUser().then((data) => setCategories(data.categories)).catch(console.error);
+    getCategories().then((data) => setCategories(data.categories)).catch(console.error);
     loadEstablishment();
   }, []);
   const handleTransactionSubmitted = () => {

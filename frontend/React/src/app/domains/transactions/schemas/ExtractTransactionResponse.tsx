@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const transactionSchema = z.object({
   account: z.any(),
-  trueLayerId: z.string(),
+  transactionCode: z.string(),
 });
 
 const spendingSchema = z.object({

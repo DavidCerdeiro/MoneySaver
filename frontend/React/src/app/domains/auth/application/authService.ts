@@ -9,7 +9,7 @@ import type {ResetPasswordData} from "@/app/domains/auth/schemas/ResetPassword";
  * @returns The user data if signup is successful.
  */
 export async function signUpUser(data: Omit<SignUpFormData, "confirmPassword">) {
-  const response = await fetch("/api/users/signup", {
+  const response = await fetch("/api/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -29,7 +29,7 @@ export async function signUpUser(data: Omit<SignUpFormData, "confirmPassword">) 
  * @returns - The user data if login is successful.
  */
 export async function logInUser(data: LogInFormData) {
-  const response = await fetch("/api/users/login", {
+  const response = await fetch("/api/auth/sessions", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -48,7 +48,7 @@ export async function logInUser(data: LogInFormData) {
  * @param data - The data to log in a user, including email and password.
  */
 export async function forgotPassword(data: ForgotPasswordData) {
-  const response = await fetch("/api/users/forgot-password", {
+  const response = await fetch("/api/users/password-reset", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -66,8 +66,8 @@ export async function forgotPassword(data: ForgotPasswordData) {
  * @param data - The data to verify the email, including the verification code and email.
  */
 export async function emailVerification(data: EmailVerificationData) {
-  const response = await fetch("/api/users/verify", {
-    method: "POST",
+  const response = await fetch("/api/users/authenticate", {
+    method: "PATCH",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -85,7 +85,7 @@ export async function emailVerification(data: EmailVerificationData) {
  * @param data - The data to authenticate the user, including the verification code and email.
  */
 export async function authUser(data: EmailVerificationData) {
-  const response = await fetch("/api/users/auth", {
+  const response = await fetch("/api/users/authenticate", {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -101,7 +101,7 @@ export async function authUser(data: EmailVerificationData) {
  * @param data - The data to reset the password, including the new password and the verification code.
  */
 export async function resetPassword(data: ResetPasswordData) {
-  const response = await fetch("/api/users/forgot-password/reset", {
+  const response = await fetch("/api/users/password-reset", {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -113,7 +113,6 @@ export async function resetPassword(data: ResetPasswordData) {
   }
 
 }
-
 /**
  * This function is used to fetch data from a URL with automatic token refresh.
  * @param url - The URL to fetch data from.
@@ -153,4 +152,3 @@ export async function fetchWithRefresh(
 
   return retryResponse;
 }
-

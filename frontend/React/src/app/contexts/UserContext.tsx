@@ -14,7 +14,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const checkAuth = async () => {
     try {
-      const res = await fetchWithRefresh("http://localhost:5173/api/users/auth/check", {
+      const res = await fetchWithRefresh("http://localhost:5173/api/auth/sessions/me", {
         credentials: "include",
       });
       setIsAuthenticated(res.ok);

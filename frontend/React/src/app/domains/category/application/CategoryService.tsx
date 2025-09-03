@@ -7,7 +7,7 @@ import { apiFetch } from "../../shared/service/ApiClient";
  * @returns The added category data.
  */
 export async function addCategory(data: CategoryData) {
-  return await apiFetch("/api/categories/add", {
+  return await apiFetch("/api/categories", {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -18,9 +18,8 @@ export async function addCategory(data: CategoryData) {
  * @param data The category data to modify.
  * @returns The modified category data.
  */
-export async function modifyCategory(data: CategoryData) {
-  const response = await fetch("/api/categories/modify", {
-    
+export async function editCategory(id: number | undefined, data: CategoryData) {
+  const response = await fetch(`/api/categories/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -36,21 +35,8 @@ export async function modifyCategory(data: CategoryData) {
  * Obtains all categories.
  * @returns A list of all categories.
  */
-export async function obtainAllCategories() {
-  return await apiFetch<{ categories: CategoryData[] }>("/api/categories/all", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-}
-
-/**
- * Fetches categories for the logged-in user.
- * @returns A list of categories for the user.
- */
-export async function fetchCategoriesForUser() {
-  return await apiFetch<{ categories: CategoryData[] }>("/api/categories/all", {
+export async function getCategories() {
+  return await apiFetch<{ categories: CategoryData[] }>("/api/categories", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -63,15 +49,10 @@ export async function fetchCategoriesForUser() {
  * @param categoryId The ID of the category to delete.
  */
 export async function deleteCategory(categoryId: number | undefined) {
-  const response = await fetch(`/api/categories/delete?id=${categoryId}`, {
+  // Llamada usando el helper apiFetch
+  await apiFetch<void>(`/api/categories/${categoryId}`, {
     method: "DELETE",
-    credentials: "include",
   });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Category deletion failed");
-  }
 }
 
 /**
@@ -81,7 +62,7 @@ export async function deleteCategory(categoryId: number | undefined) {
  */
 export async function obtainCategoriesMonthly(data: { month: number; year?: number }) {
   return apiFetch<{ categories: CategoryData[] }>(
-    `/api/categories/monthly?month=${data.month}&year=${data.year}`,
+    `/api/categories/${data.year}/${data.month}`,
     { method: "GET" }
   );
 }
@@ -92,7 +73,7 @@ export async function obtainCategoriesMonthly(data: { month: number; year?: numb
  */
 export async function obtainComparisonCategories(data: { month1: number; year1?: number; month2: number; year2?: number}) {
   return apiFetch<{ month1: CategoryData[], month2: CategoryData[] }>(
-    `/api/categories/compare?month1=${data.month1}&year1=${data.year1}&month2=${data.month2}&year2=${data.year2}`,
+    `/api/categories/comparison?year1=${data.year1}&month1=${data.month1}&year2=${data.year2}&month2=${data.month2}`,
     { method: "GET" }
   );
 }

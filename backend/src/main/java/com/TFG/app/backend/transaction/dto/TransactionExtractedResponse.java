@@ -3,16 +3,16 @@ package com.TFG.app.backend.transaction.dto;
 import com.TFG.app.backend.account.entity.Account;
 
 public class TransactionExtractedResponse {
-    private String trueLayerId;
+    private String transactionCode;
     private Account account;
 
-    public TransactionExtractedResponse(String trueLayerId, Account account) {
-        this.trueLayerId = trueLayerId;
+    public TransactionExtractedResponse(String transactionCode, Account account) {
+        this.transactionCode = transactionCode;
         this.account = account;
     }
 
-    public String getTrueLayerId() {
-        return trueLayerId;
+    public String getTransactionCode() {
+        return transactionCode;
     }
 
     public Account getAccount() {

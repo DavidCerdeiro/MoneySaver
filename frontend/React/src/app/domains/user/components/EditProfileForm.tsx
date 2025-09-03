@@ -9,7 +9,7 @@ import { Button } from "../../shared/components/button";
 import { useEffect, useState } from "react";
 import { Dialog, DialogTrigger, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogClose, DialogTitle } from "@/app/domains/shared/components/dialog";
 import { useNavigate } from "react-router-dom";
-import { modifyProfile, verificationEmailToDelete } from "../application/UserService";
+import { editProfile, verificationEmailToDelete } from "../application/UserService";
 import { toast } from "sonner";
 import { TypeChartCombobox } from "../../charts/components/TypeChartCombobox";
 import type { TypeChartData } from "../../charts/schemas/TypeChart";
@@ -20,7 +20,7 @@ type ModifyProfileFormProps = {
   typeCharts: TypeChartData[];
 };
 
-export function ModifyProfileForm({user, fetchData, typeCharts}: ModifyProfileFormProps) {
+export function EditProfileForm({user, fetchData, typeCharts}: ModifyProfileFormProps) {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const schema = createUserSchema(t, true);
@@ -54,10 +54,9 @@ export function ModifyProfileForm({user, fetchData, typeCharts}: ModifyProfileFo
       }
     }, [user, reset, typeCharts]);
 
-    const handleModify = async (data: UserData) => {
+    const handleEdit = async (data: UserData) => {
         const { confirmPassword, ...userData } = data;
-        console.log("User data to modify:", userData);
-        await modifyProfile(userData);
+        await editProfile(userData);
         localStorage.setItem("favouriteTypeCharts", JSON.stringify(userData.idTypeChart));
         await fetchData();
         reset();
@@ -69,7 +68,7 @@ export function ModifyProfileForm({user, fetchData, typeCharts}: ModifyProfileFo
         // Sending verification email to delete the account
         verificationEmailToDelete({locale: navigator.language});
 
-        navigate("/user/deleteProfile");
+        navigate("/user/profile/delete");
     };
 
     return (
@@ -138,7 +137,7 @@ export function ModifyProfileForm({user, fetchData, typeCharts}: ModifyProfileFo
             </DialogTrigger>
 
             <DialogContent className="dialog-content">
-              <form onSubmit={handleSubmit(handleModify)}>
+              <form onSubmit={handleSubmit(handleEdit)}>
                 <DialogHeader className="dialog-header">
                   <DialogTitle className="dialog-title">{t('domains.user.modify.dialog.title')}</DialogTitle>
                   <DialogDescription className="dialog-description">{t('domains.user.modify.dialog.description')}</DialogDescription>

@@ -1,5 +1,6 @@
 package com.TFG.app.backend.category;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,7 +15,7 @@ import com.TFG.app.backend.type_chart.entity.Type_Chart;
 import com.TFG.app.backend.type_chart.repository.Type_ChartRepository;
 import com.TFG.app.backend.user.repository.UserRepository;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.time.LocalDate;
 
 
 @DataJpaTest
@@ -38,11 +39,14 @@ public class CategoryIntegrationTest {
         User user = new UserTestDataBuilder().withTypeChart(typeChart).build();
         userRepository.save(user);
 
-        Category category = new CategoryTestDataBuilder().withUser(user).build();
+        Category category = new Category();
 
+        category.setIcon("heavy_dollar_sign");
+        category.setName("Videogames");
+        category.setUser(user);
         categoryRepository.save(category);
 
-        assertThat(categoryRepository.existsByNameAndUserAndDeletedAtIsNull("Videogames", user)).isTrue();
+        Assertions.assertTrue(categoryRepository.existsByNameAndUserAndDeletedAtIsNull("Videogames", user));
     }
 
     @Test
@@ -53,13 +57,17 @@ public class CategoryIntegrationTest {
         User user = new UserTestDataBuilder().withTypeChart(typeChart).build();
         userRepository.save(user);
 
-        Category category = new CategoryTestDataBuilder().withUser(user).build();
+        Category category = new Category();
+
+        category.setIcon("heavy_dollar_sign");
+        category.setName("Videogames");
+        category.setUser(user);
         categoryRepository.save(category);
 
         category.setName("Supermarkets");
         categoryRepository.save(category);
 
-        assertThat(categoryRepository.existsByNameAndUserAndDeletedAtIsNull("Supermarkets", user)).isTrue();
+        Assertions.assertTrue(categoryRepository.existsByNameAndUserAndDeletedAtIsNull("Supermarkets", user));
     }
 
     @Test
@@ -70,10 +78,16 @@ public class CategoryIntegrationTest {
         User user = new UserTestDataBuilder().withTypeChart(typeChart).build();
         userRepository.save(user);
 
-        Category category = new CategoryTestDataBuilder().withUser(user).build();
+        Category category = new Category();
+
+        category.setIcon("heavy_dollar_sign");
+        category.setName("Videogames");
+        category.setUser(user);
         categoryRepository.save(category);
 
-        assertThat(category.getCreatedAt().getDayOfMonth()).isEqualTo(1);
+        Assertions.assertEquals(1, category.getCreatedAt().getDayOfMonth());
+        Assertions.assertEquals(LocalDate.now().getMonthValue(), category.getCreatedAt().getMonthValue());
+        Assertions.assertEquals(LocalDate.now().getYear(), category.getCreatedAt().getYear());
     }
 
 }

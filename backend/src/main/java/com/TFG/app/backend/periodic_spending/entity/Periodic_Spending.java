@@ -25,7 +25,7 @@ public class Periodic_Spending {
     @Column(name = "Expiration", nullable = false)
     private LocalDate expiration;
     
-    @Column(name = "Last_Payment", nullable = false)
+    @Column(name = "LastPayment", nullable = false)
     private LocalDate lastPayment;
 
     // Getters and Setters

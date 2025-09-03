@@ -8,7 +8,7 @@ import type { FetchAccountData} from "../schemas/FetchAccount";
  */
 export async function addAccounts(data: FetchAccountData): Promise<AccountData[]> {
   // Llamada al backend
-  const response = await apiFetch<AccountData[]>(`/api/accounts/extract`, {
+  const response = await apiFetch<AccountData[]>(`/api/accounts`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -32,7 +32,7 @@ export async function addAccounts(data: FetchAccountData): Promise<AccountData[]
 
 
 export async function fetchAccountsForUser(): Promise<{ accounts: AccountData[] }> {
-  const json = await apiFetch<{ accounts: AccountData[] }>("/api/accounts/all", {
+  const json = await apiFetch<{ accounts: AccountData[] }>("/api/accounts", {
     method: "GET",
   });
 
@@ -50,7 +50,7 @@ export async function fetchAccountsForUser(): Promise<{ accounts: AccountData[] 
 }
 
 export async function deleteAccount(id: number){
-  const response = await fetch(`/api/accounts/delete?id=${id}`, {
+  const response = await fetch(`/api/accounts/${id}`, {
     method: "DELETE",
     credentials: "include",
   });

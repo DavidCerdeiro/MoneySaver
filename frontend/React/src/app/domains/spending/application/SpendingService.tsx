@@ -7,7 +7,7 @@ import type { SpendingResponse } from "../schemas/SpendingResponse";
  * @param data Spending data to add
  */
 export async function addSpending(data: SpendingData) {
-  return apiFetch("/api/spendings/add", {
+  return apiFetch("/api/spendings", {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -18,7 +18,7 @@ export async function addSpending(data: SpendingData) {
  * @returns List of periodic types
  */
 export async function obtainAllTypePeriodic() {
-  const response = await fetch("/api/type-periodic/all", {
+  const response = await fetch("/api/type-periodic", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
@@ -38,7 +38,7 @@ export async function obtainAllTypePeriodic() {
  */
 export async function obtainAllSpendingsByMonthAndYear(data: { month: number; year?: number }) {
   return apiFetch<{ spendings: SpendingResponse[] }>(
-    `/api/spendings/all?month=${data.month}&year=${data.year}`,
+    `/api/spendings/${data.year}/${data.month}`,
     { method: "GET" }
   );
 }
@@ -48,7 +48,7 @@ export async function obtainAllSpendingsByMonthAndYear(data: { month: number; ye
  * @returns List of establishments
  */
 export async function obtainAllEstablishments() {
-  const response = await fetch(`/api/establishments/all`, {
+  const response = await fetch(`/api/establishments`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
@@ -61,7 +61,7 @@ export async function obtainAllEstablishments() {
 }
 
 export async function processFileDirect(formData: FormData) {
-  const response = await fetch("/api/spendings/processFile", {
+  const response = await fetch("/api/spendings/documents", {
     method: "POST",
     body: formData,
     credentials: "include",

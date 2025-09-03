@@ -8,9 +8,8 @@ import type{ TransactionResponse } from "../schemas/TransactionResponse";
 export async function extractTransactions(
   data: ExtractTransactionData
 ): Promise<ExtractTransactionResponse> {
-  const json = await apiFetch("/api/transactions/extract", {
-    method: "POST",
-    body: JSON.stringify(data),
+  const json = await apiFetch(`/api/accounts/${data.account?.id}/transactions?from=${data.minDate}&to=${data.maxDate}&code=${data.code}`, {
+    method: "GET",
   });
 
   const parsed = createExtractTransactionsResponseSchema.safeParse(json);
@@ -20,7 +19,6 @@ export async function extractTransactions(
     throw new Error("Invalid extract transaction data received from backend");
   }
 
-  // ✅ Aquí comprobamos si no hay transacciones
   if (!parsed.data.transactions || parsed.data.transactions.length === 0) {
     throw new Error("No transactions found");
   }
@@ -29,7 +27,7 @@ export async function extractTransactions(
 }
 
 export async function addTransaction(data: AddTransactionData): Promise<AddTransactionResponse> {
-  return apiFetch("/api/transactions/add", {
+  return apiFetch("/api/transactions", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -37,7 +35,7 @@ export async function addTransaction(data: AddTransactionData): Promise<AddTrans
 }
 
 export async function getAllUserTransactionsByMonthAndYear(month: number, year: number): Promise<TransactionResponse[]> {
-  return apiFetch(`/api/transactions/all?month=${month}&year=${year}`, {
+  return apiFetch(`/api/transactions?month=${month}&year=${year}`, {
     method: "GET",
   });
 

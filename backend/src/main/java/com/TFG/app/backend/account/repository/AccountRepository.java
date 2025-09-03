@@ -13,5 +13,5 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     boolean existsByUser(User user);
 
-    boolean existsByUserAndTrueLayerId(User user, String trueLayerId);
+    boolean existsByUserAndAccountCode(User user, String accountCode);
 }

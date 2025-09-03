@@ -38,7 +38,6 @@ export function ViewSpendingsPage() {
         setTransactions(data);
       })
       .catch(console.error);
-      console.log(transactions);
   }, [selectedMonth, selectedYear]);
 
   const handlePrevMonth = () => setCurrentDate(subMonths(currentDate, 1));

@@ -8,7 +8,6 @@ import { ExtractTransactionsForm } from "../components/ExtractTransactionsForm";
 export function ExtractTransactionsPage() {
   const { t } = useTranslation();
   const [accounts, setAccounts] = useState<AccountData[]>([]);
-
   const loadAccounts = async () => {
     try {
       const data = await fetchAccountsForUser();

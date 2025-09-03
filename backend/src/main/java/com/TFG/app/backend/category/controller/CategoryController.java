@@ -42,12 +42,14 @@ public class CategoryController {
     /**
      * Endpoint to add a new category.
      * @param categoryRequest The request body containing the category details.
-     * @output:
-     *         - 201 Created if the category is created successfully.
-     *         - 400 Bad Request if the category could not be created.
+     * @return:
+     * - 201: Created CategoryResponse
+     * - 400: Bad Request if the category could not be created
+     * - 401: Unauthorized if token is missing or invalid
+     * - 404: User not found in the database
      */
-    @PostMapping("/add")
-    public ResponseEntity<Category> addCategory(@CookieValue(name = "accessToken", required = false) String token, @RequestBody AddCategoryRequest categoryRequest) {
+    @PostMapping
+    public ResponseEntity<CategoryResponse> postCategory(@CookieValue(name = "accessToken", required = false) String token, @RequestBody AddCategoryRequest categoryRequest) {
 
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -69,7 +71,7 @@ public class CategoryController {
         category.setUser(user);
 
         if(categoryService.addCategory(category)){
-            return new ResponseEntity<>(category, HttpStatus.CREATED);
+            return new ResponseEntity<>(new CategoryResponse(category), HttpStatus.CREATED);
         }else{
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -78,20 +80,36 @@ public class CategoryController {
     /**
      * Endpoint to modify a category.
      * @param categoryRequest
-     * @output:
-     *         - 200 OK if the category is modified successfully.
-     *         - 404 Not Found if the category does not exist.
+     * @return:
+     * - 200: OK CategoryResponse if the category is modified successfully
+     * - 400: Bad Request if the category could not be modified
+     * - 401: Unauthorized if token is missing or invalid
+     * - 404: User not found in the database or if the category does not exist
      */
-    @PutMapping("/modify")
-    public ResponseEntity<String> modifyCategory(@RequestBody ModifyCategoryRequest categoryRequest) {
-        Category category = categoryService.getCategoryFromId(categoryRequest.getId());
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryResponse> putCategory(@CookieValue(name = "accessToken", required = false) String token, @PathVariable("id") Integer id, @RequestBody ModifyCategoryRequest categoryRequest) {
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String email = jwtService.getEmailFromToken(token);
+        if (email == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Category category = categoryService.getCategoryFromId(id);
 
         if (category != null) {
             category.setName(categoryRequest.getName());
             category.setIcon(categoryRequest.getIcon());
             
             if (categoryService.updateCategory(category)) {
-                return new ResponseEntity<>(HttpStatus.OK);    
+                return new ResponseEntity<>(new CategoryResponse(category), HttpStatus.OK);
             }
         }
         
@@ -101,13 +119,13 @@ public class CategoryController {
     /**
      * Endpoint to get all categories from a user.
      * @param token
-     * @output:
-     *         - 200 OK with the list of categories if successful.
-     *         - 401 Unauthorized if the user is not authenticated.
-     *         - 404 Not Found if the user does not exist.
+     * @return:
+     * - 200: OK with the list of categories if successful
+     * - 401: Unauthorized if token is missing or invalid
+     * - 404: User not found in the database
      */
-    @GetMapping("/all")
-    public ResponseEntity<AllCategoriesFromUserResponse> AllCategoriesFromUser(@CookieValue(name = "accessToken", required = false) String token) {
+    @GetMapping
+    public ResponseEntity<AllCategoriesFromUserResponse> getCategories(@CookieValue(name = "accessToken", required = false) String token) {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -129,7 +147,7 @@ public class CategoryController {
         int currentYear = now.getYear();
 
         List<CategoryResponse> response = categories.stream()
-        .map(category -> new CategoryResponse(category, spendingService.getTotalAmountMonthlyByCategory(category.getId(), currentMonth, currentYear)))
+        .map(category -> new CategoryResponse(category, spendingService.getTotalAmountMonthlyByCategory(category.getId(), currentMonth, currentYear)))//Calculate the total spending for the category in the current month
         .collect(Collectors.toList());
 
         return ResponseEntity.ok(new AllCategoriesFromUserResponse(response));
@@ -138,12 +156,13 @@ public class CategoryController {
     /**
      * Endpoint to delete a category.
      * @param id
-     * @output:
-     *         - 200 OK if the category is deleted successfully.
-     *         - 404 Not Found if the category does not exist.
+     * @return:
+     * - 204: No Content if the category is deleted successfully
+     * - 401: Unauthorized if token is missing or invalid
+     * - 404: User not found or if the category does not exist
      */
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteCategory(@CookieValue(name = "accessToken", required = false) String token, @RequestParam("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@CookieValue(name = "accessToken", required = false) String token, @PathVariable("id") Long id) {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -159,7 +178,7 @@ public class CategoryController {
         }
 
         if (categoryService.deleteCategory(id.intValue())) {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -170,13 +189,13 @@ public class CategoryController {
      * @param token
      * @param month
      * @param year
-     * @output:
-     *         - 200 OK with the monthly spending by category if successful.
-     *         - 401 Unauthorized if the user is not authenticated.
-     *         - 404 Not Found if the user does not exist.
+     * @return:
+     * - 200: OK with the monthly spending by category if successful
+     * - 401: Unauthorized if token is missing or invalid
+     * - 404: User not found in the database
      */
-    @GetMapping("/monthly")
-    public ResponseEntity<CategoriesMonthlyResponse> getCategoriesMonthly(@CookieValue(name = "accessToken", required = false) String token, @RequestParam("month") int month, @RequestParam("year") int year) {
+    @GetMapping("/{year}/{month}")
+    public ResponseEntity<CategoriesMonthlyResponse> getCategoriesMonthly(@CookieValue(name = "accessToken", required = false) String token, @PathVariable("year") int year, @PathVariable("month") int month) {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -201,7 +220,19 @@ public class CategoryController {
         return ResponseEntity.ok(new CategoriesMonthlyResponse(response));
     }
 
-    @GetMapping("/compare")
+    /**
+     * Endpoint to compare monthly spending by category.
+     * @param token
+     * @param month1
+     * @param month2
+     * @param year1
+     * @param year2
+     * @return:
+     * - 200: OK with the comparison monthly spending by category if successful
+     * - 401: Unauthorized if token is missing or invalid
+     * - 404: User not found in the database
+     */
+    @GetMapping("comparison")
     public ResponseEntity<CompareMonthsResponse> compareMonths(
             @CookieValue(name = "accessToken", required = false) String token,
             @RequestParam("month1") int month1,
@@ -226,7 +257,7 @@ public class CategoryController {
         List<Category> categories1 = categoryService.getAllCategoriesNotDeletedFromUser(user.getId(), LocalDate.of(year1, month1, 1));
         List<Category> categories2 = categoryService.getAllCategoriesNotDeletedFromUser(user.getId(), LocalDate.of(year2, month2, 1));
 
-        // Crear un set con todas las categorías distintas
+        // Combine categories of both months
         List<Category> allCategories = new ArrayList<>();
         allCategories.addAll(categories1);
         allCategories.addAll(categories2);
@@ -234,28 +265,28 @@ public class CategoryController {
                 .distinct()
                 .collect(Collectors.toList());
 
-        // Map de categorías por ID para búsqueda rápida
+        // Categories map by ID
         Map<Integer, Category> map1 = categories1.stream()
-                .collect(Collectors.toMap(Category::getId, c -> c));
+            .collect(Collectors.toMap(Category::getId, c -> c));
         Map<Integer, Category> map2 = categories2.stream()
-                .collect(Collectors.toMap(Category::getId, c -> c));
+            .collect(Collectors.toMap(Category::getId, c -> c));
 
-        // Construir listas de CategoryResponse para cada mes
+        // Build CategoryResponse lists for each month
         List<CategoryResponse> totalMonth1 = allCategories.stream()
-                .map(cat -> {
-                    Category c = map1.get(cat.getId());
-                    BigDecimal total = (c != null) ? spendingService.getTotalAmountMonthlyByCategory(c.getId(), month1, year1) : BigDecimal.ZERO;
-                    return new CategoryResponse(cat, total);
-                })
-                .collect(Collectors.toList());
+            .map(cat -> {
+                Category c = map1.get(cat.getId());
+                BigDecimal total = (c != null) ? spendingService.getTotalAmountMonthlyByCategory(c.getId(), month1, year1) : BigDecimal.ZERO;
+                return new CategoryResponse(cat, total);
+            })
+            .collect(Collectors.toList());
 
         List<CategoryResponse> totalMonth2 = allCategories.stream()
-                .map(cat -> {
-                    Category c = map2.get(cat.getId());
-                    BigDecimal total = (c != null) ? spendingService.getTotalAmountMonthlyByCategory(c.getId(), month2, year2) : BigDecimal.ZERO;
-                    return new CategoryResponse(cat, total);
-                })
-                .collect(Collectors.toList());
+            .map(cat -> {
+                Category c = map2.get(cat.getId());
+                BigDecimal total = (c != null) ? spendingService.getTotalAmountMonthlyByCategory(c.getId(), month2, year2) : BigDecimal.ZERO;
+                return new CategoryResponse(cat, total);
+            })
+            .collect(Collectors.toList());
 
         return ResponseEntity.ok(new CompareMonthsResponse(totalMonth1, totalMonth2));
     }

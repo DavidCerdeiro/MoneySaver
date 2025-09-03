@@ -1,7 +1,9 @@
 package com.TFG.app.backend.goal;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -18,7 +20,6 @@ import com.TFG.app.backend.type_chart.repository.Type_ChartRepository;
 import com.TFG.app.backend.user.UserTestDataBuilder;
 import com.TFG.app.backend.user.entity.User;
 import com.TFG.app.backend.user.repository.UserRepository;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -46,14 +47,15 @@ public class GoalIntegrationTest {
         Category category = new CategoryTestDataBuilder().withUser(user).build();
         categoryRepository.save(category);
 
-
         Goal goal = new Goal();
+
         goal.setName("Holidays in Brasil");
         goal.setCategory(category);
         goal.setTargetAmount(BigDecimal.valueOf(1000.0));
-
         goalRepository.save(goal);
-        assertThat(goalRepository.findByCategoryAndDeletedAtIsNull(category)).isNotNull();
+        
+        Assertions.assertEquals(1, goalRepository.findByCategoryAndDeletedAtIsNull(category).size());
+
     }
 
     @Test
@@ -71,8 +73,10 @@ public class GoalIntegrationTest {
         goal.setName("Holidays in Brasil");
         goal.setCategory(category);
         goal.setTargetAmount(BigDecimal.valueOf(1000.0));
-
         goalRepository.save(goal);
-        assertThat(goal.getCreatedAt().getDayOfMonth()).isEqualTo(1);
+
+        Assertions.assertEquals(1, goalRepository.findByCategoryAndDeletedAtIsNull(category).get(0).getCreatedAt().getDayOfMonth());
+        Assertions.assertEquals(LocalDate.now().getMonthValue(), goalRepository.findByCategoryAndDeletedAtIsNull(category).get(0).getCreatedAt().getMonthValue());
+        Assertions.assertEquals(LocalDate.now().getYear(), goalRepository.findByCategoryAndDeletedAtIsNull(category).get(0).getCreatedAt().getYear());
     }
 }

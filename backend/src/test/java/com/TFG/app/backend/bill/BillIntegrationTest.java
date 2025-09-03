@@ -1,7 +1,6 @@
 package com.TFG.app.backend.bill;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -46,7 +45,6 @@ public class BillIntegrationTest {
 
         User user = new UserTestDataBuilder().withTypeChart(typeChart).build();
         userRepository.save(user);
-
         Category category = new CategoryTestDataBuilder().withUser(user).build();
         categoryRepository.save(category);
 
@@ -54,10 +52,11 @@ public class BillIntegrationTest {
         spendingRepository.save(spending);
 
         Bill bill = new Bill();
+
         bill.setSpending(spending);
-        bill.setFileRoute("<file_route>");
+        bill.setFileRoute("/route/to/file.pdf");
         billRepository.save(bill);
 
-        assertThat(billRepository.findById(bill.getId())).isPresent();
+        Assertions.assertTrue(billRepository.findById(bill.getId()).isPresent());
     }
 }

@@ -4,7 +4,7 @@ import com.TFG.app.backend.account.dto.AccountDTO;
 
 public class TransactionDTO {
     private AccountDTO account;
-    private String trueLayerId;
+    private String transactionCode;
 
     public AccountDTO getAccount() {
         return account;
@@ -14,11 +14,11 @@ public class TransactionDTO {
         this.account = account;
     }
 
-    public String getTrueLayerId() {
-        return trueLayerId;
+    public String getTransactionCode() {
+        return transactionCode;
     }
 
-    public void setTrueLayerId(String trueLayerId) {
-        this.trueLayerId = trueLayerId;
+    public void setTransactionCode(String transactionCode) {
+        this.transactionCode = transactionCode;
     }
 }

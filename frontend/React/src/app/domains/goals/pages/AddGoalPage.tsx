@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchCategoriesForUser } from "../../category/application/CategoryService";
+import { getCategories } from "../../category/application/CategoryService";
 import type { CategoryData } from "../../category/schemas/Category";
 import { DefaultPageLayout } from "../../shared/layouts/DefaultPageLayout"
 import { useTranslation } from "react-i18next";
@@ -23,7 +23,7 @@ export function AddGoalPage() {
   };
 
   useEffect(() => {
-    fetchCategoriesForUser()
+    getCategories()
       .then((data) => setCategories(data.categories))
       .catch(console.error);
 

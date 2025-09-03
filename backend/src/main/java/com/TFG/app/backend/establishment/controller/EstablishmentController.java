@@ -1,5 +1,7 @@
 package com.TFG.app.backend.establishment.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.TFG.app.backend.establishment.entity.Establishment;
@@ -17,14 +19,23 @@ public class EstablishmentController {
         this.establishmentService = establishmentService;
     }
 
-    @GetMapping("all")
-    public List<EstablishmentResponse> findAll() {
+    /**
+     * Endpoint to get all establishments
+     * @return:
+     * - 200: OK with the list of establishments if successful
+     * - 204: No Content if there are no establishments
+     */
+    @GetMapping
+    public ResponseEntity<List<EstablishmentResponse>> getEstablishments() {
         List<Establishment> establishments = establishmentService.findAll();
         List<EstablishmentResponse> response = new ArrayList<>();
         establishments.forEach(establishment -> response.add(new EstablishmentResponse(
                 establishment.getId(),
                 establishment.getName()
         )));
-        return response;
+        if(response.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ResponseEntity.ok(response);
     }
 }

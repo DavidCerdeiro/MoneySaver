@@ -1,20 +1,17 @@
-// components/MobileNav.tsx
-"use client"
-
 import { Sheet, SheetTrigger, SheetContent } from "@/app/domains/shared/components/sheet.js"
 import { Button } from "@/app/domains/shared/components/button.js"
 import { Menu } from "lucide-react"
 import { Link, useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
+import { logout } from "../../user/application/UserService"
 
 export function MobileNav() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-
   const handleLogout = () => {
-    localStorage.removeItem("authToken")
-    navigate("/login")
-  }
+      logout(); 
+      navigate('/login')
+    }
 
   return (
     <Sheet>
@@ -23,47 +20,63 @@ export function MobileNav() {
           <Menu className="h-6 w-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left">
-        <nav className="flex flex-col space-y-4 mt-8">
-          <Link to="/home" className="nav-link">Inicio</Link>
+      {/* CAMBIO: Añadimos estilos para el fondo negro y texto claro */}
+      <SheetContent side="left" className="bg-black text-gray-200 border-none p-4">
+        <nav className="flex flex-col space-y-2 mt-8">
+          <Link to="/home" className="mb-4">
+            <h1 className="text-xl font-bold">{t("app.title")}</h1>
+          </Link>
 
+          {/* CAMBIO: Se han añadido clases para dar estilo a los desplegables */}
           <details className="group">
-            <summary className="nav-link cursor-pointer">{t("header.sections.profile.title")}</summary>
-            <div className="ml-4 mt-1 flex flex-col space-y-1">
-              <Link to="/user/modifyProfile" className="nav-link">{t("header.sections.profile.editProfile.title")}</Link>
-              <Link to="/user/linkBankAccount" className="nav-link">{t("header.sections.profile.linkBankAccount.title")}</Link>
-              <Link to="/user/settings" className="nav-link">{t("header.sections.profile.settings.title")}</Link>
+            <summary className="nav-link cursor-pointer list-none flex items-center justify-between p-2 rounded-md hover:bg-gray-800">
+              {t("header.sections.profile.title")}
+              <span className="transition-transform duration-200 group-open:rotate-90">&#9656;</span>
+            </summary>
+            <div className="ml-4 mt-1 flex flex-col space-y-1 border-l border-gray-700 pl-4">
+              <Link to="/user/modifyProfile" className="nav-link-mobile">{t("header.sections.profile.editProfile.title")}</Link>
+              <Link to="/user/accounts" className="nav-link-mobile">{t("header.sections.profile.manageAccounts.title")}</Link>
             </div>
           </details>
 
           <details className="group">
-            <summary className="nav-link cursor-pointer">{t("header.sections.spendings.title")}</summary>
-            <div className="ml-4 mt-1 flex flex-col space-y-1">
-              <Link to="/spendings/view" className="nav-link">{t("header.sections.spendings.viewSpendings.title")}</Link>
-              <Link to="/spendings/add" className="nav-link">{t("header.sections.spendings.addSpending.title")}</Link>
-              <Link to="/categories/modify" className="nav-link">{t("header.sections.spendings.editCategory.title")}</Link>
-              <Link to="/categories/add" className="nav-link">{t("header.sections.spendings.addCategory.title")}</Link>
+            <summary className="nav-link cursor-pointer list-none flex items-center justify-between p-2 rounded-md hover:bg-gray-800">
+              {t("header.sections.spendings.title")}
+              <span className="transition-transform duration-200 group-open:rotate-90">&#9656;</span>
+            </summary>
+            <div className="ml-4 mt-1 flex flex-col space-y-1 border-l border-gray-700 pl-4">
+              <Link to="/spendings/view" className="nav-link-mobile">{t("header.sections.spendings.viewSpendings.title")}</Link>
+              <Link to="/spendings/add" className="nav-link-mobile">{t("header.sections.spendings.addSpending.title")}</Link>
+              <Link to="/categories/edit" className="nav-link-mobile">{t("header.sections.spendings.editCategory.title")}</Link>
+              <Link to="/categories/add" className="nav-link-mobile">{t("header.sections.spendings.addCategory.title")}</Link>
+              <Link to="/spendings/transactions" className="nav-link-mobile">{t("header.sections.spendings.transactions.title")}</Link>
             </div>
           </details>
 
           <details className="group">
-            <summary className="nav-link cursor-pointer">{t("header.sections.savingGoals.title")}</summary>
-            <div className="ml-4 mt-1 flex flex-col space-y-1">
-              <Link to="/savingGoals/create" className="nav-link">{t("header.sections.savingGoals.createGoal.title")}</Link>
-              <Link to="/savingGoals/view" className="nav-link">{t("header.sections.savingGoals.viewGoals.title")}</Link>
-              <Link to="/savingGoals/edit" className="nav-link">{t("header.sections.savingGoals.editGoals.title")}</Link>
+            <summary className="nav-link cursor-pointer list-none flex items-center justify-between p-2 rounded-md hover:bg-gray-800">
+              {t("header.sections.savingGoals.title")}
+              <span className="transition-transform duration-200 group-open:rotate-90">&#9656;</span>
+            </summary>
+            <div className="ml-4 mt-1 flex flex-col space-y-1 border-l border-gray-700 pl-4">
+              <Link to="/savingGoals/add" className="nav-link-mobile">{t("header.sections.savingGoals.createGoal.title")}</Link>
+              <Link to="/savingGoals/view" className="nav-link-mobile">{t("header.sections.savingGoals.viewGoals.title")}</Link>
+              <Link to="/savingGoals/edit" className="nav-link-mobile">{t("header.sections.savingGoals.editGoals.title")}</Link>
             </div>
           </details>
 
           <details className="group">
-            <summary className="nav-link cursor-pointer">{t("header.sections.charts.title")}</summary>
-            <div className="ml-4 mt-1 flex flex-col space-y-1">
-              <Link to="/charts/view" className="nav-link">{t("header.sections.charts.viewCharts.title")}</Link>
-              <Link to="/charts/compare" className="nav-link">{t("header.sections.charts.compareCharts.title")}</Link>
+            <summary className="nav-link cursor-pointer list-none flex items-center justify-between p-2 rounded-md hover:bg-gray-800">
+              {t("header.sections.charts.title")}
+              <span className="transition-transform duration-200 group-open:rotate-90">&#9656;</span>
+            </summary>
+            <div className="ml-4 mt-1 flex flex-col space-y-1 border-l border-gray-700 pl-4">
+              <Link to="/charts/view" className="nav-link-mobile">{t("header.sections.charts.viewCharts.title")}</Link>
+              <Link to="/charts/compare" className="nav-link-mobile">{t("header.sections.charts.compareCharts.title")}</Link>
             </div>
           </details>
-
-          <button onClick={handleLogout} className="logout mt-4">
+          
+          <button onClick={handleLogout} className="mt-6 w-full text-left p-2 rounded-md text-red-500 hover:bg-gray-800 font-bold">
             {t("header.logout")}
           </button>
         </nav>

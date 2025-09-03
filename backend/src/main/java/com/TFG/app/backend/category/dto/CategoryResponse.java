@@ -8,7 +8,11 @@ public class CategoryResponse {
     private String name;
     private String icon;
     private BigDecimal totalSpending;
-
+    public CategoryResponse(Category category) {
+        this.id = category.getId();
+        this.name = category.getName();
+        this.icon = category.getIcon();
+    }
     public CategoryResponse(Category category, BigDecimal totalSpending) {
         this.id = category.getId();
         this.name = category.getName();

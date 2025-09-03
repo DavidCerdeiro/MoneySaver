@@ -16,7 +16,7 @@ public class BillUnitTest {
         bill.setSpending(spending);
 
         Assertions.assertEquals("/path/to/bill.pdf", bill.getFileRoute());
-        Assertions.assertEquals(spending, bill.getSpending());
-        
+        Assertions.assertEquals("Electricity Bill", bill.getSpending().getName());
+
     }
 }

@@ -18,8 +18,8 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
-    public boolean existsByTrueLayerId(String trueLayerId) {
-        return transactionRepository.existsByTrueLayerId(trueLayerId);
+    public boolean existsByTransactionCode(String transactionCode) {
+        return transactionRepository.existsByTransactionCode(transactionCode);
     }
     public List<Transaction> getAllByAccountAndMonth(Integer idAccount, int month, int year) {
         return transactionRepository.getAllByAccountAndMonth(idAccount, month, year);

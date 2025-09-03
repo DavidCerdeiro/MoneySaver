@@ -10,7 +10,7 @@ public class Type_Chart {
     @Column(name = "Id")
     private Integer id;
 
-    @Column(name = "Name")
+    @Column(name = "Name", length = 8, nullable = false, unique = true)
     private String name;
 
     public Integer getId() {

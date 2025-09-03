@@ -4,12 +4,12 @@ import java.util.List;
 
 import com.TFG.app.backend.account.entity.Account;
 
-public class AllUserAccountsResponse {
+public class GetAccountsResponse {
     private List<AccountResponse> accounts;
 
-    public AllUserAccountsResponse(List<Account> accounts) {
+    public GetAccountsResponse(List<Account> accounts) {
         this.accounts = accounts.stream()
-                .map(account -> new AccountResponse(account.getId(), account.getTrueLayerId(), account.getName(), account.getNumber(), account.getBankName()))
+                .map(account -> new AccountResponse(account.getId(), account.getAccountCode(), account.getName(), account.getNumber(), account.getBankName()))
                 .toList();
     }
 

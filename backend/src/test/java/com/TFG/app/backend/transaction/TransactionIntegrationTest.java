@@ -1,6 +1,5 @@
 package com.TFG.app.backend.transaction;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -25,6 +24,7 @@ import com.TFG.app.backend.type_chart.repository.Type_ChartRepository;
 import com.TFG.app.backend.user.UserTestDataBuilder;
 import com.TFG.app.backend.user.entity.User;
 import com.TFG.app.backend.user.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -62,20 +62,21 @@ public class TransactionIntegrationTest {
         spendingRepository.save(spending);
 
         Account account = new Account();
+        Transaction transaction = new Transaction();
+
         account.setUser(user);
         account.setName("Cuenta de Ahorros");
         account.setNumber("1234567890abcdef1234567890abcdef12345678");
         account.setBankName("Unicaja");
-        account.setTrueLayerId("tr_id123");
+        account.setAccountCode("tr_id123");
         accountRepository.save(account);
 
-        Transaction transaction = new Transaction();
         transaction.setAccount(account);
-        transaction.setTrueLayerId("tr_id12345");
+        transaction.setTransactionCode("tr_id12345");
         transaction.setSpending(spending);
         transactionRepository.save(transaction);
 
-        assertThat(transactionRepository.findBySpending(spending)).isPresent();
+        Assertions.assertTrue(transactionRepository.findBySpending(spending).isPresent());
     }
 
     @Test
@@ -93,22 +94,25 @@ public class TransactionIntegrationTest {
         spendingRepository.save(spending);
 
         Account account = new Account();
+        Transaction transaction = new Transaction();
+        Transaction transaction2 = new Transaction();
+
         account.setUser(user);
         account.setName("Cuenta de Ahorros");
         account.setNumber("1234567890abcdef1234567890abcdef12345678");
         account.setBankName("Unicaja");
-        account.setTrueLayerId("tr_id1234577");
+        account.setAccountCode("tr_id1234577");
         accountRepository.save(account);
 
-        Transaction transaction = new Transaction();
+        
         transaction.setAccount(account);
-        transaction.setTrueLayerId("tr_id12345");
+        transaction.setTransactionCode("tr_id12345");
         transaction.setSpending(spending);
         transactionRepository.save(transaction);
 
-        Transaction transaction2 = new Transaction();
+        
         transaction2.setAccount(account);
-        transaction2.setTrueLayerId("tr_id12345");
+        transaction2.setTransactionCode("tr_id12345");
         transaction2.setSpending(spending);
 
         assertThrows(DataIntegrityViolationException.class, () -> { transactionRepository.saveAndFlush(transaction2); });

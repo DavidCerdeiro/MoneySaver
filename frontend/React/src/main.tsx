@@ -1,6 +1,6 @@
 import './index.css'
 import './i18n/index.ts'
-
+import './styles/utilities.css'
 import { LoginPage } from './app/domains/auth/pages/LoginPage.tsx'
 import { ForgotPasswordPage } from './app/domains/auth/pages/ForgotPasswordPage.tsx'
 import { ResetPasswordPage } from './app/domains/auth/pages/ResetPasswordPage.tsx';
@@ -15,10 +15,10 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { UserProvider } from './app/contexts/UserContext.tsx'
 import { Toaster } from './app/domains/shared/components/Toaster.tsx'
 import { AddCategoryPage } from './app/domains/category/pages/AddCategoryPage.tsx';
-import { ModifyCategoryPage } from './app/domains/category/pages/ModifyCategoryPage.tsx';
+import { EditCategoryPage } from './app/domains/category/pages/EditCategoryPage.tsx';
 import { AddSpendingPage } from './app/domains/spending/pages/AddSpendingPage.tsx';
 import { ViewSpendingsPage } from './app/domains/spending/pages/ViewSpendingsPage.tsx';
-import { ModifyProfilePage } from './app/domains/user/pages/ModifyProfilePage.tsx';
+import { EditProfilePage } from './app/domains/user/pages/EditProfilePage.tsx';
 import { DeleteProfilePage } from './app/domains/user/pages/DeleteProfilePage.tsx';
 import { ViewChartsPage } from './app/domains/charts/pages/ViewChartsPage.tsx';
 import { CompareChartsPage } from './app/domains/charts/pages/CompareChartsPage.tsx';
@@ -52,15 +52,15 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/home" element={<MainPage />} />
 
             <Route path="/categories/add" element={<AddCategoryPage />} />
-            <Route path="/categories/modify" element={<ModifyCategoryPage />} />
+            <Route path="/categories/edit" element={<EditCategoryPage />} />
 
             <Route path="/spendings/add" element={<AddSpendingPage />} />
             <Route path="/spendings/view" element={<ViewSpendingsPage />} />
             <Route path="/spendings/transactions" element={<ExtractTransactionsPage />} />
             <Route path="/transactions/add" element={<AddTransactionsPage />} />
-            
-            <Route path="/user/modifyProfile" element={<ModifyProfilePage />} />
-            <Route path="/user/deleteProfile" element={<DeleteProfilePage />} />
+
+            <Route path="/user/profile/edit" element={<EditProfilePage />} />
+            <Route path="/user/profile/delete" element={<DeleteProfilePage />} />
             <Route path="/user/accounts" element={<AccountsPage />} />
 
             <Route path="/charts/view" element={<ViewChartsPage />} />

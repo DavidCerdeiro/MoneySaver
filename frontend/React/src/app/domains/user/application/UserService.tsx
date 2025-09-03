@@ -5,7 +5,7 @@ import type { UserData } from "../schemas/User";
  * Function to obtain user profile
  * @returns Promise<Response>
  */
-export async function obtainUserProfile() {
+export async function getProfile() {
   return apiFetch<{
     typeChart: any;
     idTypeChart: number;
@@ -14,7 +14,7 @@ export async function obtainUserProfile() {
     name: string;
     id: number; user: UserData 
 }>(
-    `/api/users/getProfile`,
+    `/api/users/me`,
     { method: "GET" }
   );
 
@@ -28,7 +28,7 @@ export async function obtainUserProfile() {
 export async function deleteProfile(data: {code: string, locale: string}
 ) {
   return apiFetch(
-    `/api/users/delete`,
+    `/api/users/me`,
     { method: "DELETE", body: JSON.stringify(data) }
   );
 }
@@ -40,7 +40,7 @@ export async function deleteProfile(data: {code: string, locale: string}
  */
 export async function verificationEmailToDelete(data: {locale: string}) {
   return apiFetch(
-    `/api/users/verification-email/delete`,
+    `/api/users/verification`,
     { method: "POST", body: JSON.stringify(data) }
   );
 }
@@ -50,18 +50,18 @@ export async function verificationEmailToDelete(data: {locale: string}) {
  * @param data UserData
  * @returns Promise<Response>
  */
-export async function modifyProfile(data: UserData) {
+export async function editProfile(data: UserData) {
   return apiFetch(
-    `/api/users/modify`,
+    `/api/users/me`,
     { method: "PUT", body: JSON.stringify(data) }
   );
 }
 
 
 export async function loadFavouriteTypeCharts() {
-  return apiFetch(`/api/users/get-type-chart`, { method: "GET" });
+  return apiFetch(`/api/users/me/type-chart`, { method: "GET" });
 }
 
 export async function logout() {
-  return fetch(`/api/users/auth/logout`, { method: "POST" });
+  return fetch(`/api/auth/sessions`, { method: "DELETE" });
 }

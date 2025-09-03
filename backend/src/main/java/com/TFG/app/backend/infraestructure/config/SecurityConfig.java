@@ -34,9 +34,9 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(
-                    "/api/users/auth/**", "/api/users/refresh", "/api/users/login",
-                    "/api/users/forgot-password/**", "/api/users/verify", "/api/users/signup",
-                    "/api/type_periodic/all", "/api/establishments/all", "/api/type_charts/all"
+                    "/api/auth/**", "/api/auth/sessions/refresh", "/api/users/login",
+                    "/api/users/password-reset", "/api/users/authenticate", "/api/users",
+                    "/api/type_periodic", "/api/establishments", "/api/type_charts"
                 ).permitAll()
                 .requestMatchers("/api/**").authenticated()
             )

@@ -15,12 +15,12 @@ public class AccountUnitTest {
         account.setBankName("CaixaBank");
         account.setName("Cuenta de ahorros");
         account.setNumber("100000");
-        account.setTrueLayerId("tl_id1234");
+        account.setAccountCode("tl_id1234");
         account.setUser(user);
 
         Assertions.assertEquals("CaixaBank", account.getBankName());
         Assertions.assertEquals("100000", account.getNumber());
-        Assertions.assertEquals("tl_id1234", account.getTrueLayerId());
-        Assertions.assertEquals(user, account.getUser());
+        Assertions.assertEquals("tl_id1234", account.getAccountCode());
+        Assertions.assertEquals("Juan Perez", account.getUser().getName());
     }
 }

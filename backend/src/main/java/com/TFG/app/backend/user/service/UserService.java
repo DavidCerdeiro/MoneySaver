@@ -4,7 +4,6 @@ import com.TFG.app.backend.user.dto.LogInRequest;
 import com.TFG.app.backend.user.dto.SignUpRequest;
 import com.TFG.app.backend.user.entity.User;
 import com.TFG.app.backend.user.repository.UserRepository;
-
 import com.TFG.app.backend.infraestructure.email.*;
 import com.TFG.app.backend.infraestructure.one_time_password.service.One_Time_PasswordService;
 import com.TFG.app.backend.type_chart.entity.Type_Chart;
@@ -107,50 +106,30 @@ public class UserService {
     public Integer authUser(String email, String code, Locale locale) {
         String otp = oneTimePasswordService.getOTP(email);
         // Check if the OTP exists and if the provided code matches the OTP token
-        if(otp != null) {
-            if(otp.equals(code)) {
-                otpCache.invalidate(email); // Invalidate the OTP after successful authentication
-                Optional<User> user = userRepository.findByEmail(email);
-                if(user.isPresent()) {
-                    // Update the user's authentication status to true
-                    User existingUser = user.get();
+        if(otp != null && otp.equals(code)) {
+            otpCache.invalidate(email); // Invalidate the OTP after successful authentication
+            Optional<User> user = userRepository.findByEmail(email);
+            if(user.isPresent()) {
+                // Update the user's authentication status to true
+                User existingUser = user.get();
+                String subject;
+                String body;
+                if(!existingUser.getIsAuthenticated()) {
                     existingUser.setIsAuthenticated(true);
                     userRepository.save(existingUser);
-                     
-                    String subject = messageSource.getMessage("signUp.successSubject", null, locale);
-                    String body = messageSource.getMessage("signUp.successBody", null, locale);
-                    emailService.sendEmail(email, subject, body);
-
-                    return existingUser.getId();
+                    subject = messageSource.getMessage("signUp.successSubject", null, locale);
+                body = messageSource.getMessage("signUp.successBody", null, locale);
+                }else{
+                    subject = messageSource.getMessage("logIn.successSubject", null, locale);
+                    body = messageSource.getMessage("logIn.successBody", null, locale);
                 }
-                
+
+                emailService.sendEmail(email, subject, body);
+
+                return existingUser.getId();
             }
         }
         return null;
-    }
-
-    /*
-     * Method to verify a registered user.
-     * It checks if the one-time password (OTP) exists for the given email.
-     * If the OTP exists, it compares the provided code with the OTP token.
-     * If they match, it returns true, indicating the user is verified.
-     * If the OTP does not exist or the code does not match,
-     * it returns false, indicating the user is not verified.
-     */
-    public boolean verifyUser(String email, String code, Locale locale) {
-        String otp = oneTimePasswordService.getOTP(email);
-        // Check if the OTP exists and if the provided code matches the OTP token
-        boolean result = otp != null && otp.equals(code);
-        // If the OTP is valid, delete it from the database
-        if(result && otp != null){
-            otpCache.invalidate(email); // Invalidate the OTP after successful verification
-
-            // Sending a success email to the user
-            String subject = messageSource.getMessage("logIn.successSubject", null, locale);
-            String body = messageSource.getMessage("logIn.successBody", null, locale);
-            emailService.sendEmail(email, subject, body);
-        }
-        return result;
     }
 
     /*
@@ -166,12 +145,9 @@ public class UserService {
     public Optional<User> logInUser(LogInRequest logInRequest) {
         // Check if the user exists by email
         if(userRepository.findByEmail(logInRequest.getEmail()).isPresent()){
-            System.out.println("User found: " + logInRequest.getEmail());
             Optional<User> user = userRepository.findByEmail(logInRequest.getEmail());
             // Verify the password
-            System.out.println("Password to verify: " + logInRequest.getPassword());
             if(passwordEncoder.matches(logInRequest.getPassword(), user.get().getPassword())) {
-                System.out.println("Password matches for user: " + logInRequest.getEmail());
                 // Generate a one-time password (OTP) and send it via email
                 String otp = oneTimePasswordService.generateOTP(logInRequest.getEmail());
                 String subject = messageSource.getMessage("verify.email.subject", null, logInRequest.getLocale());
@@ -274,7 +250,7 @@ public class UserService {
      * It updates the user's properties that are modified.
      * If it doesn't, it does nothing.
      */
-    public void modifyUser(User user, String name, String surname, String password, Integer idTypeChart) {
+    public User modifyUser(User user, String name, String surname, String password, Integer idTypeChart) {
         if(user.getName() != name) {
             user.setName(name);
         }
@@ -283,7 +259,6 @@ public class UserService {
         }
     
         if(password != "" && !passwordEncoder.matches(password, user.getPassword())) {
-            System.out.println("PASSWORD CHANGED");
             user.setPassword(passwordEncoder.encode(password));
         }
         
@@ -294,7 +269,7 @@ public class UserService {
             }
         }
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public Integer getFavouriteTypeChart(User user) {

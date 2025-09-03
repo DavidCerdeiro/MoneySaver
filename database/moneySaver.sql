@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS "user" (
   "Id_TypeChart" int NOT NULL DEFAULT 1,
   "Name" varchar(64) NOT NULL,
   "Surname" varchar(128) NOT NULL,
-  "Email" varchar(32) NOT NULL,
-  "Password" varchar(64) NOT NULL,
+  "Email" varchar(64) NOT NULL,
+  "Password" varchar(64) NOT NULL UNIQUE,
   "IsAuthenticated" boolean NOT NULL DEFAULT false,
   CONSTRAINT "RS_User__Id_TypeChart" FOREIGN KEY ("Id_TypeChart") REFERENCES "type_chart"("Id")
 );
@@ -21,10 +21,9 @@ CREATE TABLE IF NOT EXISTS "account" (
   "Id_User" int NOT NULL,
   "BankName" varchar(32) NOT NULL,
   "Name" varchar(32) NOT NULL,
-  "TrueLayerId" varchar(64) NOT NULL,
-  "Number" varchar(128) NOT NULL,
-  CONSTRAINT "RS_Account__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id") ON DELETE CASCADE,
-  UNIQUE ("Id_User", "TrueLayerId")
+  "AccountCode" varchar(64) NOT NULL UNIQUE,
+  "Number" varchar(128) NOT NULL UNIQUE,
+  CONSTRAINT "RS_Account__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id") ON DELETE CASCADE
 );
 
 CREATE INDEX IX_Account__Id_User ON account("Id_User");
@@ -58,9 +57,7 @@ CREATE INDEX IX_Goal__Id_Category ON "goal"("Id_Category");
 
 CREATE TABLE IF NOT EXISTS establishment (
   "Id" serial PRIMARY KEY,
-  "Id_User" int NOT NULL,
-  "Name" varchar(32) NOT NULL UNIQUE,
-  CONSTRAINT "RS_Establishment__Id_User" FOREIGN KEY ("Id_User") REFERENCES "user"("Id") ON DELETE CASCADE
+  "Name" varchar(32) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS spending (
@@ -88,7 +85,7 @@ CREATE TABLE IF NOT EXISTS "transaction" (
   "Id" serial PRIMARY KEY,
   "Id_Account" int NOT NULL,
   "Id_Spending" int NOT NULL UNIQUE,
-  "TrueLayerId" varchar(64) NOT NULL, 
+  "TransactionCode" varchar(64) NOT NULL UNIQUE, 
   CONSTRAINT "RS_Transaction__Id_Spending" FOREIGN KEY ("Id_Spending") REFERENCES spending("Id") ON DELETE CASCADE,
   CONSTRAINT "RS_Transaction__Id_Account" FOREIGN KEY ("Id_Account") REFERENCES "account"("Id") ON DELETE CASCADE
 );
@@ -103,7 +100,7 @@ CREATE TABLE IF NOT EXISTS "periodic_spending" (
   "Id_Spending" int NOT NULL UNIQUE,
   "Id_TypePeriodic" int NOT NULL,
   "Expiration" Date NOT NULL,
-  "Last_Payment" Date NOT NULL,
+  "LastPayment" Date NOT NULL,
   CONSTRAINT "RS_PeriodicSpending__Id_Spending" FOREIGN KEY ("Id_Spending") REFERENCES spending("Id") ON DELETE CASCADE,
   CONSTRAINT "RS_PeriodicSpending__Id_TypePeriodic" FOREIGN KEY ("Id_TypePeriodic") REFERENCES "type_periodic"("Id")
 );

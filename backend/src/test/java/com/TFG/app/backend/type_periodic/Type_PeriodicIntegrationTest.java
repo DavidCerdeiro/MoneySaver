@@ -1,7 +1,6 @@
 package com.TFG.app.backend.type_periodic;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -22,7 +21,7 @@ public class Type_PeriodicIntegrationTest {
         typePeriodic.setName("monthly");
         typePeriodicRepository.save(typePeriodic);
 
-        assertThat(typePeriodicRepository.findByName("monthly")).isNotEmpty();
+        Assertions.assertTrue(typePeriodicRepository.findByName("monthly").isPresent());
     }
 
 }

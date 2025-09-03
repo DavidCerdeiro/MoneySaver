@@ -17,9 +17,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 
     Optional<Transaction> findBySpending(Spending spending);
 
-    boolean existsByTrueLayerId(String trueLayerId);
+    boolean existsByTransactionCode(String transactionCode);
 
-        @Query(value = """
+    @Query(value = """
         SELECT t.* FROM transaction t
         JOIN spending s ON t."Id_Spending" = s."Id"
         WHERE t."Id_Account" = :accountId

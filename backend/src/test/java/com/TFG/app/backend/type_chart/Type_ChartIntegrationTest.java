@@ -1,5 +1,6 @@
 package com.TFG.app.backend.type_chart;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -7,7 +8,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.TFG.app.backend.type_chart.entity.Type_Chart;
 import com.TFG.app.backend.type_chart.repository.Type_ChartRepository;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -22,6 +22,6 @@ public class Type_ChartIntegrationTest {
         typeChart.setName("Bars");
         typeChartRepository.save(typeChart);
 
-        assertThat(typeChartRepository.existsByName("Bars")).isTrue();
+        Assertions.assertTrue(typeChartRepository.existsByName("bars"));
     }
 }

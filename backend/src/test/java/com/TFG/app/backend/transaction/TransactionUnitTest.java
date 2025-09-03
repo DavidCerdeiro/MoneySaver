@@ -18,11 +18,11 @@ public class TransactionUnitTest {
         bankAccount.setBankName("Unicaja");
         transaction.setAccount(bankAccount);
         transaction.setSpending(spending);
-        transaction.setTrueLayerId("tr_id12345");
+        transaction.setTransactionCode("tr_id12345");
 
         Assertions.assertEquals("Mercadona", transaction.getSpending().getName());
         Assertions.assertEquals("Unicaja", transaction.getAccount().getBankName());
         Assertions.assertEquals(spending, transaction.getSpending());
-        Assertions.assertEquals("tr_id12345", transaction.getTrueLayerId());
+        Assertions.assertEquals("tr_id12345", transaction.getTransactionCode());
     }
 }

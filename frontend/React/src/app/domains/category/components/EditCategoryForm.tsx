@@ -9,7 +9,7 @@ import { Label } from "@/app/domains/shared/components/label";
 import { Input } from "@/app/domains/shared/components/input";
 import { useTranslation } from "react-i18next";
 import { getEmojiById } from "./EmojiFunctions";
-import { modifyCategory } from "../application/CategoryService";
+import { editCategory } from "../application/CategoryService";
 import { deleteCategory } from "../application/CategoryService";
 import { toast } from "sonner";
 import { Dialog, DialogTrigger, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogClose, DialogTitle } from "@/app/domains/shared/components/dialog";
@@ -19,7 +19,7 @@ type ModifyCategoryFormProps = {
   refreshCategories: () => Promise<void>;
 };
 
-export function ModifyCategoryForm({ categories, refreshCategories }: ModifyCategoryFormProps) {
+export function EditCategoryForm({ categories, refreshCategories }: ModifyCategoryFormProps) {
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<CategoryData | null>(null);
   const [selectedEmoji, setSelectedEmoji] = useState("");
@@ -47,9 +47,8 @@ export function ModifyCategoryForm({ categories, refreshCategories }: ModifyCate
       const requestBody: CategoryData = {
         ...formData,
         icon: selectedIdEmoji,
-        id: selectedCategory?.id,
       };
-      await modifyCategory(requestBody);
+      await editCategory(selectedCategory?.id, requestBody);
 
       const nativeEmoji = getEmojiById(selectedIdEmoji);
       toast.success(t('domains.category.modify.success', {icon: nativeEmoji, name: requestBody.name}));

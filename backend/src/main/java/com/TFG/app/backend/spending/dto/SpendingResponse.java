@@ -2,7 +2,11 @@ package com.TFG.app.backend.spending.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import com.TFG.app.backend.bill.entity.Bill;
+import com.TFG.app.backend.spending.entity.Spending;
 public class SpendingResponse {
+ 
     private Integer id;
     private String name;
     private BigDecimal amount;
@@ -25,6 +29,17 @@ public class SpendingResponse {
         this.establishmentName = establishmentName;
     }
 
+    public SpendingResponse(Spending spending, Bill bill) {
+        this.id = spending.getId();
+        this.name = spending.getName();
+        this.amount = spending.getAmount();
+        this.date = spending.getDate();
+        this.categoryName = spending.getCategory().getName();
+        this.iconCategory = spending.getCategory().getIcon();
+        this.isPeriodic = spending.getIsPeriodic();
+        this.establishmentName = spending.getEstablishment().getName();
+        this.billId = (bill != null) ? bill.getId() : null;
+    }
     public Integer getId() {
         return id;
     }

@@ -38,7 +38,7 @@ export function AddTransactionForm({ response, categories, establishments, onSub
     defaultValues: {
       transaction: {
         account: transaction.account,
-        trueLayerId: transaction.trueLayerId,
+        transactionCode: transaction.transactionCode,
       },
       spending: {
         amount: spending.amount,
@@ -49,7 +49,8 @@ export function AddTransactionForm({ response, categories, establishments, onSub
       },
     },
   });
-  
+  console
+  console.log(errors);
   useEffect(() => {
     if (selectedCategory)
       setValue("spending.idCategory", selectedCategory?.id || 0);

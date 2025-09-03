@@ -1,8 +1,8 @@
 package com.TFG.app.backend.user;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -30,15 +30,15 @@ public class UserIntegrationTest {
         typeChartRepository.save(typeChart);
         
         User user = new User();
+
         user.setName("Iker");
         user.setSurname("Casillas");
         user.setEmail("iker.casillas@gmail.com");
         user.setPassword("password");
         user.setTypeChart(typeChart);
-
-
         userRepository.save(user);
-        assertThat(userRepository.existsByEmail("iker.casillas@gmail.com")).isTrue();
+
+        Assertions.assertTrue(userRepository.existsByEmail("iker.casillas@gmail.com"));
     }
 
     @Test
@@ -61,8 +61,6 @@ public class UserIntegrationTest {
         user2.setPassword("password");
         user2.setTypeChart(typeChart);
 
-        assertThrows(DataIntegrityViolationException.class, () -> {
-            userRepository.saveAndFlush(user2);
-        });
+        assertThrows(DataIntegrityViolationException.class, () -> { userRepository.saveAndFlush(user2); });
     }
 }

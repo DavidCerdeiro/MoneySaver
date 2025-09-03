@@ -3,7 +3,7 @@ import { DefaultPageLayout } from "../../shared/layouts/DefaultPageLayout"
 import { AddSpendingForm } from "../components/AddSpendingForm";
 import { useTranslation } from 'react-i18next';
 import type { CategoryData } from "../../category/schemas/Category";
-import { fetchCategoriesForUser } from "../../category/application/CategoryService";
+import { getCategories } from "../../category/application/CategoryService";
 import type { TypePeriodicData } from "../schemas/TypePeriodic";
 import type { EstablishmentData } from "../schemas/Establishment";
 import { obtainAllEstablishments, obtainAllTypePeriodic } from "../application/SpendingService";
@@ -31,7 +31,7 @@ export function AddSpendingPage() {
   };
 
     useEffect(() => {
-        fetchCategoriesForUser().then((data) => setCategories(data.categories)).catch(console.error);
+        getCategories().then((data) => setCategories(data.categories)).catch(console.error);
         obtainAllTypePeriodic().then(setTypePeriodic).catch(console.error);
         loadEstablishment();
     }, []);

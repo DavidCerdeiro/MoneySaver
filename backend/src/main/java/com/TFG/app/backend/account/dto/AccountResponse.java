@@ -2,14 +2,14 @@ package com.TFG.app.backend.account.dto;
 
 public class AccountResponse {
     private Integer id;
-    private String trueLayerId;
+    private String accountCode;
     private String name;
     private String number;
     private String bankName;
 
-    public AccountResponse(Integer id, String trueLayerId, String name, String number, String bankName) {
+    public AccountResponse(Integer id, String accountCode, String name, String number, String bankName) {
         this.id = id;
-        this.trueLayerId = trueLayerId;
+        this.accountCode = accountCode;
         this.name = name;
         this.number = number;
         this.bankName = bankName;
@@ -46,10 +46,10 @@ public class AccountResponse {
     public void setBankName(String bankName) {
         this.bankName = bankName;
     }
-    public String getTrueLayerId() {
-        return trueLayerId;
+    public String getAccountCode() {
+        return accountCode;
     }
-    public void setTrueLayerId(String trueLayerId) {
-        this.trueLayerId = trueLayerId;
+    public void setAccountCode(String accountCode) {
+        this.accountCode = accountCode;
     }
 }

@@ -6,12 +6,13 @@ import { deleteAccount, fetchAccountsForUser } from "../application/AccountServi
 import { AccountsTable } from "../components/AccountsTable";
 import { Button } from "../../shared/components/button";
 import { toast } from "sonner";
+import { useLocation } from "react-router-dom";
 
 export const AccountsPage = () => {
     const { t } = useTranslation();
     const [accounts, setAccounts] = useState<AccountData[]>([]);
     const state = 'accounts';
-
+    const location = useLocation();
     localStorage.setItem('truelayer_oauth_state', state); 
 
     const accountsUrl = `https://auth.truelayer-sandbox.com/?response_type=code&client_id=sandbox-moneysaver-fefb0e&scope=accounts&redirect_uri=http://localhost:5173/callback&providers=uk-cs-mock&state=${state}`;
@@ -36,8 +37,10 @@ export const AccountsPage = () => {
     };
 
     useEffect(() => {
-        refreshAccounts();
-    }, []);
+        if (location.state?.refresh) {
+            refreshAccounts();
+        }
+    }, [location.state]);
 
     return (
         <DefaultPageLayout>

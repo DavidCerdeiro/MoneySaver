@@ -16,7 +16,12 @@ public class Type_PeriodicController {
         this.typePeriodicService = typePeriodicService;
     }
 
-    @GetMapping("/all")
+    /**
+     * Endpoint to get all type periodics
+     * @return
+     * - 200: OK with the list of type periodics
+     */
+    @GetMapping
     public ResponseEntity<List<Type_Periodic>> getAllTypePeriodics() {
         List<Type_Periodic> typePeriodics = typePeriodicService.getAllTypePeriodics();
         return ResponseEntity.ok(typePeriodics);
