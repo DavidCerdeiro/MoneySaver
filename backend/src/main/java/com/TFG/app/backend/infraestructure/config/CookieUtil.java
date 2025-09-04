@@ -13,7 +13,7 @@ public class CookieUtil {
                 .httpOnly(true) // Set HttpOnly flag
                 .secure(true) // Set Secure flag
                 .path("/") // Set cookie path
-                .sameSite("Strict") // Set SameSite attribute
+                .sameSite("None") // Allow cross-site requests
                 .maxAge(maxAgeSeconds) // Set cookie max age
                 .build();
     }
