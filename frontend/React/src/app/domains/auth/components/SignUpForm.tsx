@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createSignUpSchema } from "@/app/domains/auth/schemas/SignUp";
-import type { SignUpFormData } from "@/app/domains/auth/schemas/SignUp";
-import { signUpUser } from "../application/AuthService";
+import { createSignUpSchema } from "@/app/domains/auth/schemas/signup";
+import type { SignUpFormData } from "@/app/domains/auth/schemas/signup";
+import { signUpUser } from "../application/authService";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
 

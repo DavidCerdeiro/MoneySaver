@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { LogInFormData} from "@/app/domains/auth/schemas/LogIn";
-import { createLogInSchema } from "@/app/domains/auth/schemas/LogIn";
-import { logInUser } from '../application/AuthService';
+import type { LogInFormData} from "@/app/domains/auth/schemas/login";
+import { createLogInSchema } from "@/app/domains/auth/schemas/login";
+import { logInUser } from '../application/authService';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner"
 

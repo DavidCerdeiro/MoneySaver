@@ -1,8 +1,8 @@
-import type {SignUpFormData} from "@/app/domains/auth/schemas/SignUp";
-import type {LogInFormData} from "@/app/domains/auth/schemas/LogIn";
-import type {ForgotPasswordData} from "@/app/domains/auth/schemas/ForgotPassword";
+import type {SignUpFormData} from "@/app/domains/auth/schemas/signup";
+import type {LogInFormData} from "@/app/domains/auth/schemas/login";
+import type {ForgotPasswordData} from "@/app/domains/auth/schemas/forgotpassword";
 import type {EmailVerificationData} from "@/app/domains/auth/schemas/emailverification";
-import type {ResetPasswordData} from "@/app/domains/auth/schemas/ResetPassword";
+import type {ResetPasswordData} from "@/app/domains/auth/schemas/resetpassword";
 /**
  * This function is used to sign up a user.
  * @param data - The data to sign up a user, excluding the confirmPassword field.

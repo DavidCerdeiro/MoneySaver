@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createForgotPasswordSchema } from "../schemas/ForgotPassword";
-import type { ForgotPasswordData } from "../schemas/ForgotPassword";
-import { forgotPassword } from '../application/AuthService';
+import { createForgotPasswordSchema } from "../schemas/forgotpassword";
+import type { ForgotPasswordData } from "../schemas/forgotpassword";
+import { forgotPassword } from '../application/authService';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
 

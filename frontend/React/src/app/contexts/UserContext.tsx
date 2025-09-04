@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import { fetchWithRefresh } from "../domains/auth/application/AuthService";
+import { fetchWithRefresh } from "../domains/auth/application/authService";
 
 type UserContextType = {
   isAuthenticated: boolean | null; // null = loading

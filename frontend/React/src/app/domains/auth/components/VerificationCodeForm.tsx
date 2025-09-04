@@ -6,9 +6,9 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/app/domains/shared/comp
 import { useTranslation } from 'react-i18next';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createEmailVerificationSchema } from "../schemas/EmailVerification";
-import type { EmailVerificationData } from "../schemas/EmailVerification";
-import { emailVerification, authUser } from '../application/AuthService';
+import { createEmailVerificationSchema } from "../schemas/emailverification";
+import type { EmailVerificationData } from "../schemas/emailverification";
+import { emailVerification, authUser } from '../application/authService';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
