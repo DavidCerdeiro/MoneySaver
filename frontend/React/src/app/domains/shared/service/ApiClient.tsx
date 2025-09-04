@@ -33,7 +33,8 @@ export async function fetchWithRefresh(
  * API Helper
  */
 export async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const response = await fetchWithRefresh(path, {
+  const fullUrl = `${API_URL}${path}`;
+  const response = await fetchWithRefresh(fullUrl, {
     ...options,
     headers: {
       "Content-Type": "application/json",
