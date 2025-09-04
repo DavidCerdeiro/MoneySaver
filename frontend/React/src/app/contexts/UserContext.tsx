@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import { fetchWithRefresh } from "../domains/auth/application/authService";
-
+const API_URL = import.meta.env.VITE_API_URL;
 type UserContextType = {
   isAuthenticated: boolean | null; // null = loading
   setIsAuthenticated: (auth: boolean) => void;
@@ -14,7 +14,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const checkAuth = async () => {
     try {
-      const res = await fetchWithRefresh("http://localhost:5173/api/auth/sessions/me", {
+      const res = await fetchWithRefresh(`${API_URL}/api/auth/sessions/me`, {
         credentials: "include",
       });
       setIsAuthenticated(res.ok);
