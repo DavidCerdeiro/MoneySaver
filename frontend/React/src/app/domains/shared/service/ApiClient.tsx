@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function fetchWithRefresh(
   url: string,
   options: RequestInit = {}
@@ -8,7 +10,7 @@ export async function fetchWithRefresh(
   });
 
   if (response.status === 401 || response.status === 500) {
-    const refreshResponse = await fetch("/api/auth/refresh", {
+    const refreshResponse = await fetch(`${API_URL}/api/auth/refresh`, {
       method: "POST",
       credentials: "include",
     });
