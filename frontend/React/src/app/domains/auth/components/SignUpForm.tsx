@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
 
 export function SignUpForm() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const schema = createSignUpSchema(t);
     const {
@@ -28,8 +28,14 @@ export function SignUpForm() {
 
     const onSubmit = async (data: SignUpFormData) => {
         try {
+            const languageTag = i18n.language || "en";
+            const [language, country] = languageTag.split("-");
+
+            const locale = country ? `${language}_${country.toUpperCase()}` : language;
+            
             const requestBody: SignUpFormData = {
                 ...data,
+                locale: locale,
             };
             const { confirmPassword, ...userData } = requestBody;
             const result = await signUpUser(userData);

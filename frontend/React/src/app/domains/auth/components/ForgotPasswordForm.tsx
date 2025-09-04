@@ -30,12 +30,14 @@ export function ForgotPasswordForm() {
     
     const onSubmit = async (formData: ForgotPasswordData) => {
         try {
-            // Extract the language and country from the i18n language tag with the aim of sending the verification email in the user's preferred language.
             const languageTag = i18n.language || "en";
-            const [language, country = ""] = languageTag.split("-");
+            const [language, country] = languageTag.split("-");
+
+            const locale = country ? `${language}_${country.toUpperCase()}` : language;
+
             const requestBody: ForgotPasswordData = {
                 ...formData,
-                locale: `${language}_${country}`,
+                locale: locale,
             };
 
             await forgotPassword(requestBody);

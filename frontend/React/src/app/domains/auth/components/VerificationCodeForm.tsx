@@ -80,10 +80,13 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
         try {
             sessionStorage.removeItem('email');
             const languageTag = i18n.language || "en";
-            const [language, country = ""] = languageTag.split("-");
+            const [language, country] = languageTag.split("-");
+
+            const locale = country ? `${language}_${country.toUpperCase()}` : language;
+            
             const requestBody: any = {
                 code: data.code,
-                locale: `${language}_${country}`,
+                locale: locale,
             };
 
             // Include email in the request body for non-delete sources

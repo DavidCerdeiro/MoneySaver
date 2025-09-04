@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner"
 
 export function LoginForm() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const schema = createLogInSchema(t);
     const navigate = useNavigate();
     const {
@@ -28,6 +28,11 @@ export function LoginForm() {
     
     const onSubmit = async (data: LogInFormData) => {
     try {
+       const languageTag = i18n.language || "en";
+        const [language, country] = languageTag.split("-");
+
+        const locale = country ? `${language}_${country.toUpperCase()}` : language;
+        data.locale = locale;
         const result = await logInUser(data);
 
         // Saving the email in order to use it later

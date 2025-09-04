@@ -2,6 +2,7 @@ import { z } from "zod";
  
 // Schema for Sign Up form validation
 export const createSignUpSchema  = (t: (key: string) => string) => z.object({
+  locale: z.string().optional(),
   name: z.string().min(1, { message: t('errors.requiredField') }),
   surname: z.string().min(1, { message: t('errors.requiredField') }),
   email: z.string().email({ message: t('errors.requiredField') }),
