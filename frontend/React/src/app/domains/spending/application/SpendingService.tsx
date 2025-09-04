@@ -1,7 +1,7 @@
 import { apiFetch } from "../../shared/service/ApiClient";
 import type { SpendingData } from "../schemas/Spending";
 import type { SpendingResponse } from "../schemas/SpendingResponse";
-
+const API_URL = import.meta.env.VITE_API_URL;
 /**
  * Add a new spending
  * @param data Spending data to add
@@ -18,7 +18,7 @@ export async function addSpending(data: SpendingData) {
  * @returns List of periodic types
  */
 export async function obtainAllTypePeriodic() {
-  const response = await fetch("/api/type-periodic", {
+  const response = await fetch(`${API_URL}/api/type-periodic`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
@@ -48,7 +48,7 @@ export async function obtainAllSpendingsByMonthAndYear(data: { month: number; ye
  * @returns List of establishments
  */
 export async function obtainAllEstablishments() {
-  const response = await fetch(`/api/establishments`, {
+  const response = await fetch(`${API_URL}/api/establishments`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
@@ -61,7 +61,7 @@ export async function obtainAllEstablishments() {
 }
 
 export async function processFileDirect(formData: FormData) {
-  const response = await fetch("/api/spendings/documents", {
+  const response = await fetch(`${API_URL}/api/spendings/documents`, {
     method: "POST",
     body: formData,
     credentials: "include",

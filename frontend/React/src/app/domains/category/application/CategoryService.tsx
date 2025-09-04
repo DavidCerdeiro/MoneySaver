@@ -1,6 +1,6 @@
 import type { CategoryData } from "../schemas/Category";
 import { apiFetch } from "../../shared/service/ApiClient";
-
+const API_URL = import.meta.env.VITE_API_URL;
 /**
  * Adds a new category.
  * @param data The category data to add.
@@ -19,7 +19,7 @@ export async function addCategory(data: CategoryData) {
  * @returns The modified category data.
  */
 export async function editCategory(id: number | undefined, data: CategoryData) {
-  const response = await fetch(`/api/categories/${id}`, {
+  const response = await fetch(`${API_URL}/api/categories/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
