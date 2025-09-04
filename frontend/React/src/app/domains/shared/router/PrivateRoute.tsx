@@ -7,11 +7,17 @@ type PrivateRouteProps = {
 };
 
 export function PrivateRoute({ children }: PrivateRouteProps) {
-  const { user } = useUser();
+  const { isAuthenticated } = useUser();
 
-  if (!user) {
+  if (isAuthenticated === null) {
+    // mientras se comprueba la sesión
+    return <p>Cargando...</p>;
+  }
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
   return <>{children}</>;
 }
+

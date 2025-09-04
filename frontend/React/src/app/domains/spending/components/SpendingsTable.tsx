@@ -127,7 +127,7 @@ export function SpendingsTable({ spendings}: SpendingTableProps) {
                           <Button
                             onClick={async () => {
                               try {
-                                const signedUrl = await getDownloadUrl(spending.billId);
+                              const signedUrl = await getDownloadUrl(spending?.billId || 0);
                                 window.open(signedUrl, "_blank");
                               } catch (err) {
                                 console.error("Error downloading file", err);
