@@ -10,6 +10,7 @@ const spendingSchema = z.object({
   name: z.string().nullable().optional(),
   establishment: z.any(),
   date: z.string(),
+  idCategory: z.number().nullable().optional(),
 });
 
 export const createExtractTransactionsResponseSchema = z.object({

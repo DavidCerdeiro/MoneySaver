@@ -135,7 +135,7 @@ export async function fetchWithRefresh(
   }
 
   // If we receive a 401, we try to refresh the token
-  const refreshResponse = await fetch(`${API_URL}/api/auth/refresh`, {
+  const refreshResponse = await fetch(`${API_URL}/api/auth/sessions/refresh`, {
     method: 'POST',
     credentials: 'include',
   });

@@ -16,7 +16,6 @@ export function AddTransactionsPage() {
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [establishments, setEstablishments] = useState<EstablishmentData[]>([]);
   const transactions = (location.state as { transactions?: ExtractTransactionResponse["transactions"] })?.transactions ?? [];
-  console.log(transactions)
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const loadEstablishment = async () => {

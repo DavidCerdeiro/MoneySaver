@@ -25,13 +25,13 @@ export function AddTransactionForm({ response, categories, establishments, onSub
   const { t } = useTranslation();
   const schema = createAddTransactionSchema(t);
   const [transaction, spending] = response;
-  const [selectedCategory, setSelectedCategory] = useState<CategoryData | null>(null);
-  const [selectedEstablishment, setSelectedEstablishment] = useState<EstablishmentData | null>(null);
+
   const {
     register,
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<AddTransactionData>({
     resolver: zodResolver(schema),
@@ -44,34 +44,64 @@ export function AddTransactionForm({ response, categories, establishments, onSub
         amount: spending.amount,
         name: spending.name ?? "",
         date: spending.date,
+        idCategory: spending.idCategory ?? undefined,
         establishment: spending.establishment ?? "",
         isPeriodic: false,
       },
     },
   });
-  console
-  console.log(errors);
+
+  const [selectedCategory, setSelectedCategory] = useState<CategoryData | null>(null);
+  const [selectedEstablishment, setSelectedEstablishment] = useState<EstablishmentData | null>(
+    spending.establishment ?? null
+  );
+
+  // Reset form y selected states cuando cambia la transacción
   useEffect(() => {
-    if (selectedCategory)
-      setValue("spending.idCategory", selectedCategory?.id || 0);
-    else
-      setValue("spending.idCategory", 0);
-    if(selectedEstablishment){
+    reset({
+      transaction: {
+        account: transaction.account,
+        transactionCode: transaction.transactionCode,
+      },
+      spending: {
+        amount: spending.amount,
+        name: spending.name ?? "",
+        date: spending.date,
+        idCategory: spending.idCategory ?? undefined,
+        establishment: spending.establishment ?? "",
+        isPeriodic: false,
+      },
+    });
+
+    // Actualizar selectedCategory y selectedEstablishment
+    const foundCategory = spending.idCategory
+      ? categories.find((cat) => cat.id === spending.idCategory) || null
+      : null;
+    setSelectedCategory(foundCategory);
+
+    setSelectedEstablishment(spending.establishment ?? null);
+  }, [response, categories, reset, spending]);
+
+  // Mantener idCategory y establecimiento sincronizados con los selects
+  useEffect(() => {
+    setValue("spending.idCategory", selectedCategory?.id || 0);
+    if (selectedEstablishment) {
       if (selectedEstablishment.id === 0) {
-                // If it's a new establishment, we need to set its name from the form
-                const currentEstablishment = watch("spending.establishment");
-                setValue("spending.establishment", { 
-                    ...selectedEstablishment, 
-                    name: currentEstablishment?.name || selectedEstablishment.name || "" 
-                });
-            } else {
-                setValue("spending.establishment", selectedEstablishment);
-            }
+        const currentEstablishment = watch("spending.establishment");
+        setValue("spending.establishment", {
+          id: currentEstablishment?.id || 0,
+          name:
+            currentEstablishment?.name === "+ Añadir nuevo"
+              ? ""
+              : currentEstablishment?.name,
+        });
+      } else {
+        setValue("spending.establishment", selectedEstablishment);
+      }
     }
-  }, [selectedCategory, selectedEstablishment, setValue]);
+  }, [selectedCategory, selectedEstablishment, setValue, watch]);
 
   const onSubmitForm = async (data: AddTransactionData) => {
-    console.log("Datos del formulario:", data);
     const result = await addTransaction(data);
     toast.success(t("domains.transaction.add.success", { name: result.name, amount: result.amount }));
     onSubmitted();
@@ -82,10 +112,13 @@ export function AddTransactionForm({ response, categories, establishments, onSub
       <div className="row-input">
         <div className="w-full">
           <Label htmlFor="name" className="label">{t("domains.spending.name")}</Label>
-          <Input id="name" type="text" {...register("spending.name")} className="input-dark" defaultValue={spending.name ?? ""}/>
-          {errors.spending?.name && (
-            <p className="text-red-500 text-sm">{errors.spending.name.message}</p>
-          )}
+          <Input
+            id="name"
+            type="text"
+            {...register("spending.name")}
+            className="input-dark"
+          />
+          {errors.spending?.name && <p className="text-red-500 text-sm">{errors.spending.name.message}</p>}
         </div>
         <div className="w-full">
           <Label htmlFor="category" className="label">{t("domains.spending.category")}</Label>
@@ -98,47 +131,48 @@ export function AddTransactionForm({ response, categories, establishments, onSub
             setSelectedIdEmoji={() => {}}
             setEmojiIsNative={() => {}}
           />
-          {errors.spending?.idCategory && (
-            <p className="text-red-500 text-sm">{errors.spending.idCategory.message}</p>
-          )}
+          {errors.spending?.idCategory && <p className="text-red-500 text-sm">{errors.spending.idCategory.message}</p>}
         </div>
       </div>
 
       <div className="row-three-input mt-10">
         <div className="w-full">
           <Label htmlFor="amount" className="label">{t("domains.spending.amount")}</Label>
-          <Input id="amount" type="number" {...register("spending.amount")} className="input-dark" disabled={true} />
+          <Input id="amount" type="number" {...register("spending.amount")} className="input-dark" disabled />
         </div>
         <div className="w-full">
           <Label htmlFor="date" className="label">{t("domains.spending.date")}</Label>
-          <Input id="date" type="date" {...register("spending.date")} className="input-dark" readOnly disabled={true} />
+          <Input id="date" type="date" {...register("spending.date")} className="input-dark" readOnly disabled />
         </div>
         <div className="w-full">
           <Label htmlFor="account" className="label">{t("domains.account.title")}</Label>
+          <Input id="account" type="text" value={transaction.account?.name ?? ""} className="input-dark" disabled />
+        </div>
+      </div>
+
+      <div className="row-input mt-10">
+        <div className="w-full">
+          <Label htmlFor="establishment" className="label">{t("domains.establishment.title")}</Label>
+          <EstablishmentCombobox
+            establishments={establishments}
+            selectedEstablishment={selectedEstablishment}
+            setSelectedEstablishment={setSelectedEstablishment}
+            disabled={false}
+          />
+        </div>
+        <div className="w-full">
+          <Label htmlFor="establishment" className="label">{t('domains.establishment.name')}</Label>
           <Input
-            id="account"
+            id="establishment"
             type="text"
-            value={transaction.account?.name ?? ""}
             className="input-dark"
-            disabled={true}
+            disabled={!selectedEstablishment || selectedEstablishment.id !== 0}
+            {...register("spending.establishment.name")}
+            placeholder={t('domains.establishment.namePlaceholder')}
           />
         </div>
       </div>
-      <div className="row-input mt-10">
-          <div className="w-full">
-            <Label htmlFor="establishment" className="label">{t("domains.establishment.title")}</Label>
-            <EstablishmentCombobox
-              establishments={establishments}
-              selectedEstablishment={selectedEstablishment}
-              setSelectedEstablishment={setSelectedEstablishment}
-              disabled={false}
-            />
-          </div>
-          <div className="w-full">
-            <Label htmlFor="establishment" className="label">{t('domains.establishment.name')}</Label>
-            <Input id="establishment" type="text" className="input-dark" disabled={!selectedEstablishment || selectedEstablishment.id !== 0} {...register("spending.establishment.name")} placeholder={t('domains.establishment.namePlaceholder')} />
-          </div>
-      </div>
+
       <div className="flex justify-center">
         <Button type="submit" className="btn-primary">{t("domains.transaction.add.submit")}</Button>
       </div>

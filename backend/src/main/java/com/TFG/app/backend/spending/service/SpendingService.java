@@ -3,10 +3,14 @@ package com.TFG.app.backend.spending.service;
 import org.springframework.stereotype.Service;
 
 import com.TFG.app.backend.spending.repository.SpendingRepository;
+import com.TFG.app.backend.category.entity.Category;
 import com.TFG.app.backend.spending.entity.Spending;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -64,4 +68,27 @@ public class SpendingService {
     public Spending getSpendingById(Integer id) {
         return spendingRepository.findById(id).orElse(null);
     }
+
+    public Category getCategoryByEstablishment(Integer establishmentId) {
+    List<Spending> spendings = spendingRepository.findByEstablishmentAndCategoryNotDeleted(establishmentId);
+
+    if (spendings.isEmpty()) {
+        return null;
+    }
+
+    if (spendings.size() == 1) {
+        return spendings.get(0).getCategory();
+    }
+
+    // Count occurrences of each category in order to find the most frequent one
+    Map<Category, Long> counts = spendings.stream()
+            .collect(Collectors.groupingBy(Spending::getCategory, Collectors.counting()));
+
+    // Get the most frequent category, and in case of a tie, the first one found
+    return spendings.stream()
+            .map(Spending::getCategory)
+            .max(Comparator.comparingLong(counts::get)) 
+            .orElse(null);
+}
+
 }

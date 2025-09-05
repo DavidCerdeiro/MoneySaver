@@ -12,7 +12,6 @@ export function EditProfilePage() {
   const [typeCharts, setTypeCharts] = useState<TypeChartData[]>([]);
   const fetchData = async () => {
     const data = await getProfile();
-    console.log("User data fetched:", data);
     setUser({
       name: data.name,
       surname: data.surname,

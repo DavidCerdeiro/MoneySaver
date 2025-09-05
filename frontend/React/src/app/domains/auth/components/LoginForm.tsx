@@ -37,7 +37,6 @@ export function LoginForm() {
 
         // Saving the email in order to use it later
         sessionStorage.setItem('email', result.email);
-        console.log("Email saved:", sessionStorage.getItem('email'));
 
         // After successful login, redirect to the authUser page
         navigate('/login/authUser');

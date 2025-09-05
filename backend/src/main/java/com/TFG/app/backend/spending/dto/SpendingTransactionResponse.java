@@ -10,6 +10,7 @@ public class SpendingTransactionResponse {
     private String name;
     private Establishment establishment;
     private LocalDate date;
+    private Integer idCategory;
 
     public SpendingTransactionResponse() {
     }
@@ -46,4 +47,10 @@ public class SpendingTransactionResponse {
         this.date = date;
     }
 
+    public Integer getIdCategory() {
+        return idCategory;
+    }
+    public void setIdCategory(Integer idCategory) {
+        this.idCategory = idCategory;
+    }
 }

@@ -54,9 +54,7 @@ export function CallbackPage() {
         if (!request.success) return;
         
         try {
-          console.log("Extrayendo transacciones...");
           const response = await extractTransactions(request.data);
-          console.log("Transacciones extraídas: ", response.transactions);
           setLoading(false);
           navigate("/transactions/add", {
             state: { transactions: response.transactions }

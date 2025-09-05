@@ -5,11 +5,13 @@ import com.TFG.app.backend.account.dto.ExtractAccountsRequest;
 import com.TFG.app.backend.account.dto.GetAccountsResponse;
 import com.TFG.app.backend.account.entity.Account;
 import com.TFG.app.backend.account.service.AccountService;
+import com.TFG.app.backend.category.entity.Category;
 import com.TFG.app.backend.establishment.entity.Establishment;
 import com.TFG.app.backend.establishment.service.EstablishmentService;
 import com.TFG.app.backend.infraestructure.config.AccessTokenTrueLayer;
 import com.TFG.app.backend.infraestructure.config.JwtService;
 import com.TFG.app.backend.spending.dto.SpendingTransactionResponse;
+import com.TFG.app.backend.spending.service.SpendingService;
 import com.TFG.app.backend.transaction.dto.ExtractTransactionsResponse;
 import com.TFG.app.backend.transaction.dto.TransactionExtractedResponse;
 import com.TFG.app.backend.transaction.service.TransactionService;
@@ -40,6 +42,7 @@ public class AccountController {
     private final WebClient webClient;
     private final EstablishmentService establishmentService;
     private final TransactionService transactionService;
+    private final SpendingService spendingService;
 
     @Value("${truelayer.client-id}")
     private String truelayerClientId;
@@ -50,13 +53,14 @@ public class AccountController {
     @Value("${truelayer.redirect-url}")
     private String truelayerRedirectUrl;
 
-    public AccountController(AccountService accountService, JwtService jwtService, UserService userService, EstablishmentService establishmentService, TransactionService transactionService) {
+    public AccountController(AccountService accountService, JwtService jwtService, UserService userService, EstablishmentService establishmentService, TransactionService transactionService, SpendingService spendingService) {
         this.accountService = accountService;
         this.jwtService = jwtService;
         this.userService = userService;
         this.webClient = WebClient.builder().build();
         this.establishmentService = establishmentService;
         this.transactionService = transactionService;
+        this.spendingService = spendingService;
     }
 
     /**
@@ -267,14 +271,22 @@ public class AccountController {
                 Establishment est = establishmentService.findByName(establishmentName);
                 spending.setEstablishment(est != null ? est : new Establishment(0, establishmentName));
             } else {
-                spending.setEstablishment(new Establishment(0, spending.getName()));
+                // The description usually contains the establishment name when merchant_name is not present, so we use it as a fallback
+                Establishment est = establishmentService.findByName(spending.getName());
+                if(est != null) {
+                    spending.setEstablishment(est);
+                } else {
+                    spending.setEstablishment(new Establishment(0, spending.getName()));
+                }
             }
-
+            if(spending.getEstablishment().getId() != 0){// If the esstablishment already exists, we will look for if an older spending has been associated to it and to an alive category
+                Category cat = spendingService.getCategoryByEstablishment(spending.getEstablishment().getId());
+                spending.setIdCategory(cat != null ? cat.getId() : null);
+            }
             transactionPairs.add(new Object[]{new TransactionExtractedResponse(transactionId, account), spending});
         }
 
         response.setTransactions(transactionPairs);
-        System.out.println("Numero de transacciones extraidas: " + transactionPairs.size());
         return ResponseEntity.ok(response);
     }
 

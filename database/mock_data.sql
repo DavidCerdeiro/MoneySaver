@@ -43,3 +43,14 @@ VALUES
 (6, 1, '2025-09-30', '2025-08-30'),
 (7, 2, '2025-09-30', '2025-06-30'),
 (8, 3, '2025-09-30', '2024-09-30');
+
+
+INSERT INTO "spending" ("Id_Category", "Id_Establishment", "Name", "Amount", "Date", "IsPeriodic")
+VALUES
+(8, 5, 'SAVE THE CHANGE', 50, '2025-09-02', FALSE);
+
+INSERT INTO "transaction" ("Id_Account", "Id_Spending", "TransactionCode")
+VALUES
+(2, 25, 'TXN-2025-09-02');
+
+DELETE FROM "establishment" WHERE "Id" = 3;

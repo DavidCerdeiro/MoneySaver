@@ -13,28 +13,17 @@ import com.TFG.app.backend.account.entity.Account;
 import com.TFG.app.backend.account.service.AccountService;
 import com.TFG.app.backend.category.entity.Category;
 import com.TFG.app.backend.category.service.CategoryService;
-import com.TFG.app.backend.establishment.entity.Establishment;
 import com.TFG.app.backend.establishment.service.EstablishmentService;
-import com.TFG.app.backend.infraestructure.config.AccessTokenTrueLayer;
 import com.TFG.app.backend.infraestructure.config.JwtService;
-import com.TFG.app.backend.spending.dto.SpendingTransactionResponse;
 import com.TFG.app.backend.spending.entity.Spending;
 import com.TFG.app.backend.spending.service.SpendingService;
-import com.TFG.app.backend.transaction.dto.ExtractTransactionsResponse;
-import com.TFG.app.backend.transaction.dto.TransactionExtractedResponse;
 import com.TFG.app.backend.transaction.dto.TransactionResponse;
 import com.TFG.app.backend.transaction.dto.AddTransactionRequest;
 import com.TFG.app.backend.transaction.dto.AddTransactionResponse;
-import com.TFG.app.backend.transaction.dto.ExtractTransactionsRequest;
 import com.TFG.app.backend.transaction.entity.Transaction;
 import com.TFG.app.backend.transaction.service.TransactionService;
 import com.TFG.app.backend.user.entity.User;
 import com.TFG.app.backend.user.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -42,7 +31,6 @@ public class TransactionController {
     private final TransactionService transactionService;
     private final JwtService jwtService;
     private final UserService userService;
-    private final WebClient webClient;
     private final EstablishmentService establishmentService;
     private final SpendingService spendingService;
     private final CategoryService categoryService;
@@ -60,102 +48,10 @@ public class TransactionController {
         this.transactionService = transactionService;
         this.jwtService = jwtService;
         this.userService = userService;
-        this.webClient = WebClient.builder().build();
         this.establishmentService = establishmentService;
         this.categoryService = categoryService;
         this.spendingService = spendingService;
         this.accountService = accountService;
-    }
-    
-    /**
-     * Endpoint to extract transactions from an account by TrueLayer
-     * @param token
-     * @param request
-     * @return
-     * - 201: Created AddTransactionResponse 
-     * - 400: Bad Request if the request is invalid
-     * - 401: Unauthorized if token is missing or invalid
-     * - 404: Not Found if the user is not found
-     * @throws JsonMappingException
-     * @throws JsonProcessingException
-     */
-    @PostMapping("/extract")
-    public ResponseEntity<ExtractTransactionsResponse> extract(@CookieValue(name = "accessToken", required = false) String token, @RequestBody ExtractTransactionsRequest request) throws JsonMappingException, JsonProcessingException{
-
-        if (token == null || token.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        String email = jwtService.getEmailFromToken(token);
-        if (email == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        User user = userService.findByEmail(email);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        String clientId = truelayerClientId;
-        String clientSecret = truelayerSecret;
-        String redirectUri = truelayerRedirectUrl;
-
-        String accessToken = new AccessTokenTrueLayer().getAccessToken(clientId, clientSecret, redirectUri, request.getCode());
-
-        if (accessToken == null) {
-            System.out.println("Access token es nulo");
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        
-        
-        String body = webClient.get()
-            .uri(uriBuilder -> uriBuilder
-                .scheme("https")
-                .host("api.truelayer-sandbox.com") // Sandbox host
-                .path("/data/v1/accounts/{accountId}/transactions") // Path with placeholder for accountId
-                .queryParam("from", request.getMinDate()) 
-                .queryParam("to", request.getMaxDate())   // Dates min and max
-                .build(request.getAccount().getAccountCode())) // Build URI with accountId
-            .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken) // Authorization header
-            .retrieve() // Execute request
-            .bodyToMono(String.class) // Convert response to String
-            .block();
-        
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode transactionsJson = mapper.readTree(body);
-
-        List<Object[]> transactionPairs = new ArrayList<>();
-        ExtractTransactionsResponse response = new ExtractTransactionsResponse();
-
-        for (JsonNode tran : transactionsJson.get("results")) {
-            if (!tran.has("transaction_type") || !"DEBIT".equalsIgnoreCase(tran.get("transaction_type").asText())) {
-                continue; // skip if not DEBIT
-            }
-            String transactionId = tran.get("transaction_id").asText();
-            if(transactionService.existsByTransactionCode(transactionId)) {
-                continue;
-            }
-            SpendingTransactionResponse spending = new SpendingTransactionResponse();
-            spending.setName(tran.has("description") && !tran.get("description").isNull() ? tran.get("description").asText() : "");
-            spending.setAmount(BigDecimal.valueOf(tran.get("amount").asDouble() * -1));
-            spending.setDate(java.time.LocalDate.parse(tran.get("timestamp").asText().substring(0, 10)));
-            String establishmentName = (tran.has("merchant_name") && !tran.get("merchant_name").isNull()) ? tran.get("merchant_name").asText() : "";
-            if(establishmentName != null && !establishmentName.isEmpty()) {
-               Establishment est = establishmentService.findByName(establishmentName);
-               if (est != null) {
-                   spending.setEstablishment(est);
-               } else {
-                   spending.setEstablishment(new Establishment(0, establishmentName));
-               }
-            }else{
-                spending.setEstablishment(new Establishment(0, ""));
-            }
-
-            transactionPairs.add(new Object[]{new TransactionExtractedResponse(tran.get("transaction_id").asText(), request.getAccount()), spending});
-        }
-        
-        response.setTransactions(transactionPairs);
-        return ResponseEntity.ok(response);
     }
 
     /**
@@ -188,8 +84,7 @@ public class TransactionController {
         if(request.getSpending().getEstablishment() != null) {
             if(request.getSpending().getEstablishment().getId() == 0 && request.getSpending().getEstablishment().getName() != null) {
                 if(request.getSpending().getEstablishment().getName() != "") {
-                    String nameEstablishment = request.getSpending().getEstablishment().getName().substring(0, 1).toUpperCase()
-                        + request.getSpending().getEstablishment().getName().substring(1).toLowerCase();   
+                    String nameEstablishment = request.getSpending().getEstablishment().getName().toUpperCase();
                     spending.setEstablishment(establishmentService.newEstablishment(nameEstablishment));
                 }
             } else {

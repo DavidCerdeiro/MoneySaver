@@ -108,8 +108,7 @@ public class SpendingController {
 
         if(spendingRequest.getEstablishment() != null) {
             if(spendingRequest.getEstablishment().getId() == 0) {
-                String nameEstablishment = spendingRequest.getEstablishment().getName().substring(0, 1).toUpperCase()
-                    + spendingRequest.getEstablishment().getName().substring(1).toLowerCase();
+                String nameEstablishment = spendingRequest.getEstablishment().getName().toUpperCase();
 
                 spending.setEstablishment(establishmentService.newEstablishment(nameEstablishment));
             } else {
@@ -206,14 +205,13 @@ public class SpendingController {
      */
     @PostMapping("/documents")
     public ResponseEntity<ProcessFileResponse> processFile(
-        @RequestHeader("Authorization") String authHeader,
+        @CookieValue(name = "accessToken", required = false) String token,
         @RequestParam("file") MultipartFile fileContent) throws IOException {
 
-        if (authHeader == null || authHeader.isEmpty()) {
+        if (token == null || token.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        String token = authHeader.replace("Bearer ", "");
         String email = jwtService.getEmailFromToken(token);
         if (email == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -275,10 +273,13 @@ public class SpendingController {
         }
 
         if (supplierNameStr != null && !supplierNameStr.isEmpty()) {
-            supplierNameStr = supplierNameStr.substring(0, 1).toUpperCase() 
-            + supplierNameStr.substring(1).toLowerCase();
+            supplierNameStr = supplierNameStr.toUpperCase();
         }
         Establishment establishment = establishmentService.findByName(supplierNameStr);
+        Category category = null;
+        if(establishment != null){
+            category = spendingService.getCategoryByEstablishment(establishment.getId());
+        }
 
         LocalDate parsedDate = spendingService.parseFlexibleDate(receiptDateStr);
 
@@ -292,7 +293,8 @@ public class SpendingController {
             parsedDate,
             parsedAmount,
             establishment != null ? establishment.getId() : 0,
-            supplierNameStr
+            supplierNameStr,
+            category != null ? category.getId() : null
         );
         return ResponseEntity.ok(result);
     }

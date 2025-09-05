@@ -23,6 +23,7 @@ type ProcessFileResponse = {
     totalAmount: number | null;
     idEstablishment: number;
     establishmentName: string;
+    idCategory: number | null;
 };
 
 type AddSpendingFormProps = {
@@ -71,7 +72,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                 const currentEstablishment = watch("establishment");
                 setValue("establishment", { 
                     ...selectedEstablishment, 
-                    name: currentEstablishment?.name || selectedEstablishment.name || "" 
+                    name: currentEstablishment?.name === "+ Añadir nuevo" ? currentEstablishment?.name : "", 
                 });
             } else {
                 setValue("establishment", selectedEstablishment);
@@ -121,6 +122,10 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
             setValue('name', result.establishmentName ? t('domains.spending.add.defaultSpendingProcessed', { establishment: result.establishmentName }) : '');
             setValue('amount', result.totalAmount ?? 0);
             setValue('date', result.receiptDate || '');
+            if(result.idCategory){
+                setValue('idCategory', result.idCategory);
+                setSelectedCategory(categories.find(cat => cat.id === result.idCategory) || null);
+            }
             setSelectedEstablishment({ id: result.idEstablishment, name: result.establishmentName || '' });
             const newEstablishment: EstablishmentData = {
                 id: result.idEstablishment,

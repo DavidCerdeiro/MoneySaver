@@ -10,7 +10,7 @@ export async function fetchWithRefresh(
   });
 
   if (response.status === 401 || response.status === 500) {
-    const refreshResponse = await fetch(`${API_URL}/api/auth/refresh`, {
+    const refreshResponse = await fetch(`${API_URL}/api/auth/sessions/refresh`, {
       method: "POST",
       credentials: "include",
     });

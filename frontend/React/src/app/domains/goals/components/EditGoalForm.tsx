@@ -56,7 +56,6 @@ export function EditGoalForm({ goals, categories, refreshGoals }: EditGoalProps)
     }, [selectedGoal, setValue]);
 
     const onSubmit = async (data: GoalData) => {
-        console.log(data);
         await editGoal(data);
 
         toast.success(t("domains.goal.edit.success"));
