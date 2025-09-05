@@ -38,6 +38,16 @@ public interface SpendingRepository extends JpaRepository<Spending, Integer> {
         @Param("month") int month,
         @Param("year") int year
     );
+
+    @Query(value = """
+        SELECT s.* 
+        FROM spending s
+        JOIN category c ON s."Id_Category" = c."Id"
+        WHERE c."Id_User" = :userId
+        AND c."DeletedAt" IS NULL
+        """, nativeQuery = true)
+    List<Spending> findByUserAndCategoryNotDeleted(@Param("userId") Integer userId);
+    
     @Query(value = """
         SELECT s.*
         FROM spending s

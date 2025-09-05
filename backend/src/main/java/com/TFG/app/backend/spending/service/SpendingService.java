@@ -3,10 +3,13 @@ package com.TFG.app.backend.spending.service;
 import org.springframework.stereotype.Service;
 
 import com.TFG.app.backend.spending.repository.SpendingRepository;
+import com.TFG.app.backend.user.entity.User;
 import com.TFG.app.backend.category.entity.Category;
+import com.TFG.app.backend.establishment.entity.Establishment;
 import com.TFG.app.backend.spending.entity.Spending;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -90,5 +93,26 @@ public class SpendingService {
             .max(Comparator.comparingLong(counts::get)) 
             .orElse(null);
 }
+    public List<Establishment> getEstablishmentsOrderedByUsage(User user, List<Establishment> establishments) {
+    // Obtener todos los gastos del usuario
+        List<Spending> spendings = spendingRepository.findByUserAndCategoryNotDeleted(user.getId());
+
+        if (spendings.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // Contar ocurrencias de cada establecimiento
+        Map<Establishment, Long> counts = spendings.stream()
+        .filter(s -> s.getEstablishment() != null) // filtrar nulls
+        .collect(Collectors.groupingBy(Spending::getEstablishment, Collectors.counting()));
+
+
+        // Ordenar: primero los que más se usan (según counts)
+        establishments.sort(Comparator.comparingLong(
+                e -> -counts.getOrDefault(e, 0L) // Negativo para orden descendente
+        ));
+
+        return establishments;
+    }
 
 }

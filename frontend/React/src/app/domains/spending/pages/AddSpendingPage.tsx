@@ -19,8 +19,8 @@ export function AddSpendingPage() {
         .then((data) => {
             // Adding option to create new establishment
             const withNewOption = [
-                ...data,
-                { id: 0, name: "+ Añadir nuevo", country: "", city: "" }
+                { id: 0, name: "+ Añadir nuevo", country: "", city: "" },
+                ...data
             ];
             setEstablishments(withNewOption);
         })

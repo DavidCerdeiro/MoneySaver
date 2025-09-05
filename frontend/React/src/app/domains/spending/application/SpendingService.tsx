@@ -1,4 +1,5 @@
 import { apiFetch } from "../../shared/service/ApiClient";
+import type { EstablishmentData } from "../schemas/Establishment";
 import type { SpendingData } from "../schemas/Spending";
 import type { SpendingResponse } from "../schemas/SpendingResponse";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -47,18 +48,16 @@ export async function obtainAllSpendingsByMonthAndYear(data: { month: number; ye
  * Obtain all establishments
  * @returns List of establishments
  */
-export async function obtainAllEstablishments() {
-  const response = await fetch(`${API_URL}/api/establishments`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
+export async function obtainAllEstablishments(): Promise<EstablishmentData[]> {
+  const res = await apiFetch<{ establishments: EstablishmentData[] }>(
+    `/api/establishments`,
+    { method: "GET", headers: { "Content-Type": "application/json" } }
+  );
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Failed to fetch establishments");
-  }
-  return await response.json();
+  return res.establishments;
 }
+
+
 
 export async function processFileDirect(formData: FormData) {
   const response = await fetch(`${API_URL}/api/spendings/documents`, {
