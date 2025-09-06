@@ -50,12 +50,8 @@ export async function fetchAccountsForUser(): Promise<{ accounts: AccountData[] 
 }
 
 export async function deleteAccount(id: number){
-  const response = await fetch(`/api/accounts/${id}`, {
-    method: "DELETE",
-    credentials: "include",
+  return await apiFetch(`/api/accounts/${id}`, {
+    method: "DELETE"
   });
 
-  if (!response.ok) {
-    throw new Error("Failed to delete account");
-  }
 }
