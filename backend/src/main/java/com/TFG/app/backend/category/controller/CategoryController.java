@@ -107,7 +107,6 @@ public class CategoryController {
         if (category != null) {
             category.setName(categoryRequest.getName());
             category.setIcon(categoryRequest.getIcon());
-            
             if (categoryService.updateCategory(category)) {
                 return new ResponseEntity<>(new CategoryResponse(category), HttpStatus.OK);
             }

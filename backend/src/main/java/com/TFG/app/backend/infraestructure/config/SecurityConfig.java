@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/api/auth/**", "/api/auth/sessions/refresh", "/api/users/login",
                     "/api/users/password-reset", "/api/users/authenticate", "/api/users",
-                    "/api/type_periodic", "/api/establishments", "/api/type_charts"
+                    "/api/type-periodic", "/api/type-charts"
                 ).permitAll()
                 .requestMatchers("/api/**").authenticated()
             )

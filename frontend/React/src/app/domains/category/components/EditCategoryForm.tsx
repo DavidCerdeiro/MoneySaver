@@ -48,6 +48,7 @@ export function EditCategoryForm({ categories, refreshCategories }: ModifyCatego
         ...formData,
         icon: selectedIdEmoji,
       };
+      console.log("Request Body:", requestBody);
       await editCategory(selectedCategory?.id, requestBody);
 
       const nativeEmoji = getEmojiById(selectedIdEmoji);

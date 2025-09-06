@@ -61,6 +61,7 @@ export function EditGoalForm({ goals, categories, refreshGoals }: EditGoalProps)
         toast.success(t("domains.goal.edit.success"));
         reset();
         setSelectedGoal(null);
+        setSelectedCategory(null);
         await refreshGoals();
     };
 
@@ -71,6 +72,7 @@ export function EditGoalForm({ goals, categories, refreshGoals }: EditGoalProps)
        toast.success(t("domains.goal.delete.success"));
        reset();
        setSelectedGoal(null);
+       setSelectedCategory(null);
        await refreshGoals();
     };
 
