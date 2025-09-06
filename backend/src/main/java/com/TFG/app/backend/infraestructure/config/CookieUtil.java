@@ -18,6 +18,16 @@ public class CookieUtil {
                 .build();
     }
 
+    public static ResponseCookie deleteCookie(String name) {
+        return ResponseCookie.from(name, "")
+                .httpOnly(true)
+                .secure(true)       
+                .path("/")          
+                .sameSite("None")   
+                .maxAge(0)          
+                .build();
+    }
+
     public static String getCookieValue(HttpServletRequest request, String name) {
         if (request.getCookies() == null) {
             return null;

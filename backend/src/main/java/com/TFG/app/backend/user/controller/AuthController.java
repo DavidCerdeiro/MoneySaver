@@ -52,17 +52,8 @@ public class AuthController {
 
     @DeleteMapping("/sessions")
     public ResponseEntity<Void> logout(HttpServletResponse response) {
-        ResponseCookie accessCookie = ResponseCookie.from("accessToken", "")
-                .path("/")
-                .httpOnly(true)
-                .maxAge(0)
-                .build();
-
-        ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", "")
-                .path("/")
-                .httpOnly(true)
-                .maxAge(0)
-                .build();
+        ResponseCookie accessCookie = CookieUtil.deleteCookie("accessToken");
+        ResponseCookie refreshCookie = CookieUtil.deleteCookie("refreshToken");
 
         response.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString());
         response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
