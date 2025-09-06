@@ -41,7 +41,11 @@ export const AccountsPage = () => {
             toast.error(t("domains.account.delete.error"));
         }
     };
-
+    
+    useEffect(() => {
+        refreshAccounts();
+    }, []);
+    
     useEffect(() => {
         if (location.state?.refresh) {
             refreshAccounts();
