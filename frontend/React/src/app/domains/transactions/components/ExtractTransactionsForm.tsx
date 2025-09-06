@@ -15,8 +15,14 @@ type ExtractTransactionsFormProps = {
 export function ExtractTransactionsForm({ accounts }: ExtractTransactionsFormProps) {
   const { t } = useTranslation();
   const schema = createExtractTransactionSchema(t);
-  const state = 'transactions';
-  const transactionsUrl = `https://auth.truelayer-sandbox.com/?response_type=code&client_id=sandbox-moneysaver-fefb0e&scope=accounts%20transactions&redirect_uri=http://localhost:5173/callback&providers=uk-cs-mock%20uk-ob-all%20uk-oauth-all&state=${state}`
+  const state = "transactions";
+  const clientId = "sandbox-moneysaver-fefb0e";
+  const baseAuthUrl = "https://auth.truelayer-sandbox.com/";
+
+  const redirectUri = import.meta.env.VITE_TRUELAYER_REDIRECT_URI;
+  const providers = import.meta.env.VITE_TRUELAYER_PROVIDERS;
+
+  const transactionsUrl = `${baseAuthUrl}?response_type=code&client_id=${clientId}&scope=accounts%20transactions&redirect_uri=${redirectUri}&providers=${encodeURIComponent(providers)}&state=${state}`;
   const {
           register,
           handleSubmit,
