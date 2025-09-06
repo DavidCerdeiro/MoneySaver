@@ -63,5 +63,5 @@ export async function loadFavouriteTypeCharts() {
 }
 
 export async function logout() {
-  return fetch(`/api/auth/sessions`, { method: "DELETE" });
+  return apiFetch(`/api/auth/sessions`, { method: "DELETE" });
 }
