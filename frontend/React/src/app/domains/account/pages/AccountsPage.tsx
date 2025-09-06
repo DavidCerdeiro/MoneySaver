@@ -11,12 +11,18 @@ import { useLocation } from "react-router-dom";
 export const AccountsPage = () => {
     const { t } = useTranslation();
     const [accounts, setAccounts] = useState<AccountData[]>([]);
-    const state = 'accounts';
     const location = useLocation();
+    const state = "accounts";
     localStorage.setItem('truelayer_oauth_state', state); 
 
-    const accountsUrl = `https://auth.truelayer-sandbox.com/?response_type=code&client_id=sandbox-moneysaver-fefb0e&scope=accounts&redirect_uri=http://localhost:5173/callback&providers=uk-cs-mock&state=${state}`;
+    const clientId = "sandbox-moneysaver-fefb0e";
+    const baseAuthUrl = "https://auth.truelayer-sandbox.com/";
 
+    const redirectUri = import.meta.env.VITE_TRUELAYER_REDIRECT_URI;
+    const providers = import.meta.env.VITE_TRUELAYER_PROVIDERS;
+
+    const accountsUrl = `${baseAuthUrl}?response_type=code&client_id=${clientId}&scope=accounts&redirect_uri=${redirectUri}&providers=${encodeURIComponent(providers)}&state=${state}`;
+    
     const refreshAccounts = async () => {
         try {
             const data = await fetchAccountsForUser();
