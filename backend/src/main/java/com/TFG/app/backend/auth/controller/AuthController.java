@@ -1,4 +1,4 @@
-package com.TFG.app.backend.user.controller;
+package com.TFG.app.backend.auth.controller;
 
 import com.TFG.app.backend.infraestructure.config.CookieUtil;
 import com.TFG.app.backend.infraestructure.config.JwtService;
@@ -34,8 +34,8 @@ public class AuthController {
      * Endpoint to log in a user.
      * @param logInRequest contains the email, password, and locale of the user.
      * @output:
-     *          - 200 OK if the user is loged successfully.
-     *          - 401 Unauthorized if the email or password is incorrect.
+     * - 200 OK if the user is logged in successfully.
+     * - 401 Unauthorized if the email or password is incorrect.
      */
     @PostMapping("/sessions")
     public ResponseEntity<UserResponse> logInUser(@RequestBody LogInRequest logInRequest) {
@@ -49,7 +49,11 @@ public class AuthController {
     }
 
     
-
+    /**
+     * Endpoint to log out a user by deleting the access and refresh tokens cookies.
+     * @output:
+     * - 200 OK if the user is logged out successfully.
+     */
     @DeleteMapping("/sessions")
     public ResponseEntity<Void> logout(HttpServletResponse response) {
         ResponseCookie accessCookie = CookieUtil.deleteCookie("accessToken");
@@ -61,6 +65,13 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Endpoint to check if the user is authenticated by validating the access token.
+     * @param token the access token of the user.
+     * @output:
+     * - 200 OK if the user is authenticated.
+     * - 401 Unauthorized if the access token is invalid or expired.
+     */
     @GetMapping("/sessions/me")
     public ResponseEntity<Void> checkAuth(@CookieValue(name = "accessToken", required = false) String token) {
         if (token != null && jwtService.validateToken(token)) {
@@ -73,8 +84,8 @@ public class AuthController {
      * Endpoint to refresh the access token.
      * @param refreshToken the refresh token of the user.
      * @output:
-     *         - 200 OK if the access token is refreshed successfully.
-     *         - 401 Unauthorized if the refresh token is invalid or expired.
+     * - 200 OK if the access token is refreshed successfully.
+     * - 401 Unauthorized if the refresh token is invalid or expired.
      */
     @PostMapping("/sessions/refresh")
     public ResponseEntity<?> refreshToken(@CookieValue(name = "refreshToken", required = false) String refreshToken, HttpServletResponse response) {
@@ -118,8 +129,8 @@ public class AuthController {
      * Endpoint to authenticate a user with a verification code.
      * @param authUserRequest contains the email and code of the user.
      * @output:
-     *         - 200 OK if the user is authenticated successfully.
-     *         - 401 Unauthorized if the email does not exist in the system or the code is invalid.
+     * - 200 OK if the user is authenticated successfully.
+     * - 401 Unauthorized if the email does not exist in the system or the code is invalid.
      */
     @PatchMapping("/auth")
     public ResponseEntity<Void> authUser(@RequestBody AuthUserRequest authUserRequest,
