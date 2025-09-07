@@ -108,6 +108,7 @@ export function AddTransactionForm({ response, categories, establishments, onSub
   };
 
   return (
+    <div className="form-container">
     <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-4">
       <div className="row-input">
         <div className="w-full">
@@ -138,15 +139,15 @@ export function AddTransactionForm({ response, categories, establishments, onSub
       <div className="row-three-input mt-10">
         <div className="w-full">
           <Label htmlFor="amount" className="label">{t("domains.spending.amount")}</Label>
-          <Input id="amount" type="number" {...register("spending.amount")} className="input-dark" disabled />
+          <Input id="amount" type="number" {...register("spending.amount")} className="mobile-form-control" disabled />
         </div>
         <div className="w-full">
           <Label htmlFor="date" className="label">{t("domains.spending.date")}</Label>
-          <Input id="date" type="date" {...register("spending.date")} className="input-dark" readOnly disabled />
+          <Input id="date" type="date" {...register("spending.date")} className="mobile-form-control" readOnly disabled />
         </div>
         <div className="w-full">
           <Label htmlFor="account" className="label">{t("domains.account.title")}</Label>
-          <Input id="account" type="text" value={transaction.account?.name ?? ""} className="input-dark" disabled />
+          <Input id="account" type="text" value={transaction.account?.name ?? ""} className="mobile-form-control" disabled />
         </div>
       </div>
 
@@ -177,5 +178,6 @@ export function AddTransactionForm({ response, categories, establishments, onSub
         <Button type="submit" className="btn-primary">{t("domains.transaction.add.submit")}</Button>
       </div>
     </form>
-  );
+  </div>
+);
 }

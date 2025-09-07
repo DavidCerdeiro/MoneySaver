@@ -54,16 +54,20 @@ export const AccountsPage = () => {
 
     return (
         <DefaultPageLayout>
+            <div className="mobile-spacing">
             <h1 className="page-title">{t("domains.account.page.title")}</h1>
             <p className="page-description">{t("domains.account.page.description")}</p>
-            <AccountsTable accounts={accounts} onDelete={onDelete} isAccountPage={true} />
-            <div className="button-container">
+            <div className="table-container">
+                <AccountsTable accounts={accounts} onDelete={onDelete} isAccountPage={true} />
+            </div>
+            <div className="flex justify-center mt-5">
                 <a
                     href={accountsUrl}
                     rel="noopener noreferrer"
                 >
                     <Button>{t("domains.account.page.linkAccounts")}</Button>
                 </a>
+            </div>
             </div>
         </DefaultPageLayout>
     );

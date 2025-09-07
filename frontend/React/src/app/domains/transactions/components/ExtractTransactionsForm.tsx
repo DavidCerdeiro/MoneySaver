@@ -46,19 +46,20 @@ export function ExtractTransactionsForm({ accounts }: ExtractTransactionsFormPro
   };
 
   return (
+    <div className="form-container">
     <form onSubmit={handleSubmit(onSubmitForm)}>
       <Label htmlFor="account" className="label">{t('domains.account.title')}</Label>
       <AccountsTable accounts={accounts} isAccountPage={false} onSelect={(account) => setValue("account", account)}/>
       <div className="row-input mt-3 mb-3">
         <div className="w-full">
           <Label htmlFor="minDate" className="label">{t('domains.transaction.extract.minDate')}</Label>
-          <Input id="minDate" type="date" {...register("minDate")} className="input-dark" />
+          <Input id="minDate" type="date" {...register("minDate")} className="mobile-form-control" />
           {errors.minDate && <p className="text-red-500 text-sm">{errors.minDate.message}</p>}
         </div>
             
         <div className="w-full">
           <Label htmlFor="maxDate" className="label">{t('domains.transaction.extract.maxDate')}</Label>
-          <Input id="maxDate" type="date" {...register("maxDate")} className="input-dark" />
+          <Input id="maxDate" type="date" {...register("maxDate")} className="mobile-form-control" />
           {errors.maxDate && <p className="text-red-500 text-sm">{errors.maxDate.message}</p>}
         </div>
       </div>
@@ -66,5 +67,6 @@ export function ExtractTransactionsForm({ accounts }: ExtractTransactionsFormPro
         <Button type="submit" className="flex" disabled={!watch("account") || !watch("minDate") || !watch("maxDate")}>{t('domains.transaction.extract.submit')}</Button>
       </div>
     </form>
+  </div>
   );
 }

@@ -83,16 +83,16 @@ export function EditGoalForm({ goals, categories, refreshGoals }: EditGoalProps)
             selectedGoal={selectedGoal}
             setSelectedGoal={setSelectedGoal}
             />
-            <div className='flex flex-col items-center justify-center px-4 mt-6'>
+            <div className='form-container mt-4'>
                 <form>
                     <div className="row-three-input">
                         <div className="w-full">
                         <Label htmlFor="name" className="label">{t("domains.goal.name")}</Label>
-                        <Input id="name" className="input-dark" {...register('name')} />
+                        <Input id="name" className="mobile-form-control" {...register('name')} />
                         </div>
                         <div className="w-full">
                             <Label htmlFor="targetAmount" className="label">{t("domains.goal.targetAmount")}</Label>
-                            <Input id="targetAmount" type="number" className="input-dark" {...register('targetAmount', { valueAsNumber: true })} />
+                            <Input id="targetAmount" type="number" className="mobile-form-control" {...register('targetAmount', { valueAsNumber: true })} />
                         </div>
                         <div className="w-full">
                             <Label htmlFor="category" className="label">{t("domains.goal.category")}</Label>

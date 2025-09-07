@@ -59,13 +59,13 @@ export function ViewSpendingsPage() {
           {t('domains.spending.view.date', { month: selectedMonth, year: selectedYear })}
         </p>
         
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 my-6">
+        <div className="flex items-center justify-between my-4">
           <Button
             onClick={handlePrevMonth}
             variant="outline"
             className="button-neutral w-full sm:w-auto"
           >
-            <ChevronLeft className="mr-2 h-4 w-4" />
+            <ChevronLeft className="mr-2" />
             {t("domains.spending.view.previousMonth")}
           </Button>
           <Button
@@ -75,7 +75,7 @@ export function ViewSpendingsPage() {
             disabled={isCurrentMonth}
           >
             {t("domains.spending.view.nextMonth")}
-            <ChevronRight className="ml-2 h-4 w-4" />
+            <ChevronRight className="ml-2" />
           </Button>
         </div>
 

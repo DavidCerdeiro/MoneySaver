@@ -51,33 +51,35 @@ export function AddGoalForm({ categories, refreshGoals }: AddGoalFormProps) {
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmitForm)}>
-            <div className="row-three-input ">
-                <div className="w-full">
-                    <Label htmlFor="name" className="label">{t("domains.goal.name")}</Label>
-                    <Input id="name" className="input-dark" {...register('name')} />
+        <div className="form-container">
+            <form onSubmit={handleSubmit(onSubmitForm)}>
+                <div className="row-three-input ">
+                    <div className="w-full">
+                        <Label htmlFor="name" className="label">{t("domains.goal.name")}</Label>
+                        <Input id="name" className="mobile-form-control" {...register('name')} />
+                    </div>
+                    <div className="w-full">
+                        <Label htmlFor="targetAmount" className="label">{t("domains.goal.targetAmount")}</Label>
+                        <Input id="targetAmount" type="number" className="mobile-form-control" {...register('targetAmount', { valueAsNumber: true })} />
+                    </div>
+                    <div className="w-full">
+                        <Label htmlFor="category" className="label">{t("domains.goal.category")}</Label>
+                        <CategoryCombobox
+                            categories={categories}
+                            selectedCategory={selectedCategory}
+                            setSelectedCategory={setSelectedCategory}
+                            disabled={false}
+                            setSelectedEmoji={() => {}} setSelectedIdEmoji={() => {}} setEmojiIsNative={() => {}} 
+                    />
+                    {errors.idCategory && <p className="text-red-500 text-sm">{errors.idCategory.message}</p>}
+                    </div>
                 </div>
-                <div className="w-full">
-                    <Label htmlFor="targetAmount" className="label">{t("domains.goal.targetAmount")}</Label>
-                    <Input id="targetAmount" type="number" className="input-dark" {...register('targetAmount', { valueAsNumber: true })} />
+                <div className="flex justify-center mt-5">
+                    <Button type="submit" disabled={isSubmitting} className="button-green">
+                        {t("domains.goal.add.submit")}
+                    </Button>
                 </div>
-                <div className="w-full">
-                    <Label htmlFor="category" className="label">{t("domains.goal.category")}</Label>
-                    <CategoryCombobox
-                        categories={categories}
-                        selectedCategory={selectedCategory}
-                        setSelectedCategory={setSelectedCategory}
-                        disabled={false}
-                        setSelectedEmoji={() => {}} setSelectedIdEmoji={() => {}} setEmojiIsNative={() => {}} 
-                />
-                {errors.idCategory && <p className="text-red-500 text-sm">{errors.idCategory.message}</p>}
-                </div>
-            </div>
-            <div className="flex justify-center mt-5">
-                <Button type="submit" disabled={isSubmitting} className="button-green">
-                    {t("domains.goal.add.submit")}
-                </Button>
-            </div>
-        </form>
+            </form>
+        </div>
     );
 }

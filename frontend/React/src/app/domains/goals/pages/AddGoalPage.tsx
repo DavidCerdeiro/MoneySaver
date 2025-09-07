@@ -31,10 +31,14 @@ export function AddGoalPage() {
   }, []);
   return (
     <DefaultPageLayout>
+      <div className="mobile-spacing">
       <h1 className="page-title">{t("domains.goal.add.title")}</h1>
       <p className="page-description">{t("domains.goal.add.description")}</p>
-      <GoalsTable goals={goals} isView={false} />
+      <div className="table-container">
+        <GoalsTable goals={goals} isView={false} />
+      </div>
       <AddGoalForm categories={categories} refreshGoals={refreshGoals} />
+      </div>
     </DefaultPageLayout>
   );
 }
