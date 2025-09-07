@@ -66,7 +66,6 @@ CREATE TABLE IF NOT EXISTS spending (
   "Id_Establishment" int,
   "Name" varchar(32) NOT NULL,
   "Amount" numeric(15,2) NOT NULL,
-  "IsPeriodic" boolean NOT NULL DEFAULT false,
   "Date" Date NOT NULL,
   CONSTRAINT "RS_Spending__Id_Category" FOREIGN KEY ("Id_Category") REFERENCES category("Id"),
   CONSTRAINT "RS_Spending__Id_Establishment" FOREIGN KEY ("Id_Establishment") REFERENCES establishment("Id")

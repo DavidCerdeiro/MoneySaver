@@ -83,18 +83,17 @@ export function EditCategoryForm({ categories, refreshCategories }: ModifyCatego
   };
   return (
     <>
-      <CategoryCombobox
-        categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        setSelectedEmoji={setSelectedEmoji}
-        setSelectedIdEmoji={setSelectedIdEmoji}
-        setEmojiIsNative={setEmojiIsNative}
-        disabled={false}
-      />
-
       <div className='flex flex-col items-center justify-center px-4 mt-6'>
         <form className="grid gap-4 md:gap-6">
+            <CategoryCombobox
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            setSelectedEmoji={setSelectedEmoji}
+            setSelectedIdEmoji={setSelectedIdEmoji}
+            setEmojiIsNative={setEmojiIsNative}
+            disabled={false}
+          />
           <div className="grid gap-2">
             <Label htmlFor="name" className="label">{t('domains.category.name')}</Label>
             <Input id="name" {...register("name", { required: t('domains.category.errors.name.required') })} className="mobile-form-control" />

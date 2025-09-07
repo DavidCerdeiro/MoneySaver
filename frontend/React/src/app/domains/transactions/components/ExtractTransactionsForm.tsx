@@ -46,12 +46,16 @@ export function ExtractTransactionsForm({ accounts }: ExtractTransactionsFormPro
   };
 
   return (
+    <>
+    <div className="table-container">
+      <AccountsTable
+        accounts={accounts}
+        isAccountPage={false}
+        onSelect={(account) => setValue("account", account)}
+      />
+    </div>
     <div className="form-container">
     <form onSubmit={handleSubmit(onSubmitForm)}>
-      <Label htmlFor="account" className="label">{t('domains.account.title')}</Label>
-      <div className="table-container">
-        <AccountsTable accounts={accounts} isAccountPage={false} onSelect={(account) => setValue("account", account)}/>
-      </div>
       <div className="row-input mt-3 mb-3">
         <div className="w-full">
           <Label htmlFor="minDate" className="label">{t('domains.transaction.extract.minDate')}</Label>
@@ -70,5 +74,6 @@ export function ExtractTransactionsForm({ accounts }: ExtractTransactionsFormPro
       </div>
     </form>
   </div>
+  </>
   );
 }

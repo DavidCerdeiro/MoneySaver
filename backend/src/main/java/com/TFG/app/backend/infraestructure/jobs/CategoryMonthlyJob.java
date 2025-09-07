@@ -45,11 +45,12 @@ public class CategoryMonthlyJob implements Job {
             newSpending.setCategory(category);
             newSpending.setName(spending.getName());
             newSpending.setDate(newSpendingDate);
-            newSpending.setIsPeriodic(true);
             newSpending.setEstablishment(spending.getEstablishment());
 
             spendingService.createSpending(newSpending);
 
+            periodicSpending.setLastPayment(newSpendingDate);
+            periodicSpendingService.createPeriodicSpending(periodicSpending);
         }
     }
 

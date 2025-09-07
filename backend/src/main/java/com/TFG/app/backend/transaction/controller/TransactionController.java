@@ -96,7 +96,6 @@ public class TransactionController {
         spending.setName(request.getSpending().getName());
         spending.setAmount(BigDecimal.valueOf(request.getSpending().getAmount()).setScale(2, RoundingMode.HALF_UP));
         spending.setDate(LocalDate.parse(request.getSpending().getDate()));
-        spending.setIsPeriodic(false);
         spendingService.createSpending(spending);
 
         Transaction transaction = new Transaction();

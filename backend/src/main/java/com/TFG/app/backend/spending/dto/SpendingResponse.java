@@ -13,11 +13,10 @@ public class SpendingResponse {
     private LocalDate date;
     private String categoryName;
     private String iconCategory;
-    private boolean isPeriodic;
     private String establishmentName;
     private Integer billId;
 
-    public SpendingResponse(Integer id, String name, BigDecimal amount, LocalDate date, String categoryName, String iconCategory, boolean isPeriodic, String establishmentName, Integer billId) {
+    public SpendingResponse(Integer id, String name, BigDecimal amount, LocalDate date, String categoryName, String iconCategory, String establishmentName, Integer billId) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -25,7 +24,6 @@ public class SpendingResponse {
         this.categoryName = categoryName;
         this.billId = billId;
         this.iconCategory = iconCategory;
-        this.isPeriodic = isPeriodic;
         this.establishmentName = establishmentName;
     }
 
@@ -36,7 +34,6 @@ public class SpendingResponse {
         this.date = spending.getDate();
         this.categoryName = spending.getCategory().getName();
         this.iconCategory = spending.getCategory().getIcon();
-        this.isPeriodic = spending.getIsPeriodic();
         this.establishmentName = spending.getEstablishment().getName();
         this.billId = (bill != null) ? bill.getId() : null;
     }
@@ -57,9 +54,6 @@ public class SpendingResponse {
     }
     public String getIconCategory() {
         return iconCategory;
-    }
-    public boolean isPeriodic() {
-        return isPeriodic;
     }
     public String getEstablishmentName() {
         return establishmentName;

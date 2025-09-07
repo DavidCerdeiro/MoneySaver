@@ -120,7 +120,6 @@ public class SpendingController {
         spending.setCategory(category);
         spending.setAmount(BigDecimal.valueOf(spendingRequest.getAmount()).setScale(2, RoundingMode.HALF_UP));
         spending.setDate(LocalDate.parse(spendingRequest.getDate()));
-        spending.setIsPeriodic(spendingRequest.isPeriodic());
         Spending savedSpending = spendingService.createSpending(spending);
 
         if(savedSpending != null && spendingRequest.isPeriodic()) {
@@ -184,7 +183,6 @@ public class SpendingController {
                     spending.getDate(),
                     categoryName,
                     categoryIcon,
-                    spending.getIsPeriodic(),
                     spending.getEstablishment() != null ? spending.getEstablishment().getName() : "",
                     bill != null ? bill.getId() : null
             ));

@@ -51,18 +51,18 @@ export function AddGoalForm({ categories, refreshGoals }: AddGoalFormProps) {
 
 
     return (
-        <div className="form-container">
+        <div className="form-container mt-5">
             <form onSubmit={handleSubmit(onSubmitForm)}>
-                <div className="row-three-input ">
-                    <div className="w-full">
+                <div className="flex flex-col md:flex-row gap-4 mt-4">
+                    <div className="w-full md:w-4/12">
                         <Label htmlFor="name" className="label">{t("domains.goal.name")}</Label>
                         <Input id="name" className="mobile-form-control" {...register('name')} />
                     </div>
-                    <div className="w-full">
+                    <div className="w-full md:w-4/12">
                         <Label htmlFor="targetAmount" className="label">{t("domains.goal.targetAmount")}</Label>
                         <Input id="targetAmount" type="number" className="mobile-form-control" {...register('targetAmount', { valueAsNumber: true })} />
                     </div>
-                    <div className="w-full">
+                    <div className="w-full md:w-5/12">
                         <Label htmlFor="category" className="label">{t("domains.goal.category")}</Label>
                         <CategoryCombobox
                             categories={categories}

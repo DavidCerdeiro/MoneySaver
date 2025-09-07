@@ -11,13 +11,7 @@ public class SpendingTestDataBuilder {
     private BigDecimal amount = BigDecimal.valueOf(69.99);
     private Category category;
     private LocalDate date = LocalDate.now();
-    private boolean isPeriodic = false;
     private Establishment establishment;
-
-    public SpendingTestDataBuilder withIsPeriodic(boolean isPeriodic) {
-        this.isPeriodic = isPeriodic;
-        return this;
-    }
 
     public SpendingTestDataBuilder withEstablishment(Establishment establishment) {
         this.establishment = establishment;
@@ -35,7 +29,6 @@ public class SpendingTestDataBuilder {
         spending.setAmount(amount);
         spending.setCategory(category);
         spending.setDate(date);
-        spending.setIsPeriodic(isPeriodic);
         spending.setEstablishment(establishment);
         return spending;
     }

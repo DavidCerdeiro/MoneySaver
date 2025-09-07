@@ -23,14 +23,12 @@ public class SpendingUnitTest {
         spending.setName("GTA VI");
         spending.setAmount(new BigDecimal("100.00"));
         spending.setDate(LocalDate.now());
-        spending.setIsPeriodic(false);
         spending.setCategory(category);
         spending.setEstablishment(establishment);
 
         Assertions.assertEquals("GTA VI", spending.getName());
         Assertions.assertEquals(new BigDecimal("100.00"), spending.getAmount());
         Assertions.assertNotNull(spending.getDate());
-        Assertions.assertFalse(spending.getIsPeriodic());
         Assertions.assertEquals(category, spending.getCategory());
         Assertions.assertEquals(establishment, spending.getEstablishment());
     }

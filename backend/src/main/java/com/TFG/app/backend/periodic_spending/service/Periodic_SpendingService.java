@@ -16,6 +16,9 @@ public class Periodic_SpendingService {
         this.periodicSpendingRepository = periodicSpendingRepository;
     }
 
+    public Periodic_Spending updatePeriodicSpending(Periodic_Spending periodicSpending) {
+        return periodicSpendingRepository.save(periodicSpending);
+    }
     public Periodic_Spending createPeriodicSpending(Periodic_Spending periodicSpending) {
         return periodicSpendingRepository.save(periodicSpending);
     }
@@ -50,11 +53,8 @@ public class Periodic_SpendingService {
                     isValid = false;
                     break;
             }
-            if(isValid) {
-                ps.setLastPayment(today);
-                periodicSpendingRepository.save(ps); // Update last payment date
-            }else{
-                iterator.remove(); // Remove invalid periodic spendings
+            if(!isValid){
+                iterator.remove(); 
             }
         }
         return periodicSpendings;

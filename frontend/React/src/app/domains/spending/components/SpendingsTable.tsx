@@ -11,7 +11,7 @@ import {
 } from "@/app/domains/shared/components/table";
 import { useTranslation } from "react-i18next";
 import { getEmojiById } from "../../category/components/EmojiFunctions";
-import { Check, X, ArrowUp, ArrowDown, Eye } from "lucide-react";
+import { ArrowUp, ArrowDown, Eye } from "lucide-react";
 import { getDownloadUrl } from "../application/BillService";
 import { Button } from "../../shared/components/button";
 
@@ -126,15 +126,6 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
                 {getSortIcon('establishmentName')}
               </span>
             </TableHead>
-            <TableHead 
-              className="table-head cursor-pointer hover:bg-gray-700" 
-              onClick={() => requestSort('periodic')}
-            >
-              <span className="responsive-text-sm font-medium">
-                {t('domains.spending.periodicity')}
-                {getSortIcon('periodic')}
-              </span>
-            </TableHead>
             <TableHead className="table-head">
               <span className="responsive-text-sm font-medium">
                 {t('domains.spending.table.viewAttachment')}
@@ -178,15 +169,6 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
                 <span className="responsive-text-sm truncate max-w-[100px] sm:max-w-none block">
                   {spending.establishmentName || '-'}
                 </span>
-              </TableCell>
-              <TableCell className="table-cell">
-                <div className="flex justify-center">
-                  {spending.periodic ? (
-                    <Check className="h-4 w-4 text-green-500" aria-label={t('yes')} />
-                  ) : (
-                    <X className="h-4 w-4 text-red-500" aria-label={t('no')} />
-                  )}
-                </div>
               </TableCell>
               <TableCell className="table-cell">
                 {spending.billId ? (

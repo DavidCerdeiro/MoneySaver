@@ -56,7 +56,6 @@ public class SpendingIntegrationTest {
         spending.setName("Amazon");
         spending.setCategory(category);
         spending.setAmount(BigDecimal.valueOf(100.0));
-        spending.setIsPeriodic(false);
         spending.setDate(LocalDate.now());
         spendingRepository.save(spending);
 
@@ -64,7 +63,6 @@ public class SpendingIntegrationTest {
         Assertions.assertEquals(1, spendingRepository.findByCategory(category).size());
         Assertions.assertEquals("Amazon", spendingRepository.findByCategory(category).get(0).getName());
         Assertions.assertEquals(BigDecimal.valueOf(100.00).setScale(2), spendingRepository.findByCategory(category).get(0).getAmount());
-        Assertions.assertFalse(spendingRepository.findByCategory(category).get(0).getIsPeriodic());
         Assertions.assertEquals(LocalDate.now(), spendingRepository.findByCategory(category).get(0).getDate());
     }
 

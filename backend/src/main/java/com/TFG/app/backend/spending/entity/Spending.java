@@ -34,9 +34,6 @@ public class Spending {
     @Column(name = "Date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "IsPeriodic", nullable = false)
-    private Boolean isPeriodic = false;
-
     // Getters and Setters
     public Integer getId() {
         return id;
@@ -75,13 +72,6 @@ public class Spending {
     }
     public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public Boolean getIsPeriodic() {
-        return isPeriodic;
-    }
-    public void setIsPeriodic(Boolean isPeriodic) {
-        this.isPeriodic = isPeriodic;
     }
 
 }

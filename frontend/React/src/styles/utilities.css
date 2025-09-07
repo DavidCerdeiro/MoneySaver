@@ -173,7 +173,7 @@ html, body {
 /* === Mobile-specific improvements === */
 /* Ensure tables are scrollable on mobile */
 .table-container {
-  @apply overflow-x-auto;
+  @apply w-full overflow-x-auto md:overflow-x-visible;
 }
 
 /* Mobile-first form layouts */
@@ -183,7 +183,7 @@ html, body {
 
 /* Better mobile navigation */
 .mobile-nav-item {
-  @apply block w-full text-left px-4 py-3 text-base border-b border-zinc-800 hover:bg-zinc-800 min-h-[44px] flex items-center;
+  @apply w-full text-left px-4 py-3 text-base border-b border-zinc-800 hover:bg-zinc-800 min-h-[44px] flex items-center;
 }
 
 /* Improved mobile touch targets */

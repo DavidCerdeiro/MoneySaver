@@ -57,7 +57,7 @@ public class Periodic_SpendingIntegrationTest {
         Category category = new CategoryTestDataBuilder().withUser(user).build();
         categoryRepository.save(category);
 
-        Spending spending = new SpendingTestDataBuilder().withCategory(category).withIsPeriodic(true).build();
+        Spending spending = new SpendingTestDataBuilder().withCategory(category).build();
         spendingRepository.save(spending);
 
         Type_Periodic typePeriodic = new Type_Periodic();

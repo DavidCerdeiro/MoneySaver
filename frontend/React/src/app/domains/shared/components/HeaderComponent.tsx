@@ -163,11 +163,11 @@ export function HeaderComponent() {
 
         {/* LOGOUT */}
         <button
-    onClick={handleLogout}
-    className="hidden md:inline-block button-logout" 
->
-    {t("header.logout")}
-</button>
+          onClick={handleLogout}
+          className="!hidden md:!inline-flex button-logout"
+        >
+          {t("header.logout")}
+        </button>
 
         {/* Mobile Navigation */}
         <div className="md:hidden">
