@@ -34,7 +34,7 @@ export function MobileNav() {
               <span className="transition-transform duration-200 group-open:rotate-90">&#9656;</span>
             </summary>
             <div className="ml-4 mt-1 flex flex-col space-y-1 border-l border-gray-700 pl-4">
-              <Link to="/user/modifyProfile" className="nav-link-mobile">{t("header.sections.profile.editProfile.title")}</Link>
+              <Link to="/user/profile/edit" className="nav-link-mobile">{t("header.sections.profile.editProfile.title")}</Link>
               <Link to="/user/accounts" className="nav-link-mobile">{t("header.sections.profile.manageAccounts.title")}</Link>
             </div>
           </details>

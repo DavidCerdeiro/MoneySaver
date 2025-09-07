@@ -70,10 +70,11 @@ public class CategoryController {
         category.setIcon(categoryRequest.getIcon());
         category.setUser(user);
 
-        if(categoryService.addCategory(category)){
+        if(!categoryService.existsByNameAndUser(category.getName(), user)){
+            categoryService.addCategory(category);
             return new ResponseEntity<>(new CategoryResponse(category), HttpStatus.CREATED);
         }else{
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
 

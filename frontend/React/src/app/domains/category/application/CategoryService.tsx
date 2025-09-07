@@ -6,10 +6,16 @@ import { apiFetch } from "../../shared/service/ApiClient";
  * @returns The added category data.
  */
 export async function addCategory(data: CategoryData) {
-  return await apiFetch("/api/categories", {
+  const response = await apiFetch("/api/categories", {
     method: "POST",
     body: JSON.stringify(data),
-  });
+  })  as Response;
+  
+  if(response.status === 409) {
+    console.error("Error: A category with this name already exists.");
+    throw new Error("A category with this name already exists.");
+  }
+  return response;
 }
 
 /**

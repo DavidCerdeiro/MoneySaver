@@ -23,14 +23,16 @@ public class CategoryService {
         this.goalService = goalService;
     }
 
-    public boolean addCategory(Category category) {
-        if(categoryRepository.existsByNameAndUserAndDeletedAtIsNull(category.getName(), category.getUser())) {
-            throw new IllegalArgumentException("Ya existe una categoría activa con ese nombre");
-        }
+    public void addCategory(Category category) {
         Category result = categoryRepository.save(category);
-        return result != null;
+        if (result == null) {
+            throw new RuntimeException("Error al guardar la categoría");
+        }
     }
 
+    public boolean existsByNameAndUser(String name, User user) {
+        return categoryRepository.existsByNameAndUserAndDeletedAtIsNull(name, user);
+    }
     public List<Category> getAllCategoriesFromUser(Integer idUser) {
         User user = userService.getUserById(idUser);
         if (user != null) {

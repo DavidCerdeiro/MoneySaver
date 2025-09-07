@@ -26,7 +26,8 @@ type SortConfig = {
   direction: SortDirection;
 };
 
-export function SpendingsTable({ spendings}: SpendingTableProps) {
+
+export function SpendingsTable({ spendings }: SpendingTableProps) {
   const { t } = useTranslation();
   
   const [sortConfig, setSortConfig] = useState<SortConfig>({
@@ -68,83 +69,148 @@ export function SpendingsTable({ spendings}: SpendingTableProps) {
   const getSortIcon = (columnKey: SortableKeys) => {
     if (sortConfig.key !== columnKey) return null;
     return sortConfig.direction === 'ascending' 
-      ? <ArrowUp className="inline-block ml-2 h-4 w-4" /> 
-      : <ArrowDown className="inline-block ml-2 h-4 w-4" />;
+      ? <ArrowUp className="inline-block ml-1 h-4 w-4" /> 
+      : <ArrowDown className="inline-block ml-1 h-4 w-4" />;
   };
 
   return (
-    <div>
+    <div className="table-container">
       <Table>
-          <TableCaption className="text-white">
-              {t('domains.spending.table.caption')}
-          </TableCaption>
-          <TableHeader>
-              <TableRow>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('categoryName')}>
-                      {t('domains.spending.category')}
-                      {getSortIcon('categoryName')}
-                  </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('name')}>
-                      {t('domains.spending.name')}
-                      {getSortIcon('name')}
-                  </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('amount')}>
-                      {t('domains.spending.amount')}
-                      {getSortIcon('amount')}
-                  </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('date')}>
-                      {t('domains.spending.date')}
-                      {getSortIcon('date')}
-                  </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('establishmentName')}>
-                      {t('domains.establishment.title')}
-                      {getSortIcon('establishmentName')}
-                  </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('periodic')}>
-                      {t('domains.spending.periodicity')}
-                      {getSortIcon('periodic')}
-                  </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700">
-                    {t('domains.spending.table.viewAttachment')}
-                  </TableHead>
-              </TableRow>
-          </TableHeader>
-          <TableBody>
-              {sortedSpendings.map((spending) => (
-                  <TableRow key={spending.id}>
-                      <TableCell className="table-cell">
-                          {getEmojiById(spending.iconCategory)} {spending.categoryName === "Deleted" ? t('domains.category.deleted') : spending.categoryName}
-                      </TableCell>
-                      <TableCell className="table-cell">{spending.name}</TableCell>
-                      <TableCell className="table-cell">{spending.amount}</TableCell>
-                      <TableCell className="table-cell">{spending.date.substring(0, 10)}</TableCell>
-                      <TableCell className="table-cell">{spending.establishmentName || '-'}</TableCell>
-                      <TableCell className="table-cell">
-                          {spending.periodic ? <Check className="inline-block" /> : <X className="inline-block" />}
-                      </TableCell>
-                      <TableCell className="table-cell">
-                        {spending.billId ? (
-                          <Button
-                            onClick={async () => {
-                              try {
-                              const signedUrl = await getDownloadUrl(spending?.billId || 0);
-                                window.open(signedUrl, "_blank");
-                              } catch (err) {
-                                console.error("Error downloading file", err);
-                              }
-                            }}
-                            className="px-2 py-1 rounded bg-gray-800 text-white border border-gray-600 hover:bg-gray-700 transition flex items-center gap-1"
-                          >
-                            <Eye className="h-4 w-4" />
-
-                          </Button>
-                        ) : (
-                          "-"
-                        )}
-                      </TableCell>
-                  </TableRow>
-              ))}
-          </TableBody>
+        <TableCaption className="table-caption">
+          {t('domains.spending.table.caption')}
+        </TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead 
+              className="table-head cursor-pointer hover:bg-gray-700" 
+              onClick={() => requestSort('categoryName')}
+            >
+              <span className="responsive-text-sm font-medium">
+                {t('domains.spending.category')}
+                {getSortIcon('categoryName')}
+              </span>
+            </TableHead>
+            <TableHead 
+              className="table-head cursor-pointer hover:bg-gray-700" 
+              onClick={() => requestSort('name')}
+            >
+              <span className="responsive-text-sm font-medium">
+                {t('domains.spending.name')}
+                {getSortIcon('name')}
+              </span>
+            </TableHead>
+            <TableHead 
+              className="table-head cursor-pointer hover:bg-gray-700" 
+              onClick={() => requestSort('amount')}
+            >
+              <span className="responsive-text-sm font-medium">
+                {t('domains.spending.amount')}
+                {getSortIcon('amount')}
+              </span>
+            </TableHead>
+            <TableHead 
+              className="table-head cursor-pointer hover:bg-gray-700" 
+              onClick={() => requestSort('date')}
+            >
+              <span className="responsive-text-sm font-medium">
+                {t('domains.spending.date')}
+                {getSortIcon('date')}
+              </span>
+            </TableHead>
+            <TableHead 
+              className="table-head cursor-pointer hover:bg-gray-700" 
+              onClick={() => requestSort('establishmentName')}
+            >
+              <span className="responsive-text-sm font-medium">
+                {t('domains.establishment.title')}
+                {getSortIcon('establishmentName')}
+              </span>
+            </TableHead>
+            <TableHead 
+              className="table-head cursor-pointer hover:bg-gray-700" 
+              onClick={() => requestSort('periodic')}
+            >
+              <span className="responsive-text-sm font-medium">
+                {t('domains.spending.periodicity')}
+                {getSortIcon('periodic')}
+              </span>
+            </TableHead>
+            <TableHead className="table-head">
+              <span className="responsive-text-sm font-medium">
+                {t('domains.spending.table.viewAttachment')}
+              </span>
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {sortedSpendings.map((spending) => (
+            <TableRow key={spending.id} className="hover:bg-zinc-800/50">
+              <TableCell className="table-cell">
+                <span className="responsive-text-sm flex items-center gap-1">
+                  <span className="text-lg" aria-hidden="true">
+                    {getEmojiById(spending.iconCategory)}
+                  </span>
+                  <span className="truncate max-w-[150px] sm:max-w-none">
+                    {spending.categoryName === "Deleted" ? t('domains.category.deleted') : spending.categoryName}
+                  </span>
+                </span>
+              </TableCell>
+              <TableCell className="table-cell">
+                <span className="responsive-text-sm truncate max-w-[120px] sm:max-w-none block">
+                  {spending.name}
+                </span>
+              </TableCell>
+              <TableCell className="table-cell">
+                <span className="responsive-text-sm font-semibold">
+                  ${spending.amount}
+                </span>
+              </TableCell>
+              <TableCell className="table-cell">
+                <span className="responsive-text-sm">
+                  {new Date(spending.date).toLocaleDateString('es-ES', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                  })}
+                </span>
+              </TableCell>
+              <TableCell className="table-cell">
+                <span className="responsive-text-sm truncate max-w-[100px] sm:max-w-none block">
+                  {spending.establishmentName || '-'}
+                </span>
+              </TableCell>
+              <TableCell className="table-cell">
+                <div className="flex justify-center">
+                  {spending.periodic ? (
+                    <Check className="h-4 w-4 text-green-500" aria-label={t('yes')} />
+                  ) : (
+                    <X className="h-4 w-4 text-red-500" aria-label={t('no')} />
+                  )}
+                </div>
+              </TableCell>
+              <TableCell className="table-cell">
+                {spending.billId ? (
+                  <Button
+                    onClick={async () => {
+                      try {
+                        const signedUrl = await getDownloadUrl(spending?.billId || 0);
+                        window.open(signedUrl, "_blank");
+                      } catch (err) {
+                        console.error("Error downloading file", err);
+                      }
+                    }}
+                    className="button-neutral !p-2 !min-h-[40px] !min-w-[40px]"
+                    aria-label={t('domains.spending.table.viewAttachment')}
+                  >
+                    <Eye className="h-4 w-4" />
+                  </Button>
+                ) : (
+                  <span className="responsive-text-sm text-gray-400">-</span>
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
     </div>
   );

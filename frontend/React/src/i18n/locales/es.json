@@ -210,7 +210,8 @@
                 "iconSelected": "Seleccionado: ",
                 "submit": "Crear nueva categoría",
                 "success": "Categoría {{icon}} {{name}} creada con éxito.",
-                "error": "Error al crear la categoría. Por favor, revise los campos e inténtelo de nuevo."
+                "error": "Error al crear la categoría. Por favor, revise los campos e inténtelo de nuevo.",
+                "duplicateError": "Ya existe una categoría activa con ese nombre."
             },
             "modify":{
                 "description": "Modifica el nombre o icono de la categoría que desees. Esta modificación no afectará a los gastos ya registrados ni al gasto total. O elimina la categoría, todos los gastos de dicha categoría se eliminarán.",

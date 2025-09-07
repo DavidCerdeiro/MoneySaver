@@ -39,24 +39,31 @@ export function AddCategoryForm() {
       await addCategory(requestBody);
       const nativeEmoji = getEmojiById(selectedIdEmoji);
       toast.success(t('domains.category.add.success', {icon: nativeEmoji, name: formData.name}));
+
       reset();
       setSelectedEmoji('💲'); // Default emoji
       setSelectedIdEmoji('heavy_dollar_sign'); // Default ID
-    } catch (error) {
-      toast.error(t('domains.category.add.error'));
+      
+      
+    }catch (error) {
+      if (error instanceof Error && error.message === "Error 409") {
+        toast.error(t('domains.category.add.duplicateError'));
+      } else {
+        toast.error(t('domains.category.add.error'));
+      }
     }
-  };
 
+  }
   return (
-    <div className='flex flex-col items-center justify-center px-4'>
+    <div className="flex flex-col items-center justify-center px-4">
       <h1 className="page-title">{t('header.sections.spendings.addCategory.title')}</h1>
       <p  className="page-description">{t('domains.category.add.description')}</p>
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
         <div className="grid gap-2">
           <Label htmlFor="name" className="label">{t('domains.category.name')}</Label>
-          <Input id="name" {...register('name', { required: t('domains.category.errors.name.required') })} className="input-dark" />
+          <Input id="name" {...register('name', { required: t('domains.category.errors.name.required') })} className="mobile-form-control" />
           {errors.name && (
-            <p className="text-red-500 text-sm">{errors.name.message}</p>
+            <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
           )}
         </div>
 
@@ -77,9 +84,12 @@ export function AddCategoryForm() {
 
         <input type="hidden" {...register('icon')} />
 
-        <Button type="submit" className="button-green" disabled={isSubmitting}>
+        <div className="button-container">
+          <Button type="submit" className="button-green" disabled={isSubmitting}>
           {t('domains.category.add.submit')}
-        </Button>
+          </Button>
+        </div>
+
       </form>
     </div>
   );

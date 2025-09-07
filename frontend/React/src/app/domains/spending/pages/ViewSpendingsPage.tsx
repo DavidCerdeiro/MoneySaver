@@ -47,7 +47,8 @@ export function ViewSpendingsPage() {
     }
   };
   return (
-      <DefaultPageLayout>
+     <DefaultPageLayout>
+      <div className="mobile-spacing">
         <h1 className="page-title">
           {t('domains.spending.view.title')}
         </h1>
@@ -57,34 +58,35 @@ export function ViewSpendingsPage() {
         <p className="page-description">
           {t('domains.spending.view.date', { month: selectedMonth, year: selectedYear })}
         </p>
-        <div className="flex items-center justify-between my-4">
+        
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 my-6">
           <Button
             onClick={handlePrevMonth}
             variant="outline"
-            className="flex bg-black text-white"
+            className="button-neutral w-full sm:w-auto"
           >
-            <ChevronLeft className="mr-2" />
+            <ChevronLeft className="mr-2 h-4 w-4" />
             {t("domains.spending.view.previousMonth")}
           </Button>
           <Button
             onClick={handleNextMonth}
-            variant="outline"
-            className="flex bg-black text-white"
+            variant="outline" 
+            className="button-neutral w-full sm:w-auto"
             disabled={isCurrentMonth}
           >
             {t("domains.spending.view.nextMonth")}
-            <ChevronRight className="ml-2" />
+            <ChevronRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
 
-        <SpendingsTable
-          spendings={spendings}
-        />
-        <div className='mt-8'>
-          <TransactionsTable
-            transactions={transactions}
-          />
+        <div className="table-container">
+          <SpendingsTable spendings={spendings} />
         </div>
+        
+        <div className="table-container mt-8">
+          <TransactionsTable transactions={transactions} />
+        </div>
+      </div>
     </DefaultPageLayout>
   );
 }

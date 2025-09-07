@@ -110,6 +110,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
             fileInputRef.current.value = "";
         }
     };
+
     const onSubmitFile = async (file: File) => {
         setIsProcessing(true);
         try {
@@ -164,30 +165,40 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
     }, [selectedCategory, setValue]);
     
     return (
-        <>
-            <form onSubmit={handleSubmit(onSubmitForm)}>
+        <div className="form-container">
+            <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-6">
                 
+                {/* Primera fila: Nombre y Cantidad */}
                 <div className="row-input">
                     <div className="w-full">
                         <Label htmlFor="name" className="label">{t('domains.spending.name')}</Label>
-                        <Input id="name" placeholder={t('domains.spending.namePlaceholder')} {...register('name')} className="input-dark" disabled={isProcessing} />
-                        {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+                        <Input 
+                            id="name" 
+                            placeholder={t('domains.spending.namePlaceholder')} 
+                            {...register('name')} 
+                            className="mobile-form-control" 
+                            disabled={isProcessing} 
+                        />
+                        {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                     </div>
                     <div className="w-full">
                         <Label htmlFor="amount" className="label">{t('domains.spending.amount')}</Label>
                         <Input
                             type="number"
                             step="any"
+                            inputMode="decimal"
                             id="amount"
                             placeholder={t('domains.spending.amountPlaceholder')}
                             {...register('amount', { valueAsNumber: true })}
-                            className="input-dark"
+                            className="mobile-form-control"
                             disabled={isProcessing}
                         />
-                         {errors.amount && <p className="text-red-500 text-sm">{errors.amount.message}</p>}
+                        {errors.amount && <p className="text-red-500 text-xs mt-1">{errors.amount.message}</p>}
                     </div>
                 </div>
-                <div className="row-input mt-10 ">
+
+                {/* Segunda fila: Categoría y Fecha */}
+                <div className="row-input">
                     <div className="w-full">
                         <Label htmlFor="category" className="label">{t('domains.spending.category')}</Label>
                         <CategoryCombobox
@@ -195,18 +206,27 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                             selectedCategory={selectedCategory}
                             setSelectedCategory={setSelectedCategory}
                             disabled={isProcessing}
-                            setSelectedEmoji={() => {}} setSelectedIdEmoji={() => {}} setEmojiIsNative={() => {}} 
+                            setSelectedEmoji={() => {}} 
+                            setSelectedIdEmoji={() => {}} 
+                            setEmojiIsNative={() => {}} 
                         />
-                        {errors.idCategory && <p className="text-red-500 text-sm">{errors.idCategory.message}</p>}
+                        {errors.idCategory && <p className="text-red-500 text-xs mt-1">{errors.idCategory.message}</p>}
                     </div>
                     <div className="w-full">
                         <Label htmlFor="date" className="label">{t('domains.spending.date')}</Label>
-                        <Input id="date" type="date" {...register("date")} className="input-dark" disabled={isProcessing} />
-                        {errors.date && <p className="text-red-500 text-sm">{errors.date.message}</p>}
+                        <Input 
+                            id="date" 
+                            type="date" 
+                            {...register("date")} 
+                            className="mobile-form-control" 
+                            disabled={isProcessing} 
+                        />
+                        {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>}
                     </div>
                 </div>
 
-                <div className="row-input mt-10">
+                {/* Tercera fila: Establecimiento */}
+                <div className="row-input">
                     <div className="w-full">
                         <Label htmlFor="establishment" className="label">{t('domains.establishment.title')}</Label>
                         <EstablishmentCombobox
@@ -217,15 +237,33 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                         />
                     </div>
                     <div className="w-full">
-                        <Label htmlFor="establishment" className="label">{t('domains.establishment.name')}</Label>
-                        <Input id="establishment" type="text" className="input-dark" disabled={!selectedEstablishment || selectedEstablishment.id !== 0 || isProcessing} {...register("establishment.name")} placeholder={t('domains.establishment.namePlaceholder')} />
+                        <Label htmlFor="establishmentName" className="label">{t('domains.establishment.name')}</Label>
+                        <Input 
+                            id="establishmentName" 
+                            type="text" 
+                            className="mobile-form-control" 
+                            disabled={!selectedEstablishment || selectedEstablishment.id !== 0 || isProcessing} 
+                            {...register("establishment.name")} 
+                            placeholder={t('domains.establishment.namePlaceholder')} 
+                        />
                     </div>
                 </div>
 
-                <div className="row-three-input mt-10">
-                    <div className="w-full flex items-center gap-3">
-                        <input type="checkbox" id="isPeriodic" {...register("isPeriodic")} className="w-4 h-4" disabled={isProcessing} />
-                        <Label htmlFor="isPeriodic">{t('domains.spending.periodicity')}</Label>
+                {/* Cuarta fila: Periodicidad */}
+                <div className="row-three-input">
+                    <div className="w-full">
+                        <div className="flex items-center gap-3 min-h-[44px]">
+                            <input 
+                                type="checkbox" 
+                                id="isPeriodic" 
+                                {...register("isPeriodic")} 
+                                className="w-5 h-5 text-green-600 bg-zinc-800 border-zinc-600 rounded focus:ring-green-500 focus:ring-2" 
+                                disabled={isProcessing} 
+                            />
+                            <Label htmlFor="isPeriodic" className="responsive-text-sm cursor-pointer">
+                                {t('domains.spending.periodicity')}
+                            </Label>
+                        </div>
                     </div>
                     <div className="w-full">
                         <Label htmlFor="typePeriodic" className="label">{t('domains.typePeriodic.title')}</Label>
@@ -235,42 +273,69 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                             setSelectedTypePeriodic={setSelectedTypePeriodic}
                             disabled={!isPeriodic || isProcessing}
                         />
-                        {errors.typePeriodic && <p className="text-red-500 text-sm">{errors.typePeriodic.message}</p>}
+                        {errors.typePeriodic && <p className="text-red-500 text-xs mt-1">{errors.typePeriodic.message}</p>}
                     </div>
                     <div className="w-full">
                         <Label htmlFor="expirationDate" className="label">{t('domains.spending.expirationDate')}</Label>
-                        <Input disabled={!isPeriodic || isProcessing} id="expirationDate" type="date" {...register("expirationDate")} className="input-dark" />
-                        {errors.expirationDate && <p className="text-red-500 text-sm">{errors.expirationDate.message}</p>}
+                        <Input 
+                            disabled={!isPeriodic || isProcessing} 
+                            id="expirationDate" 
+                            type="date" 
+                            {...register("expirationDate")} 
+                            className="mobile-form-control" 
+                        />
+                        {errors.expirationDate && <p className="text-red-500 text-xs mt-1">{errors.expirationDate.message}</p>}
                     </div>
                 </div>
-                <div className="row-input mt-10">
-                    <Button type="submit" disabled={isSubmitting || isProcessing}>
+
+                {/* Botón de envío */}
+                <div className="button-container">
+                    <Button 
+                        type="submit" 
+                        disabled={isSubmitting || isProcessing}
+                        className="button-green"
+                    >
                         {isSubmitting ? t('domains.spending.add.submitting') : t('domains.spending.add.submit')}
                     </Button>
                 </div>
             </form>
 
-            <Separator className="my-4" />
+            <Separator className="my-6" />
 
+            {/* Formulario de archivo */}
             <form onSubmit={(e) => {
                 e.preventDefault();
                 if (selectedFile) {
                     onSubmitFile(selectedFile);
                 }
             }}>
-                <p className="text-sm text-gray-300 mt-2 mb-2">{t('domains.spending.add.fileDescription')}</p>
-                <div className="flex items-end gap-4">
-                    <div className="w-full max-w-sm">
+                <p className="responsive-text-sm text-gray-300 mb-4">
+                    {t('domains.spending.add.fileDescription')}
+                </p>
+                
+                <div className="flex flex-col sm:flex-row sm:items-end gap-4">
+                    <div className="flex-1">
                         <Label htmlFor="file" className="label">{t('domains.spending.add.labelFile')}</Label>
-                        <Input type="file" onChange={handleFileChange} disabled={isProcessing} ref={fileInputRef}/>
+                        <Input 
+                            type="file" 
+                            onChange={handleFileChange} 
+                            disabled={isProcessing} 
+                            ref={fileInputRef}
+                            className="mobile-form-control"
+                            accept=".pdf,.jpg,.jpeg,.png,.gif"
+                        />
                     </div>
-                    <div>
-                        <Button type="submit" disabled={!selectedFile || isProcessing || fileSubmitted}>
+                    <div className="sm:flex-shrink-0">
+                        <Button 
+                            type="submit" 
+                            disabled={!selectedFile || isProcessing || fileSubmitted}
+                            className="button-neutral w-full sm:w-auto"
+                        >
                             {isProcessing ? t('domains.spending.add.processingFile') : t('domains.spending.add.submitFile')}
                         </Button>
                     </div>
                 </div>
             </form>
-        </>
+        </div>
     );
 }
