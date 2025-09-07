@@ -43,25 +43,25 @@ export function ViewGoalsPage() {
             <h1 className="page-title">{t("domains.goal.view.title")}</h1>
             <p className="page-description">{t("domains.goal.view.description")}</p>
             <p className="page-description">{t("domains.goal.view.stats", { month: selectedMonth, year: selectedYear, goalsBelow100, totalGoals })}</p>
-            <div className="flex items-center justify-between my-4">
-          <Button
-            onClick={handlePrevMonth}
-            variant="outline"
-            className="flex bg-black text-white"
-          >
-            <ChevronLeft className="mr-2" />
-            {t("domains.spending.view.previousMonth")}
-          </Button>
-          <Button
-            onClick={handleNextMonth}
-            variant="outline"
-            className="flex bg-black text-white"
-            disabled={isCurrentMonth}
-          >
-            {t("domains.spending.view.nextMonth")}
-            <ChevronRight className="ml-2" />
-          </Button>
-        </div>
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 my-4">
+  <Button
+    onClick={handlePrevMonth}
+    variant="outline"
+    className="flex bg-black text-white w-full sm:w-auto justify-center"
+  >
+    <ChevronLeft className="mr-2" />
+    {t("domains.spending.view.previousMonth")}
+  </Button>
+  <Button
+    onClick={handleNextMonth}
+    variant="outline"
+    className="flex bg-black text-white w-full sm:w-auto justify-center"
+    disabled={isCurrentMonth}
+  >
+    {t("domains.spending.view.nextMonth")}
+    <ChevronRight className="ml-2" />
+  </Button>
+</div>
             <GoalsTable goals={goals} month={selectedMonth} year={selectedYear} isView />
         </DefaultPageLayout>
     );

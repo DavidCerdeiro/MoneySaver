@@ -7,7 +7,7 @@ export function DefaultPageLayout({ children }: { children: ReactNode }) {
     <div className="flex flex-col min-h-screen page-background">
       <HeaderComponent />
       
-      <main className="flex-grow px-4 py-8 flex justify-center">
+      <main className="flex-grow px-4 py-8 flex justify-center w-full overflow-x-hidden">
         <div className="w-full max-w-5xl">
           {children}
         </div>

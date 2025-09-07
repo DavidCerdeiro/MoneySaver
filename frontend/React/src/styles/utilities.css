@@ -173,7 +173,7 @@ html, body {
 /* === Mobile-specific improvements === */
 /* Ensure tables are scrollable on mobile */
 .table-container {
-  @apply overflow-x-auto -mx-2 sm:mx-0;
+  @apply overflow-x-auto;
 }
 
 /* Mobile-first form layouts */
