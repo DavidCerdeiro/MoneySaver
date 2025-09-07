@@ -6,7 +6,6 @@ import com.TFG.app.backend.periodic_spending.repository.Periodic_SpendingReposit
 import com.TFG.app.backend.periodic_spending.entity.Periodic_Spending;
 import java.util.List;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Iterator;
 @Service
 public class Periodic_SpendingService {
@@ -29,7 +28,7 @@ public class Periodic_SpendingService {
 
     public List<Periodic_Spending> getAllValidPeriodicSpendings() {
         LocalDate today = LocalDate.now();
-        List<Periodic_Spending> periodicSpendings = periodicSpendingRepository.findByExpirationAfter(new Date());
+        List<Periodic_Spending> periodicSpendings = periodicSpendingRepository.findByExpirationAfter(today);
         Iterator<Periodic_Spending> iterator = periodicSpendings.iterator();
         // Iterate through the list and check if the last execution date is valid based on the type of periodic spending
         while (iterator.hasNext()) {
