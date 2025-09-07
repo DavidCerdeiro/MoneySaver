@@ -116,7 +116,7 @@ export function TransactionsTable({ transactions }: TransactionTableProps) {
                       <TableCell className="table-cell">{transaction.accountName}</TableCell>
                       <TableCell className="table-cell">{transaction.accountNumber}</TableCell>
                       <TableCell className="table-cell">{transaction.name}</TableCell>
-                      <TableCell className="table-cell">{transaction.amount}</TableCell>
+                      <TableCell className="table-cell">{transaction.amount}€</TableCell>
                       <TableCell className="table-cell">{transaction.date.substring(0, 10)}</TableCell>
                       <TableCell className="table-cell">{transaction.establishmentName || '-'}</TableCell>
                   </TableRow>

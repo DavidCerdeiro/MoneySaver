@@ -265,7 +265,7 @@
                 "description": "Registra un nuevo gasto a través del formulario o mediante la importación del ticket, factura o cualquier documento similar.",
                 "currentMonth": "El gasto se debe corresponder al mes actual.",
                 "category": "Categoría",
-                "amount": "Importe",
+                "amount": "Importe €",
                 "date": "Fecha",
                 "submit": "Registrar gasto",
                 "error": "Error al registrar el gasto. Por favor, revise los campos e inténtelo de nuevo.",
@@ -354,7 +354,7 @@
             }
         },
         "typePeriodic":{
-            "title": "Tipo de periodicidad",
+            "title": "Tipo Periodicidad",
             "monthly": "Mensual",
             "quarterly": "Trimestral",
             "yearly": "Anual",

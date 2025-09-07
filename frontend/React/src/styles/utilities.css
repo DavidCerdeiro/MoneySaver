@@ -212,3 +212,18 @@ html, body {
 .mobile-form-control {
   @apply w-full min-h-[44px] px-3 py-2 text-base bg-zinc-800 text-white border border-zinc-700 rounded focus:border-green-500 focus:ring-1 focus:ring-green-500;
 }
+
+.input-euro {
+  position: relative;
+  padding-right: 2rem; /* deja espacio al símbolo */
+}
+
+.input-euro::after {
+  content: "€";
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af; /* gris */
+  pointer-events: none;
+}

@@ -22,15 +22,20 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.javamoney.moneta.Money;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.money.MonetaryAmount;
+import javax.money.convert.CurrencyConversion;
 
 
 @RestController
@@ -43,6 +48,7 @@ public class AccountController {
     private final EstablishmentService establishmentService;
     private final TransactionService transactionService;
     private final SpendingService spendingService;
+    private final CurrencyConversion euroConversion;
 
     @Value("${truelayer.client-id}")
     private String truelayerClientId;
@@ -53,12 +59,13 @@ public class AccountController {
     @Value("${truelayer.redirect-url}")
     private String truelayerRedirectUrl;
 
-    public AccountController(AccountService accountService, JwtService jwtService, UserService userService, EstablishmentService establishmentService, TransactionService transactionService, SpendingService spendingService) {
+    public AccountController(AccountService accountService, JwtService jwtService, UserService userService, EstablishmentService establishmentService, TransactionService transactionService, SpendingService spendingService, CurrencyConversion euroConversion) {
         this.accountService = accountService;
         this.jwtService = jwtService;
         this.userService = userService;
         this.webClient = WebClient.builder().build();
         this.establishmentService = establishmentService;
+        this.euroConversion = euroConversion;
         this.transactionService = transactionService;
         this.spendingService = spendingService;
     }
@@ -263,9 +270,17 @@ public class AccountController {
 
             SpendingTransactionResponse spending = new SpendingTransactionResponse();
             spending.setName(tran.has("description") && !tran.get("description").isNull() ? tran.get("description").asText() : "");
-            spending.setAmount(BigDecimal.valueOf(tran.get("amount").asDouble() * -1));
             spending.setDate(LocalDate.parse(tran.get("timestamp").asText().substring(0, 10)));
+            
+            String currencyCode = tran.has("currency") ? tran.get("currency").asText() : "GBP";
+            Double amount = tran.get("amount").asDouble() * -1;
+            MonetaryAmount originalAmount = Money.of(amount, currencyCode);
+            MonetaryAmount amountInEur = euroConversion.apply(originalAmount);
 
+            spending.setAmount( amountInEur.getNumber()
+                .numberValue(BigDecimal.class)
+                .setScale(2, RoundingMode.HALF_UP)
+            );
             String establishmentName = (tran.has("merchant_name") && !tran.get("merchant_name").isNull()) ? tran.get("merchant_name").asText() : "";
             if(establishmentName != null && !establishmentName.isEmpty()) {
                 Establishment est = establishmentService.findByName(establishmentName);

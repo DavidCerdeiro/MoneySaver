@@ -182,7 +182,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                         {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                     </div>
                     <div className="w-full">
-                        <Label htmlFor="amount" className="label">{t('domains.spending.amount')}</Label>
+                        <Label htmlFor="amount" className="label">{t('domains.spending.add.amount')}</Label>
                         <Input
                             type="number"
                             step="any"
