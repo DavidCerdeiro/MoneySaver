@@ -9,7 +9,9 @@ export function DefaultPageLayout({ children }: { children: ReactNode }) {
       
       <main className="flex-grow px-4 py-8 flex justify-center w-full overflow-x-hidden">
         <div className="w-full max-w-5xl">
+          <div className="mobile-spacing">
           {children}
+          </div>
         </div>
       </main>
 

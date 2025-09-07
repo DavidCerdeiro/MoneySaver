@@ -60,7 +60,7 @@ export function BarChartVerticalComponent({ data, principalPage }: Props) {
               tickMargin={10}
               axisLine={false}
               style={{ fill: "white", fontSize: 12, fontWeight: 500 }}
-              tickFormatter={(value) => value.slice(0, 15)}
+              tickFormatter={(value) => value.slice(0, 2)}
             />
             <ChartTooltip
               cursor={false}

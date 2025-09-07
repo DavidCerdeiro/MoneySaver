@@ -72,18 +72,18 @@ export function EditProfileForm({user, fetchData, typeCharts}: ModifyProfileForm
     };
 
     return (
-        <>
+        <div className="form-container">
             <div className="row-input mb-5">
                 <div className="w-full">
                     <Label htmlFor="name" className="label">{t('domains.user.name')}</Label>
-                    <Input id="name" {...register('name')} className="input-dark" />
+                    <Input id="name" {...register('name')} className="mobile-form-control" />
                     {errors.name && (
                         <p className="text-red-500 text-sm">{errors.name.message}</p>
                     )}
                 </div>
                 <div className="w-full">
                     <Label htmlFor="surname" className="label">{t('domains.user.surname')}</Label>
-                    <Input id="surname" {...register('surname')} className="input-dark" />
+                    <Input id="surname" {...register('surname')} className="mobile-form-control" />
                     {errors.surname && (
                         <p className="text-red-500 text-sm">{errors.surname.message}</p>
                     )}
@@ -92,7 +92,7 @@ export function EditProfileForm({user, fetchData, typeCharts}: ModifyProfileForm
             <div className="row-input mb-5">
                 <div className="w-full">
                     <Label htmlFor="email" className="label">{t("domains.user.email")}</Label>
-                    <Input type="email" id="email" defaultValue={user?.email} {...register('email')} className="input-dark" disabled/>
+                    <Input type="email" id="email" defaultValue={user?.email} {...register('email')} className="mobile-form-control" disabled/>
                     {errors.email && (
                         <p className="text-red-500 text-sm">{errors.email.message}</p>
                     )}
@@ -109,14 +109,14 @@ export function EditProfileForm({user, fetchData, typeCharts}: ModifyProfileForm
             <div className="row-input mb-4">
                 <div className="w-full">
                     <Label htmlFor="password" className="label">{t("domains.user.password")}</Label>
-                    <Input type="password" id="password" {...register('password')} className="input-dark" />
+                    <Input type="password" id="password" {...register('password')} className="mobile-form-control" />
                     {errors.password && (
                         <p className="text-red-500 text-sm">{errors.password.message}</p>
                     )}
                 </div>
                 <div className="w-full">
                     <Label htmlFor="confirmPassword" className="label">{t("domains.user.confirmPassword")}</Label>
-                    <Input type="password" id="confirmPassword" {...register('confirmPassword')} className="input-dark" />
+                    <Input type="password" id="confirmPassword" {...register('confirmPassword')} className="mobile-form-control" />
                     {errors.confirmPassword && (
                         <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
                     )}
@@ -186,6 +186,6 @@ export function EditProfileForm({user, fetchData, typeCharts}: ModifyProfileForm
             </DialogContent>
           </Dialog>
           </div>
-        </>
+        </div>
     );
 }

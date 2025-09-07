@@ -94,12 +94,12 @@ export function CompareChartsPage() {
         <div className="row-input">
           <div className="w-full">
             <Label htmlFor="date1" className="mb-2">{t("domains.charts.compare.month1Label")}</Label>
-            <Input id="date1" type="month" className="input-dark" {...register("month1")} />
+            <Input id="date1" type="month" className="mobile-form-control" {...register("month1")} />
             {errors.month1 && <p className="text-red-500 text-sm">{errors.month1.message}</p>}
           </div>
           <div className="w-full">
             <Label htmlFor="date2" className="mb-2">{t("domains.charts.compare.month2Label")}</Label>
-            <Input id="date2" type="month" className="input-dark" {...register("month2")} />
+            <Input id="date2" type="month" className="mobile-form-control" {...register("month2")} />
             {errors.month2 && <p className="text-red-500 text-sm">{errors.month2.message}</p>}
           </div>
         </div>

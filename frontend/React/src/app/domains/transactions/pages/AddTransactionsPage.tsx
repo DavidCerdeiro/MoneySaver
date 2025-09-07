@@ -47,11 +47,9 @@ export function AddTransactionsPage() {
   };
   return (
     <DefaultPageLayout>
-      <div className="mobile-spacing">
         <h1 className="page-title">{t("domains.transaction.add.title")}</h1>
         <p className="page-description">{t("domains.transaction.add.description")}</p>
         <AddTransactionForm response={transactions[currentIndex]} categories={categories} establishments={establishments} onSubmitted={handleTransactionSubmitted} />
-      </div>
     </DefaultPageLayout>
   );
 }

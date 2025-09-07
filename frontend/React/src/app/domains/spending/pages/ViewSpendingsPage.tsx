@@ -48,7 +48,6 @@ export function ViewSpendingsPage() {
   };
   return (
      <DefaultPageLayout>
-      <div className="mobile-spacing">
         <h1 className="page-title">
           {t('domains.spending.view.title')}
         </h1>
@@ -59,25 +58,25 @@ export function ViewSpendingsPage() {
           {t('domains.spending.view.date', { month: selectedMonth, year: selectedYear })}
         </p>
         
-        <div className="flex items-center justify-between my-4">
-          <Button
-            onClick={handlePrevMonth}
-            variant="outline"
-            className="button-neutral w-full sm:w-auto"
-          >
-            <ChevronLeft className="mr-2" />
-            {t("domains.spending.view.previousMonth")}
-          </Button>
-          <Button
-            onClick={handleNextMonth}
-            variant="outline" 
-            className="button-neutral w-full sm:w-auto"
-            disabled={isCurrentMonth}
-          >
-            {t("domains.spending.view.nextMonth")}
-            <ChevronRight className="ml-2" />
-          </Button>
-        </div>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 my-4">
+              <Button
+                onClick={handlePrevMonth}
+                variant="outline"
+                className="flex bg-black text-white w-full sm:w-auto justify-center"
+              >
+                <ChevronLeft className="mr-2" />
+                {t("domains.spending.view.previousMonth")}
+              </Button>
+              <Button
+                onClick={handleNextMonth}
+                variant="outline"
+                className="flex bg-black text-white w-full sm:w-auto justify-center"
+                disabled={isCurrentMonth}
+              >
+                {t("domains.spending.view.nextMonth")}
+                <ChevronRight className="ml-2" />
+              </Button>
+            </div>
 
         <div className="table-container">
           <SpendingsTable spendings={spendings} />
@@ -86,7 +85,6 @@ export function ViewSpendingsPage() {
         <div className="table-container mt-8">
           <TransactionsTable transactions={transactions} />
         </div>
-      </div>
     </DefaultPageLayout>
   );
 }

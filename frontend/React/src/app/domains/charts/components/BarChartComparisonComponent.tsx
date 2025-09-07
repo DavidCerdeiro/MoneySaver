@@ -53,7 +53,7 @@ export function BarChartComparisonComponent({
               tickMargin={10}
               axisLine={false}
               fontSize={12}
-              tickFormatter={(value) => value.slice(0, 15)}
+              tickFormatter={(value) => value.slice(0, 2)}
               
             />
             <ChartTooltip

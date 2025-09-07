@@ -60,7 +60,7 @@ export function ForgotPasswordForm() {
                     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
                         <div className="grid gap-2">
                             <Label htmlFor="email">{t('domains.user.email')}</Label>
-                            <Input id="email" type="email" {...register("email")} className="input-dark"/>
+                            <Input id="email" type="email" {...register("email")} className="mobile-form-control"/>
                             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                         </div>
                             <Button type="submit" className="button-green" disabled={isSubmitting}>

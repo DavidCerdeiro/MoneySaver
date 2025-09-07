@@ -153,7 +153,7 @@
             }
         },
         "goal":{
-            "name":"Nombre del Objetivo",
+            "name":"Nombre",
             "targetAmount":"Cantidad máxima",
             "category": "Categoría",
             "percent": "Porcentaje",

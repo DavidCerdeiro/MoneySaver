@@ -97,7 +97,7 @@ export function EditCategoryForm({ categories, refreshCategories }: ModifyCatego
         <form className="grid gap-4 md:gap-6">
           <div className="grid gap-2">
             <Label htmlFor="name" className="label">{t('domains.category.name')}</Label>
-            <Input id="name" {...register("name", { required: t('domains.category.errors.name.required') })} className="input-dark" />
+            <Input id="name" {...register("name", { required: t('domains.category.errors.name.required') })} className="mobile-form-control" />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>
             )}
