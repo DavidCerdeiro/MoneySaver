@@ -270,7 +270,6 @@
                 "submit": "Registrar gasto",
                 "error": "Error al registrar el gasto. Por favor, revise los campos e inténtelo de nuevo.",
                 "success": "Se ha registrado {{name}} con un importe de {{amount}}€ en la categoría {{category}}",
-                "fileDescription": "Adjunta una factura, ticket o cualquier documento similar para extraer la información. Una vez adjuntes el archivo, se deshabilatará el formulario anterior.",
                 "labelFile": "Archivo",
                 "submitFile": "Escanear archivo",
                 "defaultSpendingProcessed": "Compra en {{establishment}}",
@@ -287,7 +286,7 @@
                 "nextMonth": "Mes siguiente"
             },
             "table": {
-                "viewAttachment": "Ver adjunto",
+                "viewAttachment": "Adjunto",
                 "caption": "Listado de tus gastos generales"
             },
             "errors": {

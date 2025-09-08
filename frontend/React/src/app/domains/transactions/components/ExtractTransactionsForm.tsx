@@ -47,13 +47,11 @@ export function ExtractTransactionsForm({ accounts }: ExtractTransactionsFormPro
 
   return (
     <>
-    <div className="table-container">
       <AccountsTable
         accounts={accounts}
         isAccountPage={false}
         onSelect={(account) => setValue("account", account)}
       />
-    </div>
     <div className="form-container">
     <form onSubmit={handleSubmit(onSubmitForm)}>
       <div className="row-input mt-3 mb-3">

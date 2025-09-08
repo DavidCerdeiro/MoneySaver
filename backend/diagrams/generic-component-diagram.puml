@@ -11,7 +11,7 @@ package "Frontend"{
             }
             package "domains"{
                 package "shared"{
-                    package "components-shared"{
+                    package "components" as shared_components{
                         [set<ComponentsShared.tsx>]
                     }
                     package "layouts"{
@@ -28,7 +28,7 @@ package "Frontend"{
                     package "application" {
                         [set<DomainService.ts>]
                     }
-                    package "components" {
+                    package "components" as domain_components{
                         [set<DomainComponents.tsx>]
                     }
                     package "pages" as domain_pages{

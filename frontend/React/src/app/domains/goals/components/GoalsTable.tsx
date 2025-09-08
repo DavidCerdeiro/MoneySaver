@@ -27,49 +27,67 @@ export function GoalsTable({ goals, month, year, isView }: GoalsTableProps) {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col items-center justify-center px-4 mb-5">
+    <div className="table-container">
       <Table>
-        <TableCaption className="text-white">
+        <TableCaption className="table-caption">
           {isView ? t('domains.goal.view.tableCaption', { month, year }) : t('domains.goal.add.tableCaption')}
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-left text-white">
-              {t('domains.goal.name')}
+            <TableHead className="table-head">
+              <span className="span-text font-medium">
+                {t('domains.goal.name')}
+              </span>
             </TableHead>
-            <TableHead className="text-left text-white">
-              {t('domains.goal.category')}
+            <TableHead className="table-head">
+              <span className="span-text font-medium">
+                {t('domains.goal.category')}
+              </span>
             </TableHead>
-            <TableHead className="text-left text-white">
-              {t('domains.category.totalSpending')}
+            <TableHead className="table-head">
+              <span className="span-text font-medium">
+                {t('domains.category.totalSpending')}
+              </span>
             </TableHead>
-            <TableHead className="text-left text-white">
-              {t('domains.goal.targetAmount')}
+            <TableHead className="table-head">
+              <span className="span-text font-medium">
+                {t('domains.goal.targetAmount')}
+              </span>
             </TableHead>
-            <TableHead className="text-left text-white">
-              {t('domains.goal.percent')}
+            <TableHead className="table-head">
+              <span className="span-text font-medium">
+                {t('domains.goal.percent')}
+              </span>
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {goals.map((goal) => (
             <TableRow key={goal.id}>
-              <TableCell className="font-medium text-white">
-                <div className="text-left text-white">
-                  <span>{goal.name}</span>
-                </div>
+              <TableCell className="table-cell">
+                <span className="span-text">
+                  {goal.name}
+                </span>
               </TableCell>
-              <TableCell className="text-left text-white">
-                {goal.nameCategory}
+              <TableCell className="table-cell">
+                <span className="span-text">
+                  {goal.nameCategory}
+                </span>
               </TableCell>
-              <TableCell className="text-left text-white">
-                {goal.amountCategory?.toFixed(2)}€
+              <TableCell className="table-cell-money">
+                <span className="span-text">
+                  {goal.amountCategory?.toFixed(2)} €
+                </span>
               </TableCell>
-              <TableCell className="text-left text-white">
-                {goal.targetAmount?.toFixed(2)}€
+              <TableCell className="table-cell-money">
+                <span className="span-text">
+                  {goal.targetAmount?.toFixed(2)} €
+                </span>
               </TableCell>
               <TableCell className={`text-left ${getPercentColor(goal.percent ?? 0)}`}>
-                {goal.percent?.toFixed(2)}%
+                <span className="span-text">
+                  {goal.percent?.toFixed(2)}%
+                </span>
               </TableCell>
             </TableRow>
           ))}

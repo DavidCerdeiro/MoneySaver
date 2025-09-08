@@ -56,9 +56,7 @@ export const AccountsPage = () => {
         <DefaultPageLayout>
             <h1 className="page-title">{t("domains.account.page.title")}</h1>
             <p className="page-description">{t("domains.account.page.description")}</p>
-            <div className="table-container">
-                <AccountsTable accounts={accounts} onDelete={onDelete} isAccountPage={true} />
-            </div>
+            <AccountsTable accounts={accounts} onDelete={onDelete} isAccountPage={true} />
             <div className="flex justify-center mt-5">
                 <a
                     href={accountsUrl}

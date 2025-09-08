@@ -70,40 +70,75 @@ export function TransactionsTable({ transactions }: TransactionTableProps) {
   };
 
   return (
-    <div>
+    <div className="table-container">
       <Table>
-          <TableCaption className="text-white">
+          <TableCaption className="table-caption">
               {t('domains.transaction.table.caption')}
           </TableCaption>
           <TableHeader>
               <TableRow>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('categoryName')}>
+                  <TableHead 
+                    className="table-head cursor-pointer hover:bg-gray-700" 
+                    onClick={() => requestSort('categoryName')}
+                  >
+                    <span className="span-text font-medium">
                       {t('domains.spending.category')}
                       {getSortIcon('categoryName')}
+                    </span>
                   </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('accountName')}>
-                      {t('domains.account.title')}
-                      {getSortIcon('accountName')}
+                  <TableHead 
+                    className="table-head cursor-pointer hover:bg-gray-700" 
+                    onClick={() => requestSort('accountName')}
+                  >
+                    <span className="span-text font-medium">
+                        {t('domains.account.title')}
+                        {getSortIcon('accountName')}
+                    </span>
                   </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('accountNumber')}>
-                      {t('domains.account.number')}
-                      {getSortIcon('accountNumber')}
+                  <TableHead 
+                    className="table-head cursor-pointer hover:bg-gray-700" 
+                    onClick={() => requestSort('accountNumber')}
+                  >
+                    <span className="span-text font-medium">
+                        {t('domains.account.number')}
+                        {getSortIcon('accountNumber')}
+                    </span>
                   </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('name')}>
+                  <TableHead 
+                    className="table-head cursor-pointer hover:bg-gray-700" 
+                    onClick={() => requestSort('name')}
+                  >
+                    <span className="span-text font-medium">
                       {t('domains.spending.name')}
                       {getSortIcon('name')}
+                    </span>
                   </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('amount')}>
+                  <TableHead 
+                    className="table-head cursor-pointer hover:bg-gray-700" 
+                    onClick={() => requestSort('amount')}
+                  >
+                    <span className="span-text font-medium">
                       {t('domains.spending.amount')}
                       {getSortIcon('amount')}
+                    </span>
                   </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('date')}>
+                  <TableHead 
+                    className="table-head cursor-pointer hover:bg-gray-700" 
+                    onClick={() => requestSort('date')}
+                  >
+                    <span className="span-text font-medium">
                       {t('domains.spending.date')}
                       {getSortIcon('date')}
+                    </span>
                   </TableHead>
-                  <TableHead className="table-head cursor-pointer hover:bg-gray-700" onClick={() => requestSort('establishmentName')}>
+                  <TableHead 
+                    className="table-head cursor-pointer hover:bg-gray-700" 
+                    onClick={() => requestSort('establishmentName')}
+                  >
+                    <span className="span-text font-medium">
                       {t('domains.establishment.title')}
                       {getSortIcon('establishmentName')}
+                    </span>
                   </TableHead>
               </TableRow>
           </TableHeader>
@@ -113,12 +148,40 @@ export function TransactionsTable({ transactions }: TransactionTableProps) {
                       <TableCell className="table-cell">
                           {getEmojiById(transaction.categoryIcon)} {transaction.categoryName === "Deleted" ? t('domains.category.deleted') : transaction.categoryName}
                       </TableCell>
-                      <TableCell className="table-cell">{transaction.accountName}</TableCell>
-                      <TableCell className="table-cell">{transaction.accountNumber}</TableCell>
-                      <TableCell className="table-cell">{transaction.name}</TableCell>
-                      <TableCell className="table-cell">{transaction.amount}€</TableCell>
-                      <TableCell className="table-cell">{transaction.date.substring(0, 10)}</TableCell>
-                      <TableCell className="table-cell">{transaction.establishmentName || '-'}</TableCell>
+                      <TableCell className="table-cell">
+                        <span className="span-text">
+                          {transaction.accountName}
+                        </span>
+                      </TableCell>
+                      <TableCell className="table-cell">
+                        <span className="span-text">
+                          {transaction.accountNumber}
+                        </span>
+                      </TableCell>
+                      <TableCell className="table-cell">
+                        <span className="span-text">
+                          {transaction.name}
+                        </span>
+                      </TableCell>
+                      <TableCell className="table-cell-money">
+                        <span className="span-text font-semibold">
+                          {transaction.amount} €
+                        </span>
+                      </TableCell>
+                      <TableCell className="table-cell">
+                        <span className="span-text">
+                          {new Date(transaction.date).toLocaleDateString('es-ES', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                          })}
+                        </span>
+                      </TableCell>
+                      <TableCell className="table-cell">
+                        <span className="span-text">
+                          {transaction.establishmentName || '-'}
+                        </span>
+                      </TableCell>
                   </TableRow>
               ))}
           </TableBody>

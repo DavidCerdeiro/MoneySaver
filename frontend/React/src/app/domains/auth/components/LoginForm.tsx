@@ -27,22 +27,21 @@ export function LoginForm() {
     });
     
     const onSubmit = async (data: LogInFormData) => {
-    try {
-       const languageTag = i18n.language || "en";
-        const [language, country] = languageTag.split("-");
+        try {
+        const languageTag = i18n.language || "en";
+            const [language, country] = languageTag.split("-");
 
-        const locale = country ? `${language}_${country.toUpperCase()}` : language;
-        data.locale = locale;
-        const result = await logInUser(data);
+            const locale = country ? `${language}_${country.toUpperCase()}` : language;
+            data.locale = locale;
+            const result = await logInUser(data);
 
-        // Saving the email in order to use it later
-        sessionStorage.setItem('email', result.email);
+            // Saving the email in order to use it later
+            sessionStorage.setItem('email', result.email);
 
-        // After successful login, redirect to the authUser page
-        navigate('/login/authUser');
-    } catch (error) {
-        toast.error(t('login.error'));
-    }
+            navigate('/login/authUser');
+        } catch (error) {
+            toast.error(t('login.error'));
+        }
     };
 
     return (

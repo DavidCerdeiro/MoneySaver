@@ -3,6 +3,7 @@ import type { EstablishmentData } from "../schemas/Establishment";
 import type { SpendingData } from "../schemas/Spending";
 import type { SpendingResponse } from "../schemas/SpendingResponse";
 const API_URL = import.meta.env.VITE_API_URL;
+
 /**
  * Add a new spending
  * @param data Spending data to add
@@ -57,8 +58,11 @@ export async function obtainAllEstablishments(): Promise<EstablishmentData[]> {
   return res.establishments;
 }
 
-
-
+/**
+ * Process file to obtain information about spending
+ * @param formData Form data containing the file to process
+ * @returns Processed spending information
+ */
 export async function processFileDirect(formData: FormData) {
   const response = await fetch(`${API_URL}/api/spendings/documents`, {
     method: "POST",

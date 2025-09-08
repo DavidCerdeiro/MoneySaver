@@ -18,36 +18,42 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col items-center justify-center px-4">
+    <div className="form-container">
       <Table>
-        <TableCaption className="text-white">
+        <TableCaption className="table-caption">
           {t('domains.category.modify.tableCaption')}
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-left text-white">
-              {t('domains.category.name')}
+            <TableHead className="table-head">
+              <span className="span-text font-medium">
+                {t('domains.category.name')}
+              </span>
             </TableHead>
-            <TableHead className="text-left text-white">
-              {t('domains.category.totalSpending')}
+            <TableHead className="table-head">
+              <span className="span-text font-medium">
+                {t('domains.category.totalSpending')}
+              </span>
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {categories.map((category) => (
             <TableRow key={category.id}>
-              <TableCell className="font-medium text-white">
-                <div className="text-left text-white">
+              <TableCell className="table-cell">
+                <span className="span-text flex items-center gap-1">
                   {category.icon && (
                     <span className="flex-shrink-0">
                       {getEmojiById(category.icon)}
                     </span>
                   )}
                   <span>{category.name}</span>
-                </div>
+                </span>
               </TableCell>
-              <TableCell className="text-left text-white">
-                {category.totalSpending?.toFixed(2)}€
+              <TableCell className="table-cell-money">
+                <span className="span-text">
+                  {category.totalSpending?.toFixed(2)} €
+                </span>
               </TableCell>
             </TableRow>
           ))}

@@ -24,7 +24,7 @@ export function EditCategoryPage() {
 
   return (
     <DefaultPageLayout>
-      <div className="modify-category-page">
+      <div className="edit-category-page">
         <h1 className="page-title">{t('header.sections.spendings.editCategory.title')}</h1>
         <p className="page-description">{t('domains.category.modify.description')}</p>
         <CategoriesTable categories={categories} />

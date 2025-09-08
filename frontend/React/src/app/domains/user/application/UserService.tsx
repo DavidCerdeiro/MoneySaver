@@ -57,11 +57,18 @@ export async function editProfile(data: UserData) {
   );
 }
 
-
+/**
+ * Function to load user's favourite type of charts
+ * @returns A promise that resolves to the user's favourite type of charts
+ */
 export async function loadFavouriteTypeCharts() {
   return apiFetch(`/api/users/me/type-chart`, { method: "GET" });
 }
 
+/**
+ * Function to log out the user
+ * @returns No content
+ */
 export async function logout() {
   return apiFetch(`/api/auth/sessions`, { method: "DELETE" });
 }

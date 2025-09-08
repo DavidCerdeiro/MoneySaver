@@ -85,7 +85,7 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
               className="table-head cursor-pointer hover:bg-gray-700" 
               onClick={() => requestSort('categoryName')}
             >
-              <span className="responsive-text-sm font-medium">
+              <span className="span-text font-medium">
                 {t('domains.spending.category')}
                 {getSortIcon('categoryName')}
               </span>
@@ -94,7 +94,7 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
               className="table-head cursor-pointer hover:bg-gray-700" 
               onClick={() => requestSort('name')}
             >
-              <span className="responsive-text-sm font-medium">
+              <span className="span-text font-medium">
                 {t('domains.spending.name')}
                 {getSortIcon('name')}
               </span>
@@ -103,7 +103,7 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
               className="table-head cursor-pointer hover:bg-gray-700" 
               onClick={() => requestSort('amount')}
             >
-              <span className="responsive-text-sm font-medium">
+              <span className="span-text font-medium">
                 {t('domains.spending.amount')}
                 {getSortIcon('amount')}
               </span>
@@ -112,7 +112,7 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
               className="table-head cursor-pointer hover:bg-gray-700" 
               onClick={() => requestSort('date')}
             >
-              <span className="responsive-text-sm font-medium">
+              <span className="span-text font-medium">
                 {t('domains.spending.date')}
                 {getSortIcon('date')}
               </span>
@@ -121,13 +121,13 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
               className="table-head cursor-pointer hover:bg-gray-700" 
               onClick={() => requestSort('establishmentName')}
             >
-              <span className="responsive-text-sm font-medium">
+              <span className="span-text font-medium">
                 {t('domains.establishment.title')}
                 {getSortIcon('establishmentName')}
               </span>
             </TableHead>
             <TableHead className="table-head">
-              <span className="responsive-text-sm font-medium">
+              <span className="span-text font-medium">
                 {t('domains.spending.table.viewAttachment')}
               </span>
             </TableHead>
@@ -137,7 +137,7 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
           {sortedSpendings.map((spending) => (
             <TableRow key={spending.id} className="hover:bg-zinc-800/50">
               <TableCell className="table-cell">
-                <span className="responsive-text-sm flex items-center gap-1">
+                <span className="span-text flex items-center gap-1">
                   <span className="text-lg" aria-hidden="true">
                     {getEmojiById(spending.iconCategory)}
                   </span>
@@ -147,17 +147,17 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
                 </span>
               </TableCell>
               <TableCell className="table-cell">
-                <span className="responsive-text-sm truncate max-w-[120px] sm:max-w-none block">
+                <span className="span-text">
                   {spending.name}
                 </span>
               </TableCell>
-              <TableCell className="table-cell">
-                <span className="responsive-text-sm font-semibold">
-                  {spending.amount}€
+              <TableCell className="table-cell-money">
+                <span className="span-text font-semibold">
+                  {spending.amount} €
                 </span>
               </TableCell>
               <TableCell className="table-cell">
-                <span className="responsive-text-sm">
+                <span className="span-text">
                   {new Date(spending.date).toLocaleDateString('es-ES', {
                     day: '2-digit',
                     month: '2-digit',
@@ -166,7 +166,7 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
                 </span>
               </TableCell>
               <TableCell className="table-cell">
-                <span className="responsive-text-sm truncate max-w-[100px] sm:max-w-none block">
+                <span className="span-text">
                   {spending.establishmentName || '-'}
                 </span>
               </TableCell>
@@ -187,7 +187,7 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
                     <Eye className="h-4 w-4" />
                   </Button>
                 ) : (
-                  <span className="responsive-text-sm text-gray-400">-</span>
+                  ""
                 )}
               </TableCell>
             </TableRow>

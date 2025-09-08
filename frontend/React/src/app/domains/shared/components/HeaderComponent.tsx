@@ -59,9 +59,31 @@ export function HeaderComponent() {
     <header className="main-header">
       <div className="container mx-auto flex items-center justify-between px-4">
         {/* LINK TO HOME */}
+        <div className="flex items-center gap-6">
         <Link to="/home">
           <h1 className="text-xl font-bold">{t("app.title")}</h1>
         </Link>
+
+          <div className="hidden md:flex items-center gap-2">
+            <button 
+              onClick={() => handleChangeLang("es")} 
+              className={`font-semibold text-sm transition-colors hover:text-white ${
+                i18n.language === 'es' ? 'text-white' : 'text-zinc-400'
+              }`}
+            >
+              ES
+            </button>
+            <div className="h-4 w-px bg-zinc-600"></div>
+            <button 
+              onClick={() => handleChangeLang("en")} 
+              className={`font-semibold text-sm transition-colors hover:text-white ${
+                i18n.language === 'en' ? 'text-white' : 'text-zinc-400'
+              }`}
+            >
+              EN
+            </button>
+          </div>
+        </div>
 
         {/* Navigation Menu Desktop */}
         <NavigationMenu className="hidden md:flex">
@@ -164,27 +186,6 @@ export function HeaderComponent() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="hidden md:flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={() => handleChangeLang("es")} 
-              className={`font-semibold text-sm transition-colors hover:text-white ${
-                i18n.language === 'es' ? 'text-white' : 'text-zinc-400'
-              }`}
-            >
-              ES
-            </button>
-            <div className="h-4 w-px bg-zinc-600"></div>
-            <button 
-              onClick={() => handleChangeLang("en")} 
-              className={`font-semibold text-sm transition-colors hover:text-white ${
-                i18n.language === 'en' ? 'text-white' : 'text-zinc-400'
-              }`}
-            >
-              EN
-            </button>
-          </div>
-        </div>
         {/* LOGOUT */}
         <button
           onClick={handleLogout}

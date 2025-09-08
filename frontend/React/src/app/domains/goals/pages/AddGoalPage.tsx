@@ -33,9 +33,7 @@ export function AddGoalPage() {
     <DefaultPageLayout>
       <h1 className="page-title">{t("domains.goal.add.title")}</h1>
       <p className="page-description">{t("domains.goal.add.description")}</p>
-      <div className="table-container">
-        <GoalsTable goals={goals} isView={false} />
-      </div>
+      <GoalsTable goals={goals} isView={false} />
       <AddGoalForm categories={categories} refreshGoals={refreshGoals} />
     </DefaultPageLayout>
   );

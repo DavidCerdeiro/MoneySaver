@@ -4,6 +4,7 @@ import type {ForgotPasswordData} from "@/app/domains/auth/schemas/forgotpassword
 import type {EmailVerificationData} from "@/app/domains/auth/schemas/emailverification";
 import type {ResetPasswordData} from "@/app/domains/auth/schemas/resetpassword";
 const API_URL = import.meta.env.VITE_API_URL;
+
 /**
  * This function is used to sign up a user.
  * @param data - The data to sign up a user, excluding the confirmPassword field.
@@ -124,28 +125,25 @@ export async function fetchWithRefresh(
     url: string,
     options: RequestInit = {}
   ): Promise<Response> {
-    const response = await fetch(url, {
-      ...options,
-      credentials: 'include',
-    });
+    
+  const response = await fetch(url, {
+    ...options,
+    credentials: 'include',
+  });
 
   if (response.ok) {
-    // If the response is successful, return it
     return response;
   }
 
-  // If we receive a 401, we try to refresh the token
   const refreshResponse = await fetch(`${API_URL}/api/auth/sessions/refresh`, {
     method: 'POST',
     credentials: 'include',
   });
 
   if (!refreshResponse.ok) {
-    // TODO: Añadir lógica de que te devuelva al inicio de sesión y tal
     throw new Error('No se pudo refrescar el token, por favor inicia sesión de nuevo.');
   }
 
-  // If the refresh was successful, we retry the original request
   const retryResponse = await fetch(url, {
     ...options,
     credentials: 'include',

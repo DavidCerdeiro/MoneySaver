@@ -16,9 +16,12 @@ html, body {
 .page-background {
   @apply min-h-screen bg-black text-white flex flex-col items-center justify-center p-4 sm:px-6 lg:px-8;
 }
+.mobile-spacing {
+  @apply px-4 sm:px-6 lg:px-8;
+}
 
-/* === Modify Category Page === */
-.modify-category-page {
+/* === Edit Category Page === */
+.edit-category-page {
   @apply text-white text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center px-2;
 }
 
@@ -67,6 +70,8 @@ html, body {
 .input-form {
   @apply w-full min-h-[44px] px-3 py-2 text-base bg-zinc-800 text-white border border-zinc-700 rounded focus:border-green-500 focus:ring-1 focus:ring-green-500;
 }
+/* === Texts === */
+.span-text { @apply text-sm sm:text-base; }
 
 /* === UL === */
 .password-requirements {
@@ -146,7 +151,10 @@ html, body {
   @apply mr-2 h-4 w-4 text-inherit flex-shrink-0;
 }
 
-/* === Form Add Spending === */
+/* === Form === */
+.form-container {
+  @apply space-y-4 w-full max-w-md sm:max-w-lg mx-auto px-4;
+}
 .row-input {
   @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
 }
@@ -161,7 +169,23 @@ html, body {
 
 /* === Table === */
 .table-container {
-  @apply w-full overflow-x-auto md:overflow-x-visible;
+  @apply w-full;
+  overflow-x: auto;
+}
+
+@media (min-width: 768px) {
+  .table-container {
+    overflow-x: visible;
+  }
+  .table-cell span,
+  .table-cell {
+    white-space: normal;
+  }
+  .truncate {
+    text-overflow: unset;
+    white-space: normal;
+    overflow: visible;
+  }
 }
 .table-head{
   @apply text-left text-white pl-4 sm:pl-8 text-sm sm:text-base;
@@ -172,22 +196,7 @@ html, body {
 .table-cell{
   @apply text-white text-left px-3 sm:px-6 text-sm sm:text-base;
 }
-
-/* Mobile-first form layouts */
-.form-container {
-  @apply space-y-4 w-full max-w-md sm:max-w-lg mx-auto px-4;
+.table-cell-money {
+  @apply text-white text-right px-3 sm:px-6 text-sm sm:text-base;
 }
-
-/* Mobile-optimized spacing */
-.mobile-spacing {
-  @apply px-4 sm:px-6 lg:px-8;
-}
-
-/* Responsive text sizes */
-.responsive-text-xs { @apply text-xs sm:text-sm; }
-.responsive-text-sm { @apply text-sm sm:text-base; }
-.responsive-text-base { @apply text-base sm:text-lg; }
-.responsive-text-lg { @apply text-lg sm:text-xl; }
-.responsive-text-xl { @apply text-xl sm:text-2xl; }
-
 

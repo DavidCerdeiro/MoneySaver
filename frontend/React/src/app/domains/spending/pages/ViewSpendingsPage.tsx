@@ -59,30 +59,28 @@ export function ViewSpendingsPage() {
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2 my-4">
-              <Button
-                onClick={handlePrevMonth}
-                variant="outline"
-                className="flex bg-black text-white w-full sm:w-auto justify-center"
-              >
-                <ChevronLeft className="mr-2" />
-                {t("domains.spending.view.previousMonth")}
-              </Button>
-              <Button
-                onClick={handleNextMonth}
-                variant="outline"
-                className="flex bg-black text-white w-full sm:w-auto justify-center"
-                disabled={isCurrentMonth}
-              >
-                {t("domains.spending.view.nextMonth")}
-                <ChevronRight className="ml-2" />
-              </Button>
-            </div>
-
-        <div className="table-container">
+          <Button
+            onClick={handlePrevMonth}
+            variant="outline"
+            className="flex bg-black text-white w-full sm:w-auto justify-center"
+          >
+            <ChevronLeft className="mr-2" />
+            {t("domains.spending.view.previousMonth")}
+          </Button>
+          <Button
+            onClick={handleNextMonth}
+            variant="outline"
+            className="flex bg-black text-white w-full sm:w-auto justify-center"
+            disabled={isCurrentMonth}
+          >
+            {t("domains.spending.view.nextMonth")}
+            <ChevronRight className="ml-2" />
+          </Button>
+        </div>
+        <div className="mt-2">
           <SpendingsTable spendings={spendings} />
         </div>
-        
-        <div className="table-container mt-8">
+        <div className="mt-8">
           <TransactionsTable transactions={transactions} />
         </div>
     </DefaultPageLayout>

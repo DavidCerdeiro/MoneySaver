@@ -46,7 +46,7 @@ export function AccountsTable({
 
   return (
     <Table>
-      <TableCaption className="text-white">
+      <TableCaption className="table-caption">
         {t("domains.account.table.caption")}
       </TableCaption>
       <TableHeader>
@@ -73,16 +73,22 @@ export function AccountsTable({
           const isSelected = account.accountCode === selectedId;
           return (
             <TableRow key={account.id} className="hover:bg-transparent">
-              <TableCell className="font-medium text-white text-center">
-                {account.name}
+              <TableCell className="table-cell">
+                <span className="span-text">
+                  {account.name}
+                </span>
               </TableCell>
-              <TableCell className="font-medium text-white text-center">
-                {account.number}
+              <TableCell className="table-cell">
+                <span className="span-text">
+                  {account.number}
+                </span>
               </TableCell>
-              <TableCell className="font-medium text-white text-center">
-                {account.bankName}
+              <TableCell className="table-cell">
+                <span className="span-text">
+                  {account.bankName}
+                </span>
               </TableCell>
-              <TableCell className="text-center" hidden={isAccountPage}>
+              <TableCell className="table-cell" hidden={isAccountPage}>
                 {onSelect && (
                   <Button
                     type="button"
@@ -100,7 +106,7 @@ export function AccountsTable({
                   </Button>
                 )}
               </TableCell>
-              <TableCell className="text-center" hidden={!isAccountPage}>
+              <TableCell className="table-cell" hidden={!isAccountPage}>
                 {onDelete && (
                   <Dialog>
                     <DialogTrigger asChild>

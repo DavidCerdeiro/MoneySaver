@@ -5,6 +5,11 @@ import type { ExtractTransactionData } from "../schemas/ExtractTransactionData";
 import { createExtractTransactionsResponseSchema, type ExtractTransactionResponse } from "../schemas/ExtractTransactionResponse";
 import type{ TransactionResponse } from "../schemas/TransactionResponse";
 
+/**
+ * Function to extract transactions from a bank account
+ * @param data - Data required to extract transactions from a bank account
+ * @returns A promise that resolves to the extracted transaction data
+ */
 export async function extractTransactions(
   data: ExtractTransactionData
 ): Promise<ExtractTransactionResponse> {
@@ -26,6 +31,11 @@ export async function extractTransactions(
   return parsed.data;
 }
 
+/**
+ * Function to add a new transaction
+ * @param data - Data required to add a new transaction
+ * @returns A promise that resolves to the added transaction data
+ */
 export async function addTransaction(data: AddTransactionData): Promise<AddTransactionResponse> {
   return apiFetch("/api/transactions", {
     method: "POST",
@@ -34,6 +44,12 @@ export async function addTransaction(data: AddTransactionData): Promise<AddTrans
   });
 }
 
+/**
+ * Function to get all user transactions by month and year
+ * @param month - The month to filter transactions
+ * @param year - The year to filter transactions
+ * @returns A promise that resolves to an array of transaction responses
+ */
 export async function getAllUserTransactionsByMonthAndYear(month: number, year: number): Promise<TransactionResponse[]> {
   return apiFetch(`/api/transactions?month=${month}&year=${year}`, {
     method: "GET",

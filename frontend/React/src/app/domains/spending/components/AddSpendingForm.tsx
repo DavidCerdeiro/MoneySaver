@@ -166,9 +166,37 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
     
     return (
         <div className="form-container">
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                if (selectedFile) {
+                    onSubmitFile(selectedFile);
+                }
+            }}>                
+                <div className="flex flex-col sm:flex-row sm:items-end gap-4">
+                    <div className="flex-1">
+                        <Label htmlFor="file" className="label">{t('domains.spending.add.labelFile')}</Label>
+                        <Input 
+                            type="file" 
+                            onChange={handleFileChange} 
+                            disabled={isProcessing} 
+                            ref={fileInputRef}
+                            className="input-form"
+                            accept=".pdf,.jpg,.jpeg,.png,.gif"
+                        />
+                    </div>
+                    <div className="sm:flex-shrink-0">
+                        <Button 
+                            type="submit" 
+                            disabled={!selectedFile || isProcessing || fileSubmitted}
+                            className="button-neutral w-full sm:w-auto"
+                        >
+                            {isProcessing ? t('domains.spending.add.processingFile') : t('domains.spending.add.submitFile')}
+                        </Button>
+                    </div>
+                </div>
+            </form>
+            <Separator className="my-6" />
             <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-6">
-                
-                {/* Primera fila: Nombre y Cantidad */}
                 <div className="row-input">
                     <div className="w-full">
                         <Label htmlFor="name" className="label">{t('domains.spending.name')}</Label>
@@ -197,7 +225,6 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                     </div>
                 </div>
 
-                {/* Segunda fila: Categoría y Fecha */}
                 <div className="row-input">
                     <div className="w-full">
                         <Label htmlFor="category" className="label">{t('domains.spending.category')}</Label>
@@ -225,7 +252,6 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                     </div>
                 </div>
 
-                {/* Tercera fila: Establecimiento */}
                 <div className="row-input">
                     <div className="w-full">
                         <Label htmlFor="establishment" className="label">{t('domains.establishment.title')}</Label>
@@ -249,7 +275,6 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                     </div>
                 </div>
 
-                {/* Cuarta fila: Periodicidad */}
                 <div className="row-three-input">
                     <div className="w-full">
                         <div className="flex items-center gap-3 min-h-[44px]">
@@ -260,7 +285,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                                 className="w-5 h-5 text-green-600 bg-zinc-800 border-zinc-600 rounded focus:ring-green-500 focus:ring-2" 
                                 disabled={isProcessing} 
                             />
-                            <Label htmlFor="isPeriodic" className="responsive-text-sm cursor-pointer">
+                            <Label htmlFor="isPeriodic" className="span-text cursor-pointer">
                                 {t('domains.spending.periodicity')}
                             </Label>
                         </div>
@@ -288,7 +313,6 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                     </div>
                 </div>
 
-                {/* Botón de envío */}
                 <div className="button-container">
                     <Button 
                         type="submit" 
@@ -300,42 +324,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                 </div>
             </form>
 
-            <Separator className="my-6" />
-
-            {/* Formulario de archivo */}
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                if (selectedFile) {
-                    onSubmitFile(selectedFile);
-                }
-            }}>
-                <p className="responsive-text-sm text-gray-300 mb-4">
-                    {t('domains.spending.add.fileDescription')}
-                </p>
-                
-                <div className="flex flex-col sm:flex-row sm:items-end gap-4">
-                    <div className="flex-1">
-                        <Label htmlFor="file" className="label">{t('domains.spending.add.labelFile')}</Label>
-                        <Input 
-                            type="file" 
-                            onChange={handleFileChange} 
-                            disabled={isProcessing} 
-                            ref={fileInputRef}
-                            className="input-form"
-                            accept=".pdf,.jpg,.jpeg,.png,.gif"
-                        />
-                    </div>
-                    <div className="sm:flex-shrink-0">
-                        <Button 
-                            type="submit" 
-                            disabled={!selectedFile || isProcessing || fileSubmitted}
-                            className="button-neutral w-full sm:w-auto"
-                        >
-                            {isProcessing ? t('domains.spending.add.processingFile') : t('domains.spending.add.submitFile')}
-                        </Button>
-                    </div>
-                </div>
-            </form>
+            
         </div>
     );
 }
