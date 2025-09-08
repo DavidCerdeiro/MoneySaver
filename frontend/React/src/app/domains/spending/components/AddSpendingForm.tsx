@@ -91,7 +91,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                 formData.establishment = undefined;
             }
         }
-        
+        console.log(formData);
         const spending = await addSpending(formData) as SpendingData;
         if (selectedFile && spending?.id) {
             await uploadBill(selectedFile, spending.id);
@@ -155,7 +155,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
             setSelectedEstablishment(null);
         }
     };
-
+    console.log(errors);
     useEffect(() => {
         if (selectedCategory) {
             setValue("idCategory", selectedCategory?.id || 0);

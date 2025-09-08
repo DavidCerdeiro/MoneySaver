@@ -34,7 +34,7 @@ public class SpendingResponse {
         this.date = spending.getDate();
         this.categoryName = spending.getCategory().getName();
         this.iconCategory = spending.getCategory().getIcon();
-        this.establishmentName = spending.getEstablishment().getName();
+        this.establishmentName = spending.getEstablishment() != null ? spending.getEstablishment().getName() : null;
         this.billId = (bill != null) ? bill.getId() : null;
     }
     public Integer getId() {
