@@ -70,6 +70,11 @@ html, body {
 .input-form {
   @apply w-full min-h-[44px] px-3 py-2 text-base bg-zinc-800 text-white border border-zinc-700 rounded focus:border-green-500 focus:ring-1 focus:ring-green-500;
 }
+@media (min-width: 1024px) {
+  .input-file {
+    @apply w-80; /* ~320px de ancho */
+  }
+}
 /* === Texts === */
 .span-text { @apply text-sm sm:text-base; }
 
@@ -130,7 +135,7 @@ html, body {
   @apply w-full justify-between bg-zinc-900 text-white hover:bg-zinc-800 hover:text-white min-h-[44px] px-3;
 }
 .combobox-popover-content {
-  @apply w-full p-0 bg-zinc-900 border border-white text-white max-h-[300px] overflow-y-auto;
+  @apply w-full p-0 bg-zinc-900 border border-white text-white max-h-[300px];
 }
 .combobox-command {
   @apply bg-zinc-900 text-white;
@@ -154,6 +159,11 @@ html, body {
 /* === Form === */
 .form-container {
   @apply space-y-4 w-full max-w-md sm:max-w-lg mx-auto px-4;
+}
+@media (min-width: 1024px) {
+  .form-container-wide {
+    @apply max-w-3xl;
+  }
 }
 .row-input {
   @apply grid grid-cols-1 sm:grid-cols-2 gap-4;

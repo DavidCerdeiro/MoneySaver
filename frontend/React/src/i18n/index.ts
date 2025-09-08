@@ -10,7 +10,6 @@ i18next
   .use(initReactI18next)
   .init({
     fallbackLng: "es",
-    debug: true, // 🔍 Activa esto temporalmente para ver logs
     resources: {
       en: { translation: en },
       es: { translation: es },

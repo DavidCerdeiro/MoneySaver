@@ -165,7 +165,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
     }, [selectedCategory, setValue]);
     
     return (
-        <div className="form-container">
+        <div className="form-container form-container-wide">
             <form onSubmit={(e) => {
                 e.preventDefault();
                 if (selectedFile) {
@@ -180,7 +180,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                             onChange={handleFileChange} 
                             disabled={isProcessing} 
                             ref={fileInputRef}
-                            className="input-form"
+                            className="input-form input-file"
                             accept=".pdf,.jpg,.jpeg,.png,.gif"
                         />
                     </div>
@@ -272,6 +272,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                             {...register("establishment.name")} 
                             placeholder={t('domains.establishment.namePlaceholder')} 
                         />
+                        {errors.establishment?.name && <p className="text-red-500 text-xs mt-1">{errors.establishment.name.message}</p>}
                     </div>
                 </div>
 
