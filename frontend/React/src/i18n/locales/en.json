@@ -408,7 +408,7 @@
             "savingGoals": {
                 "title": "Saving goals",
                 "createGoal": {
-                    "title": "Create saving goal",
+                    "title": "Add saving goal",
                     "description": "Set a saving goal and start saving."
                 },
                 "viewGoals": {

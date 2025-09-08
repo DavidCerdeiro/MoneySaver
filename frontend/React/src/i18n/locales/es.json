@@ -408,7 +408,7 @@
             "savingGoals": {
                 "title": "Objetivos de ahorro",
                 "createGoal": {
-                    "title": "Crear objetivo de ahorro",
+                    "title": "Añadir objetivo de ahorro",
                     "description": "Establece un objetivo de ahorro y comienza a ahorrar."
                 },
                 "viewGoals": {
