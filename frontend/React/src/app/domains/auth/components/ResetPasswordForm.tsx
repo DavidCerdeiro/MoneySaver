@@ -68,12 +68,12 @@ export function ResetPasswordForm() {
                     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
                         <div className="grid gap-2">
                             <Label htmlFor="newPassword">{t('resetPassword.newPassword')}</Label>
-                            <Input id="password" type="password" {...register("newPassword")} className="mobile-form-control" />
+                            <Input id="password" type="password" {...register("newPassword")} className="input-form" />
                             {errors.newPassword && <p className="text-red-500 text-sm">{errors.newPassword.message}</p>}
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="confirmPassword">{t('resetPassword.confirmNewPassword')}</Label>
-                            <Input id="confirmPassword" type="password" {...register("confirmPassword")} className="mobile-form-control" />
+                            <Input id="confirmPassword" type="password" {...register("confirmPassword")} className="input-form" />
                             {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
                         </div>
                             <Button type="submit" className="button-green" disabled={isSubmitting}>

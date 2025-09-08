@@ -176,7 +176,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                             id="name" 
                             placeholder={t('domains.spending.namePlaceholder')} 
                             {...register('name')} 
-                            className="mobile-form-control" 
+                            className="input-form" 
                             disabled={isProcessing} 
                         />
                         {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
@@ -190,7 +190,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                             id="amount"
                             placeholder={t('domains.spending.amountPlaceholder')}
                             {...register('amount', { valueAsNumber: true })}
-                            className="mobile-form-control"
+                            className="input-form"
                             disabled={isProcessing}
                         />
                         {errors.amount && <p className="text-red-500 text-xs mt-1">{errors.amount.message}</p>}
@@ -218,7 +218,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                             id="date" 
                             type="date" 
                             {...register("date")} 
-                            className="mobile-form-control" 
+                            className="input-form" 
                             disabled={isProcessing} 
                         />
                         {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>}
@@ -241,7 +241,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                         <Input 
                             id="establishmentName" 
                             type="text" 
-                            className="mobile-form-control" 
+                            className="input-form" 
                             disabled={!selectedEstablishment || selectedEstablishment.id !== 0 || isProcessing} 
                             {...register("establishment.name")} 
                             placeholder={t('domains.establishment.namePlaceholder')} 
@@ -282,7 +282,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                             id="expirationDate" 
                             type="date" 
                             {...register("expirationDate")} 
-                            className="mobile-form-control" 
+                            className="input-form" 
                         />
                         {errors.expirationDate && <p className="text-red-500 text-xs mt-1">{errors.expirationDate.message}</p>}
                     </div>
@@ -321,7 +321,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
                             onChange={handleFileChange} 
                             disabled={isProcessing} 
                             ref={fileInputRef}
-                            className="mobile-form-control"
+                            className="input-form"
                             accept=".pdf,.jpg,.jpeg,.png,.gif"
                         />
                     </div>

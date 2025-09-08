@@ -1,5 +1,11 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
+/**
+ * Fetches a resource, if the token access is expired tries to refresh it and retries the request.
+ * @param url - The URL of the resource to fetch.
+ * @param options - Fetch options.
+ * @returns The response from the fetch call.
+ */
 export async function fetchWithRefresh(
   url: string,
   options: RequestInit = {}

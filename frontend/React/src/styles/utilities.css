@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* === Global Styles === */
 html, body {
   overflow-x: hidden;
   width: 100%;
@@ -25,7 +26,6 @@ html, body {
 .main-header {
   @apply sticky top-0 z-50 bg-black border-b border-zinc-800 py-2 sm:py-3 w-full px-2 sm:px-4;
 }
-
 .nav-link {
   @apply text-base sm:text-lg font-medium text-white bg-black px-2 sm:px-3 py-2 rounded-md transition-colors min-h-[44px] flex items-center justify-center;
 }
@@ -62,10 +62,10 @@ html, body {
 
 /* === Inputs === */
 .label{
-  @apply block mb-2 text-sm sm:text-base;
+  @apply block mb-2 text-sm sm:text-base text-left;
 }
-.input-dark {
-  @apply bg-zinc-800 text-white placeholder-gray-300 border-none focus:ring-2 focus:ring-green-500 w-full min-h-[44px] px-3 py-2 rounded text-base;
+.input-form {
+  @apply w-full min-h-[44px] px-3 py-2 text-base bg-zinc-800 text-white border border-zinc-700 rounded focus:border-green-500 focus:ring-1 focus:ring-green-500;
 }
 
 /* === UL === */
@@ -160,6 +160,9 @@ html, body {
 }
 
 /* === Table === */
+.table-container {
+  @apply w-full overflow-x-auto md:overflow-x-visible;
+}
 .table-head{
   @apply text-left text-white pl-4 sm:pl-8 text-sm sm:text-base;
 }
@@ -170,25 +173,9 @@ html, body {
   @apply text-white text-left px-3 sm:px-6 text-sm sm:text-base;
 }
 
-/* === Mobile-specific improvements === */
-/* Ensure tables are scrollable on mobile */
-.table-container {
-  @apply w-full overflow-x-auto md:overflow-x-visible;
-}
-
 /* Mobile-first form layouts */
 .form-container {
   @apply space-y-4 w-full max-w-md sm:max-w-lg mx-auto px-4;
-}
-
-/* Better mobile navigation */
-.mobile-nav-item {
-  @apply w-full text-left px-4 py-3 text-base border-b border-zinc-800 hover:bg-zinc-800 min-h-[44px] flex items-center;
-}
-
-/* Improved mobile touch targets */
-.touch-target {
-  @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
 }
 
 /* Mobile-optimized spacing */
@@ -203,27 +190,4 @@ html, body {
 .responsive-text-lg { @apply text-lg sm:text-xl; }
 .responsive-text-xl { @apply text-xl sm:text-2xl; }
 
-/* Mobile-first grid layouts */
-.responsive-grid {
-  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4;
-}
 
-/* Better mobile form controls */
-.mobile-form-control {
-  @apply w-full min-h-[44px] px-3 py-2 text-base bg-zinc-800 text-white border border-zinc-700 rounded focus:border-green-500 focus:ring-1 focus:ring-green-500;
-}
-
-.input-euro {
-  position: relative;
-  padding-right: 2rem; /* deja espacio al símbolo */
-}
-
-.input-euro::after {
-  content: "€";
-  position: absolute;
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #9ca3af; /* gris */
-  pointer-events: none;
-}

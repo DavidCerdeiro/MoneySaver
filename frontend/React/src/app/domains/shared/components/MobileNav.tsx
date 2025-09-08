@@ -6,13 +6,16 @@ import { useTranslation } from "react-i18next"
 import { logout } from "../../user/application/UserService"
 
 export function MobileNav() {
-  const { t } = useTranslation()
+  const { t, i18n} = useTranslation()
   const navigate = useNavigate()
   const handleLogout = () => {
       logout(); 
       navigate('/login')
-    }
-
+  }
+  
+  const handleChangeLang = (lng: string) => {
+    i18n.changeLanguage(lng);
+  }
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -20,14 +23,32 @@ export function MobileNav() {
           <Menu className="h-6 w-6" />
         </Button>
       </SheetTrigger>
-      {/* CAMBIO: Añadimos estilos para el fondo negro y texto claro */}
       <SheetContent side="left" className="bg-black text-gray-200 border-none p-4">
         <nav className="flex flex-col space-y-2 mt-8">
           <Link to="/home" className="mb-4">
             <h1 className="text-xl font-bold">{t("app.title")}</h1>
           </Link>
-
-          {/* CAMBIO: Se han añadido clases para dar estilo a los desplegables */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => handleChangeLang("es")} 
+                className={`font-semibold text-sm transition-colors hover:text-white ${
+                  i18n.language === 'es' ? 'text-white' : 'text-zinc-400'
+                }`}
+              >
+                ES
+              </button>
+              <div className="h-4 w-px bg-zinc-600"></div>
+              <button 
+                onClick={() => handleChangeLang("en")} 
+                className={`font-semibold text-sm transition-colors hover:text-white ${
+                  i18n.language === 'en' ? 'text-white' : 'text-zinc-400'
+                }`}
+              >
+                EN
+              </button>
+            </div>
+          </div>
           <details className="group">
             <summary className="nav-link cursor-pointer list-none flex items-center justify-between p-2 rounded-md hover:bg-gray-800">
               {t("header.sections.profile.title")}
@@ -75,7 +96,7 @@ export function MobileNav() {
               <Link to="/charts/compare" className="nav-link-mobile">{t("header.sections.charts.compareCharts.title")}</Link>
             </div>
           </details>
-          
+
           <button onClick={handleLogout} className="mt-6 w-full text-left p-2 rounded-md text-red-500 hover:bg-gray-800 font-bold">
             {t("header.logout")}
           </button>

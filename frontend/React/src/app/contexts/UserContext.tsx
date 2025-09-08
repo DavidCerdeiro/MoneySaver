@@ -2,16 +2,17 @@ import { createContext, useContext, useState, useEffect, type ReactNode } from "
 import { fetchWithRefresh } from "../domains/auth/application/authService";
 const API_URL = import.meta.env.VITE_API_URL;
 type UserContextType = {
-  isAuthenticated: boolean | null; // null = loading
+  isAuthenticated: boolean | null;
   setIsAuthenticated: (auth: boolean) => void;
-  checkAuth: () => Promise<void>; // <- añadimos checkAuth
+  checkAuth: () => Promise<void>; 
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-
+  
+  // Function to check user authentication status
   const checkAuth = async () => {
     try {
       const res = await fetchWithRefresh(`${API_URL}/api/auth/sessions/me`, {

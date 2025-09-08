@@ -44,14 +44,17 @@ function ListItem({
 }
 
 export function HeaderComponent() {
-  const { t } = useTranslation();
+  const { t, i18n} = useTranslation();
   const navigate = useNavigate();
   // This function handles the logout action
   const handleLogout = () => {
     logout(); 
     navigate('/login')
   }
-
+  
+  const handleChangeLang = (lng: string) => {
+    i18n.changeLanguage(lng);
+  }
   return (
     <header className="main-header">
       <div className="container mx-auto flex items-center justify-between px-4">
@@ -161,6 +164,27 @@ export function HeaderComponent() {
           </NavigationMenuList>
         </NavigationMenu>
 
+        <div className="hidden md:flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => handleChangeLang("es")} 
+              className={`font-semibold text-sm transition-colors hover:text-white ${
+                i18n.language === 'es' ? 'text-white' : 'text-zinc-400'
+              }`}
+            >
+              ES
+            </button>
+            <div className="h-4 w-px bg-zinc-600"></div>
+            <button 
+              onClick={() => handleChangeLang("en")} 
+              className={`font-semibold text-sm transition-colors hover:text-white ${
+                i18n.language === 'en' ? 'text-white' : 'text-zinc-400'
+              }`}
+            >
+              EN
+            </button>
+          </div>
+        </div>
         {/* LOGOUT */}
         <button
           onClick={handleLogout}

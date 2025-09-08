@@ -1,104 +1,479 @@
 {
-  "domains": {
-    "transaction": {
-      "extract": {
-        "title": "Extract transactions",
-        "description": "Extract your latest transactions from a bank account over a period of time.",
-        "submit": "Extract information",
-        "minDate": "Minimum date",
-        "maxDate": "Maximum date",
-        "noTransactionsFound": "No pending transactions found for this period."
-      },
-      "add": {
-        "title": "Add transactions",
-        "description": "Add the category you want to associate it with and the establishment if desired.",
-        "submit": "Add transaction",
-        "success": "Transaction {{name}} of {{amount}}€ added successfully."
-      },
-      "table": {
-        "caption": "List of your transactions"
-      },
-      "errors": {
-        "minDate": {
-          "required": "Minimum date is required",
-          "currentMonth": "Minimum date must be in the current month",
-          "cannotBeAfterMaxDate": "Minimum date cannot be after the maximum date"
-        },
-        "maxDate": {
-          "required": "Maximum date is required",
-          "future": "Maximum date cannot be in the future"
-        }
-      }
+    "app": {
+        "title": "MoneySaver",
+        "description": "Control your personal finances",
+        "welcome": "Welcome to MoneySaver! Your partner in financial management."
     },
-    "account": {
-      "title": "Bank Accounts",
-      "number": "Account number",
-      "addedSuccesfully": "{{num}} bank accounts have been linked.",
-      "addedOneAccount": "{{name}} bank account has been linked.",
-      "noAccountsFound": "No bank accounts found to add.",
-      "page": {
-        "title": "View bank accounts",
-        "description": "Check your linked bank accounts, add new ones or delete them.",
-        "linkAccounts": "Link new accounts"
-      },
-      "delete": {
-        "success": "Bank account successfully deleted.",
-        "error": "Error deleting bank account. Please try again."
-      },
-      "table": {
-        "caption": "List of your linked bank accounts",
-        "headers": {
-          "name": "Name",
-          "number": "Number",
-          "bankName": "Bank name",
-          "unlink": "Unlink",
-          "select": "Select"
-        },
-        "dialog": {
-          "title": "Unlink account",
-          "description": "Are you sure you want to unlink the account {{name}}?",
-          "confirm": "Unlink",
-          "cancel": "Cancel"
-        }
-      },
-      "errors": {
-        "duplicateAccount": "The bank account is already linked."
-      }
-    }
-  },
-  "spending": {
-    "add": {
-      "currentMonth": "The spending must correspond to the current month.",
-      "fileError": "Error processing file. Please try again.",
-      "processingFile": "Processing file..."
+    "login": {
+        "title": "Log in",
+        "welcomeBack": "Welcome back",
+        "logout": "Log out",
+        "forgotPassword": "Forgot your password?",
+        "signUp": "Sign up",
+        "emailPlaceholder": "email@example.com",
+        "submit": "Log in",
+        "error": "Incorrect email or password"
     },
-    "view": {
-      "date": "Showing the monthly summary for {{month}}/{{year}}."
+    "signUp": {
+        "title": "Sign up",
+        "welcome": "Sign up to manage your finances",
+        "namePlaceholder": "Sherlock",
+        "lastNamePlaceholder": "Holmes",
+        "emailPlaceholder": "sherlockHolmes@ejemplo.com",
+        "confirmPassword": "Confirm password",
+        "logIn": "Log in",
+        "submit": "Sign up",
+        "success": "Welcome, {{name}}! Please verify your email to continue.",
+        "error": "Email already registered."
     },
-    "table": {
-      "viewAttachment": "View attachment",
-      "caption": "List of your general spendings"
+    "forgotPassword": {
+        "title": "Password Recovery",
+        "description": "Enter your email to receive the verification code.",
+        "emailPlaceholder": "email@example.com",
+        "backToLogin": "Back to login",
+        "submit": "Send verification code",
+        "error": "Email not registered."
+    },
+    "auth":{
+        "defaultTitle": "User Authentication",
+        "forgotTitle": "Password Recovery",
+        "forgotDescription": "To recover your password, a verification code has been sent to your email.",
+        "signUpDescription": "To complete your registration, a verification code has been sent to your email.",
+        "loginDescription": "To complete your login, a verification code has been sent to your email.",
+        "length": "The code must be 6 digits long",
+        "forgotSubmit": "Change password",
+        "signUpSubmit": "Sign up",
+        "loginSubmit": "Log in",
+        "signUpSuccess": "Successfully registered! Welcome to MoneySaver.",
+        "loginSuccess": "Logged in successfully! Welcome back.",
+        "verificationError": "Verification error. Please check your code and try again."
+    },
+    "resetPassword": {
+        "title": "Change Password",
+        "description": "Enter your new password. You will be redirected to the login page.",
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password",
+        "submit": "Change Password",
+        "success": "Password changed successfully, please log in.",
+        "error": "Error changing password. Please try again."
     },
     "errors": {
-      "date": {
-        "currentMonth": "The date must be in the current month"
-      }
-    }
-  },
-  "header": {
-    "sections": {
-      "profile": {
-        "manageAccounts": {
-          "title": "Manage bank accounts",
-          "description": "Add new bank accounts or remove the linked ones."
+        "requiredField": "This field is required",
+        "invalidEmail": "Invalid email address",
+        "passwordMismatch": "Passwords do not match",
+        "passwordLength": "The password must be at least 8 characters long",
+        "passwordChars": "The password must contain at least one uppercase letter, one lowercase letter, and one number",
+        "otpContent": "The content must be numeric only"
+    },
+    "domains":{
+        "user":{
+            "name": "Name",
+            "surname": "Surname",
+            "email": "Email",
+            "password": "Password",
+            "confirmPassword": "Confirm New Password",
+            "typeChart": "Preferred Chart Type",
+            "passwordRequirements":{
+                "length": "The password must be at least 8 characters long",
+                "uppercase": "The password must contain at least one uppercase letter",
+                "lowercase": "The password must contain at least one lowercase letter",
+                "number": "The password must contain at least one number"
+            },
+            "modify":{
+                "title": "Modify Profile",
+                "description": "Update your profile information.",
+                "success": "Profile updated successfully.",
+                "error": "Error updating profile. Please try again.",
+                "submit": "Update Profile",
+                "dialog":{
+                    "title": "Confirm Profile Update",
+                    "description": "Are you sure you want to update your profile? This action will update your personal information.",
+                    "confirm": "Yes, update",
+                    "cancel": "No, cancel"
+                }
+            },
+            "delete":{
+                "title": "Delete Account",
+                "success": "Account deleted successfully. Come back soon!",
+                "error": "Error deleting account. Please try again.",
+                "submit": "Delete Account",
+                "dialog":{
+                    "title": "Confirm Account Deletion",
+                    "description": "Are you sure you want to delete your account? This action is irreversible and will delete your account and all associated data. You will need to verify your email.",
+                    "confirm": "Yes, continue",
+                    "cancel": "No, cancel"
+                },
+                "confirm":{
+                    "title": "Authenticate to Delete Your Account",
+                    "description": "Enter the code sent to your email to confirm the deletion of your account.",
+                    "submit": "Delete Account"
+                }
+            }
+        },
+        "transaction":{
+                "extract":{
+                    "title": "Extract Transactions",
+                    "description": "Extract your latest transactions from a bank account over a period of time.",
+                    "submit": "Extract Information",
+                    "minDate": "Minimum Date",
+                    "maxDate": "Maximum Date",
+                    "noTransactionsFound": "No pending transactions found for this period."
+                },
+                "add":{
+                    "title":"Add Transactions",
+                    "description":"Add the category you want to associate it with and the establishment if you wish.",
+                    "submit": "Add Transaction",
+                    "success": "Transaction {{name}} of {{amount}}€ added successfully."
+                },
+                "table":{
+                    "caption": "List of your transactions"
+                },
+                "errors":{
+                    "minDate": {
+                        "required": "Minimum date is required",
+                        "currentMonth": "Minimum date must be from the current month",
+                        "cannotBeAfterMaxDate": "Minimum date cannot be after maximum date"
+                    },
+                    "maxDate": {
+                        "required": "Maximum date is required",
+                        "future": "Maximum date cannot be in the future"
+                    }
+                }
+            },
+        "establishment":{
+            "title": "Establishment",
+            "name": "Establishment Name",
+            "namePlaceholder": "Tesco",
+            "combobox":{
+                "select": "Select establishment",
+                "noEstablishments": "No establishment found.",
+                "selectedNewEstablishment": "New establishment selected",
+                "newEstablishment":"+ New establishment",
+                "search": "Search establishment"
+            }
+        },
+        "goal":{
+            "name":"Name",
+            "targetAmount":"Maximum Amount",
+            "category": "Category",
+            "percent": "Percentage",
+            "combobox":{
+                "select": "Select goal",
+                "noGoals": "No goal found.",
+                "search": "Search goal"
+            },
+            "add":{
+                "title": "Add Goal",
+                "description": "Create a new savings goal. Set the maximum amount you want to spend in a category.",
+                "tableCaption": "List of your current savings goals",
+                "submit": "Create Goal",
+                "success": "Goal created successfully."
+            },
+            "edit":{
+                "title": "Edit Goal",
+                "description": "Update the information of the goals or delete them.",
+                "success": "Goal updated successfully.",
+                "error": "Error updating goal. Please try again.",
+                "submit": "Update Goal",
+                "dialog":{
+                    "title": "Confirm Update",
+                    "description": "Are you sure you want to update the goal {{name}}?",
+                    "confirm": "Yes, update",
+                    "cancel": "No, cancel"
+                }
+            },
+            "delete":{
+                "success": "Goal deleted successfully.",
+                "submit": "Delete Goal",
+                "dialog":{
+                    "title": "Confirm Delete",
+                    "description": "Are you sure you want to delete the goal {{name}}?",
+                    "confirm": "Yes, delete",
+                    "cancel": "No, cancel"
+                }            
+            },
+            "view":{
+                "title": "View Goals",
+                "description": "Check the summary of your goals by month.",
+                "tableCaption": "List of your savings goals for {{month}}/{{year}}",
+                "stats": "In the month {{month}}/{{year}} you have completed {{goalsBelow100}} of {{totalGoals}} goals."
+            }
+        },
+        "category":{
+            "title": "Categories",
+            "name": "Name",
+            "icon": "Icon",
+            "totalSpending": "Total Spending",
+            "deleted": "Deleted",
+            "add":{
+                "description": "Create a new spending category. The name must be unique among active categories.",
+                "iconSelected": "Selected: ",
+                "submit": "Create new category",
+                "success": "Category {{icon}} {{name}} created successfully.",
+                "error": "Error creating category. Please check the fields and try again.",
+                "duplicateError": "An active category with that name already exists."
+            },
+            "modify":{
+                "description": "Modify the name or icon of the category you want. This change will not affect already registered expenses or the total spending. Or delete the category, all expenses in that category will be removed.",
+                "tableCaption": "List of your current spending categories",
+                "success": "Category {{icon}} {{name}} modified successfully.",
+                "error": "Error modifying category. Please check the fields and try again.",
+                "submit": "Modify category",
+                "dialog":{
+                    "title": "Confirm Modification",
+                    "description": "Are you sure you want to modify the category {{icon}}{{name}} to {{newIcon}}{{newName}}?",
+                    "confirm": "Yes, modify",
+                    "cancel": "No, cancel"
+                }
+            },
+            "delete":{
+                "description": "Delete the category you want. This action will remove all expenses in that category.",
+                "tableCaption": "List of your current spending categories",
+                "success": "Category {{icon}} {{name}} deleted successfully.",
+                "error": "Error deleting category. Please try again.",
+                "selectCategory": "Select category",
+                "noCategories": "No categories found.",
+                "submit": "Delete category",
+                "dialog":{
+                    "title": "Confirm Deletion",
+                    "description": "Are you sure you want to delete the category {{icon}}{{name}}? All associated goals and expenses will be removed.",
+                    "confirm": "Yes, delete",
+                    "cancel": "No, cancel"
+                }
+            },
+            "combobox":{
+                "select": "Select category",
+                "noCategories": "No categories found.",
+                "search": "Search category"
+            },
+            "errors":{
+                "name": {
+                    "required": "Name is required"
+                }
+            }
+        },
+        "spending":{
+            "name": "Name",
+            "namePlaceholder": "GTA VI",
+            "amount": "Amount",
+            "amountPlaceholder": 0.00,
+            "category": "Category",
+            "date": "Date",
+            "periodicity": "Is periodic",
+            "expirationDate": "Expiration date",
+            "add": {
+                "description": "Register a new expense through the form or by importing the receipt, invoice, or any similar document.",
+                "currentMonth": "The expense must correspond to the current month.",
+                "category": "Category",
+                "amount": "Amount €",
+                "date": "Date",
+                "submit": "Register expense",
+                "error": "Error registering expense. Please check the fields and try again.",
+                "success": "Registered {{name}} with an amount of {{amount}}€ in the category {{category}}",
+                "fileDescription": "Attach a receipt, invoice, or any similar document to extract the information. Once you attach the file, the previous form will be disabled.",
+                "labelFile": "File",
+                "submitFile": "Scan file",
+                "defaultSpendingProcessed": "Purchase at {{establishment}}",
+                "fileProcessed": "File processed successfully",
+                "fileError": "Error processing file. Please try again.",
+                "processingFile": "Processing file...",
+                "submitting": "Submitting..."
+            },
+            "view":{
+                "title": "View spendings",
+                "description": "Check your spendings by month and sort them as you wish.",
+                "date": "Showing the summary for {{month}}/{{year}}.",
+                "previousMonth": "Previous month",
+                "nextMonth": "Next month"
+            },
+            "table": {
+                "viewAttachment": "View attachment",
+                "caption": "List of your general expenses"
+            },
+            "errors": {
+                "name": {
+                    "required": "The name is required"
+                },
+                "amount": {
+                    "required": "The amount is required",
+                    "positive": "The amount must be a positive number"
+                },
+                "date": {
+                    "required": "Date is required",
+                    "currentMonth": "Date must be from the current month"
+                },
+                "expirationDate": {
+                    "required": "Expiration day is required",
+                    "future": "Expiration day must be later than today",
+                    "sameDay": "Day of expiration must be the same as the day of the spending"
+                },
+                "typePeriodic": {
+                    "required": "The periodicity type is required"
+                },
+                "category": {
+                    "required": "The category is required"
+                },
+                "token":{
+                    "errorRefresh": "Session token has expired. Please log in again."
+                }
+            }
+        },
+        "account":{
+            "title": "Bank accounts",
+            "number": "Account number",
+            "addedSuccesfully": "Linked {{num}} bank accounts.",
+            "addedOneAccount": "Linked {{name}} bank account.",
+            "noAccountsFound": "No bank accounts found to link.",
+            "page":{
+                "title": "View bank accounts",
+                "description": "Check your linked bank accounts, add new ones, or remove existing ones.",
+                "linkAccounts": "Link new accounts"
+            },
+            "delete":{
+                "success": "Account successfully unlinked.",
+                "error": "Error unlinking account. Please try again."
+            },
+            "table":{
+                "caption": "List of your linked bank accounts",
+                "headers": {
+                    "name": "Name",
+                    "number": "Number",
+                    "bankName": "Bank name",
+                    "unlink": "Unlink",
+                    "select": "Select"
+                },
+                "dialog":{
+                    "title": "Unlink account",
+                    "description": "Are you sure you want to unlink the account {{name}}?",
+                    "confirm": "Unlink",
+                    "cancel": "Cancel"
+                }
+            },
+            "errors":{
+                "duplicateAccount": "The bank account is already linked."
+            }
+        },
+        "typePeriodic":{
+            "title": "Periodicity type",
+            "monthly": "Monthly",
+            "quarterly": "Quarterly",
+            "yearly": "Annual",
+            "combobox":{
+                "select": "Select type",
+                "noTypePeriodic": "No type found",
+                "search": "Search type"
+            }
+        },
+        "charts":{
+            "main": {
+                "title": "Monthly charts",
+                "footer": "Breakdown of expenses by category"
+            },
+            "type": {
+                "radar": "Radar chart",
+                "pie": "Pie chart",
+                "bars": "Bar chart",
+                "combobox":{
+                    "select": "Select chart type",
+                    "noTypeChart": "No chart type found.",
+                    "search": "Search chart type"
+                }
+            },
+            "view": {
+                "title": "View charts",
+                "description": "Showing the monthly summary by categories corresponding to {{month}}/{{year}}."
+            },
+            "compare":{
+                "title": "Compare charts",
+                "description": "Compare your monthly expenses by category. Select different dates.",
+                "actualMonths": "Comparing {{month1}}/{{year1}} and {{month2}}/{{year2}}.",
+                "month1Label": "Month 1",
+                "month2Label": "Month 2",
+                "submit": "Compare"
+            }
         }
-      },
-      "spendings": {
-        "transactions": {
-          "title": "Extract transactions",
-          "description": "Extract your latest transactions."
-        }
-      }
+    },
+    "header":{
+        "sections":{
+            "profile":{
+                "title":"Profile",
+                "editProfile":{
+                    "title": "Edit profile",
+                    "description": "Update your personal information."
+                },
+                "manageAccounts":{
+                    "title": "Manage bank accounts",
+                    "description": "Add new bank accounts or remove existing ones."
+                }
+            },
+            "savingGoals": {
+                "title": "Saving goals",
+                "createGoal": {
+                    "title": "Create saving goal",
+                    "description": "Set a saving goal and start saving."
+                },
+                "viewGoals": {
+                    "title": "View saving goals",
+                    "description": "Consult your current saving goals."
+                },
+                "editGoals": {
+                    "title": "Edit saving goal",
+                    "description": "Modify the details of your saving goal."
+                }
+            },
+            "spendings":{
+                "title": "Spendings",
+                "viewSpendings": {
+                    "title": "View spendings",
+                    "description": "Consult your spendings by month."
+                },
+                "addSpending": {
+                    "title": "Add spending",
+                    "description": "Register a new spending."
+                },
+                "transactions":{
+                    "title": "Extract transactions",
+                    "description": "Extract your latest transactions."
+                },
+                "addCategory": {
+                    "title": "Add category",
+                    "description": "Create a new spending category.",
+                    "submit": "Create new category"
+                },
+                "editCategory": {
+                    "title": "Edit category",
+                    "description": "Update the details of an existing category or delete it."
+                }
+            },
+            "charts": {
+                "title": "Charts",
+                "viewCharts": {
+                    "title": "View charts",
+                    "description": "Visualize your monthly expenses through different charts."
+                },
+                "compareCharts": {
+                    "title": "Compare charts",
+                    "description": "Compare your monthly expenses across different categories."
+                }
+            }
+        },
+        "logout": "Log out"
+    },
+    "footer":{
+        "copyright": "All rights reserved."
+    },
+    "months":{
+        "january": "January",
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
     }
-  }
 }

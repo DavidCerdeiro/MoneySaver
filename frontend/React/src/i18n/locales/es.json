@@ -206,7 +206,7 @@
             "totalSpending": "Gasto total",
             "deleted": "Eliminada",
             "add":{
-                "description": "Crea una nueva categoría de gasto mediante el nombre que estimes oportuno y el icono que más se adecue.",
+                "description": "Crea una nueva categoría de gasto. El nombre debe ser único entre las categorías activas.",
                 "iconSelected": "Seleccionado: ",
                 "submit": "Crear nueva categoría",
                 "success": "Categoría {{icon}} {{name}} creada con éxito.",

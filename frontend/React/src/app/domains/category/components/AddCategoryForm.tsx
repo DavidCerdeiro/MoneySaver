@@ -55,13 +55,13 @@ export function AddCategoryForm() {
 
   }
   return (
-    <div className="flex flex-col items-center justify-center px-4">
+    <div className="form-container">
       <h1 className="page-title">{t('header.sections.spendings.addCategory.title')}</h1>
       <p  className="page-description">{t('domains.category.add.description')}</p>
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
         <div className="grid gap-2">
           <Label htmlFor="name" className="label">{t('domains.category.name')}</Label>
-          <Input id="name" {...register('name', { required: t('domains.category.errors.name.required') })} className="mobile-form-control" />
+          <Input id="name" {...register('name', { required: t('domains.category.errors.name.required') })} className="input-form" />
           {errors.name && (
             <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
           )}

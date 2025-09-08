@@ -61,22 +61,22 @@ export function SignUpForm() {
                     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
                         <div className="grid gap-2">
                             <Label htmlFor="name">{t('domains.user.name')}</Label>
-                            <Input id="firstName" placeholder={t('signUp.namePlaceholder')} {...register("name")} className="mobile-form-control" />
+                            <Input id="firstName" placeholder={t('signUp.namePlaceholder')} {...register("name")} className="input-form" />
                             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="surname">{t('domains.user.surname')}</Label>
-                            <Input id="surname" placeholder={t('signUp.lastNamePlaceholder')} {...register("surname")} className="mobile-form-control" />
+                            <Input id="surname" placeholder={t('signUp.lastNamePlaceholder')} {...register("surname")} className="input-form" />
                             {errors.surname && <p className="text-red-500 text-sm">{errors.surname.message}</p>}
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="email">{t('domains.user.email')}</Label>
-                            <Input id="email" type="email" placeholder={t('signUp.emailPlaceholder')} {...register("email")} className="mobile-form-control" />
+                            <Input id="email" type="email" placeholder={t('signUp.emailPlaceholder')} {...register("email")} className="input-form" />
                             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="password">{t('domains.user.password')}</Label>
-                            <Input id="password" type="password" {...register("password")} className="mobile-form-control" />
+                            <Input id="password" type="password" {...register("password")} className="input-form" />
                             {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                         </div>
                         <div className="grid gap-2">
@@ -90,7 +90,7 @@ export function SignUpForm() {
                         
                         <div className="grid gap-2">
                             <Label htmlFor="confirmPassword">{t('signUp.confirmPassword')}</Label>
-                            <Input id="confirmPassword" type="password" {...register("confirmPassword")} className="mobile-form-control" />
+                            <Input id="confirmPassword" type="password" {...register("confirmPassword")} className="input-form" />
                             {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
                         </div>
                         <Button type="submit" className="button-green" disabled={isSubmitting}>

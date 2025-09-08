@@ -58,7 +58,7 @@ export function LoginForm() {
                     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
                         <div className="grid gap-2">
                             <Label htmlFor="email">{t('domains.user.email')}</Label>
-                            <Input id="email" type="email" {...register("email")} className="mobile-form-control"/>
+                            <Input id="email" type="email" {...register("email")} className="input-form"/>
                             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                         </div>
                         <div className="grid gap-2">
@@ -66,7 +66,7 @@ export function LoginForm() {
                                 <Label htmlFor="password">{t('domains.user.password')}</Label>
                                 <Link to="/forgot-password" className="ml-auto text-sm text-blue-400 hover:underline">{t('login.forgotPassword')}</Link>
                             </div>
-                            <Input id="password" type="password" {...register("password")} className="mobile-form-control"/>
+                            <Input id="password" type="password" {...register("password")} className="input-form"/>
                             {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                         </div>
                         <Button type="submit" className="button-green" disabled={isSubmitting}>

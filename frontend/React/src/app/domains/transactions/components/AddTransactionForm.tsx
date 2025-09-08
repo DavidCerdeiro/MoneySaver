@@ -56,7 +56,7 @@ export function AddTransactionForm({ response, categories, establishments, onSub
     spending.establishment ?? null
   );
 
-  // Reset form y selected states cuando cambia la transacción
+  // Reset form and states when its next transaction
   useEffect(() => {
     reset({
       transaction: {
@@ -73,7 +73,7 @@ export function AddTransactionForm({ response, categories, establishments, onSub
       },
     });
 
-    // Actualizar selectedCategory y selectedEstablishment
+    // Update selectedCategory and selectedEstablishment based on spending data
     const foundCategory = spending.idCategory
       ? categories.find((cat) => cat.id === spending.idCategory) || null
       : null;
@@ -82,7 +82,7 @@ export function AddTransactionForm({ response, categories, establishments, onSub
     setSelectedEstablishment(spending.establishment ?? null);
   }, [response, categories, reset, spending]);
 
-  // Mantener idCategory y establecimiento sincronizados con los selects
+  // Sinchronize selectedCategory y selectedEstablishment with form values
   useEffect(() => {
     setValue("spending.idCategory", selectedCategory?.id || 0);
     if (selectedEstablishment) {
@@ -91,9 +91,7 @@ export function AddTransactionForm({ response, categories, establishments, onSub
         setValue("spending.establishment", {
           id: currentEstablishment?.id || 0,
           name:
-            currentEstablishment?.name === "+ Añadir nuevo"
-              ? ""
-              : currentEstablishment?.name,
+            currentEstablishment?.name === "+ Añadir nuevo" ? "" : currentEstablishment?.name,
         });
       } else {
         setValue("spending.establishment", selectedEstablishment);
@@ -138,16 +136,16 @@ export function AddTransactionForm({ response, categories, establishments, onSub
 
       <div className="row-three-input mt-10">
         <div className="w-full">
-          <Label htmlFor="amount" className="label">{t("domains.spending.amount")}</Label>
-          <Input id="amount" type="number" {...register("spending.amount")} className="mobile-form-control" disabled />
+          <Label htmlFor="amount" className="label">{t("domains.spending.add.amount")}</Label>
+          <Input id="amount" type="number" {...register("spending.amount")} className="input-form" disabled />
         </div>
         <div className="w-full">
           <Label htmlFor="date" className="label">{t("domains.spending.date")}</Label>
-          <Input id="date" type="date" {...register("spending.date")} className="mobile-form-control" readOnly disabled />
+          <Input id="date" type="date" {...register("spending.date")} className="input-form" readOnly disabled />
         </div>
         <div className="w-full">
           <Label htmlFor="account" className="label">{t("domains.account.title")}</Label>
-          <Input id="account" type="text" value={transaction.account?.name ?? ""} className="mobile-form-control" disabled />
+          <Input id="account" type="text" value={transaction.account?.name ?? ""} className="input-form" disabled />
         </div>
       </div>
 

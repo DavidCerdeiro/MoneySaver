@@ -59,13 +59,13 @@ export function ExtractTransactionsForm({ accounts }: ExtractTransactionsFormPro
       <div className="row-input mt-3 mb-3">
         <div className="w-full">
           <Label htmlFor="minDate" className="label">{t('domains.transaction.extract.minDate')}</Label>
-          <Input id="minDate" type="date" {...register("minDate")} className="mobile-form-control" />
+          <Input id="minDate" type="date" {...register("minDate")} className="input-form" />
           {errors.minDate && <p className="text-red-500 text-sm">{errors.minDate.message}</p>}
         </div>
             
         <div className="w-full">
           <Label htmlFor="maxDate" className="label">{t('domains.transaction.extract.maxDate')}</Label>
-          <Input id="maxDate" type="date" {...register("maxDate")} className="mobile-form-control" />
+          <Input id="maxDate" type="date" {...register("maxDate")} className="input-form" />
           {errors.maxDate && <p className="text-red-500 text-sm">{errors.maxDate.message}</p>}
         </div>
       </div>
