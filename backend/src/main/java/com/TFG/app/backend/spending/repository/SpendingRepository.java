@@ -1,8 +1,10 @@
 package com.TFG.app.backend.spending.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.TFG.app.backend.spending.entity.Spending;
 
@@ -59,4 +61,14 @@ public interface SpendingRepository extends JpaRepository<Spending, Integer> {
 
 
     List<Spending> findByCategory(Category category);
+
+    @Modifying
+    @Transactional
+    @Query(value = """
+        DELETE FROM spending s
+        USING category c
+        WHERE s."Id_Category" = c."Id"
+        AND c."Id_User" = :userId
+        """, nativeQuery = true)
+    void deleteAllByUserId(@Param("userId") int userId);
 }

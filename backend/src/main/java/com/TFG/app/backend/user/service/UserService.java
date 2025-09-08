@@ -6,6 +6,7 @@ import com.TFG.app.backend.user.entity.User;
 import com.TFG.app.backend.user.repository.UserRepository;
 import com.TFG.app.backend.infraestructure.email.*;
 import com.TFG.app.backend.infraestructure.one_time_password.service.One_Time_PasswordService;
+import com.TFG.app.backend.spending.service.SpendingService;
 import com.TFG.app.backend.type_chart.entity.Type_Chart;
 import com.TFG.app.backend.type_chart.service.Type_ChartService;
 
@@ -26,19 +27,20 @@ public class UserService {
     private final One_Time_PasswordService oneTimePasswordService;
     private final EmailService emailService;
     private final Type_ChartService typeChartService;
-
+    private final SpendingService spendingService;
     @Autowired
     private MessageSource messageSource;
 
     @Autowired
     private Cache<String, String> otpCache;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, One_Time_PasswordService oneTimePasswordService, EmailService emailService, Type_ChartService typeChartService) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, One_Time_PasswordService oneTimePasswordService, EmailService emailService, Type_ChartService typeChartService, SpendingService spendingService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.oneTimePasswordService = oneTimePasswordService;
         this.emailService = emailService;
         this.typeChartService = typeChartService;
+        this.spendingService = spendingService;
     }
 
     /*
@@ -239,6 +241,7 @@ public class UserService {
     @Transactional
     public boolean deleteUser(User user) {
         if (user != null) {
+            spendingService.deleteAllSpendingsByUserId(user.getId());
             userRepository.delete(user);
             return true;
         }

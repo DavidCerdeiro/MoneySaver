@@ -26,6 +26,9 @@ public class SpendingService {
         this.spendingRepository = spendingRepository;
     }
 
+    public void deleteAllSpendingsByUserId(int userId) {
+        spendingRepository.deleteAllByUserId(userId);
+    }
     public Spending createSpending(Spending spending) {
         return spendingRepository.save(spending);
     }
