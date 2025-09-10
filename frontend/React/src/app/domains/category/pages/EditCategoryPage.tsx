@@ -1,4 +1,3 @@
-import { DefaultPageLayout } from "../../shared/layouts/DefaultPageLayout";
 import { useTranslation } from 'react-i18next';
 import { CategoriesTable } from "../components/CategoriesTable";
 import { EditCategoryForm } from "../components/EditCategoryForm";
