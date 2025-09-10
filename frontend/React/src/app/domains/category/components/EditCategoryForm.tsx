@@ -106,16 +106,18 @@ export function EditCategoryForm({ categories, refreshCategories }: ModifyCatego
             <div className="flex items-center gap-2">
               <span className="text-2xl">{t('domains.category.add.iconSelected')}{emojiIsNative ? selectedEmoji : getEmojiById(selectedEmoji)}</span>
             </div>
-            <Picker
-              onEmojiSelect={(emoji: any) => {
-                setSelectedEmoji(emoji.native);
-                setEmojiIsNative(true);
-                setSelectedIdEmoji(emoji.id);
+            <div className="picker-container w-full">
+              <Picker
+                onEmojiSelect={(emoji: any) => {
+                  setSelectedEmoji(emoji.native);
+                  setEmojiIsNative(true);
+                  setSelectedIdEmoji(emoji.id);
                 setValue("icon", emoji.id);
               }}
               previewPosition="none"
               theme="dark"
             />
+            </div>
           </div>
 
           <input type="hidden" {...register("icon")} />
