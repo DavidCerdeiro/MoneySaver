@@ -118,13 +118,42 @@ html, body {
   @apply text-sm text-gray-300 hover:text-white active:text-gray-100 transition-colors min-h-[44px] flex items-center;
 }
 
-/* === Emoji Tooltip === */
+/* === Emoji Picker - MEJORADO === */
 .emoji-mart-preview {
   display: none !important;
 }
-.picker-container em-emoji-picker {
+
+/* Contenedor principal del picker */
+.picker-container {
+  @apply w-full overflow-hidden;
+  max-width: 100%;
+  /* Contener el picker dentro del contenedor padre */
+  box-sizing: border-box;
+}
+
+/* Selector más específico para el emoji picker */
+.picker-container em-emoji-picker,
+.picker-container .emoji-mart {
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 280px !important;
+  box-sizing: border-box !important;
+}
+
+/* Para pantallas muy pequeñas, hacer el picker más pequeño */
+@media (max-width: 320px) {
+  .picker-container em-emoji-picker,
+  .picker-container .emoji-mart {
+    min-width: 260px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* Asegurar que el contenido interno también respete el ancho */
+.picker-container em-emoji-picker .emoji-mart-scroll,
+.picker-container .emoji-mart .emoji-mart-scroll {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
 }
 
 /* === Dialog === */
@@ -170,10 +199,19 @@ html, body {
   @apply mr-2 h-4 w-4 text-inherit flex-shrink-0;
 }
 
-/* === Form === */
+/* === Form - MEJORADO === */
 .form-container {
-  @apply space-y-4 max-w-md sm:max-w-lg mx-auto px-4;
+  @apply w-full max-w-full mx-auto px-2 sm:px-4;
+  /* Quitar límite de ancho máximo que estaba causando problemas */
+  box-sizing: border-box;
 }
+
+/* Contenedor responsive mejorado */
+.form-container-responsive {
+  @apply w-full max-w-4xl mx-auto px-2 sm:px-4;
+  box-sizing: border-box;
+}
+
 @media (min-width: 1024px) {
   .form-container-wide {
     @apply max-w-3xl;
@@ -223,4 +261,3 @@ html, body {
 .table-cell-money {
   @apply text-white text-right px-3 sm:px-6 text-sm sm:text-base;
 }
-

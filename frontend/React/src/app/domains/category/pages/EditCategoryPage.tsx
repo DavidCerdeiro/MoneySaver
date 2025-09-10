@@ -9,6 +9,7 @@ import { DefaultPageLayout } from '../../shared/layouts/DefaultPageLayout';
 export function EditCategoryPage() {
   const { t } = useTranslation();
   const [categories, setCategories] = useState<CategoryData[]>([]);
+  
   const refreshCategories = async () => {
     try {
       const data = await getCategories();
@@ -24,14 +25,30 @@ export function EditCategoryPage() {
 
   return (
     <DefaultPageLayout>
-      <div className="edit-category-page">
-        <h1 className="page-title">{t('header.sections.spendings.editCategory.title')}</h1>
-        <p className="page-description">{t('domains.category.modify.description')}</p>
-        <CategoriesTable categories={categories} />
-        <div className="mt-5">
-          <EditCategoryForm categories={categories} refreshCategories={refreshCategories} />
+      <div className="w-full max-w-full overflow-x-hidden">
+        {/* Header con mejor spacing */}
+        <div className="text-center mb-8">
+          <h1 className="page-title">
+            {t('header.sections.spendings.editCategory.title')}
+          </h1>
+          <p className="page-description">
+            {t('domains.category.modify.description')}
+          </p>
+        </div>
+
+        {/* Tabla de categorías con contenedor responsive */}
+        <div className="w-full mb-8 overflow-x-auto">
+          <CategoriesTable categories={categories} />
+        </div>
+
+        {/* Formulario de edición con mejor spacing */}
+        <div className="w-full mt-8">
+          <EditCategoryForm 
+            categories={categories} 
+            refreshCategories={refreshCategories} 
+          />
         </div>
       </div>
     </DefaultPageLayout>
   );
-} 
+}
