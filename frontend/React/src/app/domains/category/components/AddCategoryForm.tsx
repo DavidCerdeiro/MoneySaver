@@ -55,9 +55,10 @@ export function AddCategoryForm() {
 
   }
   return (
-    <div className="form-container">
+    <div className="flex flex-col items-center justify-center">
       <h1 className="page-title">{t('header.sections.spendings.addCategory.title')}</h1>
       <p  className="page-description">{t('domains.category.add.description')}</p>
+       <div className="w-full max-w-md mx-auto px-4">
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
         <div className="grid gap-2">
           <Label htmlFor="name" className="label">{t('domains.category.name')}</Label>
@@ -92,6 +93,7 @@ export function AddCategoryForm() {
         </div>
 
       </form>
+      </div>
     </div>
   );
 }
