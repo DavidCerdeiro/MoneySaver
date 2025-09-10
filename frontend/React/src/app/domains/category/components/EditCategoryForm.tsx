@@ -82,7 +82,7 @@ export function EditCategoryForm({ categories, refreshCategories }: ModifyCatego
   };
   return (
     <>
-      <div className='flex flex-col items-center justify-center px-4'>
+      <div className='form-container'>
         <form className="grid gap-4 md:gap-6">
             <CategoryCombobox
             categories={categories}

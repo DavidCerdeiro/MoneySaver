@@ -122,9 +122,6 @@ html, body {
 .emoji-mart-preview {
   display: none !important;
 }
-.emoji-mart {
-  max-width: 100% !important;
-}
 /* === Dialog === */
 .dialog-content {
   @apply bg-zinc-900 text-white rounded-lg shadow-lg p-4 sm:p-6 max-w-[90vw] sm:max-w-md mx-auto;
