@@ -53,12 +53,12 @@ export function AddCategoryForm() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center px-4">
+    <div className="flex flex-col items-center justify-center">
       <h1 className="page-title">{t('header.sections.spendings.addCategory.title')}</h1>
       <p className="page-description">{t('domains.category.add.description')}</p>
       
-      {/* Contenedor principal del formulario con ancho controlado */}
-      <div className="w-full max-w-md mx-auto">
+      {/* Contenedor principal del formulario */}
+      <div className="w-full max-w-md mx-auto px-4">
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 md:gap-6">
           <div className="grid gap-2">
             <Label htmlFor="name" className="label">{t('domains.category.name')}</Label>
@@ -74,8 +74,8 @@ export function AddCategoryForm() {
               <span className="text-2xl">{t('domains.category.add.iconSelected')}{selectedEmoji}</span>
             </div>
             
-            {/* Contenedor del picker con ancho controlado */}
-            <div className="emoji-picker-container">
+            {/* Contenedor del picker que usa todo el ancho disponible */}
+            <div className="emoji-picker-container -mx-4 sm:mx-0">
               <Picker
                 data={data}
                 onEmojiSelect={(emoji: any) => {
@@ -83,9 +83,6 @@ export function AddCategoryForm() {
                     setSelectedIdEmoji(emoji.id);
                 }}
                 previewPosition="none"
-                // Props para controlar el tamaño en móvil
-                perLine={8} // Menos emojis por línea en móvil
-                emojiSize={20} // Tamaño más pequeño de emojis
                 set="native"
                 theme="dark"
               />

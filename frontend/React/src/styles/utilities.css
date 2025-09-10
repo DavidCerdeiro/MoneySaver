@@ -218,35 +218,48 @@ html, body {
 }
 
 .emoji-picker-container {
-  @apply w-full overflow-hidden;
+  @apply w-full;
   max-width: 100%;
 }
 
-/* Forzar que el picker no sobrepase el ancho disponible */
+/* Estilos base para el picker */
 .emoji-picker-container > div,
 .emoji-picker-container em-emoji-picker {
-  max-width: 100% !important;
   width: 100% !important;
   box-sizing: border-box !important;
 }
 
 /* Estilos responsivos específicos para móvil */
 @media (max-width: 640px) {
-  .emoji-picker-container > div,
-  .emoji-picker-container em-emoji-picker {
-    max-width: calc(100vw - 2rem) !important;
+  /* En móvil, usar todo el ancho de pantalla disponible */
+  .emoji-picker-container {
     width: calc(100vw - 2rem) !important;
+    max-width: calc(100vw - 2rem) !important;
   }
   
-  /* Ajustar el grid interno del picker */
+  .emoji-picker-container > div,
+  .emoji-picker-container em-emoji-picker {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* Asegurar que el contenido interno se ajuste */
+  .emoji-picker-container .emoji-mart {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
   .emoji-picker-container .emoji-mart-scroll {
+    width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
   }
-  
-  /* Reducir padding interno en móvil */
-  .emoji-picker-container .emoji-mart {
-    padding: 0.5rem !important;
+}
+
+/* Desktop: mantener ancho controlado */
+@media (min-width: 641px) {
+  .emoji-picker-container {
+    max-width: 400px;
   }
 }
 
