@@ -75,10 +75,11 @@ export function AddCategoryForm() {
           <Picker
             data={data}
             onEmojiSelect={(emoji: any) => {
-                setSelectedEmoji(emoji.native);
-                setSelectedIdEmoji(emoji.id);
+              setSelectedEmoji(emoji.native);
+              setSelectedIdEmoji(emoji.id);
             }}
             previewPosition="none"
+            className="max-w-full overflow-hidden"
           />
         </div>
 
