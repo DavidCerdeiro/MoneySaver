@@ -4,7 +4,7 @@ import { EditCategoryForm } from "../components/EditCategoryForm";
 import { useEffect, useState } from "react";
 import type { CategoryData } from "../schemas/Category";
 import { getCategories } from "../application/CategoryService";
-import { CategoryPageLayout } from "../../shared/layouts/CategoryPageLayout";
+import { DefaultPageLayout } from '../../shared/layouts/DefaultPageLayout';
 
 export function EditCategoryPage() {
   const { t } = useTranslation();
@@ -23,7 +23,7 @@ export function EditCategoryPage() {
   }, []);
 
   return (
-    <CategoryPageLayout>
+    <DefaultPageLayout>
       <div className="edit-category-page">
         <h1 className="page-title">{t('header.sections.spendings.editCategory.title')}</h1>
         <p className="page-description">{t('domains.category.modify.description')}</p>
@@ -32,6 +32,6 @@ export function EditCategoryPage() {
           <EditCategoryForm categories={categories} refreshCategories={refreshCategories} />
         </div>
       </div>
-    </CategoryPageLayout>
+    </DefaultPageLayout>
   );
 } 
