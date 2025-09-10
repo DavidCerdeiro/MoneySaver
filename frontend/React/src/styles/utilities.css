@@ -217,3 +217,40 @@ html, body {
   @apply text-white text-right px-3 sm:px-6 text-sm sm:text-base;
 }
 
+.emoji-picker-container {
+  @apply w-full overflow-hidden;
+  max-width: 100%;
+}
+
+/* Forzar que el picker no sobrepase el ancho disponible */
+.emoji-picker-container > div,
+.emoji-picker-container em-emoji-picker {
+  max-width: 100% !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Estilos responsivos específicos para móvil */
+@media (max-width: 640px) {
+  .emoji-picker-container > div,
+  .emoji-picker-container em-emoji-picker {
+    max-width: calc(100vw - 2rem) !important;
+    width: calc(100vw - 2rem) !important;
+  }
+  
+  /* Ajustar el grid interno del picker */
+  .emoji-picker-container .emoji-mart-scroll {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Reducir padding interno en móvil */
+  .emoji-picker-container .emoji-mart {
+    padding: 0.5rem !important;
+  }
+}
+
+/* Mantener los estilos existentes del preview oculto */
+.emoji-mart-preview {
+  display: none !important;
+}
