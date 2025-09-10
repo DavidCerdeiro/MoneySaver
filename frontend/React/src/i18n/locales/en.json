@@ -97,6 +97,7 @@
                 "success": "Account deleted successfully. Come back soon!",
                 "error": "Error deleting account. Please try again.",
                 "submit": "Delete Account",
+                "backtoProfile": "Back to Profile",
                 "dialog":{
                     "title": "Confirm Account Deletion",
                     "description": "Are you sure you want to delete your account? This action is irreversible and will delete your account and all associated data. You will need to verify your email.",

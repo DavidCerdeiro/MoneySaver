@@ -94,6 +94,7 @@
             },
             "delete":{
                 "title": "Eliminar cuenta",
+                "backtoProfile": "Volver al perfil",
                 "success": "Cuenta eliminada con éxito.¡Vuelve pronto!",
                 "error": "Error al eliminar la cuenta. Por favor, inténtelo de nuevo.",
                 "submit": "Eliminar cuenta",
