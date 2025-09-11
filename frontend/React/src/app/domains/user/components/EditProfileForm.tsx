@@ -72,7 +72,7 @@ export function EditProfileForm({user, fetchData, typeCharts}: ModifyProfileForm
     };
 
     return (
-        <div className="form-container">
+        <div className="general-container">
             <div className="row-input mb-5">
                 <div className="w-full">
                     <Label htmlFor="name" className="label">{t('domains.user.name')}</Label>

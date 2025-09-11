@@ -106,7 +106,7 @@ export function AddTransactionForm({ response, categories, establishments, onSub
   };
 
   return (
-    <div className="form-container">
+    <div className="general-container">
     <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-4">
       <div className="row-input">
         <div className="w-full">

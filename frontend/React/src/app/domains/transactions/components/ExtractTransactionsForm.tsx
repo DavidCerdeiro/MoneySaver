@@ -52,7 +52,7 @@ export function ExtractTransactionsForm({ accounts }: ExtractTransactionsFormPro
         isAccountPage={false}
         onSelect={(account) => setValue("account", account)}
       />
-    <div className="form-container">
+    <div className="general-container">
     <form onSubmit={handleSubmit(onSubmitForm)}>
       <div className="row-input mt-3 mb-3">
         <div className="w-full">

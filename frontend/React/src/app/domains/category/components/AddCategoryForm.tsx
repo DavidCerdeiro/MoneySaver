@@ -55,7 +55,7 @@ export function AddCategoryForm() {
 
   }
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="general-container">
       <h1 className="page-title">{t('header.sections.spendings.addCategory.title')}</h1>
       <p  className="page-description">{t('domains.category.add.description')}</p>
        <div className="w-full max-w-md mx-auto px-4">
@@ -73,15 +73,19 @@ export function AddCategoryForm() {
           <div className="flex items-center gap-2">
             <span className="text-2xl">{t('domains.category.add.iconSelected')}{selectedEmoji}</span>
           </div>
-          <Picker
-            data={data}
-            onEmojiSelect={(emoji: any) => {
-              setSelectedEmoji(emoji.native);
-              setSelectedIdEmoji(emoji.id);
-            }}
-            previewPosition="none"
-            className="max-w-full overflow-hidden"
-          />
+          <div className="w-full max-w-full overflow-hidden">
+            <div className="picker-container">
+              <Picker
+                data={data}
+                onEmojiSelect={(emoji: any) => {
+                  setSelectedEmoji(emoji.native);
+                  setSelectedIdEmoji(emoji.id);
+                }}
+                previewPosition="none"
+                className="max-w-full overflow-hidden"
+              />
+            </div>
+          </div>
         </div>
 
         <input type="hidden" {...register('icon')} />

@@ -56,8 +56,10 @@ export function MainPage() {
   return (
     <DefaultPageLayout>
       <h1 className="page-title">{t("app.welcome")}</h1>
+      <div className="general-container"> 
       <div className="flex justify-center items-center mt-8 w-full px-4">
         {renderChart()}
+      </div>
       </div>
     </DefaultPageLayout>
   )

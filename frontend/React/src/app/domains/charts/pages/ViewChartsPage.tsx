@@ -46,6 +46,7 @@ export function ViewChartsPage() {
       <div>
         <h1 className="page-title">{t("domains.charts.view.title")}</h1>
         <p className="page-description">{t("domains.charts.view.description", { month: selectedMonth, year: selectedYear })}</p>
+            <div className="general-container"> 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-2 my-4">
               <Button
                 onClick={handlePrevMonth}
@@ -73,6 +74,7 @@ export function ViewChartsPage() {
             <div className="mt-2">
                 <BarChartVerticalComponent data={chartData} principalPage={false} />
             </div>
+        </div>
       </div>
     </DefaultPageLayout>
   );

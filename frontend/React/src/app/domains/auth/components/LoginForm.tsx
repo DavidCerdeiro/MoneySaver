@@ -33,6 +33,7 @@ export function LoginForm() {
 
             const locale = country ? `${language}_${country.toUpperCase()}` : language;
             data.locale = locale;
+            console.log("Locale set to:", data.locale);
             const result = await logInUser(data);
 
             // Saving the email in order to use it later

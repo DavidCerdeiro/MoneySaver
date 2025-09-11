@@ -18,7 +18,7 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
   const { t } = useTranslation();
 
   return (
-    <div className="form-container">
+    <div className="general-container">
       <Table>
         <TableCaption className="table-caption">
           {t('domains.category.modify.tableCaption')}

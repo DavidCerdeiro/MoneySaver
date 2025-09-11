@@ -45,11 +45,12 @@ export function AccountsTable({
   };
 
   return (
-    <Table>
-      <TableCaption className="table-caption">
-        {t("domains.account.table.caption")}
-      </TableCaption>
-      <TableHeader>
+    <div className="table-container">
+      <Table>
+        <TableCaption className="table-caption">
+          {t("domains.account.table.caption")}
+        </TableCaption>
+        <TableHeader>
         <TableRow>
           <TableHead className="table-head">
             {t("domains.account.table.headers.name")}
@@ -154,5 +155,6 @@ export function AccountsTable({
         })}
       </TableBody>
     </Table>
+    </div>
   );
 }

@@ -23,7 +23,6 @@ export function CompareChartsPage() {
   const prevMonth = prevMonthDate.getMonth() + 1;
   const prevYear = prevMonthDate.getFullYear();
 
-  // 📌 Estado para los datos de los gráficos
   const [chartData, setChartData] = useState<CompareChart[]>([]);
   const [monthNames, setMonthNames] = useState({ month1: "", month2: "" });
   const [selectedYears, setSelectedYears] = useState({ year1: currentYear, year2: prevYear });
@@ -89,42 +88,44 @@ export function CompareChartsPage() {
         month2: numericMonth.month2,
         year2: selectedYears.year2
       })}</p>
-      {/* 📌 Formulario para escoger meses */}
+      <div className="general-container"> 
       <form onSubmit={handleSubmit(onSubmit)} className="mb-6">
-        <div className="row-input">
-          <div className="w-full">
-            <Label htmlFor="date1" className="mb-2">{t("domains.charts.compare.month1Label")}</Label>
-            <Input id="date1" type="month" className="input-form" {...register("month1")} />
-            {errors.month1 && <p className="text-red-500 text-sm">{errors.month1.message}</p>}
-          </div>
-          <div className="w-full">
-            <Label htmlFor="date2" className="mb-2">{t("domains.charts.compare.month2Label")}</Label>
-            <Input id="date2" type="month" className="input-form" {...register("month2")} />
-            {errors.month2 && <p className="text-red-500 text-sm">{errors.month2.message}</p>}
-          </div>
-        </div>
-        <div className="flex justify-center mb-4">
-            <button type="submit" className="button-green mt-4">
-                {t("domains.charts.compare.submit")}
-            </button>
-        </div>
         
-      </form>
+          <div className="row-input">
+            <div className="w-full">
+              <Label htmlFor="date1" className="mb-2">{t("domains.charts.compare.month1Label")}</Label>
+              <Input id="date1" type="month" className="input-form" {...register("month1")} />
+              {errors.month1 && <p className="text-red-500 text-sm">{errors.month1.message}</p>}
+            </div>
+            <div className="w-full">
+              <Label htmlFor="date2" className="mb-2">{t("domains.charts.compare.month2Label")}</Label>
+              <Input id="date2" type="month" className="input-form" {...register("month2")} />
+              {errors.month2 && <p className="text-red-500 text-sm">{errors.month2.message}</p>}
+            </div>
+          </div>
+          <div className="flex justify-center mb-4">
+              <button type="submit" className="button-green mt-4">
+                  {t("domains.charts.compare.submit")}
+              </button>
+          </div>
+          
+        </form>
 
-      {/* 📌 Gráficos */}
-      <div className="mb-5">
-        <BarChartComparisonComponent
-          dataChart={chartData}
-          monthName1={monthNames.month1}
-          monthName2={monthNames.month2}
-        />
-      </div>
-      <div>
-        <RadarChartComparisonComponent
-          dataChart={chartData}
-          month1={monthNames.month1}
-          month2={monthNames.month2}
-        />
+      
+        <div className="mb-5">
+          <BarChartComparisonComponent
+            dataChart={chartData}
+            monthName1={monthNames.month1}
+            monthName2={monthNames.month2}
+          />
+        </div>
+        <div>
+          <RadarChartComparisonComponent
+            dataChart={chartData}
+            month1={monthNames.month1}
+            month2={monthNames.month2}
+          />
+        </div>
       </div>
     </DefaultPageLayout>
   );

@@ -199,15 +199,13 @@ html, body {
   @apply mr-2 h-4 w-4 text-inherit flex-shrink-0;
 }
 
-/* === Form - MEJORADO === */
+/* === Container === */
 .form-container {
-  @apply w-full max-w-full mx-auto px-2 sm:px-4;
-  /* Quitar límite de ancho máximo que estaba causando problemas */
+  @apply w-full max-w-md sm:max-w-lg lg:max-w-xl mx-auto px-2 sm:px-4;
   box-sizing: border-box;
 }
 
-/* Contenedor responsive mejorado */
-.form-container-responsive {
+.general-container {
   @apply w-full max-w-4xl mx-auto px-2 sm:px-4;
   box-sizing: border-box;
 }
@@ -231,9 +229,10 @@ html, body {
 
 /* === Table === */
 .table-container {
-  @apply w-full;
+  @apply w-full max-w-4xl mx-auto;
   overflow-x: auto;
 }
+
 
 @media (min-width: 768px) {
   .table-container {
