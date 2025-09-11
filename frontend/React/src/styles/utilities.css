@@ -127,7 +127,8 @@ html, body {
 .picker-container {
   @apply w-full overflow-hidden;
   max-width: 100%;
-  /* Contener el picker dentro del contenedor padre */
+  overflow-x: auto;
+  overflow-y: hidden;
   box-sizing: border-box;
 }
 

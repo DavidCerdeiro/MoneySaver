@@ -85,7 +85,6 @@ export function EditCategoryForm({ categories, refreshCategories }: ModifyCatego
     <>
       <div className='general-container'>
         <form className="space-y-6">
-          {/* Selector de categoría - Ancho completo centrado */}
           <div className="flex justify-center">
             <div className="w-full max-w-md">
               <CategoryCombobox
@@ -100,57 +99,53 @@ export function EditCategoryForm({ categories, refreshCategories }: ModifyCatego
             </div>
           </div>
 
-          {/* Layout responsive para campos */}
           <div className="flex justify-center">
-  <div className="flex flex-col gap-6 w-full max-w-md">
-    {/* Campo Nombre */}
-    <div className="w-full">
-      <Label htmlFor="name" className="label">{t('domains.category.name')}</Label>
-      <Input 
-        id="name" 
-        {...register("name", { required: t('domains.category.errors.name.required') })} 
-        className="input-form" 
-        disabled={!selectedCategory} 
-      />
-      {errors.name && (
-        <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-      )}
-    </div>
+            <div className="flex flex-col gap-6 w-full max-w-md">
+              {/* Campo Nombre */}
+              <div className="w-full">
+                <Label htmlFor="name" className="label">{t('domains.category.name')}</Label>
+                <Input 
+                  id="name" 
+                  {...register("name", { required: t('domains.category.errors.name.required') })} 
+                  className="input-form" 
+                  disabled={!selectedCategory} 
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+                )}
+              </div>
 
-    {/* Selector de Icono */}
-    <div className="w-full">
-      <Label className="label">{t('domains.category.icon')}</Label>
+              <div className="w-full">
+                <Label className="label">{t('domains.category.icon')}</Label>
 
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-2xl">
-          {t('domains.category.add.iconSelected')}
-          {emojiIsNative ? selectedEmoji : getEmojiById(selectedEmoji)}
-        </span>
-      </div>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-2xl">
+                    {t('domains.category.add.iconSelected')}
+                    {emojiIsNative ? selectedEmoji : getEmojiById(selectedEmoji)}
+                  </span>
+                </div>
 
-      <div className="w-full max-w-full overflow-hidden">
-        <div className="picker-container">
-          <Picker
-            onEmojiSelect={(emoji: any) => {
-              setSelectedEmoji(emoji.native);
-              setEmojiIsNative(true);
-              setSelectedIdEmoji(emoji.id);
-              setValue("icon", emoji.id);
-            }}
-            previewPosition="none"
-            theme="dark"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+                <div className="w-full max-w-full overflow-hidden">
+                  <div className="picker-container">
+                    <Picker
+                      onEmojiSelect={(emoji: any) => {
+                        setSelectedEmoji(emoji.native);
+                        setEmojiIsNative(true);
+                        setSelectedIdEmoji(emoji.id);
+                        setValue("icon", emoji.id);
+                      }}
+                      previewPosition="none"
+                      theme="dark"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <input type="hidden" {...register("icon")} />
 
-          {/* Botones de acción */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
-            {/* Botón Modificar */}
             <Dialog>
               <DialogTrigger asChild disabled={!selectedCategory || isSubmitting}>
                 <Button className="button-neutral">

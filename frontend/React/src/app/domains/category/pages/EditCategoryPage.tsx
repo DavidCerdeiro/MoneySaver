@@ -26,7 +26,6 @@ export function EditCategoryPage() {
   return (
     <DefaultPageLayout>
       <div className="w-full max-w-full overflow-x-hidden">
-        {/* Header con mejor spacing */}
         <div className="text-center mb-8">
           <h1 className="page-title">
             {t('header.sections.spendings.editCategory.title')}
@@ -36,12 +35,10 @@ export function EditCategoryPage() {
           </p>
         </div>
 
-        {/* Tabla de categorías con contenedor responsive */}
         <div className="w-full mb-8 overflow-x-auto">
           <CategoriesTable categories={categories} />
         </div>
 
-        {/* Formulario de edición con mejor spacing */}
         <div className="w-full mt-8">
           <EditCategoryForm 
             categories={categories} 
