@@ -38,10 +38,10 @@ This application web uses two external API:
 ### TrueLayer (https://truelayer.com/)
 * Enables users to link their bank accounts and fetch transactions.
 
-## 🧪 Testing
-Unit and integration tests with JUnit 5 and Spring Boot Test
-
 * In this project, the TrueLayer sandbox is used → all data is mock (not real).
 ### Google Cloud Vision (https://cloud.google.com/vision)
 * Used to extract data from tickets or invoices via OCR (Optical Character Recognition).
+
+## 🧪 Testing
+Unit and integration tests with JUnit 5 and Spring Boot Test
 
