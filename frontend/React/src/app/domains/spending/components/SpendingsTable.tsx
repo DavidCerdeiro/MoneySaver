@@ -153,7 +153,7 @@ export function SpendingsTable({ spendings }: SpendingTableProps) {
               </TableCell>
               <TableCell className="table-cell-money">
                 <span className="span-text font-semibold">
-                  {spending.amount} €
+                  {spending.amount.toFixed(2)} €
                 </span>
               </TableCell>
               <TableCell className="table-cell">

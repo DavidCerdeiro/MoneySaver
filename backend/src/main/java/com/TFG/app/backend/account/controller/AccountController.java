@@ -105,7 +105,7 @@ public class AccountController {
         if (accessToken == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        // Con el token llamar a /accounts
+        // After obtaining the access token, we fetch the accounts from TrueLayer
         String accountsUrl = "https://api.truelayer-sandbox.com/data/v1/accounts";
         String body = webClient.get()
                 .uri(accountsUrl)

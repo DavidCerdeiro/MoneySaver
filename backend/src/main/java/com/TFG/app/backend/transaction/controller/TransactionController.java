@@ -133,15 +133,13 @@ public class TransactionController {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        List<Account> accounts = accountService.findByUser(user);
+        
+        List<Transaction> transactions = transactionService.getAllByUserAndMonth(user, month, year);
         List<TransactionResponse> response = new ArrayList<>();
-        for (Account account : accounts) {
-            List<Transaction> transactions = transactionService.getAllByAccountAndMonth(account.getId(), month, year);
-            for (Transaction transaction : transactions) {
-                Spending spending = transaction.getSpending();
-                response.add(new TransactionResponse(transaction.getId(), spending.getName(), spending.getAmount(), spending.getDate(), account.getName(), account.getNumber(), spending.getCategory().getIcon(), spending.getCategory().getName(), spending.getEstablishment() != null ? spending.getEstablishment().getName() : ""));
-            }
+        for (Transaction tr : transactions) {
+            Spending spending = tr.getSpending();
+            Account account = accountService.findById(tr.getAccount().getId());
+            response.add(new TransactionResponse(tr.getId(), spending.getName(), spending.getAmount(), spending.getDate(), account.getName(), account.getNumber(), spending.getCategory().getIcon(), spending.getCategory().getName(), spending.getEstablishment() != null ? spending.getEstablishment().getName() : ""));
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

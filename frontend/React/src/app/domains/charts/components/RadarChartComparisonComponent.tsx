@@ -96,10 +96,16 @@ export function RadarChartComparisonComponent({
             <Radar
               dataKey="month1"
               fill="var(--color-desktop)"
-              fillOpacity={0.6}
+              fillOpacity={0}
               name={month1}
+              strokeWidth={4}
             />
-            <Radar dataKey="month2" fill="var(--color-mobile)" name={month2}/>
+            <Radar 
+              dataKey="month2" 
+              fill="var(--color-mobile)" 
+              fillOpacity={0}
+              name={month2} 
+              strokeWidth={4}/>
           </RadarChart>
         </ChartContainer>
       </CardContent>

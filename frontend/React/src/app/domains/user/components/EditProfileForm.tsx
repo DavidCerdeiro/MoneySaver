@@ -130,7 +130,7 @@ export function EditProfileForm({user, fetchData, typeCharts}: ModifyProfileForm
                     <li>{t('domains.user.passwordRequirements.number')}</li>
                 </ul>
             </div>
-            <div className="grid gap-2 mb-4">
+            <div className="grid gap-2 mb-4 md:max-w-xs md:mx-auto">
             <Dialog>
             <DialogTrigger asChild disabled={isSubmitting}>
               <Button className="button-neutral">{t('domains.user.modify.submit')}</Button>

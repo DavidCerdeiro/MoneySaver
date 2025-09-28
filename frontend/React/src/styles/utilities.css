@@ -118,12 +118,11 @@ html, body {
   @apply text-sm text-gray-300 hover:text-white active:text-gray-100 transition-colors min-h-[44px] flex items-center;
 }
 
-/* === Emoji Picker - MEJORADO === */
+/* === Emoji Picker === */
 .emoji-mart-preview {
   display: none !important;
 }
 
-/* Contenedor principal del picker */
 .picker-container {
   @apply w-full overflow-hidden;
   max-width: 100%;
@@ -132,7 +131,6 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Selector más específico para el emoji picker */
 .picker-container em-emoji-picker,
 .picker-container .emoji-mart {
   width: 100% !important;
@@ -141,7 +139,6 @@ html, body {
   box-sizing: border-box !important;
 }
 
-/* Para pantallas muy pequeñas, hacer el picker más pequeño */
 @media (max-width: 320px) {
   .picker-container em-emoji-picker,
   .picker-container .emoji-mart {
@@ -150,7 +147,6 @@ html, body {
   }
 }
 
-/* Asegurar que el contenido interno también respete el ancho */
 .picker-container em-emoji-picker .emoji-mart-scroll,
 .picker-container .emoji-mart .emoji-mart-scroll {
   max-width: 100% !important;

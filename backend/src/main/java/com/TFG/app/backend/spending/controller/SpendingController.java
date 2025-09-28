@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.TFG.app.backend.spending.service.SpendingService;
+import com.TFG.app.backend.transaction.entity.Transaction;
+import com.TFG.app.backend.transaction.service.TransactionService;
 import com.TFG.app.backend.type_periodic.service.Type_PeriodicService;
 import com.TFG.app.backend.periodic_spending.service.Periodic_SpendingService;
 import com.TFG.app.backend.establishment.entity.Establishment;
@@ -42,7 +44,9 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/spendings")
@@ -55,6 +59,7 @@ public class SpendingController {
     private final EstablishmentService establishmentService;
     private final JwtService jwtService;
     private final BillService billService;
+    private final TransactionService transactionService;
 
     @Value("${documentai.project-id}")
     private String documentAiProjectId;
@@ -64,8 +69,8 @@ public class SpendingController {
 
     @Value("${documentai.processor-id}")
     private String documentAiProcessorId;
-    
-    public SpendingController(SpendingService spendingService, UserService userService, CategoryService categoryService, Type_PeriodicService typePeriodicService, Periodic_SpendingService periodicSpendingService, EstablishmentService establishmentService, JwtService jwtService, BillService billService) {
+
+    public SpendingController(SpendingService spendingService, UserService userService, CategoryService categoryService, Type_PeriodicService typePeriodicService, Periodic_SpendingService periodicSpendingService, EstablishmentService establishmentService, JwtService jwtService, BillService billService, TransactionService transactionService) {
         this.spendingService = spendingService;
         this.userService = userService;
         this.categoryService = categoryService;
@@ -74,8 +79,8 @@ public class SpendingController {
         this.establishmentService = establishmentService;
         this.jwtService = jwtService;
         this.billService = billService;
+        this.transactionService = transactionService;
     }
-
     /**
      * Endpoint to add a new spending
      * @param token
@@ -167,6 +172,13 @@ public class SpendingController {
         }
 
         List<Spending> spendings = spendingService.getAllSpendingsByUserMonthAndYear(user.getId().intValue(), month, year);
+        List<Transaction> transactions = transactionService.getAllByUserAndMonth(user, month, year);
+        //Delete spendings that are transactions
+        Set<Spending> spendingInTransactions = transactions.stream()
+            .map(Transaction::getSpending)
+            .collect(Collectors.toSet());
+
+        spendings.removeIf(spending -> spendingInTransactions.contains(spending));
         List<SpendingResponse> spendingResponses = new ArrayList<>();
 
         LocalDate date = LocalDate.of(year, month, 1);
