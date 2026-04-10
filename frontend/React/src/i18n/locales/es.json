@@ -263,7 +263,7 @@
             "periodicity": "Es periódico",
             "expirationDate": "Fecha de expiración",
             "add": {
-                "description": "Registra un nuevo gasto a través del formulario o mediante la importación del ticket, factura o cualquier documento similar.",
+                "description": "Registra un nuevo gasto a través del formulario o mediante la importación del ticket, factura o cualquier documento similar. En esta versión portfolio, el procesamiento de archivos se simula para evitar costes asociados a la IA.",
                 "currentMonth": "El gasto se debe corresponder al mes actual.",
                 "category": "Categoría",
                 "amount": "Importe €",
@@ -275,6 +275,7 @@
                 "submitFile": "Escanear archivo",
                 "defaultSpendingProcessed": "Compra en {{establishment}}",
                 "fileProcessed": "Archivo procesado con éxito",
+                "mockFileProcessed": "Para evitar costes en esta versión portfolio, se simula el procesamiento del archivo.",
                 "fileError": "Error al procesar el archivo. Por favor, inténtalo de nuevo.",
                 "processingFile": "Procesando archivo...",
                 "submitting": "Enviando..."

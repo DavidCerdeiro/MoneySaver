@@ -118,7 +118,7 @@ export function AddSpendingForm({ categories, typePeriodic, establishments, load
             formDataWithFile.append('file', file);
             const result: ProcessFileResponse = await processFileDirect(formDataWithFile);
             
-            toast.info(t('domains.spending.add.fileProcessed'));
+            toast.info(t('domains.spending.add.mockFileProcessed'));
 
             setValue('name', result.establishmentName ? t('domains.spending.add.defaultSpendingProcessed', { establishment: result.establishmentName }) : '');
             setValue('amount', result.totalAmount ?? 0);

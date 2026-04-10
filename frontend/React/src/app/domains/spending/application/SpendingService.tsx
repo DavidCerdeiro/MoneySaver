@@ -59,10 +59,9 @@ export async function obtainAllEstablishments(): Promise<EstablishmentData[]> {
 }
 
 /**
- * Process file to obtain information about spending
+ * Original Process file to obtain information about spending
  * @param formData Form data containing the file to process
  * @returns Processed spending information
- */
 export async function processFileDirect(formData: FormData) {
   const response = await fetch(`${API_URL}/api/spendings/documents`, {
     method: "POST",
@@ -76,4 +75,33 @@ export async function processFileDirect(formData: FormData) {
   }
 
   return response.json();
+}
+  */
+
+/**
+ * MOCK: Process file to obtain information about spending
+ * Simulates the processing of a bill file and returns mock spending information after a delay
+ * @param _formData Form data containing the file to process
+ * @returns Processed spending information
+ */
+export async function processFileDirect(_formData: FormData) {
+    return new Promise<{
+        supplierName: string;
+        receiptDate: string;
+        totalAmount: number;
+        idEstablishment: number;
+        establishmentName: string;
+        idCategory: number;
+    }>((resolve) => {
+        setTimeout(() => {
+            resolve({
+                supplierName: "MERCADONA",
+                receiptDate: "2024-04-10",
+                totalAmount: 34.50,
+                idEstablishment: 1, 
+                establishmentName: "MERCADONA",
+                idCategory: 2 
+            });
+        }, 2000); // Simulate a 2-second delay to mimic processing time
+    });
 }

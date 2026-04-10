@@ -165,7 +165,7 @@ export function TransactionsTable({ transactions }: TransactionTableProps) {
                       </TableCell>
                       <TableCell className="table-cell-money">
                         <span className="span-text font-semibold">
-                          {transaction.amount} €
+                          {transaction.amount.toFixed(2)} €
                         </span>
                       </TableCell>
                       <TableCell className="table-cell">

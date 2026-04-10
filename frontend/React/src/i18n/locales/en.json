@@ -19,7 +19,7 @@
         "welcome": "Sign up to manage your finances",
         "namePlaceholder": "Sherlock",
         "lastNamePlaceholder": "Holmes",
-        "emailPlaceholder": "sherlockHolmes@ejemplo.com",
+        "emailPlaceholder": "sherlockHolmes@example.com",
         "confirmPassword": "Confirm password",
         "logIn": "Log in",
         "submit": "Sign up",
@@ -263,7 +263,7 @@
             "periodicity": "Is periodic",
             "expirationDate": "Expiration date",
             "add": {
-                "description": "Register a new expense through the form or by importing the receipt, invoice, or any similar document.",
+                "description": "Register a new expense through the form or by importing the receipt, invoice, or any similar document. In this portfolio version, file processing is simulated to avoid costs associated with AI.",
                 "currentMonth": "The expense must correspond to the current month.",
                 "category": "Category",
                 "amount": "Amount €",
@@ -275,6 +275,7 @@
                 "submitFile": "Scan file",
                 "defaultSpendingProcessed": "Purchase at {{establishment}}",
                 "fileProcessed": "File processed successfully",
+                "mockFileProcessed": "To avoid costs in this portfolio version, the file processing is simulated.",
                 "fileError": "Error processing file. Please try again.",
                 "processingFile": "Processing file...",
                 "submitting": "Submitting..."

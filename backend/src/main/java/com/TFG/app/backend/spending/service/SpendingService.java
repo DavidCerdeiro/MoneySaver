@@ -9,7 +9,6 @@ import com.TFG.app.backend.establishment.entity.Establishment;
 import com.TFG.app.backend.spending.entity.Spending;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -101,7 +100,7 @@ public class SpendingService {
         List<Spending> spendings = spendingRepository.findByUserAndCategoryNotDeleted(user.getId());
 
         if (spendings.isEmpty()) {
-            return Collections.emptyList();
+            return establishments;
         }
 
         // Contar ocurrencias de cada establecimiento
