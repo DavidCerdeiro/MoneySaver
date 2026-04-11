@@ -9,12 +9,12 @@ import com.TFG.app.backend.infraestructure.one_time_password.service.One_Time_Pa
 import com.TFG.app.backend.spending.service.SpendingService;
 import com.TFG.app.backend.type_chart.entity.Type_Chart;
 import com.TFG.app.backend.type_chart.service.Type_ChartService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import com.google.common.cache.Cache;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -112,7 +112,7 @@ public class UserService {
         String otp = oneTimePasswordService.getOTP(email);
         // Check if the OTP exists and if the provided code matches the OTP token
         if(otp != null && otp.equals(code)) {
-            otpCache.invalidate(email); // Invalidate the OTP after successful authentication
+            otpCache.invalidate(Objects.requireNonNull(email, "Email no puede ser nulo")); // Invalidate the OTP after successful authentication
             Optional<User> user = userRepository.findByEmail(email);
             if(user.isPresent()) {
                 // Update the user's authentication status to true

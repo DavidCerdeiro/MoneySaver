@@ -3,7 +3,7 @@
         "title": "MoneySaver",
         "description": "Controla tu economía personal",
         "welcome": "¡Bienvenido a MoneySaver! Tu compañero en la gestión financiera.",
-        "WaitingDisclaimer": "Por limitaciones del servidor para esta versión portfolio, la primera petición al sistema puede tardar entre 30 segundos y 1 minuto. Gracias por tu paciencia."
+        "WaitingDisclaimer": "Por limitaciones del servidor para esta versión portfolio, la primera petición al sistema puede tardar más de 50 segundos. Gracias por tu paciencia."
     },
     "login": {
         "title": "Iniciar sesión",

@@ -40,19 +40,6 @@ public class QuartzJobConfig {
     }
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean(
-            SpringBeanJobFactory jobFactory,
-            Trigger resetCategoryTrigger,
-            JobDetail resetCategoryJobDetail
-    ) {
-        SchedulerFactoryBean factory = new SchedulerFactoryBean();
-        factory.setJobFactory(jobFactory);
-        factory.setJobDetails(resetCategoryJobDetail);
-        factory.setTriggers(resetCategoryTrigger);
-        return factory;
-    }
-
-    @Bean
     public JobDetail periodicSpendingJobDetail() {
         return JobBuilder.newJob(PeriodicSpendingJob.class)
                 .withIdentity("periodicSpendingJob")
@@ -60,7 +47,6 @@ public class QuartzJobConfig {
                 .build();
     }
 
-    // 2. Definir el Trigger para los Gastos (Ej: Todos los días a las 02:00 AM)
     @Bean
     public Trigger periodicSpendingTrigger(JobDetail periodicSpendingJobDetail) {
         return TriggerBuilder.newTrigger()
@@ -70,19 +56,17 @@ public class QuartzJobConfig {
                 .build();
     }
 
-    // 3. ACTUALIZAR la factoría para que acepte una lista de jobs y triggers
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean(
             SpringBeanJobFactory jobFactory,
-            Trigger resetCategoryTrigger,     // Trigger 1
-            JobDetail resetCategoryJobDetail, // Job 1
-            Trigger periodicSpendingTrigger,     // Trigger 2 (NUEVO)
-            JobDetail periodicSpendingJobDetail  // Job 2 (NUEVO)
+            Trigger resetCategoryTrigger,
+            JobDetail resetCategoryJobDetail, 
+            Trigger periodicSpendingTrigger,     
+            JobDetail periodicSpendingJobDetail  
     ) {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
         factory.setJobFactory(jobFactory);
         
-        // Pasamos arrays con todos nuestros jobs y triggers
         factory.setJobDetails(resetCategoryJobDetail, periodicSpendingJobDetail);
         factory.setTriggers(resetCategoryTrigger, periodicSpendingTrigger);
         
