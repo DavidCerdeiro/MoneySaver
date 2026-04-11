@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.Locale;
 import java.util.Optional;
 import com.google.common.cache.Cache;
-
+import org.springframework.jdbc.core.JdbcTemplate;
+import java.util.UUID;
 import jakarta.transaction.Transactional;
 @Service
 public class UserService {
@@ -28,19 +29,21 @@ public class UserService {
     private final EmailService emailService;
     private final Type_ChartService typeChartService;
     private final SpendingService spendingService;
+    private final JdbcTemplate jdbcTemplate;
     @Autowired
     private MessageSource messageSource;
 
     @Autowired
     private Cache<String, String> otpCache;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, One_Time_PasswordService oneTimePasswordService, EmailService emailService, Type_ChartService typeChartService, SpendingService spendingService) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, One_Time_PasswordService oneTimePasswordService, EmailService emailService, Type_ChartService typeChartService, SpendingService spendingService, JdbcTemplate jdbcTemplate) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.oneTimePasswordService = oneTimePasswordService;
         this.emailService = emailService;
         this.typeChartService = typeChartService;
         this.spendingService = spendingService;
+        this.jdbcTemplate = jdbcTemplate;   
     }
 
     /*
@@ -165,16 +168,50 @@ public class UserService {
         
     }
 
+    /*
+     * Method to log in a demo user.
+     * It performs a lazy cleanup of old demo users, generates a new random demo email,
+     * hashes a random password, and calls the PostgreSQL function to clone the template user data.
+     * Returns the newly created ephemeral user.
+     */
+    @Transactional
     public Optional<User> logInDemoUser() {
-        Optional<User> user = userRepository.findByEmail("davidcergall22@gmail.com");
-        if(user.isPresent()) {
-            User existingUser = user.get();
-            existingUser.setIsAuthenticated(true);
-            userRepository.save(existingUser);
-            return Optional.of(existingUser);
+        try {
+            // 1. Limpieza Perezosa delegada al Repositorio
+            userRepository.deleteOldDemoUsers();
+
+            // 2. Preparar credenciales del nuevo usuario efímero
+            String randomStr = UUID.randomUUID().toString().substring(0, 8);
+            String demoEmail = "demo_" + randomStr + "@demo.com";
+            
+            // Generamos una contraseña aleatoria y la hasheamos con tu PasswordEncoder
+            String rawPassword = UUID.randomUUID().toString();
+            String encodedPassword = passwordEncoder.encode(rawPassword);
+
+            // 3. Llamar a la función de PostgreSQL para clonar
+            // IMPORTANTE: Este email debe coincidir con el del usuario que creaste en Supabase
+            String templateEmail = "template@demo.com"; 
+            String callFunctionSql = "SELECT clone_demo_user(?, ?, ?)";
+            
+            Integer newUserId = jdbcTemplate.queryForObject(
+                    callFunctionSql, 
+                    Integer.class, 
+                    templateEmail, demoEmail, encodedPassword
+            );
+
+            // 4. Devolver el nuevo usuario recién creado
+            if (newUserId != null) {
+                return userRepository.findById(newUserId);
+            }
+            
+            return Optional.empty();
+
+        } catch (Exception e) {
+            System.err.println("Error creando sesión demo: " + e.getMessage());
+            return Optional.empty();
         }
-        return Optional.empty();
     }
+
     /*
      * Method to create a new user.
      * It checks if the email already exists in the database.

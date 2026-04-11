@@ -35,6 +35,7 @@ export async function logInUser(data: LogInFormData) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -49,6 +50,7 @@ export async function logInDemoUser() {
   const response = await fetch(`${API_URL}/api/auth/sessions/demo`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -105,6 +107,7 @@ export async function authUser(data: EmailVerificationData) {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
+    credentials: "include",
   });
   if (!response.ok) {
     const error = await response.json();

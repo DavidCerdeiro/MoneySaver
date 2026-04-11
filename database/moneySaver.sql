@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS "user" (
   "Email" varchar(64) NOT NULL,
   "Password" varchar(64) NOT NULL UNIQUE,
   "IsAuthenticated" boolean NOT NULL DEFAULT false,
+  "CreatedAt" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT "RS_User__Id_TypeChart" FOREIGN KEY ("Id_TypeChart") REFERENCES "type_chart"("Id")
 );
 

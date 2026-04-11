@@ -10,7 +10,7 @@ INSERT INTO "type_periodic" ("Id", "Name") VALUES
 (2, 'quarterly'),
 (3, 'yearly');
 
--- 4. Insertar Cuentas Bancarias
+-- 3. Insertar Cuentas Bancarias
 INSERT INTO "account" ("Id", "Id_User", "BankName", "Name", "AccountCode", "Number") VALUES 
 (1, 3, 'BBVA', 'Cuenta Principal Ana', 'ACC-ANA-001', 'ES9100000000000000000001'),
 (2, 3, 'ING', 'Ahorros Ana', 'ACC-ANA-002', 'ES9100000000000000000002');
