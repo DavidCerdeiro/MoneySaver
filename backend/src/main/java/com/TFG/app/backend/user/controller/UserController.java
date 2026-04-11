@@ -54,6 +54,7 @@ public class UserController {
         UserResponse userResponse = new UserResponse(newUser.getId(), newUser.getName(), newUser.getSurname(), newUser.getEmail(), newUser.getIsAuthenticated());
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
+    
     /**
      * Endpoint to to send a email with a verification code to reset the password.
      * @param forgotPasswordRequest contains the email and locale of the user.
@@ -252,7 +253,8 @@ public class UserController {
                                             HttpServletResponse response) {
         Integer userID = userService.authUser(authUserRequest.getEmail(),
                                             authUserRequest.getCode(),
-                                            authUserRequest.getLocale());
+                                            authUserRequest.getLocale(),
+                                            authUserRequest.getPurpose());
 
         if (userID != null) {
             // Generate new tokens

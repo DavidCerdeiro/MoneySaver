@@ -2,10 +2,13 @@
     "app": {
         "title": "MoneySaver",
         "description": "Controla tu economía personal",
-        "welcome": "¡Bienvenido a MoneySaver! Tu compañero en la gestión financiera."
+        "welcome": "¡Bienvenido a MoneySaver! Tu compañero en la gestión financiera.",
+        "WaitingDisclaimer": "Por limitaciones del servidor para esta versión portfolio, la primera petición al sistema puede tardar entre 30 segundos y 1 minuto. Gracias por tu paciencia."
     },
     "login": {
         "title": "Iniciar sesión",
+        "tryDemo": "Iniciar sesión con cuenta de demostración",
+        "demoLoading": "Iniciando modo demo...",
         "welcomeBack": "Bienvenido de nuevo",
         "logout": "Cerrar sesión",
         "forgotPassword": "¿Olvidaste tu contraseña?",

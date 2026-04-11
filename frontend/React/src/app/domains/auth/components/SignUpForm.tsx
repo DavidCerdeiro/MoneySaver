@@ -53,7 +53,7 @@ export function SignUpForm() {
                     <CardTitle className="text-2xl">{t('signUp.title')}</CardTitle>
                     <CardDescription className="card-description">{t('signUp.welcome')}</CardDescription>
                     <CardAction>
-                        <Link to="/login" className="text-link">{t('signUp.logIn')}</Link>
+                        <Link to="/" className="text-link">{t('signUp.logIn')}</Link>
                     </CardAction>
                 </CardHeader>
 

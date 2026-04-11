@@ -45,6 +45,20 @@ export async function logInUser(data: LogInFormData) {
   return await response.json();
 }
 
+export async function logInDemoUser() {
+  const response = await fetch(`${API_URL}/api/auth/sessions/demo`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Demo login failed");
+  }
+
+  return await response.json();
+}
+
 /**
  * This function is used to initiate the forgot password process.
  * @param data - The data to log in a user, including email and password.

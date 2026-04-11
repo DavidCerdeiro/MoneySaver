@@ -49,7 +49,7 @@ export function HeaderComponent() {
   // This function handles the logout action
   const handleLogout = () => {
     logout(); 
-    navigate('/login')
+    navigate('/')
   }
   
   const handleChangeLang = (lng: string) => {

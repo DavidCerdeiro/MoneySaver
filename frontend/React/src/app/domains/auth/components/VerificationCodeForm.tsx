@@ -95,8 +95,10 @@ export function VerificationCodeForm({ source }: { source: "login" | "signup" | 
             }
 
             if(source === "forgot") {
+                requestBody.purpose = "reset-password";
+                console.log(requestBody);
                 await emailVerification(requestBody);
-
+                
                 localStorage.setItem('otpEmail', data.email ? data.email : "");
                 navigate("/forgot-password/reset-password");
             }else if(source === "signup") {

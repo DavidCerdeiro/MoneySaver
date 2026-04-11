@@ -48,7 +48,48 @@ public class AuthController {
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
-    
+    /**
+     * Endpoint to log in the demo user.
+     * @param response injected by Spring to set cookies
+     * @return
+     * - 200 OK if the demo user is logged in successfully.
+     * - 401 Unauthorized if the demo user cannot be logged in.
+     */
+    @PostMapping("/sessions/demo")
+    public ResponseEntity<UserResponse> logInDemoUser(HttpServletResponse response) {
+        Optional<User> userOpt = userService.logInDemoUser();
+        
+        // Corrección menor: Al devolver un Optional, verificamos si está vacío, no si es null
+        if (userOpt.isEmpty()) { 
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        User user = userOpt.get();
+
+        // 1. Generamos los nuevos tokens usando el email del usuario demo
+        String accessToken = jwtService.generateAccessToken(user.getEmail());
+        String refreshToken = jwtService.generateRefreshToken(user.getEmail());
+
+        // 2. Creamos las cookies seguras (HttpOnly)
+        ResponseCookie accessCookie = CookieUtil.createHttpOnlyCookie("accessToken", accessToken, 900); // 15 min
+        ResponseCookie refreshCookie = CookieUtil.createHttpOnlyCookie("refreshToken", refreshToken, 7 * 24 * 60 * 60); // 7 days
+
+        // 3. Añadimos las cookies a las cabeceras de la respuesta HTTP
+        response.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
+
+        // 4. Devolvemos la respuesta mapeada
+        UserResponse userResponse = new UserResponse(
+            user.getId(), 
+            user.getName(), 
+            user.getSurname(), 
+            user.getEmail(), 
+            user.getIsAuthenticated()
+        );
+        
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
+    }
+
     /**
      * Endpoint to log out a user by deleting the access and refresh tokens cookies.
      * @output:
@@ -137,8 +178,10 @@ public class AuthController {
                                             HttpServletResponse response) {
         Integer userID = userService.authUser(authUserRequest.getEmail(),
                                             authUserRequest.getCode(),
-                                            authUserRequest.getLocale());
+                                            authUserRequest.getLocale(),
+                                            authUserRequest.getPurpose());
 
+        
         if (userID != null) {
             // Generate new tokens
             String accessToken = jwtService.generateAccessToken(authUserRequest.getEmail());

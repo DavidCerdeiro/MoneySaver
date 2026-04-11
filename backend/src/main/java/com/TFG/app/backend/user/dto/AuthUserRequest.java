@@ -12,6 +12,8 @@ public class AuthUserRequest {
 
     private Locale locale;
 
+    private String purpose;
+
     public String getEmail() {
         return email;
     }
@@ -23,4 +25,9 @@ public class AuthUserRequest {
     public Locale getLocale() {
         return locale;
     }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
 }

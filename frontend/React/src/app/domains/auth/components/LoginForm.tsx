@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { LogInFormData} from "@/app/domains/auth/schemas/login";
 import { createLogInSchema } from "@/app/domains/auth/schemas/login";
-import { logInUser } from '../application/authService';
+import { logInDemoUser, logInUser } from '../application/authService';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner"
 
@@ -45,13 +45,30 @@ export function LoginForm() {
         }
     };
 
+    const handleDemoLogin = async () => {
+        try {
+            sessionStorage.removeItem('demoGastos');
+            sessionStorage.setItem('isDemoMode', 'true');
+
+
+            toast.info(t('login.demoLoading'));
+            const result = await logInDemoUser();
+            
+            sessionStorage.setItem('email', result.email);
+            navigate('/home');
+            
+        } catch (error) {
+            toast.error(t('login.error') || 'Error al entrar en modo demo');
+        }
+    };
+
     return (
             <Card className="form-card">
                 <CardHeader>
                     <CardTitle className="text-2xl">{t('login.title')}</CardTitle>
                     <CardDescription className="card-description">{t('login.welcomeBack')}</CardDescription>
                     <CardAction>
-                        <Link to="/" className="text-link">{t('login.signUp')}</Link>
+                        <Link to="/signup" className="text-link">{t('login.signUp')}</Link>
                     </CardAction>
                 </CardHeader>
                 <CardContent className="grid gap-4">
@@ -71,6 +88,17 @@ export function LoginForm() {
                         </div>
                         <Button type="submit" className="button-green" disabled={isSubmitting}>
                             {t('login.submit')}
+                        </Button>
+
+                        <line className="my-4 border-t border-gray-300" />
+
+                        <Button 
+                            type="button" 
+                            onClick={handleDemoLogin} 
+                            disabled={isSubmitting}
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                        >
+                            {t('login.tryDemo') || 'Entrar como Invitado (Demo)'}
                         </Button>
                     </form>
                 </CardContent>

@@ -37,9 +37,9 @@ createRoot(document.getElementById('root')!).render(
     <UserProvider>
       <Router>
         <Routes>
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/login/authUser" element={<VerificationEmailPage />} />
-          <Route path="/" element={<SignUpPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/authUser" element={<VerificationEmailPage />} />
           <Route path="/forgot-password/authUser" element={<VerificationEmailPage />} />

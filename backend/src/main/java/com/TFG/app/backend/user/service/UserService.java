@@ -105,7 +105,7 @@ public class UserService {
      * If the user is authenticated successfully,
      * it returns the user ID
      */
-    public Integer authUser(String email, String code, Locale locale) {
+    public Integer authUser(String email, String code, Locale locale, String purpose) {
         String otp = oneTimePasswordService.getOTP(email);
         // Check if the OTP exists and if the provided code matches the OTP token
         if(otp != null && otp.equals(code)) {
@@ -116,18 +116,20 @@ public class UserService {
                 User existingUser = user.get();
                 String subject;
                 String body;
-                if(!existingUser.getIsAuthenticated()) {
-                    existingUser.setIsAuthenticated(true);
-                    userRepository.save(existingUser);
-                    subject = messageSource.getMessage("signUp.successSubject", null, locale);
-                body = messageSource.getMessage("signUp.successBody", null, locale);
-                }else{
-                    subject = messageSource.getMessage("logIn.successSubject", null, locale);
-                    body = messageSource.getMessage("logIn.successBody", null, locale);
-                }
+                // If the purpose is null, it means it's either a sign-up or log-in authentication
+                if(purpose == null) {
+                    if(!existingUser.getIsAuthenticated()) {
+                        existingUser.setIsAuthenticated(true);
+                        userRepository.save(existingUser);
+                        subject = messageSource.getMessage("signUp.successSubject", null, locale);
+                        body = messageSource.getMessage("signUp.successBody", null, locale);
+                    }else{
+                        subject = messageSource.getMessage("logIn.successSubject", null, locale);
+                        body = messageSource.getMessage("logIn.successBody", null, locale);
+                    }
 
                 emailService.sendEmail(email, subject, body);
-
+                }
                 return existingUser.getId();
             }
         }
@@ -163,6 +165,16 @@ public class UserService {
         
     }
 
+    public Optional<User> logInDemoUser() {
+        Optional<User> user = userRepository.findByEmail("davidcergall22@gmail.com");
+        if(user.isPresent()) {
+            User existingUser = user.get();
+            existingUser.setIsAuthenticated(true);
+            userRepository.save(existingUser);
+            return Optional.of(existingUser);
+        }
+        return Optional.empty();
+    }
     /*
      * Method to create a new user.
      * It checks if the email already exists in the database.

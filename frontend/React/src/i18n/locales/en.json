@@ -2,10 +2,13 @@
     "app": {
         "title": "MoneySaver",
         "description": "Control your personal finances",
-        "welcome": "Welcome to MoneySaver! Your partner in financial management."
+        "welcome": "Welcome to MoneySaver! Your partner in financial management.",
+        "WaitingDisclaimer": "Due to server limitations for this portfolio version, the first request to the system may take between 30 seconds and 1 minute. Thank you for your patience."
     },
     "login": {
         "title": "Log in",
+        "tryDemo": "Log in with demo account",
+        "demoLoading": "Starting demo mode...",
         "welcomeBack": "Welcome back",
         "logout": "Log out",
         "forgotPassword": "Forgot your password?",
