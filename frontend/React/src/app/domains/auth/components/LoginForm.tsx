@@ -90,7 +90,7 @@ export function LoginForm() {
                             {t('login.submit')}
                         </Button>
 
-                        <line className="my-4 border-t border-gray-300" />
+                        <hr className="my-4 border-t border-gray-300" />
 
                         <Button 
                             type="button" 

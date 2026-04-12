@@ -129,7 +129,7 @@ BEGIN
 
     -- 3. Clone Accounts
     CREATE TEMP TABLE temp_account_map ON COMMIT DROP AS
-    SELECT "Id" AS old_id, nextval('account_Id_seq') AS new_id FROM "account" WHERE "Id_User" = v_template_user_id;
+    SELECT "Id" AS old_id, nextval('"account_Id_seq"')AS new_id FROM "account" WHERE "Id_User" = v_template_user_id;
 
     INSERT INTO "account" ("Id", "Id_User", "BankName", "Name", "AccountCode", "Number")
     SELECT m.new_id, v_new_user_id, a."BankName", a."Name", a."AccountCode" || '_' || v_new_user_id, a."Number" || '_' || v_new_user_id
@@ -137,7 +137,7 @@ BEGIN
 
     -- 4. Clone Categories
     CREATE TEMP TABLE temp_category_map ON COMMIT DROP AS
-    SELECT "Id" AS old_id, nextval('category_Id_seq') AS new_id FROM "category" WHERE "Id_User" = v_template_user_id;
+    SELECT "Id" AS old_id, nextval('"category_Id_seq"') AS new_id FROM "category" WHERE "Id_User" = v_template_user_id;
 
     INSERT INTO "category" ("Id", "Id_User", "Name", "Icon", "CreatedAt", "DeletedAt")
     SELECT m.new_id, v_new_user_id, c."Name", c."Icon", c."CreatedAt", c."DeletedAt"
@@ -150,7 +150,7 @@ BEGIN
 
     -- 6. Clone Spending
     CREATE TEMP TABLE temp_spending_map ON COMMIT DROP AS
-    SELECT s."Id" AS old_id, nextval('spending_Id_seq') AS new_id
+    SELECT s."Id" AS old_id, nextval('"spending_Id_seq"') AS new_id
     FROM "spending" s JOIN temp_category_map c ON s."Id_Category" = c.old_id;
 
     INSERT INTO "spending" ("Id", "Id_Category", "Id_Establishment", "Name", "Amount", "Date")

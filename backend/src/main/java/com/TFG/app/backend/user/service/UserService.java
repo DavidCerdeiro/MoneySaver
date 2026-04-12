@@ -191,7 +191,7 @@ public class UserService {
             // 3. Llamar a la función de PostgreSQL para clonar
             // IMPORTANTE: Este email debe coincidir con el del usuario que creaste en Supabase
             String templateEmail = "template@demo.com"; 
-            String callFunctionSql = "SELECT clone_demo_user(?, ?, ?)";
+            String callFunctionSql = "SELECT clone_demo_user(?::VARCHAR, ?::VARCHAR, ?::VARCHAR)";
             
             Integer newUserId = jdbcTemplate.queryForObject(
                     callFunctionSql, 

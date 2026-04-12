@@ -70,7 +70,7 @@ export function ForgotPasswordForm() {
                 </CardContent>
                 <CardFooter className="flex justify-center">
                     <CardAction>
-                        <Link to="/login" className="back-link">{t('forgotPassword.backToLogin')}</Link>
+                        <Link to="/" className="back-link">{t('forgotPassword.backToLogin')}</Link>
                     </CardAction>
                 </CardFooter>
             </Card>
