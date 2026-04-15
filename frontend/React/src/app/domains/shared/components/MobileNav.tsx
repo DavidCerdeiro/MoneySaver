@@ -10,7 +10,7 @@ export function MobileNav() {
   const navigate = useNavigate()
   const handleLogout = () => {
       logout(); 
-      navigate('/login')
+      navigate('/')
   }
   
   const handleChangeLang = (lng: string) => {

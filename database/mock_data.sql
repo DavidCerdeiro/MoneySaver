@@ -10,6 +10,9 @@ INSERT INTO "type_periodic" ("Id", "Name") VALUES
 (2, 'quarterly'),
 (3, 'yearly');
 
+INSERT INTO "user" ("Id", "Name", "Surname", "Email", "Password", "IsAuthenticated", "CreatedAt") VALUES 
+(4, 'Template', 'Demo', 'template@demo.com', '$2a$10$ruYarGmgRQbmvjYOaE8CM.rCfaiHAY0z.zf.AT.2sM8hrB1e/VJAu', true, '2026-01-01');
+
 -- 3. Insertar Cuentas Bancarias
 INSERT INTO "account" ("Id", "Id_User", "BankName", "Name", "AccountCode", "Number") VALUES 
 (1, 4, 'BBVA', 'Cuenta Principal Ana', 'ACC-ANA-001', 'ES9100000000000000000001'),
